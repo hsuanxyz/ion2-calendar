@@ -1,0 +1,22 @@
+{
+  "name": "ion2-calendar",
+  "version": "1.0.0",
+  "description": "ionic2 ",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build":"tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "hsuanlee"
+  },
+  "keywords": [
+    "ionic2",
+    "calendar",
+    "Datepicker",
+    "date-range"
+  ],
+  "author": "HsuanLee",
+  "license": "MIT"
+}

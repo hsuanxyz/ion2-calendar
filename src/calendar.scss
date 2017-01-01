@@ -1,0 +1,86 @@
+.calendar-page{
+
+  .month-box{
+    display: inline-block;
+    padding-bottom: 1em;
+    border-bottom: 2px solid #eee;
+  }
+
+  h4 {
+    font-size: 2rem;
+    display: block;
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    margin: 1rem 0;
+    padding-bottom: 1rem;
+  }
+
+  .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
+    width: 15%;
+  }
+
+  .days {
+    width: 14%;
+    float: left;
+    text-align: center;
+    height: 40px;
+  }
+
+  .days .marked{
+    color: #f90;
+  }
+
+  .days .on-selected{
+    background-color: #f90;
+    border-radius: 7px;
+    p{
+      color: #fff;
+    }
+    em{
+      color: #ffdfae;
+    }
+  }
+
+  button.days-btn {
+    width: 100%;
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    background-color: transparent;
+
+    p {
+      margin:0;
+      font-size: 1.2em;
+    }
+
+    em {
+      margin-top: 2px;
+      font-size: 1em;
+      color: #797979;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+  }
+
+}
+
+ul.week-title {
+  background-color: #eee;
+  padding:0;margin:0
+}
+
+.week-title li {
+  list-style-type:none;
+  display: block;
+  float: left;
+  width: 14%;
+  text-align: center;
+}
+
+.week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
+  width: 15%;
+}
