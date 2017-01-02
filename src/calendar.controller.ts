@@ -25,7 +25,7 @@ export class CalendarController {
     public modalCtrl: ModalController
   ) { }
 
-  openCalendar(calendarOptions):any {
+  openCalendar(calendarOptions?):any {
 
     let {
       from = new Date(),

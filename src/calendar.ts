@@ -61,14 +61,14 @@ class DateResults {
   template: `
 <ion-header>
   <ion-navbar>
-  
+
    <ion-buttons start>
        <button ion-button clear *ngIf="closeLabel !== ''" (click)="dismiss()">
          {{closeLabel}}
        </button>
     </ion-buttons>
-  
-   
+
+
     <ion-title>{{title}}</ion-title>
   </ion-navbar>
 
@@ -185,7 +185,7 @@ margin-top: 2px;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
 }
-  
+
 `]
 
 })
@@ -226,8 +226,6 @@ export class CalendarPage{
   }
 
   dismiss() {
-    this.toast.dismiss();
-
     let data = this.dayTemp;
     this.viewCtrl.dismiss({
       from:data[0],
