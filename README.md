@@ -3,7 +3,7 @@ A configurable and selectable range dates calendar component for ionic2
 # Usage
 ### install
 `$ npm install ion2-calendar --save`
-if you do not use google
+#### if you do not use moment
 `$ npm install moment --save`
 ### import module
 
