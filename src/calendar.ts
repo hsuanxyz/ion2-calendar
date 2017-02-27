@@ -1,6 +1,4 @@
-/**
- * Created by youyou on 16/11/28.
- */
+
 import * as moment from 'moment';
 import { NavParams ,ViewController } from 'ionic-angular';
 import { Component } from '@angular/core';
