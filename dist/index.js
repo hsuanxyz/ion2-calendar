@@ -1,6 +1,3 @@
-"use strict";
-var calendar_module_1 = require("./calendar.module");
-exports.CalendarModule = calendar_module_1.CalendarModule;
-var calendar_controller_1 = require("./calendar.controller");
-exports.CalendarController = calendar_controller_1.CalendarController;
+export { CalendarModule } from './calendar.module';
+export { CalendarController } from './calendar.controller';
 //# sourceMappingURL=index.js.map

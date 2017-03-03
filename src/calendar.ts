@@ -279,7 +279,7 @@ export class CalendarPage{
 
   };
 
-  static findDayConfig(day){
+  static findDayConfig(day:any):any{
     if(CalendarPage.options.daysConfig.length <= 0) return null;
     return CalendarPage.options.daysConfig.find((n) => day.isSame(n.date,'day'))
   }

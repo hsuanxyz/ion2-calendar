@@ -1,15 +1,32 @@
 {
   "name": "ion2-calendar",
-  "version": "1.0.1",
-  "description": "ionic2 ",
+  "version": "1.0.2",
+  "description": "A date picker for ionic2 ",
   "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "scripts": {
+    "ngc": "ngc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build":"tsc"
+    "build": "rm -rf aot dist && npm run ngc"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/HsuanXyz/ion2-calendar.git"
+  },
+  "devDependencies": {
+    "@angular/common": "2.2.1",
+    "@angular/compiler": "2.2.1",
+    "@angular/compiler-cli": "2.2.1",
+    "@angular/core": "2.2.1",
+    "@angular/forms": "2.2.1",
+    "@angular/http": "2.2.1",
+    "@angular/platform-browser": "2.2.1",
+    "@angular/platform-browser-dynamic": "2.2.1",
+    "@angular/platform-server": "2.2.1",
+    "ionic-angular": "2.0.0",
+    "rxjs": "5.0.0-beta.12",
+    "zone.js": "0.6.26",
+    "typescript": "2.0.9"
   },
   "keywords": [
     "ionic2",
@@ -18,5 +35,8 @@
     "date-range"
   ],
   "author": "HsuanLee",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.17.1"
+  }
 }

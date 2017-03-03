@@ -25,18 +25,20 @@ export class CalendarController {
     public modalCtrl: ModalController
   ) { }
 
-  openCalendar(calendarOptions?):any {
+  openCalendar(calendarOptions?:any):any {
+
+    let _arr:Array<any> = [];
 
     let {
       from = new Date(),
       to = 0,
       isRadio = true,
-      disableWeekdays = [],
+      disableWeekdays = _arr,
       closeLabel = 'cancel',
       monthTitle = 'MMM yyyy',
       title = 'Calendar',
       weekdaysTitle = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
-      daysConfig = []
+      daysConfig = _arr
     } = calendarOptions || {};
 
 
@@ -58,7 +60,7 @@ export class CalendarController {
 
 
     return new Promise( (resolve, reject) => {
-      calendarModal.onDidDismiss(data => {
+      calendarModal.onDidDismiss((data:any)=> {
         if( (data.from && data.to) || data.date ){
           resolve(data)
         }else {
