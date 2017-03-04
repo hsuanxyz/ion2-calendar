@@ -1,10 +1,17 @@
 # ion2-calendar
+
+[![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
+
 A configurable and selectable range dates calendar component for ionic2
-# Usage
+
 ### install
-`$ npm install ion2-calendar --save`
-#### if you do not use moment
+
+  *if you do not use moment*
 `$ npm install moment --save`
+
+`$ npm install ion2-calendar --save`
+
 ### import module
 
 ```javascript
@@ -61,20 +68,35 @@ export class HomePage {
 ```
 
 # Demo
+
 ### date
+
 ![date](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+
 ### date range
+
 ![date range](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+
 ### disable weekdays
+
 ![disable weekdays](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
+
 ### weekdays title
+
 ![weekdays title](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
+
 ### month title
+
 ![month title](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
+
 ### days config
+
 ![days config](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
+
 # API
+
 ## openCalendar(Options)
+
 ### Options
 | Name            | Type          | Default       | Description |
 | --------------- | ------------- | ------------- | ----------- |
@@ -123,3 +145,12 @@ Ionic CLI Version: 2.1.18
 Ionic App Lib Version: 2.1.9
 Ionic App Scripts Version: 1.1.3
 ```
+
+[npm-url]: https://www.npmjs.com/package/ion2-calendar
+[npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
+
+[downloads-image]: https://img.shields.io/npm/dm/ion2-calendar.svg
+[downloads-url]: http://badge.fury.io/js/ionic2-rating
+
+[license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license-url]: LICENSE
