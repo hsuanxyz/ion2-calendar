@@ -6,6 +6,8 @@ import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { CalendarModule } from "ion2-calendar";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -15,7 +17,8 @@ import { TabsPage } from '../pages/tabs/tabs';
     TabsPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    CalendarModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
