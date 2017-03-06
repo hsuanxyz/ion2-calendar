@@ -109,6 +109,7 @@ export class HomePage {
 | monthTitle      | string        | `'MMM yyyy'`  | month title format  |
 | weekdaysTitle   | Array<string> | `"Di_Lu_Ma_Me_Je_Ve_Sa".split("_")` | weeks title |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
+
 #### DaysConfig
 | Name          | Type          | Default  | Description     |
 | ------------- | ------------- | -------- | --------------- |
@@ -117,12 +118,14 @@ export class HomePage {
 | disable       | boolean       | false    | disable         |
 | title         | string        | none     | displayed title example:'today'       |
 | subTitle      | string        | none     | subTitle subTitle example:'christmas' |
+
 ### Output Promise
 | Name          | Type  | Description |
 | ------------- | ----- | ----------- |
 | from          | ***Day***   | start date If `isRadio` it is `false` |
 | to            | ***Day***   | end date If `isRadio` it is `false`   |
 | date          | ***Day***   | date If `isRadio` it is `true`        |
+
 ### Day
 | Name          | Type    | Description |
 | ------------- | ------- | ----------- |
