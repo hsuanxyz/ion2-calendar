@@ -3,6 +3,7 @@
 [![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
 
+
 A configurable and selectable range dates calendar component for ionic2
 
 ### install
@@ -68,6 +69,7 @@ export class HomePage {
 ```
 
 # Demo
+[DEMO](https://hsuanxyz.github.io/hsuan.github.io/demo/ion2-calendar/)
 
 ### date
 

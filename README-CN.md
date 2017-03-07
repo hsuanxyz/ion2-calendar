@@ -1,4 +1,8 @@
 # ion2-calendar
+
+[![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
+
 一个可配置与可选择范围日期的ionic2日历组件
 # 使用
 ### 安装
@@ -61,6 +65,7 @@ export class HomePage {
 ```
 
 # 演示
+[DEMO](https://hsuanxyz.github.io/hsuan.github.io/demo/ion2-calendar/)
 ### 选择单个日期
 ![date](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
 ### 选择范围日期
@@ -121,3 +126,12 @@ Ionic CLI Version: 2.1.18
 Ionic App Lib Version: 2.1.9
 Ionic App Scripts Version: 1.1.3
 ```
+
+[npm-url]: https://www.npmjs.com/package/ion2-calendar
+[npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
+
+[downloads-image]: https://img.shields.io/npm/dm/ion2-calendar.svg
+[downloads-url]: http://badge.fury.io/js/ionic2-rating
+
+[license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
+[license-url]: LICENSE
