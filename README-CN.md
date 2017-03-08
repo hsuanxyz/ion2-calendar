@@ -79,7 +79,7 @@ export class HomePage {
 ### 按天配置
 ![days config](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
 # API
-## openCalendar(Options)
+## openCalendar(Options,ModalOptions)
 ### Options
 | 参数名            | 类型          | 默认       | 描述 |
 | --------------- | ------------- | ------------- | ----------- |
@@ -100,6 +100,16 @@ export class HomePage {
 | disable       | boolean       | false    | 是否禁用         |
 | title         | string        | none     | 这天的标题 如"今天"      |
 | subTitle      | string        | none     | 这天的副标题 如 "春节" |
+
+
+### ModalOptions
+| Name            | Type          | Default       | Description |
+| --------------- | ------------- | ------------- | ----------- |
+| showBackdrop            | boolean          | true  | 是否显示背景遮罩|
+| enableBackdropDismiss   | boolean          | true | 允许通过背景遮罩关闭 |
+
+
+
 ### 输出 Promise
 | 参数名          | 类型  | 描述 |
 | ------------- | ----- | ----------- |

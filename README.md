@@ -97,7 +97,7 @@ export class HomePage {
 
 # API
 
-## openCalendar(Options)
+## openCalendar(Options,ModalOptions)
 
 ### Options
 | Name            | Type          | Default       | Description |
@@ -120,6 +120,13 @@ export class HomePage {
 | disable       | boolean       | false    | disable         |
 | title         | string        | none     | displayed title example:'today'       |
 | subTitle      | string        | none     | subTitle subTitle example:'christmas' |
+
+### ModalOptions
+| Name            | Type          | Default       | Description |
+| --------------- | ------------- | ------------- | ----------- |
+| showBackdrop            | boolean          | true  | Whether to show the backdrop |
+| enableBackdropDismiss   | boolean          | true | Whether the popover should be dismissed by tapping the backdrop   |
+
 
 ### Output Promise
 | Name          | Type  | Description |
