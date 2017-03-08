@@ -1,2 +1,2 @@
 export { CalendarModule } from './calendar.module';
-export { CalendarController } from './calendar.controller';
+export { CalendarController, CalendarOptions } from './calendar.controller';

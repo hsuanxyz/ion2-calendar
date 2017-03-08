@@ -21,7 +21,7 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       title:'basic demo'
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 
@@ -29,7 +29,7 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       isRadio: false,
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 
@@ -38,7 +38,7 @@ export class HomePage {
       from: new Date(2017,1,1),
       to  : new Date(2017,2,5)
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 
@@ -46,7 +46,7 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       disableWeekdays:[0,6]
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 
@@ -56,7 +56,7 @@ export class HomePage {
       weekdaysTitle:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       closeLabel:''
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 
@@ -109,7 +109,7 @@ export class HomePage {
       to  : new Date(2017,11.1),
       daysConfig:_daysConfig
     })
-      .then( res => { console.log(res) })
+      .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
 

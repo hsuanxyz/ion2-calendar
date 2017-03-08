@@ -1,1 +1,1 @@
-{"__symbolic":"module","version":1,"metadata":{},"exports":[{"from":"./calendar.module","export":["CalendarModule"]},{"from":"./calendar.controller","export":["CalendarController"]}]}
+{"__symbolic":"module","version":1,"metadata":{},"exports":[{"from":"./calendar.module","export":["CalendarModule"]},{"from":"./calendar.controller","export":["CalendarController","CalendarOptions"]}]}

@@ -2,22 +2,29 @@ import { Injectable } from '@angular/core';
 import { CalendarPage } from './calendar';
 import { ModalController } from 'ionic-angular';
 
+export interface CalendarOptions {
+  from?:Date,
+  to?:Date|number,
+  isRadio?:boolean;
+  disableWeekdays?:Array<number>,
+  weekdaysTitle?:Array<string>,
+  closeLabel?:string;
+  monthTitle?:string;
+  title?:string;
+  daysConfig?:Array<{
+    date:Date;
+    marked?:boolean;
+    title?:string;
+    subTitle?:string;
+  }>
+}
 
-// interface CalendarOptions {
-//   from?:Date,
-//   to?:Date|number,
-//   isRadio?:boolean;
-//   disableWeekdays?:Array<number>,
-//   weekdaysTitle?:Array<string>,
-//   monthTitle?:string;
-//   title?:string;
-//   daysConfig?:Array<{
-//     date:Date;
-//     marked?:boolean;
-//     title?:string;
-//     subTitle?:string;
-//   }>
-// }
+export interface ModalOptions {
+    showBackdrop?: boolean;
+    enableBackdropDismiss?: boolean;
+    enterAnimation?: string;
+    leaveAnimation?: string;
+}
 
 @Injectable()
 export class CalendarController {
@@ -25,7 +32,7 @@ export class CalendarController {
     public modalCtrl: ModalController
   ) { }
 
-  openCalendar(calendarOptions?:any):any {
+  openCalendar(calendarOptions:CalendarOptions, modalOptions:ModalOptions = {}):any {
 
     let _arr:Array<any> = [];
 
@@ -54,14 +61,16 @@ export class CalendarController {
       daysConfig:daysConfig
     };
 
-    let calendarModal = this.modalCtrl.create(CalendarPage,options);
+    let calendarModal = this.modalCtrl.create(CalendarPage,options,modalOptions);
     calendarModal.present();
 
 
 
     return new Promise( (resolve, reject) => {
-      calendarModal.onDidDismiss((data:any)=> {
-        if( (data.from && data.to) || data.date ){
+
+
+      calendarModal.onWillDismiss((data:any)=> {
+        if( data && ( (data.from && data.to) || data.date ) ){
           resolve(data)
         }else {
           reject('cancelled')
