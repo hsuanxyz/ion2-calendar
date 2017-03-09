@@ -27,6 +27,7 @@ export declare class CalendarPage {
     params: NavParams;
     viewCtrl: ViewController;
     title: string;
+    cssClass: string;
     closeLabel: string;
     dayTemp: Array<CalendarDay | null>;
     calendarMonths: Array<CalendarMonth>;
@@ -35,6 +36,8 @@ export declare class CalendarPage {
     toast: any;
     private static options;
     constructor(params: NavParams, viewCtrl: ViewController);
+    init(): void;
+    findCssClass(): void;
     dismiss(): void;
     onSelected(item: CalendarDay): void;
     nextMonth(infiniteScroll: any): void;

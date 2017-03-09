@@ -19,7 +19,16 @@ export class HomePage {
 
   basic() {
     this.calendarCtrl.openCalendar({
-      title:'basic demo'
+      title:'basic demo',
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+
+  setCssClass() {
+    this.calendarCtrl.openCalendar({
+      cssClass:'my-class',
+      isRadio: false,
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )

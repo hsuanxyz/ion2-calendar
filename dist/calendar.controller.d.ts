@@ -1,6 +1,7 @@
 import { ModalController } from 'ionic-angular';
 export interface CalendarOptions {
     from?: Date;
+    cssClass?: string;
     to?: Date | number;
     isRadio?: boolean;
     disableWeekdays?: Array<number>;
@@ -10,6 +11,7 @@ export interface CalendarOptions {
     title?: string;
     daysConfig?: Array<{
         date: Date;
+        cssClass?: string;
         marked?: boolean;
         title?: string;
         subTitle?: string;

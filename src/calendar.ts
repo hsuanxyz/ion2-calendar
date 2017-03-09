@@ -1,7 +1,7 @@
 
 import * as moment from 'moment';
 import { NavParams ,ViewController } from 'ionic-angular';
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 
 export interface CalendarOriginal {
@@ -57,7 +57,7 @@ class DateResults {
 
 @Component({
   template: `
-<ion-header>
+<ion-header [class]="cssClass">
   <ion-navbar>
 
    <ion-buttons start>
@@ -78,7 +78,7 @@ class DateResults {
 
 </ion-header>
 
-<ion-content class="calendar-page">
+<ion-content [class]=" 'calendar-page ' + cssClass || ''">
 
 
   <div *ngFor="let month of calendarMonths" class="month-box">
@@ -123,6 +123,10 @@ class DateResults {
 .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
   width: 15%;
 }
+
+  .calendar-page {
+  background-color: #fff;
+  }
 
 .calendar-page .month-box{
     display: inline-block;
@@ -183,13 +187,13 @@ margin-top: 2px;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
 }
-
 `]
 
 })
 export class CalendarPage{
 
   title: string;
+  cssClass: string = '';
   closeLabel: string;
   dayTemp: Array<CalendarDay|null> = [null,null];
   calendarMonths: Array<CalendarMonth>;
@@ -199,10 +203,17 @@ export class CalendarPage{
   private static options: CalendarOptions;
   constructor(
     public params: NavParams,
-    public viewCtrl: ViewController
+    public viewCtrl: ViewController,
+    // private elementRef: ElementRef,
+    // renderer: Renderer
 
   ) {
+    this.findCssClass();
+    this.init();
+  }
 
+  init(){
+    const params = this.params;
     let startTime = moment(params.get('from')).valueOf();
     let endTime = moment(params.get('to')).valueOf();
     CalendarPage.options = {
@@ -219,8 +230,18 @@ export class CalendarPage{
     this.title = params.get('title');
     this.closeLabel = params.get('closeLabel');
     this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,3);
+  }
 
-
+  findCssClass() {
+    this.cssClass = '';
+    let cssClass = this.params.get('cssClass');
+    if (cssClass) {
+      cssClass.split(' ').forEach( (cc:string) => {
+        if (cc.trim() !== '') {
+          this.cssClass += ` ${cc}`;
+        }
+      });
+    }
   }
 
   dismiss() {
