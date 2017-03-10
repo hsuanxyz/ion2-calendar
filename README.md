@@ -3,8 +3,9 @@
 [![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
 
-
 A configurable and selectable range dates calendar component for ionic2
+
+[中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
 
 ### install
 
@@ -105,6 +106,7 @@ export class HomePage {
 | from            | Date          | `new Date()`  | start date  |
 | to              | Date          |  0 (Infinite) | end date    |
 | title           | string        | `'Calendar'`  | title       |
+| cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
 | isRadio         | boolean       | `true`        | true for one day ,false for range dates     |
 | disableWeekdays | Array<number> | `[]`          | week to be disabled (0-6)                   |
 | closeLabel      | string        | `cancel`      | cancel button label ,can be an empty string |
