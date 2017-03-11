@@ -65,19 +65,19 @@ export class HomePage {
 ```
 
 # 演示
-[DEMO](https://hsuanxyz.github.io/hsuan.github.io/demo/ion2-calendar/)
+[DEMO](https://hsuanxyz.github.io/demo/ion2-calendar/)
 ### 选择单个日期
-![date](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
 ### 选择范围日期
-![date range](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+![date range](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
 ### 按星期禁用
-![disable weekdays](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
+![disable weekdays](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
 ### 设置星期标题
-![weekdays title](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
+![weekdays title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
 ### 设置月份标题
-![month title](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
+![month title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
 ### 按天配置
-![days config](https://github.com/HsuanXyz/hsuan.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
+![days config](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
 # API
 ## openCalendar(Options,ModalOptions)
 ### Options
