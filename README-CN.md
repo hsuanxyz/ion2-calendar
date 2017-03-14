@@ -68,16 +68,111 @@ export class HomePage {
 [DEMO](https://hsuanxyz.github.io/demo/ion2-calendar/)
 ### 选择单个日期
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+
+```typescript
+ basic() {
+    this.calendarCtrl.openCalendar({
+      title:'basic demo',
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+```
+
 ### 选择范围日期
 ![date range](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
+
+```typescript
+dateRange() {
+    this.calendarCtrl.openCalendar({
+      isRadio: false,
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+```
+
 ### 按星期禁用
 ![disable weekdays](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
+
+```typescript
+  disableWeekdays() {
+    this.calendarCtrl.openCalendar({
+      disableWeekdays:[0,6]
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+```
+
 ### 设置星期标题
 ![weekdays title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
 ### 设置月份标题
 ![month title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
+
+```typescript
+ settingDisplay() {
+    this.calendarCtrl.openCalendar({
+      monthTitle:' MMMM-yy ',
+      weekdaysTitle:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      closeLabel:''
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+```
+
 ### 按天配置
 ![days config](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
+
+```typescript
+daysConfig() {
+
+    let _daysConfig = [
+      {
+        date:new Date(2017,0,1),
+        subTitle:'New Year\'s',
+        marked:true
+      },
+      {
+        date:new Date(2017,1,14),
+        subTitle:'Valentine\'s',
+        disable:true
+      },
+      {
+        date:new Date(2017,3,1),
+        subTitle:'April Fools',
+        marked:true
+      },
+      {
+        date:new Date(2017,3,7),
+        subTitle:'World Health',
+        marked:true
+      },
+      {
+        date:new Date(2017,4,31),
+        subTitle:'No-Smoking',
+        marked:true
+      },
+      {
+        date:new Date(2017,5,1),
+        subTitle:'Children\'s',
+        marked:true
+      }
+    ];
+   
+    _daysConfig.push(...this.days);
+
+    this.calendarCtrl.openCalendar({
+      from: new Date(2017,0,1),
+      to  : new Date(2017,11.1),
+      daysConfig:_daysConfig
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+```
+
 # API
 ## openCalendar(Options,ModalOptions)
 ### Options
@@ -127,7 +222,7 @@ export class HomePage {
 | subTitle      | string  | 副标题 |
 
 ### 待办事宜
-1. 添加样式设置
+1. ~~添加样式设置~~
 
 # 开发时的环境
 ```
