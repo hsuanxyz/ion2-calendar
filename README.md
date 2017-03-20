@@ -238,6 +238,7 @@ daysConfig() {
 
 ### TODO
 1. ~~Add style settings.~~
+2. Add default date, let the view scroll to the default date.
 
 # Environment
 ```
