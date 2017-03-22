@@ -9,6 +9,7 @@ export interface CalendarOptions {
     closeLabel?: string;
     monthTitle?: string;
     title?: string;
+    defaultDate?: Date;
     daysConfig?: Array<{
         date: Date;
         cssClass?: string;

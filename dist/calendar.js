@@ -45,6 +45,7 @@ export var CalendarPage = (function () {
             disableWeekdays: params.get('disableWeekdays'),
             monthTitle: params.get('monthTitle'),
         };
+        this.defaultDate = params.get('defaultDate');
         this.monthTitleFilterStr = params.get('monthTitle');
         this.weekdaysTitle = params.get('weekdaysTitle');
         this.title = params.get('title');

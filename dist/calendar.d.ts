@@ -32,6 +32,7 @@ export declare class CalendarPage {
     dayTemp: Array<CalendarDay | null>;
     calendarMonths: Array<CalendarMonth>;
     monthTitleFilterStr: string;
+    defaultDate: Date;
     weekdaysTitle: Array<string>;
     toast: any;
     private static options;

@@ -12,6 +12,7 @@ export interface CalendarOptions {
   closeLabel?:string;
   monthTitle?:string;
   title?:string;
+  defaultDate?:Date;
   daysConfig?:Array<{
     date:Date;
     cssClass?:string,
@@ -44,6 +45,7 @@ export class CalendarController {
         cssClass = '',
         isRadio = true,
         disableWeekdays = _arr,
+        defaultDate = new Date(),
         closeLabel = 'cancel',
         monthTitle = 'MMM yyyy',
         title = 'Calendar',
@@ -58,6 +60,7 @@ export class CalendarController {
       cssClass:cssClass,
       isRadio:isRadio,
       closeLabel:closeLabel,
+      defaultDate:defaultDate,
       disableWeekdays:disableWeekdays,
       monthTitle:monthTitle,
       title:title,

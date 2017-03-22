@@ -8,13 +8,14 @@ export var CalendarController = (function () {
     CalendarController.prototype.openCalendar = function (calendarOptions, modalOptions) {
         if (modalOptions === void 0) { modalOptions = {}; }
         var _arr = [];
-        var _a = calendarOptions || {}, _b = _a.from, from = _b === void 0 ? new Date() : _b, _c = _a.to, to = _c === void 0 ? 0 : _c, _d = _a.cssClass, cssClass = _d === void 0 ? '' : _d, _e = _a.isRadio, isRadio = _e === void 0 ? true : _e, _f = _a.disableWeekdays, disableWeekdays = _f === void 0 ? _arr : _f, _g = _a.closeLabel, closeLabel = _g === void 0 ? 'cancel' : _g, _h = _a.monthTitle, monthTitle = _h === void 0 ? 'MMM yyyy' : _h, _j = _a.title, title = _j === void 0 ? 'Calendar' : _j, _k = _a.weekdaysTitle, weekdaysTitle = _k === void 0 ? "Di_Lu_Ma_Me_Je_Ve_Sa".split("_") : _k, _l = _a.daysConfig, daysConfig = _l === void 0 ? _arr : _l;
+        var _a = calendarOptions || {}, _b = _a.from, from = _b === void 0 ? new Date() : _b, _c = _a.to, to = _c === void 0 ? 0 : _c, _d = _a.cssClass, cssClass = _d === void 0 ? '' : _d, _e = _a.isRadio, isRadio = _e === void 0 ? true : _e, _f = _a.disableWeekdays, disableWeekdays = _f === void 0 ? _arr : _f, _g = _a.defaultDate, defaultDate = _g === void 0 ? new Date() : _g, _h = _a.closeLabel, closeLabel = _h === void 0 ? 'cancel' : _h, _j = _a.monthTitle, monthTitle = _j === void 0 ? 'MMM yyyy' : _j, _k = _a.title, title = _k === void 0 ? 'Calendar' : _k, _l = _a.weekdaysTitle, weekdaysTitle = _l === void 0 ? "Di_Lu_Ma_Me_Je_Ve_Sa".split("_") : _l, _m = _a.daysConfig, daysConfig = _m === void 0 ? _arr : _m;
         var options = {
             from: from,
             to: to,
             cssClass: cssClass,
             isRadio: isRadio,
             closeLabel: closeLabel,
+            defaultDate: defaultDate,
             disableWeekdays: disableWeekdays,
             monthTitle: monthTitle,
             title: title,

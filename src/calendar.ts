@@ -198,14 +198,13 @@ export class CalendarPage{
   dayTemp: Array<CalendarDay|null> = [null,null];
   calendarMonths: Array<CalendarMonth>;
   monthTitleFilterStr = '';
+  defaultDate:Date;
   weekdaysTitle:Array<string> = [];
   toast:any;
   private static options: CalendarOptions;
   constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
-    // private elementRef: ElementRef,
-    // renderer: Renderer
 
   ) {
     this.findCssClass();
@@ -225,6 +224,7 @@ export class CalendarPage{
       disableWeekdays:params.get('disableWeekdays'),
       monthTitle:params.get('monthTitle'),
     };
+    this.defaultDate = params.get('defaultDate');
     this.monthTitleFilterStr = params.get('monthTitle');
     this.weekdaysTitle = params.get('weekdaysTitle');
     this.title = params.get('title');
