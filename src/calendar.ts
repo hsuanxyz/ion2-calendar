@@ -1,7 +1,7 @@
+import {Component,ViewChild,ElementRef} from '@angular/core';
+import { NavParams ,ViewController, Content } from 'ionic-angular';
 
 import * as moment from 'moment';
-import { NavParams ,ViewController } from 'ionic-angular';
-import {Component} from '@angular/core';
 
 
 export interface CalendarOriginal {
@@ -81,7 +81,8 @@ class DateResults {
 <ion-content [class]=" 'calendar-page ' + cssClass || ''">
 
 
-  <div *ngFor="let month of calendarMonths" class="month-box">
+ <div #months>
+  <div *ngFor="let month of calendarMonths;let i = index;" class="month-box"  [attr.id]="'month-' + i">
     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
     <div class="days-box">
       <div class="days" *ngFor="let day of month.days">
@@ -97,6 +98,7 @@ class DateResults {
       </div>
     </div>
   </div>
+</div>
 
   <ion-infinite-scroll (ionInfinite)="nextMonth($event)">
     <ion-infinite-scroll-content></ion-infinite-scroll-content>
@@ -191,24 +193,29 @@ margin-top: 2px;
 
 })
 export class CalendarPage{
-
+    @ViewChild(Content) content: Content;
+    @ViewChild('months') monthsEle: ElementRef;
   title: string;
   cssClass: string = '';
   closeLabel: string;
   dayTemp: Array<CalendarDay|null> = [null,null];
   calendarMonths: Array<CalendarMonth>;
   monthTitleFilterStr = '';
-  defaultDate:Date;
   weekdaysTitle:Array<string> = [];
   toast:any;
   private static options: CalendarOptions;
-  constructor(
+  private static defaultDate:Date;
+    constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
 
   ) {
     this.findCssClass();
     this.init();
+  }
+
+  ngAfterViewInit(){
+      this.scrollToDefaultDate();
   }
 
   init(){
@@ -224,13 +231,13 @@ export class CalendarPage{
       disableWeekdays:params.get('disableWeekdays'),
       monthTitle:params.get('monthTitle'),
     };
-    this.defaultDate = params.get('defaultDate');
+    CalendarPage.defaultDate = params.get('defaultDate');
     this.monthTitleFilterStr = params.get('monthTitle');
     this.weekdaysTitle = params.get('weekdaysTitle');
     this.title = params.get('title');
     this.closeLabel = params.get('closeLabel');
+    this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,CalendarPage.findInitMonthNumber(CalendarPage.defaultDate)+3);
 
-    this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,CalendarPage.findInitMonthNumber(params.get('from'))+3);
   }
 
   findCssClass() {
@@ -385,12 +392,16 @@ export class CalendarPage{
 
     if(!isAfter) return 0;
 
-    const monthsNum: number = defaultDate.subtract(startDate).month();
-
-    return  monthsNum;
+    return  defaultDate.subtract(startDate).month();
   }
 
-  static scrollToDefaultDate(date: Date) {
-
-  }
+    scrollToDefaultDate() {
+      let defaultDateIndex = CalendarPage.findInitMonthNumber(CalendarPage.defaultDate );
+      console.log(this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop);
+      let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
+      if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
+       setTimeout(() => {
+           this.content.scrollTo(0,defaultDateMonth,128);
+       },300)
+    }
 }
