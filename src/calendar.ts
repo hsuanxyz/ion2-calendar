@@ -229,7 +229,8 @@ export class CalendarPage{
     this.weekdaysTitle = params.get('weekdaysTitle');
     this.title = params.get('title');
     this.closeLabel = params.get('closeLabel');
-    this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,3);
+
+    this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,CalendarPage.findInitMonthNumber(params.get('from'))+3);
   }
 
   findCssClass() {
@@ -252,7 +253,7 @@ export class CalendarPage{
     });
   }
 
-  onSelected(item:CalendarDay){
+  onSelected(item:CalendarDay) {
     item.selected = true;
 
     if(CalendarPage.options.isRadio) {
@@ -285,7 +286,7 @@ export class CalendarPage{
     }
   }
 
-  nextMonth(infiniteScroll:any){
+  nextMonth(infiniteScroll:any) {
     let len = this.calendarMonths.length;
     let final = this.calendarMonths[len-1];
     let nextTime = moment(final.original.time).add(1,'M').valueOf();
@@ -298,9 +299,9 @@ export class CalendarPage{
     this.calendarMonths.push(...CalendarPage.createMonthsByPeriod(nextTime,1));
     infiniteScroll.complete();
 
-  };
+  }
 
-  static findDayConfig(day:any):any{
+  static findDayConfig(day:any):any {
     if(CalendarPage.options.daysConfig.length <= 0) return null;
     return CalendarPage.options.daysConfig.find((n) => day.isSame(n.date,'day'))
   }
@@ -375,5 +376,21 @@ export class CalendarPage{
     }
 
     return _array;
+  }
+
+  static findInitMonthNumber(date: Date): number {
+    const startDate = moment(CalendarPage.options.start);
+    const defaultDate = moment(date);
+    const isAfter:boolean = defaultDate.isAfter(startDate);
+
+    if(!isAfter) return 0;
+
+    const monthsNum: number = defaultDate.subtract(startDate).month();
+
+    return  monthsNum;
+  }
+
+  static scrollToDefaultDate(date: Date) {
+
   }
 }
