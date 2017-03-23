@@ -25,6 +25,16 @@ export class HomePage {
       .catch( () => {} )
   }
 
+  setDefaultDate() {
+    this.calendarCtrl.openCalendar({
+      from: new Date(2017,1,1),
+      defaultDate:new Date(2017,4,1)
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} )
+  }
+
+
   setCssClass() {
     this.calendarCtrl.openCalendar({
       cssClass:'my-class',

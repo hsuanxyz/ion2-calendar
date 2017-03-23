@@ -1,4 +1,5 @@
-import { NavParams, ViewController } from 'ionic-angular';
+import { ElementRef } from '@angular/core';
+import { NavParams, ViewController, Content } from 'ionic-angular';
 export interface CalendarOriginal {
     time: number;
     date: Date;
@@ -26,17 +27,20 @@ export declare class CalendarMonth {
 export declare class CalendarPage {
     params: NavParams;
     viewCtrl: ViewController;
+    content: Content;
+    monthsEle: ElementRef;
     title: string;
     cssClass: string;
     closeLabel: string;
     dayTemp: Array<CalendarDay | null>;
     calendarMonths: Array<CalendarMonth>;
     monthTitleFilterStr: string;
-    defaultDate: Date;
     weekdaysTitle: Array<string>;
     toast: any;
     private static options;
+    private static defaultDate;
     constructor(params: NavParams, viewCtrl: ViewController);
+    ngAfterViewInit(): void;
     init(): void;
     findCssClass(): void;
     dismiss(): void;
@@ -47,4 +51,6 @@ export declare class CalendarPage {
     static createCalendarDay(time: number): CalendarDay;
     static createCalendarMonth(original: CalendarOriginal): CalendarMonth;
     static createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
+    static findInitMonthNumber(date: Date): number;
+    scrollToDefaultDate(): void;
 }
