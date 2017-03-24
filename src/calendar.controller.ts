@@ -38,14 +38,12 @@ export class CalendarController {
   openCalendar(calendarOptions:CalendarOptions, modalOptions:ModalOptions = {}):any {
 
     let _arr:Array<any> = [];
-
     let {
         from = new Date(),
         to = 0,
         cssClass = '',
         isRadio = true,
         disableWeekdays = _arr,
-        defaultDate = new Date(),
         closeLabel = 'cancel',
         monthTitle = 'MMM yyyy',
         title = 'Calendar',
@@ -53,14 +51,13 @@ export class CalendarController {
         daysConfig = _arr
     } = calendarOptions || {};
 
-
     let options = {
       from:from,
       to:to,
       cssClass:cssClass,
       isRadio:isRadio,
       closeLabel:closeLabel,
-      defaultDate:defaultDate,
+      defaultDate:calendarOptions.defaultDate || from ,
       disableWeekdays:disableWeekdays,
       monthTitle:monthTitle,
       title:title,
