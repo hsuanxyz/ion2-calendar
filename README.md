@@ -7,6 +7,9 @@ A configurable and selectable range dates calendar component for ionic2
 
 [中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
 
+
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
+
 ### install
 
   *if you do not use moment*
@@ -114,11 +117,11 @@ dateRange() {
   }
 ```
 
-### weekdays title
+### weekdays title format
 
 ![weekdays title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
 
-### month title
+### month title format
 
 ![month title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
 

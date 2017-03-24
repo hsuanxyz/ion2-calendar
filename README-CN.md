@@ -4,6 +4,10 @@
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
 
 一个可配置与可选择范围日期的ionic2日历组件
+
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
+
+
 # 使用
 ### 安装
 `$ npm install ion2-calendar --save`
