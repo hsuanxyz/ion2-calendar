@@ -198,6 +198,7 @@ daysConfig() {
 | from            | Date          | `new Date()`  | start date  |
 | to              | Date          |  0 (Infinite) | end date    |
 | title           | string        | `'Calendar'`  | title       |
+| defaultDate     | Date          | none          | let the view scroll to the default date|
 | cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
 | isRadio         | boolean       | `true`        | true for one day ,false for range dates     |
 | disableWeekdays | Array<number> | `[]`          | week to be disabled (0-6)                   |

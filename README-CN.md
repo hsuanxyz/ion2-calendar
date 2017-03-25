@@ -185,6 +185,7 @@ daysConfig() {
 | from            | Date          | `new Date()`  | 开始时间     |
 | to              | Date          |  0 (Infinite) | 结束时间     |
 | title           | string        | `'Calendar'`  | 标题         |
+| defaultDate     | Date          | 无          | 让视图滚动到默认日期|
 | cssClass        | string        | `''`          | 自定义css类，多个用空格分开 |
 | isRadio         | boolean       | `true`        | 设置是否单选 ，如果为false则选择日期范围    |
 | disableWeekdays | Array<number> | `[]`          | 需要禁用的星期数 (0-6，重0开始)                   |
