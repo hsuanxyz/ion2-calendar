@@ -244,6 +244,7 @@ daysConfig() {
 1. ~~Add style settings.~~
 2. ~~Add default date, let the view scroll to the default date.~~
 3. To today
+4. Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))
 
 # Environment
 ```
