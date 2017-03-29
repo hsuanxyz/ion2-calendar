@@ -46,11 +46,12 @@ export declare class CalendarPage {
     dismiss(): void;
     onSelected(item: CalendarDay): void;
     nextMonth(infiniteScroll: any): void;
+    scrollToDefaultDate(): void;
+    onScroll($event: any): void;
     static findDayConfig(day: any): any;
     static createOriginalCalendar(time: number): CalendarOriginal;
     static createCalendarDay(time: number): CalendarDay;
     static createCalendarMonth(original: CalendarOriginal): CalendarMonth;
     static createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
     static findInitMonthNumber(date: Date): number;
-    scrollToDefaultDate(): void;
 }
