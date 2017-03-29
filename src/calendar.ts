@@ -1,8 +1,7 @@
-import {Component,ViewChild,ElementRef} from '@angular/core';
+import {Component,ViewChild,ElementRef, ChangeDetectorRef} from '@angular/core';
 import { NavParams ,ViewController, Content } from 'ionic-angular';
 
 import * as moment from 'moment';
-
 
 export interface CalendarOriginal {
   time: number;
@@ -78,7 +77,7 @@ class DateResults {
 
 </ion-header>
 
-<ion-content [class]=" 'calendar-page ' + cssClass || ''">
+<ion-content (ionScroll)="onScroll($event)" [class]=" 'calendar-page ' + cssClass || ''">
 
 
  <div #months>
@@ -203,11 +202,14 @@ export class CalendarPage{
   monthTitleFilterStr = '';
   weekdaysTitle:Array<string> = [];
   toast:any;
+  _s:boolean = true;
   private static options: CalendarOptions;
   private static defaultDate:Date;
+  private static scrollBackwards:boolean;
     constructor(
     public params: NavParams,
     public viewCtrl: ViewController,
+    public ref: ChangeDetectorRef,
 
   ) {
     this.findCssClass();
@@ -215,7 +217,14 @@ export class CalendarPage{
   }
 
   ngAfterViewInit(){
-      this.scrollToDefaultDate();
+  }
+
+  ionViewDidLoad() {
+    this.scrollToDefaultDate();
+
+    if(this.content.enableScrollListener && CalendarPage.scrollBackwards ){
+      this.content.enableScrollListener();
+    }
   }
 
   init(){
@@ -232,6 +241,7 @@ export class CalendarPage{
       monthTitle:params.get('monthTitle'),
     };
     CalendarPage.defaultDate = params.get('defaultDate');
+    CalendarPage.scrollBackwards = params.get('canBackwardsSelected');
     this.monthTitleFilterStr = params.get('monthTitle');
     this.weekdaysTitle = params.get('weekdaysTitle');
     this.title = params.get('title');
@@ -262,6 +272,7 @@ export class CalendarPage{
 
   onSelected(item:CalendarDay) {
     item.selected = true;
+    this.ref.detectChanges();
 
     if(CalendarPage.options.isRadio) {
       this.viewCtrl.dismiss({
@@ -308,6 +319,33 @@ export class CalendarPage{
 
   }
 
+  backwardsMonth() {
+    let first = this.calendarMonths[0];
+    let firstTime =  moment(first.original.time).subtract(1,'M').valueOf();
+    this.calendarMonths.unshift(...CalendarPage.createMonthsByPeriod(firstTime,1))
+  }
+
+  scrollToDefaultDate() {
+    let defaultDateIndex = CalendarPage.findInitMonthNumber(CalendarPage.defaultDate );
+    let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
+    if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
+    setTimeout(() => {
+      this.content.scrollTo(0,defaultDateMonth,128);
+    },300)
+  }
+
+  onScroll($event: any){
+    if(!CalendarPage.scrollBackwards) return;
+    if($event.scrollTop <= 300 && this._s){
+      this._s = !1;
+      this.backwardsMonth();
+      this.ref.detectChanges();
+      setTimeout( () => {
+        this._s = !0;
+      },300)
+    }
+  }
+
   static findDayConfig(day:any):any {
     if(CalendarPage.options.daysConfig.length <= 0) return null;
     return CalendarPage.options.daysConfig.find((n) => day.isSame(n.date,'day'))
@@ -337,12 +375,22 @@ export class CalendarPage{
     let isBetween = true;
     let disableWee = CalendarPage.options.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
     if(_rangeBeg > 0 && _rangeEnd > 0){
-      isBetween = !_time.isBetween(_rangeBeg, _rangeEnd,'days','[]');
-
+      if (!CalendarPage.scrollBackwards ){
+        isBetween = !_time.isBetween(_rangeBeg, _rangeEnd,'days','[]');
+      }else {
+        isBetween = moment(_time).isBefore(_rangeBeg) ? false : isBetween;
+      }
     }else if (_rangeBeg > 0 && _rangeEnd === 0){
-      let _addTime = _time.add('day',1);
-      isBetween = !_addTime.isAfter(_rangeBeg);
+
+
+      if (!CalendarPage.scrollBackwards ){
+        let _addTime = _time.add('day',1);
+        isBetween = !_addTime.isAfter(_rangeBeg);
+      }else {
+        isBetween = false;
+      }
     }
+
     let _disable = disableWee || isBetween;
     return {
       time: time,
@@ -395,13 +443,4 @@ export class CalendarPage{
     return  defaultDate.subtract(startDate).month();
   }
 
-    scrollToDefaultDate() {
-      let defaultDateIndex = CalendarPage.findInitMonthNumber(CalendarPage.defaultDate );
-      console.log(this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop);
-      let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
-      if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
-       setTimeout(() => {
-           this.content.scrollTo(0,defaultDateMonth,128);
-       },300)
-    }
 }

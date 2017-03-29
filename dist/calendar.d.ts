@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import { ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
 export interface CalendarOriginal {
     time: number;
@@ -27,6 +27,7 @@ export declare class CalendarMonth {
 export declare class CalendarPage {
     params: NavParams;
     viewCtrl: ViewController;
+    ref: ChangeDetectorRef;
     content: Content;
     monthsEle: ElementRef;
     title: string;
@@ -37,15 +38,19 @@ export declare class CalendarPage {
     monthTitleFilterStr: string;
     weekdaysTitle: Array<string>;
     toast: any;
+    _s: boolean;
     private static options;
     private static defaultDate;
-    constructor(params: NavParams, viewCtrl: ViewController);
+    private static scrollBackwards;
+    constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef);
     ngAfterViewInit(): void;
+    ionViewDidLoad(): void;
     init(): void;
     findCssClass(): void;
     dismiss(): void;
     onSelected(item: CalendarDay): void;
     nextMonth(infiniteScroll: any): void;
+    backwardsMonth(): void;
     scrollToDefaultDate(): void;
     onScroll($event: any): void;
     static findDayConfig(day: any): any;

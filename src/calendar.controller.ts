@@ -11,6 +11,7 @@ export interface CalendarOptions {
   weekdaysTitle?:Array<string>,
   closeLabel?:string;
   monthTitle?:string;
+  canBackwardsSelected?:boolean;
   title?:string;
   defaultDate?:Date;
   daysConfig?:Array<{
@@ -43,6 +44,7 @@ export class CalendarController {
         to = 0,
         cssClass = '',
         isRadio = true,
+        canBackwardsSelected = false,
         disableWeekdays = _arr,
         closeLabel = 'cancel',
         monthTitle = 'MMM yyyy',
@@ -56,6 +58,7 @@ export class CalendarController {
       to:to,
       cssClass:cssClass,
       isRadio:isRadio,
+      canBackwardsSelected:canBackwardsSelected,
       closeLabel:closeLabel,
       defaultDate:calendarOptions.defaultDate || from ,
       disableWeekdays:disableWeekdays,

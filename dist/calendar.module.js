@@ -19,7 +19,7 @@ export var CalendarModule = (function () {
                 },] },
     ];
     /** @nocollapse */
-    CalendarModule.ctorParameters = [];
+    CalendarModule.ctorParameters = function () { return []; };
     return CalendarModule;
 }());
 //# sourceMappingURL=calendar.module.js.map

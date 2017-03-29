@@ -8,6 +8,7 @@ export interface CalendarOptions {
     weekdaysTitle?: Array<string>;
     closeLabel?: string;
     monthTitle?: string;
+    canBackwardsSelected?: boolean;
     title?: string;
     defaultDate?: Date;
     daysConfig?: Array<{

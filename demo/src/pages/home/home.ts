@@ -20,6 +20,7 @@ export class HomePage {
   basic() {
     this.calendarCtrl.openCalendar({
       title:'basic demo',
+      scrollBackwards:true
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -47,6 +48,8 @@ export class HomePage {
   dateRange() {
     this.calendarCtrl.openCalendar({
       isRadio: false,
+      scrollBackwards:true
+
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -63,7 +66,9 @@ export class HomePage {
 
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
-      disableWeekdays:[0,6]
+      disableWeekdays:[0,6],
+      scrollBackwards:true
+
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -71,7 +76,7 @@ export class HomePage {
 
   settingDisplay() {
     this.calendarCtrl.openCalendar({
-      monthTitle:' MMMM-yy ',
+      monthTitle:'yyyy 年 MM 月 ',
       weekdaysTitle:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       closeLabel:''
     })
