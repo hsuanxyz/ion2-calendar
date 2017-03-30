@@ -188,6 +188,7 @@ daysConfig() {
 | defaultDate     | Date          | 无          | 让视图滚动到默认日期|
 | cssClass        | string        | `''`          | 自定义css类，多个用空格分开 |
 | isRadio         | boolean       | `true`        | 设置是否单选 ，如果为false则选择日期范围    |
+| canBackwardsSelected        | boolean        | `false`        | 能否向后选择 |
 | disableWeekdays | Array<number> | `[]`          | 需要禁用的星期数 (0-6，重0开始)                   |
 | closeLabel      | string        | `cancel`      | 取消按钮文字，可以为空 |
 | monthTitle      | string        | `'MMM yyyy'`  | 设置月份显示格式  |

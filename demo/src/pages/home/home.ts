@@ -20,7 +20,7 @@ export class HomePage {
   basic() {
     this.calendarCtrl.openCalendar({
       title:'basic demo',
-      scrollBackwards:true
+      canBackwardsSelected:true
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -48,7 +48,7 @@ export class HomePage {
   dateRange() {
     this.calendarCtrl.openCalendar({
       isRadio: false,
-      scrollBackwards:true
+      canBackwardsSelected:true
 
     })
       .then( (res:any) => { console.log(res) })
@@ -67,7 +67,7 @@ export class HomePage {
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
       disableWeekdays:[0,6],
-      scrollBackwards:true
+      canBackwardsSelected:true
 
     })
       .then( (res:any) => { console.log(res) })

@@ -200,6 +200,7 @@ daysConfig() {
 | title           | string        | `'Calendar'`  | title       |
 | defaultDate     | Date          | none          | let the view scroll to the default date|
 | cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
+| canBackwardsSelected        | boolean        | `false`        | can backwards selected |
 | isRadio         | boolean       | `true`        | true for one day ,false for range dates     |
 | disableWeekdays | Array<number> | `[]`          | week to be disabled (0-6)                   |
 | closeLabel      | string        | `cancel`      | cancel button label ,can be an empty string |
@@ -244,7 +245,7 @@ daysConfig() {
 1. ~~Add style settings.~~
 2. ~~Add default date, let the view scroll to the default date.~~
 3. To today
-4. Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))
+4. ~~Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))~~
 
 # Environment
 ```
