@@ -5,6 +5,8 @@
 
 一个可配置与可选择范围日期的ionic2日历组件
 
+[![NPM](https://nodei.co/npm/ion2-calendar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ion2-calendar/)
+
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
 
 
@@ -238,6 +240,8 @@ Ionic CLI Version: 2.1.18
 Ionic App Lib Version: 2.1.9
 Ionic App Scripts Version: 1.1.3
 ```
+
+[![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg

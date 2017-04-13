@@ -5,6 +5,8 @@
 
 A configurable and selectable range dates calendar component for ionic2
 
+[![NPM](https://nodei.co/npm/ion2-calendar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ion2-calendar/)
+
 [中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
 
 
@@ -255,6 +257,8 @@ Ionic CLI Version: 2.1.18
 Ionic App Lib Version: 2.1.9
 Ionic App Scripts Version: 1.1.3
 ```
+
+[![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
