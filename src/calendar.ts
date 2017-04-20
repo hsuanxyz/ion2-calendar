@@ -405,10 +405,19 @@ export class CalendarPage{
   static createCalendarMonth(original: CalendarOriginal): CalendarMonth {
     let days:Array<CalendarDay> = new Array(6).fill(null);
     let len = original.howManyDays;
+    let startIndex = 1;
 
     for(let i = original.firstWeek ; i < len+original.firstWeek; i++){
       let itemTime = new Date(original.year,original.month,i - original.firstWeek+1).getTime();
       days[i] = CalendarPage.createCalendarDay(itemTime);
+    }
+
+    if(startIndex){
+        if(days[0] !== null){
+            days.unshift(...new Array(7).fill(null))
+        }
+        days.shift();
+        days.push(...new Array(1).fill(null));
     }
 
     return {

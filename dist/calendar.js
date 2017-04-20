@@ -209,9 +209,17 @@ export var CalendarPage = (function () {
     CalendarPage.createCalendarMonth = function (original) {
         var days = new Array(6).fill(null);
         var len = original.howManyDays;
+        var startIndex = 1;
         for (var i = original.firstWeek; i < len + original.firstWeek; i++) {
             var itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
             days[i] = CalendarPage.createCalendarDay(itemTime);
+        }
+        if (startIndex) {
+            if (days[0] !== null) {
+                days.unshift.apply(days, new Array(7).fill(null));
+            }
+            days.shift();
+            days.push.apply(days, new Array(1).fill(null));
         }
         return {
             original: original,
