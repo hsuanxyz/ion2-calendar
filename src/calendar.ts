@@ -449,7 +449,7 @@ export class CalendarPage{
 
     if(!isAfter) return 0;
 
-    return  defaultDate.subtract(startDate).month();
+    return  defaultDate.diff(startDate, 'month');
   }
 
 }
