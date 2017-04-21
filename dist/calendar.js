@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
 export var CalendarMonth = (function () {
@@ -6,27 +6,23 @@ export var CalendarMonth = (function () {
     }
     return CalendarMonth;
 }());
-var dayConfig = (function () {
+export var dayConfig = (function () {
     function dayConfig() {
     }
     return dayConfig;
 }());
-var CalendarOptions = (function () {
+export var CalendarOptions = (function () {
     function CalendarOptions() {
     }
     return CalendarOptions;
 }());
-var DateResults = (function () {
-    function DateResults() {
-    }
-    return DateResults;
-}());
 export var CalendarPage = (function () {
-    function CalendarPage(params, viewCtrl, ref) {
+    function CalendarPage(params, viewCtrl, ref, _renderer, _elementRef) {
         this.params = params;
         this.viewCtrl = viewCtrl;
         this.ref = ref;
-        this.cssClass = '';
+        this._renderer = _renderer;
+        this._elementRef = _elementRef;
         this.dayTemp = [null, null];
         this.monthTitleFilterStr = '';
         this.weekdaysTitle = [];
@@ -65,13 +61,11 @@ export var CalendarPage = (function () {
     };
     CalendarPage.prototype.findCssClass = function () {
         var _this = this;
-        this.cssClass = '';
         var cssClass = this.params.get('cssClass');
         if (cssClass) {
-            cssClass.split(' ').forEach(function (cc) {
-                if (cc.trim() !== '') {
-                    _this.cssClass += " " + cc;
-                }
+            cssClass.split(' ').forEach(function (cssClass) {
+                if (cssClass.trim() !== '')
+                    _this._renderer.setElementClass(_this._elementRef.nativeElement, cssClass, true);
             });
         }
     };
@@ -201,6 +195,7 @@ export var CalendarPage = (function () {
             time: time,
             selected: false,
             marked: dayConfig ? dayConfig.marked || false : false,
+            cssClass: dayConfig ? dayConfig.cssClass || '' : '',
             disable: dayConfig ? dayConfig.disable || _disable : _disable,
             title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
             subTitle: dayConfig ? dayConfig.subTitle || '' : ''
@@ -243,14 +238,14 @@ export var CalendarPage = (function () {
         var isAfter = defaultDate.isAfter(startDate);
         if (!isAfter)
             return 0;
-        return defaultDate.subtract(startDate).month();
+        return defaultDate.diff(startDate, 'month');
     };
     CalendarPage.decorators = [
         { type: Component, args: [{
-                    template: "\n<ion-header [class]=\"cssClass\">\n  <ion-navbar>\n\n   <ion-buttons start>\n       <button ion-button clear *ngIf=\"closeLabel !== ''\" (click)=\"dismiss()\">\n         {{closeLabel}}\n       </button>\n    </ion-buttons>\n\n\n    <ion-title>{{title}}</ion-title>\n  </ion-navbar>\n\n  <ion-toolbar no-border-top>\n    <ul class=\"week-title\">\n      <li *ngFor=\"let w of weekdaysTitle\">{{w}}</li>\n    </ul>\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content (ionScroll)=\"onScroll($event)\" [class]=\" 'calendar-page ' + cssClass || ''\">\n\n\n <div #months>\n  <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\"  [attr.id]=\"'month-' + i\">\n    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n    <div class=\"days-box\">\n      <div class=\"days\" *ngFor=\"let day of month.days\">\n        <button class=\"days-btn\"\n                *ngIf=\"day\"\n                (click)=\"onSelected(day)\"\n                [class.marked]=\"day.marked\"\n                [class.on-selected]=\"day.selected\"\n                [disabled]=\"day.disable\">\n          <p>{{day.title}}</p>\n          <em>{{day.subTitle}}</em>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n  <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n    <ion-infinite-scroll-content></ion-infinite-scroll-content>\n  </ion-infinite-scroll>\n\n</ion-content>\n",
+                    template: "\n        <ion-header>\n            <ion-navbar>\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== ''\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title>{{title}}</ion-title>\n            </ion-navbar>\n\n            <ion-toolbar no-border-top>\n                <ul class=\"week-title\">\n                    <li *ngFor=\"let w of weekdaysTitle\">{{w}}</li>\n                </ul>\n            </ion-toolbar>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\">\n\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\"  [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <div class=\"days\" *ngFor=\"let day of month.days\">\n                            <button [class]=\"'days-btn ' + day.cssClass\"\n                                    *ngIf=\"day\"\n                                    (click)=\"onSelected(day)\"\n                                    [class.marked]=\"day.marked\"\n                                    [class.on-selected]=\"day.selected\"\n                                    [disabled]=\"day.disable\">\n                                <p>{{day.title}}</p>\n                                <em>{{day.subTitle}}</em>\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
                     selector: 'calendar-page',
                     styles: [
-                        "\n  ul.week-title {\n  background-color: #eee;\n  padding:0;margin:0\n}\n\n.week-title li {\n  list-style-type:none;\n  display: block;\n  float: left;\n  width: 14%;\n  text-align: center;\n}\n\n.week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {\n  width: 15%;\n}\n\n  .calendar-page {\n  background-color: #fff;\n  }\n\n.calendar-page .month-box{\n    display: inline-block;\n    padding-bottom: 1em;\n    border-bottom: 2px solid #eee;\n  }\n.calendar-page h4 {\n    font-size: 2rem;\n    display: block;\n    text-align: center;\n    border-bottom: 2px solid #eee;\n    margin: 1rem 0;\n    padding-bottom: 1rem;\n  }\n.calendar-page .days:nth-of-type(7n), .days:nth-of-type(7n+1) {\n    width: 15%;\n  }\n.calendar-page .days {\n    width: 14%;\n    float: left;\n    text-align: center;\n    height: 40px;\n  }\n.calendar-page .days .marked{\n    color: #f90;\n  }\n\n.calendar-page .days .on-selected{\n background-color: #f90;\n    border-radius: 7px;\n}\n\n.calendar-page .days .on-selected p{\n  color: #fff;\n}\n.calendar-page .days .on-selected em{\n  color: #ffdfae;\n}\n.calendar-page button.days-btn {\n  width: 100%;\n    display: block;\n    margin: 0 auto;\n    height: 40px;\n    background-color: transparent;\n}\n\n.calendar-page button.days-btn p {\n margin:0;\n      font-size: 1.2em;\n}\n.calendar-page button.days-btn em {\nmargin-top: 2px;\n      font-size: 1em;\n      color: #797979;\n      overflow: hidden;\n      text-overflow: ellipsis;\n      display: -webkit-box;\n      -webkit-line-clamp: 2;\n      -webkit-box-orient: vertical;\n}\n"]
+                        "\n            ul.week-title {\n                background-color: #eee;\n                padding:0;margin:0\n            }\n\n            .week-title li {\n                list-style-type:none;\n                display: block;\n                float: left;\n                width: 14%;\n                text-align: center;\n            }\n\n            .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {\n                width: 15%;\n            }\n\n            .calendar-page {\n                background-color: #fff;\n            }\n\n            .month-box{\n                display: inline-block;\n                padding-bottom: 1em;\n                border-bottom: 2px solid #eee;\n            }\n            h4 {\n                font-size: 2rem;\n                display: block;\n                text-align: center;\n                border-bottom: 2px solid #eee;\n                margin: 1rem 0;\n                padding-bottom: 1rem;\n            }\n            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {\n                width: 15%;\n            }\n            .days {\n                width: 14%;\n                float: left;\n                text-align: center;\n                height: 40px;\n            }\n            .days .marked{\n                color: #f90;\n            }\n\n            .days .on-selected{\n                background-color: #f90;\n                border-radius: 7px;\n            }\n\n            .days .on-selected p{\n                color: #fff;\n            }\n            .days .on-selected em{\n                color: #ffdfae;\n            }\n            button.days-btn {\n                width: 100%;\n                display: block;\n                margin: 0 auto;\n                height: 40px;\n                background-color: transparent;\n            }\n\n            button.days-btn p {\n                margin:0;\n                font-size: 1.2em;\n            }\n            button.days-btn em {\n                margin-top: 2px;\n                font-size: 1em;\n                color: #797979;\n                overflow: hidden;\n                text-overflow: ellipsis;\n                display: -webkit-box;\n                -webkit-line-clamp: 2;\n                -webkit-box-orient: vertical;\n            }\n        "]
                 },] },
     ];
     /** @nocollapse */
@@ -258,6 +253,8 @@ export var CalendarPage = (function () {
         { type: NavParams, },
         { type: ViewController, },
         { type: ChangeDetectorRef, },
+        { type: Renderer, },
+        { type: ElementRef, },
     ]; };
     CalendarPage.propDecorators = {
         'content': [{ type: ViewChild, args: [Content,] },],

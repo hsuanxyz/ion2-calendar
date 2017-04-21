@@ -90,7 +90,8 @@ export class HomePage {
       {
         date:new Date(2017,0,1),
         subTitle:'New Year\'s',
-        marked:true
+        marked:true,
+        cssClass:'day-danger',
       },
       {
         date:new Date(2017,1,14),
@@ -131,7 +132,8 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       from: new Date(2017,0,1),
       to  : new Date(2017,11.1),
-      daysConfig:_daysConfig
+      daysConfig:_daysConfig,
+      cssClass:'my-cal'
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )

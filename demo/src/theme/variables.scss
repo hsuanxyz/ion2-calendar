@@ -77,41 +77,6 @@ $colors: (
 @import "roboto";
 @import "noto-sans";
 
-calendar-page{
 
-  ion-header.my-class{
-    .toolbar-background-md,.toolbar-background-ios{
-      background-color: #f53d3d;
-    }
-    .toolbar-title-md,.toolbar-title-ios{
-      color: #fff;
-    }
-    .bar-button-clear-md,.bar-button-clear-ios{
-      color: #fff;
-    }
-    .week-title{
-      background-color: rgba(245, 61, 61, 0.64);
-      color: #fff;
-    }
-  }
-
-  ion-content.my-class {
-
-    background-color: #faf4c6;
-
-    .month-box{
-      background-color: #eaeaea;
-    }
-
-    .days-btn,.month-title{
-      color: #f53d3d;
-    }
-    button.days-btn.on-selected{
-     background-color: #f53d3d !important;;
-   }
-
-  }
-
-}
 
 
