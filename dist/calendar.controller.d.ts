@@ -4,6 +4,7 @@ export interface CalendarOptions {
     cssClass?: string;
     to?: Date | number;
     isRadio?: boolean;
+    weekStartDay?: number;
     disableWeekdays?: Array<number>;
     weekdaysTitle?: Array<string>;
     closeLabel?: string;

@@ -53,10 +53,14 @@ export var CalendarPage = (function () {
         };
         CalendarPage.defaultDate = params.get('defaultDate');
         CalendarPage.scrollBackwards = params.get('canBackwardsSelected');
+        CalendarPage.weekStartDay = params.get('weekStartDay');
         this.monthTitleFilterStr = params.get('monthTitle');
         this.weekdaysTitle = params.get('weekdaysTitle');
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
+        if (CalendarPage.weekStartDay === 1) {
+            this.weekdaysTitle.unshift(this.weekdaysTitle.pop());
+        }
         this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime, CalendarPage.findInitMonthNumber(CalendarPage.defaultDate) + 3);
     };
     CalendarPage.prototype.findCssClass = function () {
@@ -204,17 +208,20 @@ export var CalendarPage = (function () {
     CalendarPage.createCalendarMonth = function (original) {
         var days = new Array(6).fill(null);
         var len = original.howManyDays;
-        var startIndex = 1;
         for (var i = original.firstWeek; i < len + original.firstWeek; i++) {
             var itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
             days[i] = CalendarPage.createCalendarDay(itemTime);
         }
-        if (startIndex) {
-            if (days[0] !== null) {
-                days.unshift.apply(days, new Array(7).fill(null));
+        var weekStartDay = CalendarPage.weekStartDay;
+        if (weekStartDay === 1) {
+            if (days[0] === null) {
+                days.shift();
+                days.push.apply(days, new Array(1).fill(null));
             }
-            days.shift();
-            days.push.apply(days, new Array(1).fill(null));
+            else {
+                days.unshift(null);
+                days.pop();
+            }
         }
         return {
             original: original,
@@ -240,6 +247,7 @@ export var CalendarPage = (function () {
             return 0;
         return defaultDate.diff(startDate, 'month');
     };
+    CalendarPage.weekStartDay = 0;
     CalendarPage.decorators = [
         { type: Component, args: [{
                     template: "\n        <ion-header>\n            <ion-navbar>\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== ''\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title>{{title}}</ion-title>\n            </ion-navbar>\n\n            <ion-toolbar no-border-top>\n                <ul class=\"week-title\">\n                    <li *ngFor=\"let w of weekdaysTitle\">{{w}}</li>\n                </ul>\n            </ion-toolbar>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\">\n\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\"  [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <div class=\"days\" *ngFor=\"let day of month.days\">\n                            <button [class]=\"'days-btn ' + day.cssClass\"\n                                    *ngIf=\"day\"\n                                    (click)=\"onSelected(day)\"\n                                    [class.marked]=\"day.marked\"\n                                    [class.on-selected]=\"day.selected\"\n                                    [disabled]=\"day.disable\">\n                                <p>{{day.title}}</p>\n                                <em>{{day.subTitle}}</em>\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",

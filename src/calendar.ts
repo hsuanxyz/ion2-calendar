@@ -199,6 +199,7 @@ export class CalendarPage{
     private static options: CalendarOptions;
     private static defaultDate:Date;
     private static scrollBackwards:boolean;
+    private static weekStartDay:number = 0;
     constructor(
         public params: NavParams,
         public viewCtrl: ViewController,
@@ -237,10 +238,18 @@ export class CalendarPage{
         };
         CalendarPage.defaultDate = params.get('defaultDate');
         CalendarPage.scrollBackwards = params.get('canBackwardsSelected');
+        CalendarPage.weekStartDay = params.get('weekStartDay');
+
         this.monthTitleFilterStr = params.get('monthTitle');
         this.weekdaysTitle = params.get('weekdaysTitle');
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
+
+        if(CalendarPage.weekStartDay === 1){
+            this.weekdaysTitle.unshift(this.weekdaysTitle.pop())
+        }
+
+
         this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,CalendarPage.findInitMonthNumber(CalendarPage.defaultDate)+3);
 
     }
@@ -400,19 +409,23 @@ export class CalendarPage{
     static createCalendarMonth(original: CalendarOriginal): CalendarMonth {
         let days:Array<CalendarDay> = new Array(6).fill(null);
         let len = original.howManyDays;
-        let startIndex = 1;
 
         for(let i = original.firstWeek ; i < len+original.firstWeek; i++){
             let itemTime = new Date(original.year,original.month,i - original.firstWeek+1).getTime();
             days[i] = CalendarPage.createCalendarDay(itemTime);
         }
 
-        if(startIndex){
-            if(days[0] !== null){
-                days.unshift(...new Array(7).fill(null))
+
+        let weekStartDay = CalendarPage.weekStartDay;
+
+        if(weekStartDay === 1){
+            if(days[0] === null){
+                days.shift();
+                days.push(...new Array(1).fill(null));
+            }else {
+                days.unshift(null);
+                days.pop();
             }
-            days.shift();
-            days.push(...new Array(1).fill(null));
         }
 
         return {

@@ -59,6 +59,7 @@ export declare class CalendarPage {
     private static options;
     private static defaultDate;
     private static scrollBackwards;
+    private static weekStartDay;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
     ngAfterViewInit(): void;
     ionViewDidLoad(): void;
