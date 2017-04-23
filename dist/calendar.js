@@ -59,7 +59,7 @@ export var CalendarPage = (function () {
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
         if (CalendarPage.weekStartDay === 1) {
-            this.weekdaysTitle.unshift(this.weekdaysTitle.pop());
+            this.weekdaysTitle.push(this.weekdaysTitle.shift());
         }
         this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime, CalendarPage.findInitMonthNumber(CalendarPage.defaultDate) + 3);
     };

@@ -246,7 +246,7 @@ export class CalendarPage{
         this.closeLabel = params.get('closeLabel');
 
         if(CalendarPage.weekStartDay === 1){
-            this.weekdaysTitle.unshift(this.weekdaysTitle.pop())
+            this.weekdaysTitle.push(this.weekdaysTitle.shift())
         }
 
 

@@ -77,7 +77,8 @@ export class HomePage {
   settingDisplay() {
     this.calendarCtrl.openCalendar({
       monthTitle:'yyyy 年 MM 月 ',
-      weekdaysTitle:["一", "二", "三", "四", "五", "六", "天"],
+      weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
+      weekStartDay:1,
       closeLabel:''
     })
       .then( (res:any) => { console.log(res) })
