@@ -78,8 +78,8 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       monthTitle:'yyyy 年 MM 月 ',
       weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
-      weekStartDay:1,
-      closeLabel:''
+      closeLabel:'',
+      weekStartDay:1
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )

@@ -208,11 +208,13 @@ daysConfig() {
 | closeLabel      | string        | `cancel`      | cancel button label ,can be an empty string |
 | monthTitle      | string        | `'MMM yyyy'`  | month title format  |
 | weekdaysTitle   | Array<string> | `"Di_Lu_Ma_Me_Je_Ve_Sa".split("_")` | weeks title |
+| weekStartDay    | number        | `0` (0 or 1)           | set week start day |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
 
 #### DaysConfig
-| Name          | Type          | Default  | Description     |
+| Name          | Type          | Default  | Description
 | ------------- | ------------- | -------- | --------------- |
+| cssClass      | string        | `''`     | separated by spaces|
 | date          | Date          | required | configured days |
 | marked        | boolean       | false    | highlight color |
 | disable       | boolean       | false    | disable         |
@@ -248,7 +250,7 @@ daysConfig() {
 2. ~~Add default date, let the view scroll to the default date.~~
 3. To today
 4. ~~Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))~~
-5. Settings week start day
+5. ~~Settings week start day([#5](https://github.com/HsuanXyz/ion2-calendar/issues/5))~~
 
 # Environment
 ```

@@ -236,6 +236,7 @@ export class CalendarPage{
             disableWeekdays:params.get('disableWeekdays'),
             monthTitle:params.get('monthTitle'),
         };
+
         CalendarPage.defaultDate = params.get('defaultDate');
         CalendarPage.scrollBackwards = params.get('canBackwardsSelected');
         CalendarPage.weekStartDay = params.get('weekStartDay');

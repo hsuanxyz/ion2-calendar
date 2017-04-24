@@ -195,10 +195,12 @@ daysConfig() {
 | closeLabel      | string        | `cancel`      | 取消按钮文字，可以为空 |
 | monthTitle      | string        | `'MMM yyyy'`  | 设置月份显示格式  |
 | weekdaysTitle   | Array<string> | `"Di_Lu_Ma_Me_Je_Ve_Sa".split("_")` | 星期显示格式 |
+| weekStartDay    | number        | `0` (0 or 1)           | 设置周的开始 |
 | daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
 #### DaysConfig
 | 参数名          | 类型          | 默认  | 描述     |
 | ------------- | ------------- | -------- | --------------- |
+| cssClass      | string        | `''`     | 用空格隔开|
 | date          | Date          | 必选 | 需要配置的天数时间对象 |
 | marked        | boolean       | false    | 是否高亮显示 |
 | disable       | boolean       | false    | 是否禁用         |
