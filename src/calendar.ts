@@ -1,7 +1,7 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
 import { NavParams ,ViewController, Content } from 'ionic-angular';
 
-import * as moment from 'moment';
+import moment from 'moment';
 
 export interface CalendarOriginal {
     time: number;
