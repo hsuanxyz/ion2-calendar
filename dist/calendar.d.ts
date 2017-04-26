@@ -1,46 +1,6 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
-export interface CalendarOriginal {
-    time: number;
-    date: Date;
-    year: number;
-    month: number;
-    firstWeek: number;
-    howManyDays: number;
-}
-export interface CalendarDay {
-    time: number;
-    selected: boolean;
-    disable: boolean;
-    cssClass: string;
-    title?: string;
-    subTitle?: string;
-    marked?: boolean;
-    style?: {
-        title?: string;
-        subTitle?: string;
-    };
-}
-export declare class CalendarMonth {
-    original: CalendarOriginal;
-    days: Array<CalendarDay | void>;
-}
-export declare class dayConfig {
-    date: Date;
-    marked?: boolean;
-    disable?: boolean;
-    title?: string;
-    subTitle?: string;
-}
-export declare class CalendarOptions {
-    start: number;
-    isRadio: boolean;
-    monthTitle: string;
-    range_beg: number;
-    range_end: number;
-    daysConfig: Array<dayConfig>;
-    disableWeekdays: Array<number>;
-}
+import { CalendarOriginal, CalendarDay, CalendarMonth } from './calendar.model';
 export declare class CalendarPage {
     params: NavParams;
     viewCtrl: ViewController;
@@ -61,7 +21,6 @@ export declare class CalendarPage {
     private static scrollBackwards;
     private static weekStartDay;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
-    ngAfterViewInit(): void;
     ionViewDidLoad(): void;
     init(): void;
     findCssClass(): void;

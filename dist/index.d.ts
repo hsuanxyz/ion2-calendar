@@ -1,3 +1,4 @@
+export * from './calendar.model';
 export { CalendarModule } from './calendar.module';
-export { CalendarController, CalendarOptions } from './calendar.controller';
+export { CalendarController } from './calendar.controller';
 export * from './calendar';

@@ -1,21 +1,6 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
-export var CalendarMonth = (function () {
-    function CalendarMonth() {
-    }
-    return CalendarMonth;
-}());
-export var dayConfig = (function () {
-    function dayConfig() {
-    }
-    return dayConfig;
-}());
-export var CalendarOptions = (function () {
-    function CalendarOptions() {
-    }
-    return CalendarOptions;
-}());
 export var CalendarPage = (function () {
     function CalendarPage(params, viewCtrl, ref, _renderer, _elementRef) {
         this.params = params;
@@ -30,8 +15,6 @@ export var CalendarPage = (function () {
         this.findCssClass();
         this.init();
     }
-    CalendarPage.prototype.ngAfterViewInit = function () {
-    };
     CalendarPage.prototype.ionViewDidLoad = function () {
         this.scrollToDefaultDate();
         if (this.content.enableScrollListener && CalendarPage.scrollBackwards) {

@@ -2,34 +2,8 @@ import { Injectable } from '@angular/core';
 import { CalendarPage } from './calendar';
 import { ModalController } from 'ionic-angular';
 
-export interface CalendarOptions {
-    from?:Date,
-    cssClass?:string,
-    to?:Date|number,
-    isRadio?:boolean;
-    weekStartDay?:number;
-    disableWeekdays?:Array<number>,
-    weekdaysTitle?:Array<string>,
-    closeLabel?:string;
-    monthTitle?:string;
-    canBackwardsSelected?:boolean;
-    title?:string;
-    defaultDate?:Date;
-    daysConfig?:Array<{
-        date:Date;
-        cssClass?:string,
-        marked?:boolean;
-        title?:string;
-        subTitle?:string;
-    }>
-}
+import { ModalOptions, CalendarControllerOptions } from './calendar.model'
 
-export interface ModalOptions {
-    showBackdrop?: boolean;
-    enableBackdropDismiss?: boolean;
-    enterAnimation?: string;
-    leaveAnimation?: string;
-}
 
 @Injectable()
 export class CalendarController {
@@ -37,7 +11,7 @@ export class CalendarController {
         public modalCtrl: ModalController
     ) { }
 
-    openCalendar(calendarOptions:CalendarOptions, modalOptions:ModalOptions = {}):any {
+    openCalendar(calendarOptions: CalendarControllerOptions, modalOptions:ModalOptions = {}):any {
 
         let _arr:Array<any> = [];
         let {
@@ -55,7 +29,7 @@ export class CalendarController {
             daysConfig = _arr
         } = calendarOptions || {};
 
-        let options: CalendarOptions = {
+        let options: CalendarControllerOptions = {
             from:from,
             to:to,
             cssClass:cssClass,

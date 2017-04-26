@@ -3,51 +3,8 @@ import { NavParams ,ViewController, Content } from 'ionic-angular';
 
 import * as moment from 'moment';
 
-export interface CalendarOriginal {
-    time: number;
-    date: Date;
-    year: number;
-    month: number;
-    firstWeek: number;
-    howManyDays: number;
-}
+import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './calendar.model'
 
-export interface CalendarDay {
-    time: number;
-    selected:boolean;
-    disable: boolean;
-    cssClass:string;
-    title?: string;
-    subTitle?: string;
-    marked?:boolean;
-    style?:{
-        title?: string;
-        subTitle?: string;
-    }
-}
-
-export class CalendarMonth {
-    original:CalendarOriginal;
-    days: Array<CalendarDay|void>
-}
-
-export class dayConfig {
-    date:Date;
-    marked?:boolean;
-    disable?:boolean;
-    title?:string;
-    subTitle?:string
-}
-
-export class CalendarOptions {
-    start:number;
-    isRadio:boolean;
-    monthTitle:string;
-    range_beg:number;
-    range_end:number;
-    daysConfig:Array<dayConfig>;
-    disableWeekdays:Array<number>
-}
 
 @Component({
     template: `
@@ -210,9 +167,6 @@ export class CalendarPage{
     ) {
         this.findCssClass();
         this.init();
-    }
-
-    ngAfterViewInit(){
     }
 
     ionViewDidLoad() {
