@@ -267,7 +267,7 @@ Ionic App Scripts Version: 1.1.3
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
 
 [downloads-image]: https://img.shields.io/npm/dm/ion2-calendar.svg
-[downloads-url]: http://badge.fury.io/js/iion2-calendar
+[downloads-url]: http://badge.fury.io/js/ion2-calendar
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE

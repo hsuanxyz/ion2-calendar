@@ -1,6 +1,6 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
-import { CalendarOriginal, CalendarDay, CalendarMonth } from './calendar.model';
+import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions } from './calendar.model';
 export declare class CalendarPage {
     params: NavParams;
     viewCtrl: ViewController;
@@ -16,10 +16,10 @@ export declare class CalendarPage {
     monthTitleFilterStr: string;
     weekdaysTitle: Array<string>;
     _s: boolean;
-    private static options;
-    private static defaultDate;
-    private static scrollBackwards;
-    private static weekStartDay;
+    options: CalendarOptions;
+    defaultDate: Date;
+    scrollBackwards: boolean;
+    weekStartDay: number;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
     ionViewDidLoad(): void;
     init(): void;
@@ -30,10 +30,10 @@ export declare class CalendarPage {
     backwardsMonth(): void;
     scrollToDefaultDate(): void;
     onScroll($event: any): void;
-    static findDayConfig(day: any): any;
-    static createOriginalCalendar(time: number): CalendarOriginal;
-    static createCalendarDay(time: number): CalendarDay;
-    static createCalendarMonth(original: CalendarOriginal): CalendarMonth;
-    static createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
-    static findInitMonthNumber(date: Date): number;
+    findDayConfig(day: any): any;
+    createOriginalCalendar(time: number): CalendarOriginal;
+    createCalendarDay(time: number): CalendarDay;
+    createCalendarMonth(original: CalendarOriginal): CalendarMonth;
+    createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
+    findInitMonthNumber(date: Date): number;
 }

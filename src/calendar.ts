@@ -22,9 +22,9 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
             </ion-navbar>
 
             <ion-toolbar no-border-top>
-                <ul class="week-title">
-                    <li *ngFor="let w of weekdaysTitle">{{w}}</li>
-                </ul>
+                <calendar-week-title [weekArray]="weekdaysTitle" 
+                                     [weekStart]="weekStartDay">
+                </calendar-week-title>
             </ion-toolbar>
 
         </ion-header>
@@ -153,10 +153,10 @@ export class CalendarPage{
     monthTitleFilterStr = '';
     weekdaysTitle:Array<string> = [];
     _s:boolean = true;
-    private static options: CalendarOptions;
-    private static defaultDate:Date;
-    private static scrollBackwards:boolean;
-    private static weekStartDay:number = 0;
+    options: CalendarOptions;
+    defaultDate:Date;
+    scrollBackwards:boolean;
+    weekStartDay:number = 0;
     constructor(
         public params: NavParams,
         public viewCtrl: ViewController,
@@ -172,7 +172,7 @@ export class CalendarPage{
     ionViewDidLoad() {
         this.scrollToDefaultDate();
 
-        if(this.content.enableScrollListener && CalendarPage.scrollBackwards ){
+        if(this.content.enableScrollListener && this.scrollBackwards ){
             this.content.enableScrollListener();
         }
     }
@@ -181,7 +181,7 @@ export class CalendarPage{
         const params = this.params;
         let startTime = moment(params.get('from')).valueOf();
         let endTime = moment(params.get('to')).valueOf();
-        CalendarPage.options = {
+        this.options = {
             start:startTime,
             isRadio:params.get('isRadio'),
             range_beg:startTime,
@@ -191,21 +191,17 @@ export class CalendarPage{
             monthTitle:params.get('monthTitle'),
         };
 
-        CalendarPage.defaultDate = params.get('defaultDate');
-        CalendarPage.scrollBackwards = params.get('canBackwardsSelected');
-        CalendarPage.weekStartDay = params.get('weekStartDay');
+        this.defaultDate = params.get('defaultDate');
+        this.scrollBackwards = params.get('canBackwardsSelected');
+        this.weekStartDay = params.get('weekStartDay');
 
         this.monthTitleFilterStr = params.get('monthTitle');
         this.weekdaysTitle = params.get('weekdaysTitle');
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
 
-        if(CalendarPage.weekStartDay === 1){
-            this.weekdaysTitle.push(this.weekdaysTitle.shift())
-        }
 
-
-        this.calendarMonths = CalendarPage.createMonthsByPeriod(startTime ,CalendarPage.findInitMonthNumber(CalendarPage.defaultDate)+3);
+        this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
 
     }
 
@@ -232,7 +228,7 @@ export class CalendarPage{
         item.selected = true;
         this.ref.detectChanges();
 
-        if(CalendarPage.options.isRadio) {
+        if(this.options.isRadio) {
             this.viewCtrl.dismiss({
                 date:Object.assign({},item)
             });
@@ -266,13 +262,13 @@ export class CalendarPage{
         let len = this.calendarMonths.length;
         let final = this.calendarMonths[len-1];
         let nextTime = moment(final.original.time).add(1,'M').valueOf();
-        let rangeEnd = CalendarPage.options.range_end ? moment(CalendarPage.options.range_end).subtract(1,'M') : 0;
+        let rangeEnd = this.options.range_end ? moment(this.options.range_end).subtract(1,'M') : 0;
         if(len <= 0 || ( rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd) )) {
             infiniteScroll.enable(false);
             return;
         }
 
-        this.calendarMonths.push(...CalendarPage.createMonthsByPeriod(nextTime,1));
+        this.calendarMonths.push(...this.createMonthsByPeriod(nextTime,1));
         infiniteScroll.complete();
 
     }
@@ -280,11 +276,11 @@ export class CalendarPage{
     backwardsMonth() {
         let first = this.calendarMonths[0];
         let firstTime =  moment(first.original.time).subtract(1,'M').valueOf();
-        this.calendarMonths.unshift(...CalendarPage.createMonthsByPeriod(firstTime,1))
+        this.calendarMonths.unshift(...this.createMonthsByPeriod(firstTime,1))
     }
 
     scrollToDefaultDate() {
-        let defaultDateIndex = CalendarPage.findInitMonthNumber(CalendarPage.defaultDate );
+        let defaultDateIndex = this.findInitMonthNumber(this.defaultDate );
         let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
         if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
         setTimeout(() => {
@@ -293,7 +289,7 @@ export class CalendarPage{
     }
 
     onScroll($event: any){
-        if(!CalendarPage.scrollBackwards) return;
+        if(!this.scrollBackwards) return;
         if($event.scrollTop <= 300 && this._s){
             this._s = !1;
             this.backwardsMonth();
@@ -304,12 +300,12 @@ export class CalendarPage{
         }
     }
 
-    static findDayConfig(day:any):any {
-        if(CalendarPage.options.daysConfig.length <= 0) return null;
-        return CalendarPage.options.daysConfig.find((n) => day.isSame(n.date,'day'))
+    findDayConfig(day:any):any {
+        if(this.options.daysConfig.length <= 0) return null;
+        return this.options.daysConfig.find((n) => day.isSame(n.date,'day'))
     }
 
-    static createOriginalCalendar(time: number): CalendarOriginal {
+    createOriginalCalendar(time: number): CalendarOriginal {
         let _year = new Date(time).getFullYear();
         let _month = new Date(time).getMonth();
         let _firstWeek = new Date(_year,_month,1).getDay();
@@ -325,15 +321,15 @@ export class CalendarPage{
         }
     }
 
-    static createCalendarDay (time: number): CalendarDay {
+    createCalendarDay (time: number): CalendarDay {
         let _time = moment(time);
-        let dayConfig = CalendarPage.findDayConfig(_time);
-        let _rangeBeg = CalendarPage.options.range_beg;
-        let _rangeEnd = CalendarPage.options.range_end;
+        let dayConfig = this.findDayConfig(_time);
+        let _rangeBeg = this.options.range_beg;
+        let _rangeEnd = this.options.range_end;
         let isBetween = true;
-        let disableWee = CalendarPage.options.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
+        let disableWee = this.options.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
         if(_rangeBeg > 0 && _rangeEnd > 0){
-            if (!CalendarPage.scrollBackwards ){
+            if (!this.scrollBackwards ){
                 isBetween = !_time.isBetween(_rangeBeg, _rangeEnd,'days','[]');
             }else {
                 isBetween = moment(_time).isBefore(_rangeBeg) ? false : isBetween;
@@ -341,7 +337,7 @@ export class CalendarPage{
         }else if (_rangeBeg > 0 && _rangeEnd === 0){
 
 
-            if (!CalendarPage.scrollBackwards ){
+            if (!this.scrollBackwards ){
                 let _addTime = _time.add('day',1);
                 isBetween = !_addTime.isAfter(_rangeBeg);
             }else {
@@ -361,17 +357,17 @@ export class CalendarPage{
         }
     }
 
-    static createCalendarMonth(original: CalendarOriginal): CalendarMonth {
+    createCalendarMonth(original: CalendarOriginal): CalendarMonth {
         let days:Array<CalendarDay> = new Array(6).fill(null);
         let len = original.howManyDays;
 
         for(let i = original.firstWeek ; i < len+original.firstWeek; i++){
             let itemTime = new Date(original.year,original.month,i - original.firstWeek+1).getTime();
-            days[i] = CalendarPage.createCalendarDay(itemTime);
+            days[i] = this.createCalendarDay(itemTime);
         }
 
 
-        let weekStartDay = CalendarPage.weekStartDay;
+        let weekStartDay = this.weekStartDay;
 
         if(weekStartDay === 1){
             if(days[0] === null){
@@ -390,7 +386,7 @@ export class CalendarPage{
 
     }
 
-    static createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth> {
+    createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth> {
         let _array:Array<CalendarMonth> = [];
 
         let _start = new Date(startTime);
@@ -398,15 +394,15 @@ export class CalendarPage{
 
         for(let i = 0; i < monthsNum; i++ ){
             let time = moment(_startMonth).add(i,'M').valueOf();
-            let originalCalendar = CalendarPage.createOriginalCalendar(time);
-            _array.push(CalendarPage.createCalendarMonth(originalCalendar))
+            let originalCalendar = this.createOriginalCalendar(time);
+            _array.push(this.createCalendarMonth(originalCalendar))
         }
 
         return _array;
     }
 
-    static findInitMonthNumber(date: Date): number {
-        const startDate = moment(CalendarPage.options.start);
+    findInitMonthNumber(date: Date): number {
+        const startDate = moment(this.options.start);
         const defaultDate = moment(date);
         const isAfter:boolean = defaultDate.isAfter(startDate);
 

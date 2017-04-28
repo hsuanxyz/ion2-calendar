@@ -7,13 +7,14 @@ import { CommonModule } from '@angular/common';
 import { CalendarController } from './calendar.controller';
 import { CalendarPage } from './calendar';
 import {IonicModule} from "ionic-angular";
+import {CalendarWeekTitle} from "./compopnents/week-title";
 
 @NgModule({
   imports:      [  IonicModule, CommonModule ],
-  declarations: [ CalendarPage],
+  declarations: [ CalendarPage, CalendarWeekTitle],
   providers:    [ CalendarController ],
   exports:[],
-  entryComponents:    [ CalendarPage ],
+  entryComponents:    [ CalendarPage,  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
