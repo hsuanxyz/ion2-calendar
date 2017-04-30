@@ -12,12 +12,13 @@ export interface CalendarOriginal {
 
 export interface CalendarDay {
     time: number;
-    selected:boolean;
+    isToday: boolean;
+    selected: boolean;
     disable: boolean;
-    cssClass:string;
+    cssClass: string;
     title?: string;
     subTitle?: string;
-    marked?:boolean;
+    marked?: boolean;
     style?:{
         title?: string;
         subTitle?: string;
