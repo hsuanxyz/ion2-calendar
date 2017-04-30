@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CalendarController } from './calendar.controller';
 import { CalendarPage } from './calendar';
 import { IonicModule } from "ionic-angular";
-import { CalendarWeekTitle } from "./compopnents/week-title";
+import { CalendarWeekTitle } from "./components/week-title";
 export var CalendarModule = (function () {
     function CalendarModule() {
     }
