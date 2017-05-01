@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CalendarPage } from './calendar';
 import { ModalController } from 'ionic-angular';
+import { CalendarComponent } from "./components/calendar-component";
 export var CalendarController = (function () {
     function CalendarController(modalCtrl) {
         this.modalCtrl = modalCtrl;
@@ -24,7 +24,7 @@ export var CalendarController = (function () {
             weekdaysTitle: weekdaysTitle,
             daysConfig: daysConfig
         };
-        var calendarModal = this.modalCtrl.create(CalendarPage, options, modalOptions);
+        var calendarModal = this.modalCtrl.create(CalendarComponent, options, modalOptions);
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onWillDismiss(function (data) {

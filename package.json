@@ -7,7 +7,7 @@
   "scripts": {
     "ngc": "ngc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf aot dist && npm run ngc"
+    "build": "rm -rf aot dist && npm run ngc && gulp copy-scss"
   },
   "repository": {
     "type": "git",
@@ -38,6 +38,7 @@
   "author": "HsuanLee",
   "license": "MIT",
   "dependencies": {
+    "gulp": "^3.9.1",
     "moment": "^2.18.1",
     "typescript": "2.0.9"
   }
