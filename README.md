@@ -12,6 +12,8 @@ A configurable and selectable range dates calendar component for ionic2
 
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
 
+> English is not my native language; please excuse typing errors.
+
 ### install
 
   *if you do not use moment*
@@ -246,21 +248,31 @@ daysConfig() {
 
 
 ### TODO
+
 1. ~~Add style settings.~~
 2. ~~Add default date, let the view scroll to the default date.~~
 3. To today
 4. ~~Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))~~
 5. ~~Settings week start day([#5](https://github.com/HsuanXyz/ion2-calendar/issues/5))~~
 
-# Environment
-```
-Cordova CLI: 6.4.0
-Ionic Framework Version: 2.0.0
-Ionic CLI Version: 2.1.18
-Ionic App Lib Version: 2.1.9
-Ionic App Scripts Version: 1.1.3
-```
 
+
+# Contributing
+
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Commit your changes: git commit -am 'Add some feature'
+4. Push to the branch: git push origin my-new-feature
+5. Submit a pull request :D
+
+# Development
+
+```bash
+cd ion2-calendar
+npm install
+npm run build
+# output ./dist files
+```
 [![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
