@@ -22,7 +22,7 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
             </ion-navbar>
 
             <ion-toolbar no-border-top>
-                <calendar-week-title [weekArray]="weekdaysTitle" 
+                <calendar-week-title [weekArray]="weekdaysTitle"
                                      [weekStart]="weekStartDay">
                 </calendar-week-title>
             </ion-toolbar>
@@ -39,6 +39,7 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
                         <div class="days" *ngFor="let day of month.days">
                             <button [class]="'days-btn ' + day.cssClass"
                                     *ngIf="day"
+                                    [class.today]="day.isToday"
                                     (click)="onSelected(day)"
                                     [class.marked]="day.marked"
                                     [class.on-selected]="day.selected"
@@ -86,6 +87,11 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
                 padding-bottom: 1em;
                 border-bottom: 2px solid #eee;
             }
+
+            .days-box {
+                padding: 0.5rem;
+            }
+
             h4 {
                 font-size: 2rem;
                 display: block;
@@ -107,9 +113,15 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
                 color: #f90;
             }
 
+            .days .today{
+                border-radius: 50px;
+                border: 1px solid #f90;
+            }
+
             .days .on-selected{
                 background-color: #f90;
                 border-radius: 7px;
+                border: none;
             }
 
             .days .on-selected p{
@@ -323,6 +335,7 @@ export class CalendarPage{
 
     createCalendarDay (time: number): CalendarDay {
         let _time = moment(time);
+        let isToday = moment().isSame(_time, 'days');
         let dayConfig = this.findDayConfig(_time);
         let _rangeBeg = this.options.range_beg;
         let _rangeEnd = this.options.range_end;
@@ -345,9 +358,12 @@ export class CalendarPage{
             }
         }
 
+
+
         let _disable = disableWee || isBetween;
         return {
             time: time,
+            isToday: isToday,
             selected: false,
             marked: dayConfig ? dayConfig.marked || false : false,
             cssClass: dayConfig ? dayConfig.cssClass || '' : '',
