@@ -6,4 +6,4 @@ node_modules/
 .editorconfig
 .gitignore
 www/
-
+dist/
