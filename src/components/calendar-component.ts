@@ -3,7 +3,7 @@ import { NavParams ,ViewController, Content } from 'ionic-angular';
 
 import * as moment from 'moment';
 
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './calendar.model'
+import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from '../calendar.model'
 
 
 @Component({
@@ -58,104 +58,10 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from './
 
         </ion-content>
     `,
-    selector: 'calendar-page',
-    styles:[
-            `
-            ul.week-title {
-                background-color: #eee;
-                padding:0;margin:0
-            }
-
-            .week-title li {
-                list-style-type:none;
-                display: block;
-                float: left;
-                width: 14%;
-                text-align: center;
-            }
-
-            .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
-                width: 15%;
-            }
-
-            .calendar-page {
-                background-color: #fff;
-            }
-
-            .month-box{
-                display: inline-block;
-                padding-bottom: 1em;
-                border-bottom: 2px solid #eee;
-            }
-
-            .days-box {
-                padding: 0.5rem;
-            }
-
-            h4 {
-                font-size: 2rem;
-                display: block;
-                text-align: center;
-                border-bottom: 2px solid #eee;
-                margin: 1rem 0;
-                padding-bottom: 1rem;
-            }
-            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
-                width: 15%;
-            }
-            .days {
-                width: 14%;
-                float: left;
-                text-align: center;
-                height: 40px;
-            }
-            .days .marked{
-                color: #f90;
-            }
-
-            .days .today{
-                border-radius: 50px;
-                border: 1px solid #f90;
-            }
-
-            .days .on-selected{
-                background-color: #f90;
-                border-radius: 7px;
-                border: none;
-            }
-
-            .days .on-selected p{
-                color: #fff;
-            }
-            .days .on-selected em{
-                color: #ffdfae;
-            }
-            button.days-btn {
-                width: 100%;
-                display: block;
-                margin: 0 auto;
-                height: 40px;
-                background-color: transparent;
-            }
-
-            button.days-btn p {
-                margin:0;
-                font-size: 1.2em;
-            }
-            button.days-btn em {
-                margin-top: 2px;
-                font-size: 1em;
-                color: #797979;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
-            }
-        `]
+    selector: 'calendar-component',
 
 })
-export class CalendarPage{
+export class CalendarComponent{
     @ViewChild(Content) content: Content;
     @ViewChild('months') monthsEle: ElementRef;
     title: string;
@@ -251,8 +157,6 @@ export class CalendarPage{
 
             this.dayTemp[0] = item;
 
-
-
         }else if(!this.dayTemp[1]){
             if(this.dayTemp[0].time < item.time){
                 this.dayTemp[1] = item;
@@ -312,7 +216,7 @@ export class CalendarPage{
         }
     }
 
-    findDayConfig(day:any):any {
+    findDayConfig(day:any): any {
         if(this.options.daysConfig.length <= 0) return null;
         return this.options.daysConfig.find((n) => day.isSame(n.date,'day'))
     }

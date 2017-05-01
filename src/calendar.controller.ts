@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { CalendarPage } from './calendar';
 import { ModalController } from 'ionic-angular';
 
 import { ModalOptions, CalendarControllerOptions } from './calendar.model'
+import {CalendarComponent} from "./components/calendar-component";
 
 
 @Injectable()
@@ -14,6 +14,7 @@ export class CalendarController {
     openCalendar(calendarOptions: CalendarControllerOptions, modalOptions:ModalOptions = {}):any {
 
         let _arr:Array<any> = [];
+
         let {
             from = new Date(),
             to = 0,
@@ -45,7 +46,7 @@ export class CalendarController {
             daysConfig:daysConfig
         };
 
-        let calendarModal = this.modalCtrl.create(CalendarPage,options,modalOptions);
+        let calendarModal = this.modalCtrl.create(CalendarComponent, options,modalOptions);
         calendarModal.present();
 
         return new Promise( (resolve, reject) => {

@@ -29,7 +29,7 @@ import {Component, Input} from '@angular/core';
     ]
 })
 
-export class CalendarWeekTitle {
+export class CalendarWeekComponent {
 
     _weekArray: string[] = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_");
     _weekStart: number = 0;

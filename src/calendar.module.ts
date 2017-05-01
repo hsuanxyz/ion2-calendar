@@ -5,16 +5,16 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA }           from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CalendarController } from './calendar.controller';
-import { CalendarPage } from './calendar';
 import {IonicModule} from "ionic-angular";
-import {CalendarWeekTitle} from "./components/week-title";
+import {CalendarWeekComponent} from "./components/calendar-week-component";
+import {CalendarComponent} from "./components/calendar-component";
 
 @NgModule({
   imports:      [  IonicModule, CommonModule ],
-  declarations: [ CalendarPage, CalendarWeekTitle],
+  declarations: [ CalendarComponent, CalendarWeekComponent],
   providers:    [ CalendarController ],
   exports:[],
-  entryComponents:    [ CalendarPage,  ],
+  entryComponents:    [ CalendarComponent,  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
