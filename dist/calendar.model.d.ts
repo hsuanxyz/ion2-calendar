@@ -54,6 +54,8 @@ export interface CalendarControllerOptions {
     cssClass?: string;
     to?: Date | number;
     isRadio?: boolean;
+    id?: number;
+    savedDates?: boolean;
     weekStartDay?: number;
     disableWeekdays?: Array<number>;
     weekdaysTitle?: Array<string>;
@@ -69,4 +71,10 @@ export interface CalendarControllerOptions {
         title?: string;
         subTitle?: string;
     }>;
+}
+export declare class SavedDatesCache {
+    type: string;
+    id: string;
+    from?: Date;
+    to?: Date;
 }

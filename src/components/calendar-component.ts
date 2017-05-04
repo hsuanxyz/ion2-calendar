@@ -3,7 +3,7 @@ import { NavParams ,ViewController, Content } from 'ionic-angular';
 
 import * as moment from 'moment';
 
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from '../calendar.model'
+import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache} from '../calendar.model'
 
 
 @Component({
@@ -64,6 +64,7 @@ import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions} from '..
 export class CalendarComponent{
     @ViewChild(Content) content: Content;
     @ViewChild('months') monthsEle: ElementRef;
+    localStoragePrefix:'ion-calendar';
     title: string;
     closeLabel: string;
     dayTemp: Array<CalendarDay|null> = [null,null];
@@ -71,6 +72,7 @@ export class CalendarComponent{
     monthTitleFilterStr = '';
     weekdaysTitle:Array<string> = [];
     _s:boolean = true;
+    _id:string;
     options: CalendarOptions;
     defaultDate:Date;
     scrollBackwards:boolean;
@@ -112,6 +114,7 @@ export class CalendarComponent{
         this.defaultDate = params.get('defaultDate');
         this.scrollBackwards = params.get('canBackwardsSelected');
         this.weekStartDay = params.get('weekStartDay');
+        this._id = params.get('id');
 
         this.monthTitleFilterStr = params.get('monthTitle');
         this.weekdaysTitle = params.get('weekdaysTitle');
@@ -121,6 +124,16 @@ export class CalendarComponent{
 
         this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
 
+    }
+
+    get savedDates(): SavedDatesCache {
+        const _savedDatesCache = localStorage.getItem(`${this.localStoragePrefix}-${this._id}`);
+        const _savedDates = <any>JSON.parse(_savedDatesCache);
+        return <SavedDatesCache>_savedDates
+    }
+
+    set savedDates(savedDates: SavedDatesCache) {
+        localStorage.setItem(`${this.localStoragePrefix}-${this._id}`, JSON.stringify(savedDates));
     }
 
     findCssClass() {
