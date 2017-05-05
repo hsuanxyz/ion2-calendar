@@ -42,7 +42,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                                     [class.today]="day.isToday"
                                     (click)="onSelected(day)"
                                     [class.marked]="day.marked"
-                                    [class.on-selected]="day.selected"
+                                    [class.on-selected]="day.selected || _savedDates?.from === day.time || _savedDates?.to === day.time"
                                     [disabled]="day.disable">
                                 <p>{{day.title}}</p>
                                 <em>{{day.subTitle}}</em>
@@ -58,7 +58,86 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 
         </ion-content>
     `,
-    selector: 'calendar-component',
+    styles:[
+        `
+            .calendar-page {
+                background-color: #fff;
+            }
+
+            .month-box{
+                display: inline-block;
+                padding-bottom: 1em;
+                border-bottom: 2px solid #eee;
+            }
+
+            .days-box {
+                padding: 0.5rem;
+            }
+
+            h4 {
+                font-size: 2rem;
+                display: block;
+                text-align: center;
+                border-bottom: 2px solid #eee;
+                margin: 1rem 0;
+                padding-bottom: 1rem;
+            }
+            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
+                width: 15%;
+            }
+            .days {
+                width: 14%;
+                float: left;
+                text-align: center;
+                height: 40px;
+            }
+            .days .marked{
+                color: #f90;
+            }
+
+            .days .today{
+                border-radius: 50px;
+                border: 1px solid #f90;
+            }
+
+            .days .on-selected{
+                background-color: #f90;
+                border-radius: 7px;
+                border: none;
+            }
+
+            .days .on-selected p{
+                color: #fff;
+            }
+            .days .on-selected em{
+                color: #ffdfae;
+            }
+            button.days-btn {
+                width: 100%;
+                display: block;
+                margin: 0 auto;
+                height: 40px;
+                background-color: transparent;
+            }
+
+            button.days-btn p {
+                margin:0;
+                font-size: 1.2em;
+            }
+
+            button.days-btn em {
+                margin-top: 2px;
+                font-size: 1em;
+                color: #797979;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+            }
+        `
+    ],
+    selector: 'calendar-page',
 
 })
 export class CalendarComponent{
@@ -73,10 +152,12 @@ export class CalendarComponent{
     weekdaysTitle:Array<string> = [];
     _s:boolean = true;
     _id:string;
+    _savedDates:SavedDatesCache|null;
     options: CalendarOptions;
     defaultDate:Date;
     scrollBackwards:boolean;
     weekStartDay:number = 0;
+
     constructor(
         public params: NavParams,
         public viewCtrl: ViewController,
@@ -121,12 +202,13 @@ export class CalendarComponent{
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
 
+        this._savedDates = this.savedDates;
 
         this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
 
     }
 
-    get savedDates(): SavedDatesCache {
+    get savedDates(): SavedDatesCache|null {
         const _savedDatesCache = localStorage.getItem(`${this.localStoragePrefix}-${this._id}`);
         const _savedDates = <any>JSON.parse(_savedDatesCache);
         return <SavedDatesCache>_savedDates
@@ -160,6 +242,13 @@ export class CalendarComponent{
         this.ref.detectChanges();
 
         if(this.options.isRadio) {
+            this.savedDates = <SavedDatesCache>{
+                type: 'radio',
+                id: this._id,
+                from: item.time,
+                to:0
+            };
+            this._savedDates = this.savedDates;
             this.viewCtrl.dismiss({
                 date:Object.assign({},item)
             });
@@ -170,6 +259,8 @@ export class CalendarComponent{
 
             this.dayTemp[0] = item;
 
+            this._savedDates.from = this.dayTemp[0].time
+
         }else if(!this.dayTemp[1]){
             if(this.dayTemp[0].time < item.time){
                 this.dayTemp[1] = item;
@@ -177,6 +268,15 @@ export class CalendarComponent{
                 this.dayTemp[1] = this.dayTemp[0];
                 this.dayTemp[0] = item;
             }
+
+            this.savedDates = <SavedDatesCache>{
+                type: 'radio',
+                id: this._id,
+                from: this.dayTemp[0].time,
+                to: this.dayTemp[1].time
+            };
+            this._savedDates = this.savedDates;
+
             this.dismiss();
 
         }else {

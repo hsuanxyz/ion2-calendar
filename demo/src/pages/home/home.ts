@@ -19,8 +19,9 @@ export class HomePage {
 
   basic() {
     this.calendarCtrl.openCalendar({
+      id:1,
       title:'basic demo',
-      canBackwardsSelected:true
+      canBackwardsSelected:true,
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -28,6 +29,7 @@ export class HomePage {
 
   setDefaultDate() {
     this.calendarCtrl.openCalendar({
+      id:2,
       from: new Date(2017,1,1),
       defaultDate:new Date(2017,4,1)
     })
@@ -38,6 +40,7 @@ export class HomePage {
 
   setCssClass() {
     this.calendarCtrl.openCalendar({
+      id:3,
       cssClass:'my-class',
       isRadio: false,
     })
@@ -47,6 +50,7 @@ export class HomePage {
 
   dateRange() {
     this.calendarCtrl.openCalendar({
+      id:4,
       isRadio: false,
       canBackwardsSelected:true
 
@@ -57,6 +61,7 @@ export class HomePage {
 
   maxAndMin() {
     this.calendarCtrl.openCalendar({
+      id:5,
       from: new Date(2017,1,1),
       to  : new Date(2017,2,5)
     })
@@ -66,6 +71,7 @@ export class HomePage {
 
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
+      id:6,
       disableWeekdays:[0,6],
       canBackwardsSelected:true
 
@@ -76,6 +82,7 @@ export class HomePage {
 
   settingDisplay() {
     this.calendarCtrl.openCalendar({
+      id:7,
       monthTitle:'yyyy 年 MM 月 ',
       weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
       closeLabel:'',
@@ -131,6 +138,7 @@ export class HomePage {
     _daysConfig.push(...this.days);
 
     this.calendarCtrl.openCalendar({
+      id:8,
       from: new Date(2017,0,1),
       to  : new Date(2017,11.1),
       daysConfig:_daysConfig,
