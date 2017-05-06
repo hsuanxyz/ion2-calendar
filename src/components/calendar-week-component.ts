@@ -3,16 +3,28 @@ import {Component, Input} from '@angular/core';
 @Component({
     selector: 'calendar-week-title',
     template:`
-        <ul class="week-title">
-            <li *ngFor="let w of _weekArray">{{w}}</li>
-        </ul>
+        <ion-toolbar class="week-toolbar"  no-border-top >
+            <ul [class]="'week-title ' + color">
+                <li *ngFor="let w of _weekArray">{{w}}</li>
+            </ul>          
+        </ion-toolbar>
     `,
     styles:[
         `
-            .week-title {
-                background-color: #eee;
-                padding:0;margin:0
+            .week-toolbar{
+                padding: 0;
+          
             }
+            
+            .week-title {
+                margin: 0;
+                color:#fff;
+                height: 44px;
+                width: 100%;
+                background-color: rgb(59, 151, 247);
+                padding: 15px 0;
+            }
+
 
             .week-title li {
                 list-style-type:none;
@@ -33,6 +45,7 @@ export class CalendarWeekComponent {
 
     _weekArray: string[] = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_");
     _weekStart: number = 0;
+    @Input() color:string = 'primary';
 
     constructor() {}
 

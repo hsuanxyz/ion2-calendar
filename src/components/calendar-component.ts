@@ -9,7 +9,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 @Component({
     template: `
         <ion-header>
-            <ion-navbar>
+            <ion-navbar [color]="_color">
 
                 <ion-buttons start>
                     <button ion-button clear *ngIf="closeLabel !== ''" (click)="dismiss()">
@@ -21,11 +21,11 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 <ion-title>{{title}}</ion-title>
             </ion-navbar>
 
-            <ion-toolbar no-border-top>
-                <calendar-week-title [weekArray]="weekdaysTitle"
-                                     [weekStart]="weekStartDay">
+                <calendar-week-title
+                        [color]="_color"
+                        [weekArray]="weekdaysTitle"
+                        [weekStart]="weekStartDay">
                 </calendar-week-title>
-            </ion-toolbar>
 
         </ion-header>
 
@@ -61,13 +61,13 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
     styles:[
         `
             .calendar-page {
-                background-color: #fff;
+                background-color: #fbfbfb;
             }
 
             .month-box{
                 display: inline-block;
                 padding-bottom: 1em;
-                border-bottom: 2px solid #eee;
+                border-bottom: 1px solid #f1f1f1;
             }
 
             .days-box {
@@ -75,12 +75,12 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
             }
 
             h4 {
-                font-size: 2rem;
+                font-weight: 400;
+                font-size: 1.8rem;
                 display: block;
                 text-align: center;
-                border-bottom: 2px solid #eee;
-                margin: 1rem 0;
-                padding-bottom: 1rem;
+                margin: 1rem 0 0;
+                color: #929292;
             }
             .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
                 width: 15%;
@@ -96,33 +96,35 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
             }
 
             .days .today{
-                border-radius: 50%;
                 border: 1px solid #f90;
             }
 
             .days .on-selected{
+                transition: background-color .3s;
                 background-color: #f90;
-                border-radius: 50%;
                 border: none;
             }
 
             .days .on-selected p{
                 color: #fff;
+                font-size: 1.3em;
             }
             .days .on-selected em{
                 color: #ffdfae;
             }
             button.days-btn {
-                width: 40px;
+                border-radius: 50%;
+                width: 36px;
                 display: block;
                 margin: 0 auto;
-                height: 40px;
+                height: 36px;
                 background-color: transparent;
             }
 
             button.days-btn p {
                 margin:0;
                 font-size: 1.2em;
+                color: #333;
             }
 
             button.days-btn em {
@@ -153,6 +155,7 @@ export class CalendarComponent{
     _s:boolean = true;
     _id:string;
     _savedDates:SavedDatesCache|any = {};
+    _color:string = 'primary';
     options: CalendarOptions;
     defaultDate:Date;
     scrollBackwards:boolean;
