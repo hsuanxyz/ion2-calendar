@@ -104,7 +104,6 @@ export class HomePage {
       {
         date:new Date(2017,1,14),
         subTitle:'Valentine\'s',
-        disable:true
       },
       {
         date:new Date(2017,3,1),
@@ -114,24 +113,21 @@ export class HomePage {
       {
         date:new Date(2017,3,7),
         subTitle:'World Health',
-        marked:true
       },
       {
         date:new Date(2017,4,31),
         subTitle:'No-Smoking',
-        marked:true
       },
       {
         date:new Date(2017,5,1),
         subTitle:'Children\'s',
-        marked:true
       }
     ];
 
     for(let i = 0;  i < 31; i++){
       this.days.push({
         date:new Date(2017,0,i+1),
-        marked:true
+        subTitle:`$${i+1}`
       })
     }
 

@@ -13,9 +13,14 @@ import {Component, Input} from '@angular/core';
         `
             .week-toolbar{
                 padding: 0;
-          
+                box-shadow: 0 2px 4px rgb(158, 158, 158);
             }
             
+            .week-toolbar.toolbar-md {
+                min-height:44px;
+            }
+
+
             .week-title {
                 margin: 0;
                 color:#fff;

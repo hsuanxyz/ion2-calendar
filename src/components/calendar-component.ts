@@ -45,7 +45,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                                     [class.on-selected]="day.selected || _savedDates?.from === day.time || _savedDates?.to === day.time"
                                     [disabled]="day.disable">
                                 <p>{{day.title}}</p>
-                                <em>{{day.subTitle}}</em>
+                                <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
                             </button>
                         </div>
                     </div>
@@ -91,27 +91,27 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 text-align: center;
                 height: 40px;
             }
-            .days .marked{
-                color: #f90;
+            .days .marked p{
+                color: rgb(59, 151, 247);
+                font-weight:500;
             }
 
-            .days .today{
-                border: 1px solid #f90;
+            .days .today p {
+                border-bottom: 2px solid rgb(59, 151, 247);
+                padding-bottom: 2px;
             }
 
             .days .on-selected{
                 transition: background-color .3s;
-                background-color: #f90;
+                background-color: rgb(201, 225, 250);
                 border: none;
             }
 
             .days .on-selected p{
-                color: #fff;
+                color: rgb(59, 151, 247);
                 font-size: 1.3em;
             }
-            .days .on-selected em{
-                color: #ffdfae;
-            }
+
             button.days-btn {
                 border-radius: 50%;
                 width: 36px;
@@ -119,6 +119,8 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 margin: 0 auto;
                 height: 36px;
                 background-color: transparent;
+                position: relative;
+                z-index:2;
             }
 
             button.days-btn p {
@@ -127,15 +129,22 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 color: #333;
             }
 
-            button.days-btn em {
-                margin-top: 2px;
-                font-size: 1em;
-                color: #797979;
+            button.days-btn.on-selected small{
+                transition: bottom .3s;
+                bottom: -14px;
+            }
+            
+            button.days-btn small {
                 overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
+                display: block;
+                left: 0;
+                right: 0;
+                bottom: -5px;
+                position: absolute;
+                z-index:1;
+                text-align: center;
+                color: #3b97f7;
+                font-weight: 200;
             }
         `
     ],
