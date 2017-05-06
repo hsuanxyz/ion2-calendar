@@ -96,13 +96,13 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
             }
 
             .days .today{
-                border-radius: 50px;
+                border-radius: 50%;
                 border: 1px solid #f90;
             }
 
             .days .on-selected{
                 background-color: #f90;
-                border-radius: 7px;
+                border-radius: 50%;
                 border: none;
             }
 
@@ -113,7 +113,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 color: #ffdfae;
             }
             button.days-btn {
-                width: 100%;
+                width: 40px;
                 display: block;
                 margin: 0 auto;
                 height: 40px;
@@ -152,7 +152,7 @@ export class CalendarComponent{
     weekdaysTitle:Array<string> = [];
     _s:boolean = true;
     _id:string;
-    _savedDates:SavedDatesCache|null;
+    _savedDates:SavedDatesCache|any = {};
     options: CalendarOptions;
     defaultDate:Date;
     scrollBackwards:boolean;
@@ -202,7 +202,7 @@ export class CalendarComponent{
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
 
-        this._savedDates = this.savedDates;
+        this._savedDates = this.savedDates || {};
 
         this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
 

@@ -7,7 +7,7 @@
   "scripts": {
     "ngc": "ngc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf aot dist && npm run ngc && gulp copy-scss"
+    "build": "rm -rf aot dist && npm run ngc && gulp copy-scss && gulp dist2nm"
   },
   "repository": {
     "type": "git",
