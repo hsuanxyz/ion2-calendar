@@ -21,11 +21,11 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 <ion-title>{{title}}</ion-title>
             </ion-navbar>
 
-                <calendar-week-title
-                        [color]="_color"
-                        [weekArray]="weekdaysTitle"
-                        [weekStart]="weekStartDay">
-                </calendar-week-title>
+            <calendar-week-title
+                    [color]="_color"
+                    [weekArray]="weekdaysTitle"
+                    [weekStart]="weekStartDay">
+            </calendar-week-title>
 
         </ion-header>
 
@@ -33,7 +33,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 
 
             <div #months>
-                <div *ngFor="let month of calendarMonths;let i = index;" class="month-box"  [attr.id]="'month-' + i">
+                <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
                     <div class="days-box">
                         <div class="days" *ngFor="let day of month.days">
@@ -42,7 +42,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                                     [class.today]="day.isToday"
                                     (click)="onSelected(day)"
                                     [class.marked]="day.marked"
-                                    [class.on-selected]="day.selected || _savedDates?.from === day.time || _savedDates?.to === day.time"
+                                    [class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"
                                     [disabled]="day.disable">
                                 <p>{{day.title}}</p>
                                 <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
@@ -154,7 +154,6 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 export class CalendarComponent{
     @ViewChild(Content) content: Content;
     @ViewChild('months') monthsEle: ElementRef;
-    localStoragePrefix:'ion-calendar';
     title: string;
     closeLabel: string;
     dayTemp: Array<CalendarDay|null> = [null,null];
@@ -163,12 +162,13 @@ export class CalendarComponent{
     weekdaysTitle:Array<string> = [];
     _s:boolean = true;
     _id:string;
-    _savedDates:SavedDatesCache|any = {};
+    _savedHistory:SavedDatesCache|any = {};
     _color:string = 'primary';
     options: CalendarOptions;
     defaultDate:Date;
     scrollBackwards:boolean;
     weekStartDay:number = 0;
+    isSaveHistory:boolean;
 
     constructor(
         public params: NavParams,
@@ -214,20 +214,24 @@ export class CalendarComponent{
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
 
-        this._savedDates = this.savedDates || {};
+        this.isSaveHistory = params.get('isSaveHistory');
+
+        if(this.isSaveHistory){
+            this._savedHistory = this.savedHistory || {};
+        }
 
         this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
 
     }
 
-    get savedDates(): SavedDatesCache|null {
-        const _savedDatesCache = localStorage.getItem(`${this.localStoragePrefix}-${this._id}`);
+    get savedHistory(): SavedDatesCache|null {
+        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this._id}`);
         const _savedDates = <any>JSON.parse(_savedDatesCache);
         return <SavedDatesCache>_savedDates
     }
 
-    set savedDates(savedDates: SavedDatesCache) {
-        localStorage.setItem(`${this.localStoragePrefix}-${this._id}`, JSON.stringify(savedDates));
+    set savedHistory(savedDates: SavedDatesCache) {
+        localStorage.setItem(`ion-calendar-${this._id}`, JSON.stringify(savedDates));
     }
 
     findCssClass() {
@@ -254,13 +258,15 @@ export class CalendarComponent{
         this.ref.detectChanges();
 
         if(this.options.isRadio) {
-            this.savedDates = <SavedDatesCache>{
+            this.savedHistory = <SavedDatesCache>{
                 type: 'radio',
                 id: this._id,
                 from: item.time,
                 to:0
             };
-            this._savedDates = this.savedDates;
+            if(this.isSaveHistory) {
+                this._savedHistory = this.savedHistory;
+            }
             this.viewCtrl.dismiss({
                 date:Object.assign({},item)
             });
@@ -271,7 +277,7 @@ export class CalendarComponent{
 
             this.dayTemp[0] = item;
 
-            this._savedDates.from = this.dayTemp[0].time
+            this._savedHistory.from = this.dayTemp[0].time
 
         }else if(!this.dayTemp[1]){
             if(this.dayTemp[0].time < item.time){
@@ -281,13 +287,16 @@ export class CalendarComponent{
                 this.dayTemp[0] = item;
             }
 
-            this.savedDates = <SavedDatesCache>{
-                type: 'radio',
-                id: this._id,
-                from: this.dayTemp[0].time,
-                to: this.dayTemp[1].time
-            };
-            this._savedDates = this.savedDates;
+            if(this.isSaveHistory) {
+                this.savedHistory = <SavedDatesCache>{
+                    type: 'radio',
+                    id: this._id,
+                    from: this.dayTemp[0].time,
+                    to: this.dayTemp[1].time
+                };
+                this._savedHistory = this.savedHistory;
+            }
+
 
             this.dismiss();
 

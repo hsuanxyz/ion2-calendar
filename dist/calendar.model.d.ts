@@ -55,7 +55,7 @@ export interface CalendarControllerOptions {
     to?: Date | number;
     isRadio?: boolean;
     id?: number;
-    savedDates?: boolean;
+    isSaveHistory?: boolean;
     weekStartDay?: number;
     disableWeekdays?: Array<number>;
     weekdaysTitle?: Array<string>;

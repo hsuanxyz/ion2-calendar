@@ -1,12 +1,12 @@
 calendar-page {
   .calendar-page {
-    background-color: #fff;
+    background-color: #fbfbfb;
   }
 
   .month-box{
     display: inline-block;
     padding-bottom: 1em;
-    border-bottom: 2px solid #eee;
+    border-bottom: 1px solid #f1f1f1;
   }
 
   .days-box {
@@ -14,12 +14,12 @@ calendar-page {
   }
 
   h4 {
-    font-size: 2rem;
+    font-weight: 400;
+    font-size: 1.8rem;
     display: block;
     text-align: center;
-    border-bottom: 2px solid #eee;
-    margin: 1rem 0;
-    padding-bottom: 1rem;
+    margin: 1rem 0 0;
+    color: #929292;
   }
   .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
     width: 15%;
@@ -30,50 +30,60 @@ calendar-page {
     text-align: center;
     height: 40px;
   }
-  .days .marked{
-    color: #f90;
+  .days .marked p{
+    color: rgb(59, 151, 247);
+    font-weight:500;
   }
 
-  .days .today{
-    border-radius: 50px;
-    border: 1px solid #f90;
+  .days .today p {
+    border-bottom: 2px solid rgb(59, 151, 247);
+    padding-bottom: 2px;
   }
 
   .days .on-selected{
-    background-color: #f90;
-    border-radius: 7px;
+    transition: background-color .3s;
+    background-color: rgb(201, 225, 250);
     border: none;
   }
 
   .days .on-selected p{
-    color: #fff;
+    color: rgb(59, 151, 247);
+    font-size: 1.3em;
   }
-  .days .on-selected em{
-    color: #ffdfae;
-  }
+
   button.days-btn {
-    width: 100%;
+    border-radius: 50%;
+    width: 36px;
     display: block;
     margin: 0 auto;
-    height: 40px;
+    height: 36px;
     background-color: transparent;
+    position: relative;
+    z-index:2;
   }
 
   button.days-btn p {
     margin:0;
     font-size: 1.2em;
+    color: #333;
   }
 
-  button.days-btn em {
-    margin-top: 2px;
-    font-size: 1em;
-    color: #797979;
+  button.days-btn.on-selected small{
+    transition: bottom .3s;
+    bottom: -14px;
+  }
+
+  button.days-btn small {
     overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    position: absolute;
+    z-index:1;
+    text-align: center;
+    color: #3b97f7;
+    font-weight: 200;
   }
-
 }
 
