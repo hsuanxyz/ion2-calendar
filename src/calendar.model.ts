@@ -70,6 +70,7 @@ export interface CalendarControllerOptions {
     canBackwardsSelected?:boolean;
     title?:string;
     defaultDate?:Date;
+    countNextMonths?:number;
     daysConfig?:Array<{
         date:Date;
         cssClass?:string,

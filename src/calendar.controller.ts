@@ -29,7 +29,8 @@ export class CalendarController {
             monthTitle = 'MMM yyyy',
             title = 'Calendar',
             weekdaysTitle = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
-            daysConfig = _arr
+            daysConfig = _arr,
+            countNextMonths = 3,
         } = calendarOptions || {};
 
         let options: CalendarControllerOptions = {
@@ -47,7 +48,8 @@ export class CalendarController {
             monthTitle:monthTitle,
             title:title,
             weekdaysTitle:weekdaysTitle,
-            daysConfig:daysConfig
+            daysConfig:daysConfig,
+            countNextMonths:countNextMonths,
         };
 
         let calendarModal = this.modalCtrl.create(CalendarComponent, options,modalOptions);

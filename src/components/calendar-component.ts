@@ -169,6 +169,7 @@ export class CalendarComponent{
     scrollBackwards:boolean;
     weekStartDay:number = 0;
     isSaveHistory:boolean;
+    countNextMonths:number;
 
     constructor(
         public params: NavParams,
@@ -220,7 +221,12 @@ export class CalendarComponent{
             this._savedHistory = this.savedHistory || {};
         }
 
-        this.calendarMonths = this.createMonthsByPeriod(startTime ,this.findInitMonthNumber(this.defaultDate)+3);
+        this.countNextMonths = (params.get('countNextMonths') || 3);
+        if (this.countNextMonths < 1) {
+            this.countNextMonths = 1;
+        }
+
+        this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
 
     }
 
