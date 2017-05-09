@@ -31,7 +31,6 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 
         <ion-content (ionScroll)="onScroll($event)" class="calendar-page">
 
-
             <div #months>
                 <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
@@ -228,6 +227,7 @@ export class CalendarComponent{
 
         this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
 
+
     }
 
     get savedHistory(): SavedDatesCache|null {
@@ -332,7 +332,8 @@ export class CalendarComponent{
     backwardsMonth() {
         let first = this.calendarMonths[0];
         let firstTime =  moment(first.original.time).subtract(1,'M').valueOf();
-        this.calendarMonths.unshift(...this.createMonthsByPeriod(firstTime,1))
+        this.calendarMonths.unshift(...this.createMonthsByPeriod(firstTime,1));
+        this.ref.detectChanges();
     }
 
     scrollToDefaultDate() {
@@ -346,13 +347,17 @@ export class CalendarComponent{
 
     onScroll($event: any){
         if(!this.scrollBackwards) return;
-        if($event.scrollTop <= 300 && this._s){
+        if($event.scrollTop <= 200 && this._s){
             this._s = !1;
-            this.backwardsMonth();
-            this.ref.detectChanges();
+            let lastHeight = this.content.getContentDimensions().scrollHeight;
             setTimeout( () => {
-                this._s = !0;
-            },300)
+                this.backwardsMonth();
+                let nowHeight = this.content.getContentDimensions().scrollHeight;
+                this.content.scrollTo(0,nowHeight-lastHeight,0)
+                    .then(() => {
+                        this._s = !0;
+                    })
+            },180)
         }
     }
 
