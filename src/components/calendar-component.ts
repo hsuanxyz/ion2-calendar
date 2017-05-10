@@ -227,7 +227,6 @@ export class CalendarComponent{
 
         this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
 
-
     }
 
     get savedHistory(): SavedDatesCache|null {

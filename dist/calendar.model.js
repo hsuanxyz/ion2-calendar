@@ -13,9 +13,4 @@ export var CalendarOptions = (function () {
     }
     return CalendarOptions;
 }());
-export var SavedDatesCache = (function () {
-    function SavedDatesCache() {
-    }
-    return SavedDatesCache;
-}());
 //# sourceMappingURL=calendar.model.js.map

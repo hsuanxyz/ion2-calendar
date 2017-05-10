@@ -60,7 +60,7 @@ export interface CalendarControllerOptions {
     cssClass?:string,
     to?:Date|number,
     isRadio?:boolean;
-    id?:number;
+    id?:string;
     isSaveHistory?:boolean;
     weekStartDay?:number;
     disableWeekdays?:Array<number>,
@@ -80,8 +80,7 @@ export interface CalendarControllerOptions {
     }>
 }
 
-export class SavedDatesCache {
-    type:string;
+export interface SavedDatesCache {
     id:string;
     from?:number;
     to?:number;

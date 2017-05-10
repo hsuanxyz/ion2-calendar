@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
-import { ModalOptions, CalendarControllerOptions } from './calendar.model'
+import {ModalOptions, CalendarControllerOptions, SavedDatesCache} from './calendar.model'
 import {CalendarComponent} from "./components/calendar-component";
 
 
@@ -24,7 +24,7 @@ export class CalendarController {
             canBackwardsSelected = false,
             disableWeekdays = _arr,
             closeLabel = 'cancel',
-            id = 0,
+            id = '',
             isSaveHistory = false,
             monthTitle = 'MMM yyyy',
             title = 'Calendar',
@@ -67,5 +67,20 @@ export class CalendarController {
         });
 
 
+    }
+
+    setHistory(param: SavedDatesCache){
+        localStorage.setItem(`ion-calendar-${param.id}`, JSON.stringify(param));
+    }
+
+    getHistory(id: any): Object{
+        let _history = localStorage.getItem(`ion-calendar-${id}`);
+        if(_history){
+            return JSON.parse(_history);
+        }
+    }
+
+    removeHistory(id:any){
+        localStorage.removeItem(`ion-calendar-${id}`)
     }
 }
