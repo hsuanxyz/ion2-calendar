@@ -1,4 +1,10 @@
 calendar-page {
+  ion-select {
+    .select-icon>.select-icon-inner{
+        color: #fff;
+    }
+  }
+
   .calendar-page {
     background-color: #fbfbfb;
   }
