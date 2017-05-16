@@ -1,10 +1,10 @@
 calendar-page {
   ion-select {
     .select-icon>.select-icon-inner{
-        color: #fff !important;
+      color: #fff !important;
     }
-    .select-ios{
-        max-width: unset;
+    &.select-ios{
+      max-width: unset;
     }
   }
 
