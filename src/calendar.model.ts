@@ -67,6 +67,7 @@ export interface CalendarControllerOptions {
     disableWeekdays?:Array<number>,
     weekdaysTitle?:Array<string>,
     closeLabel?:string;
+    closeIcon?:boolean;
     monthTitle?:string;
     canBackwardsSelected?:boolean;
     title?:string;

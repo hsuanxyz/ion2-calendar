@@ -29,6 +29,7 @@ export declare class CalendarComponent {
     year: number;
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
+    closeIcon: boolean;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
     ionViewDidLoad(): void;
     init(): void;
