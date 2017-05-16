@@ -31,6 +31,7 @@ export class CalendarController {
             weekdaysTitle = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
             daysConfig = _arr,
             countNextMonths = 3,
+            showYearPicker = false,
         } = calendarOptions || {};
 
         let options: CalendarControllerOptions = {
@@ -50,6 +51,7 @@ export class CalendarController {
             weekdaysTitle:weekdaysTitle,
             daysConfig:daysConfig,
             countNextMonths:countNextMonths,
+            showYearPicker:showYearPicker,
         };
 
         let calendarModal = this.modalCtrl.create(CalendarComponent, options,modalOptions);

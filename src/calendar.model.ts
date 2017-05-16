@@ -40,6 +40,7 @@ export class DayConfig {
 
 export class CalendarOptions {
     start:number;
+    end:number;
     isRadio:boolean;
     monthTitle:string;
     range_beg:number;
@@ -71,6 +72,7 @@ export interface CalendarControllerOptions {
     title?:string;
     defaultDate?:Date;
     countNextMonths?:number;
+    showYearPicker?:boolean;
     daysConfig?:Array<{
         date:Date;
         cssClass?:string,
