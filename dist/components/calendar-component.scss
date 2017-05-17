@@ -69,6 +69,19 @@ calendar-page {
     background-color: transparent;
     position: relative;
     z-index:2;
+    &.startSelection{
+      border-top-right-radius: 0px !important;
+      border-bottom-right-radius: 0px !important;
+    }
+    &.between{
+        background-color: rgba(201, 225, 250, 0.5);
+        width: 100% !important;
+        border-radius: 0px !important;
+    }
+    &.endSelection{
+        border-top-left-radius: 0px !important;
+        border-bottom-left-radius: 0px !important;
+    }
   }
 
   button.days-btn p {
@@ -94,5 +107,7 @@ calendar-page {
     color: #3b97f7;
     font-weight: 200;
   }
+
+
 }
 

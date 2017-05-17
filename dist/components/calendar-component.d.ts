@@ -48,4 +48,7 @@ export declare class CalendarComponent {
     createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
     findInitMonthNumber(date: Date): number;
     changedYearSelection(): void;
+    isStartSelection(day: CalendarDay): boolean;
+    isEndSelection(day: CalendarDay): boolean;
+    isBetween(day: CalendarDay): boolean;
 }
