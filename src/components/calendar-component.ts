@@ -12,8 +12,11 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
             <ion-navbar [color]="_color">
 
                 <ion-buttons start>
-                    <button ion-button clear *ngIf="closeLabel !== ''" (click)="dismiss()">
+                    <button ion-button clear *ngIf="closeLabel !== '' && !closeIcon" (click)="dismiss()">
                         {{closeLabel}}
+                    </button>
+                    <button ion-button icon-only clear *ngIf="closeLabel === '' || closeIcon" (click)="dismiss()">
+                         <ion-icon name="close"></ion-icon>
                     </button>
                 </ion-buttons>
 
@@ -137,7 +140,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 transition: bottom .3s;
                 bottom: -14px;
             }
-            
+
             button.days-btn small {
                 overflow: hidden;
                 display: block;
@@ -178,6 +181,7 @@ export class CalendarComponent{
     year: number;
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
+    closeIcon: boolean;
 
     constructor(
         public params: NavParams,
@@ -223,6 +227,7 @@ export class CalendarComponent{
         this.weekdaysTitle = params.get('weekdaysTitle');
         this.title = params.get('title');
         this.closeLabel = params.get('closeLabel');
+        this.closeIcon = params.get('closeIcon');
 
         this.isSaveHistory = params.get('isSaveHistory');
 
