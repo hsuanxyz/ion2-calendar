@@ -1,3 +1,27 @@
+@mixin transition-property($args...) {
+    -webkit-transition-property: $args;
+    -moz-transition-property: $args;
+    -ms-transition-property: $args;
+    -o-transition-property: $args;
+    transition-property: $args;
+}
+
+@mixin transition-duration($args...) {
+    -webkit-transition-duration: $args;
+    -moz-transition-duration: $args;
+    -ms-transition-duration: $args;
+    -o-transition-duration: $args;
+    transition-duration: $args;
+}
+
+@mixin transition-timing-function($args...) {
+    -webkit-transition-timing-function: $args;
+    -moz-transition-timing-function: $args;
+    -ms-transition-timing-function: $args;
+    -o-transition-timing-function: $args;
+    transition-timing-function: $args;
+}
+
 calendar-page {
   ion-select {
     .select-icon>.select-icon-inner{
@@ -50,7 +74,6 @@ calendar-page {
   }
 
   .days .on-selected{
-    transition: background-color .3s;
     background-color: rgb(201, 225, 250);
     border: none;
   }
@@ -69,18 +92,28 @@ calendar-page {
     background-color: transparent;
     position: relative;
     z-index:2;
+    &.startSelection,
+    &.endSelection,
+    &.between{
+        @include transition-property(
+            border-radius,
+            background-color);
+        @include transition-duration(300ms);
+        @include transition-timing-function(ease-in-out);
+    }
+    &.startSelection.endSelection{
+      border-radius: 50%;
+    }
     &.startSelection{
-      border-top-right-radius: 0px !important;
-      border-bottom-right-radius: 0px !important;
+      border-radius: 50% 0px 0px 50%;
     }
     &.between{
         background-color: rgba(201, 225, 250, 0.5);
-        width: 100% !important;
-        border-radius: 0px !important;
+        width: 100%;
+        border-radius: 0px;
     }
     &.endSelection{
-        border-top-left-radius: 0px !important;
-        border-bottom-left-radius: 0px !important;
+        border-radius: 0px 50% 50% 0px;
     }
   }
 
@@ -110,4 +143,5 @@ calendar-page {
 
 
 }
+
 
