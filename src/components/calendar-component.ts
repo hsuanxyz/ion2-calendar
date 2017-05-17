@@ -336,7 +336,15 @@ export class CalendarComponent{
 
             this.dayTemp[0] = item;
 
-            this._savedHistory.from = this.dayTemp[0].time
+            if(this._savedHistory.to !== null) {
+                if(this.dayTemp[0].time > this._savedHistory.to){
+                    this._savedHistory.to = this.dayTemp[0].time;
+                } else {
+                    this._savedHistory.from = this.dayTemp[0].time
+                }
+            } else {
+                this._savedHistory.from = this.dayTemp[0].time
+            }
 
             this.ref.detectChanges();
 
@@ -575,7 +583,7 @@ export class CalendarComponent{
         if(!day.selected){
             return false;
         }
-        return this.dayTemp.indexOf(day) === 0;
+        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
     }
 
     isEndSelection(day: CalendarDay): boolean {
@@ -588,7 +596,7 @@ export class CalendarComponent{
         if(!day.selected){
             return false;
         }
-        return this.dayTemp.indexOf(day) === 1;
+        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
     }
 
     isBetween(day: CalendarDay): boolean{
@@ -601,6 +609,5 @@ export class CalendarComponent{
             }
         }
         return false;
-        // !options.isRadio && day.time > dayTemp[0]?.time && day.time < dayTemp[1]?.time"
     }
 }

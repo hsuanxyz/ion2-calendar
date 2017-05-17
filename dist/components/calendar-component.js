@@ -143,7 +143,17 @@ export var CalendarComponent = (function () {
         }
         if (!this.dayTemp[0]) {
             this.dayTemp[0] = item;
-            this._savedHistory.from = this.dayTemp[0].time;
+            if (this._savedHistory.to !== null) {
+                if (this.dayTemp[0].time > this._savedHistory.to) {
+                    this._savedHistory.to = this.dayTemp[0].time;
+                }
+                else {
+                    this._savedHistory.from = this.dayTemp[0].time;
+                }
+            }
+            else {
+                this._savedHistory.from = this.dayTemp[0].time;
+            }
             this.ref.detectChanges();
         }
         else if (!this.dayTemp[1]) {
@@ -360,7 +370,7 @@ export var CalendarComponent = (function () {
         if (!day.selected) {
             return false;
         }
-        return this.dayTemp.indexOf(day) === 0;
+        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
     };
     CalendarComponent.prototype.isEndSelection = function (day) {
         if (this.options.isRadio) {
@@ -372,7 +382,7 @@ export var CalendarComponent = (function () {
         if (!day.selected) {
             return false;
         }
-        return this.dayTemp.indexOf(day) === 1;
+        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
     };
     CalendarComponent.prototype.isBetween = function (day) {
         if (this.options.isRadio) {
@@ -384,7 +394,6 @@ export var CalendarComponent = (function () {
             }
         }
         return false;
-        // !options.isRadio && day.time > dayTemp[0]?.time && day.time < dayTemp[1]?.time"
     };
     CalendarComponent.decorators = [
         { type: Component, args: [{
