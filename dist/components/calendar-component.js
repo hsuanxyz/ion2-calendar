@@ -360,7 +360,6 @@ export var CalendarComponent = (function () {
         if (!day.selected) {
             return false;
         }
-        console.warn(day, this.dayTemp, this.dayTemp.indexOf(day));
         return this.dayTemp.indexOf(day) === 0;
     };
     CalendarComponent.prototype.isEndSelection = function (day) {
