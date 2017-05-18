@@ -30,6 +30,7 @@ export var CalendarComponent = (function () {
         var endTime = moment(params.get('to')).valueOf();
         this.options = {
             start: startTime,
+            end: endTime,
             isRadio: params.get('isRadio'),
             range_beg: startTime,
             range_end: endTime,
@@ -53,7 +54,44 @@ export var CalendarComponent = (function () {
         if (this.countNextMonths < 1) {
             this.countNextMonths = 1;
         }
-        this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+        this.showYearPicker = (params.get('showYearPicker') || false);
+        if (this.showYearPicker) {
+            // init year array
+            this.years = new Array();
+            // getting max and be sure, it is in future (maybe parameter?)
+            var maxYear = (new Date(endTime)).getFullYear();
+            if (maxYear <= 1970) {
+                maxYear = (new Date(this.defaultDate)).getFullYear() + 10;
+                this.options.end = new Date(maxYear, 12, 0).getTime();
+            }
+            // min year should be okay, either it will be set or something like 1970 at min
+            var minYear = (new Date(startTime)).getFullYear();
+            // calculating the needed years to be added to array
+            var neededYears = (maxYear - minYear);
+            //pushing years to selection array
+            for (var y = 0; y <= neededYears; y++) {
+                this.years.push(maxYear - y);
+            }
+            // selection-start-year of defaultDate
+            this.year = this.defaultDate.getFullYear();
+            var firstDayOfYear = new Date(this.year, 0, 1);
+            var lastDayOfYear = new Date(this.year, 12, 0);
+            // don't calc over the start / end
+            if (firstDayOfYear.getTime() < this.options.start) {
+                firstDayOfYear = new Date(this.options.start);
+            }
+            if (lastDayOfYear.getTime() > this.options.end) {
+                lastDayOfYear = new Date(this.options.end);
+            }
+            // calcing the month
+            this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+            // sets the range new
+            this.options.range_beg = firstDayOfYear.getTime();
+            this.options.range_end = lastDayOfYear.getTime();
+        }
+        else {
+            this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+        }
     };
     Object.defineProperty(CalendarComponent.prototype, "savedHistory", {
         get: function () {
@@ -136,6 +174,7 @@ export var CalendarComponent = (function () {
         }
     };
     CalendarComponent.prototype.nextMonth = function (infiniteScroll) {
+        this.infiniteScroll = infiniteScroll;
         var len = this.calendarMonths.length;
         var final = this.calendarMonths[len - 1];
         var nextTime = moment(final.original.time).add(1, 'M').valueOf();
@@ -274,15 +313,45 @@ export var CalendarComponent = (function () {
     };
     CalendarComponent.prototype.findInitMonthNumber = function (date) {
         var startDate = moment(this.options.start);
+        if (this.showYearPicker) {
+            startDate = moment(new Date(this.year, 0, 1));
+        }
         var defaultDate = moment(date);
         var isAfter = defaultDate.isAfter(startDate);
         if (!isAfter)
             return 0;
         return defaultDate.diff(startDate, 'month');
     };
+    CalendarComponent.prototype.changedYearSelection = function () {
+        var _this = this;
+        // re-enabling infinite scroll
+        if (this.infiniteScroll !== undefined) {
+            this.infiniteScroll.enable(true);
+        }
+        // getting first day and last day of the year
+        var firstDayOfYear = new Date(this.year, 0, 1);
+        var lastDayOfYear = new Date(this.year, 12, 0);
+        // don't calc over the start / end
+        if (firstDayOfYear.getTime() < this.options.start) {
+            firstDayOfYear = new Date(this.options.start);
+        }
+        if (lastDayOfYear.getTime() > this.options.end) {
+            lastDayOfYear = new Date(this.options.end);
+        }
+        // sets the range new
+        this.options.range_beg = firstDayOfYear.getTime();
+        this.options.range_end = lastDayOfYear.getTime();
+        // calcing the months
+        var monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
+        this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount);
+        // scrolling to the top
+        setTimeout(function () {
+            _this.content.scrollTo(0, 0, 128);
+        }, 300);
+    };
     CalendarComponent.decorators = [
         { type: Component, args: [{
-                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== ''\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title>{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <div class=\"days\" *ngFor=\"let day of month.days\">\n                            <button [class]=\"'days-btn ' + day.cssClass\"\n                                    *ngIf=\"day\"\n                                    [class.today]=\"day.isToday\"\n                                    (click)=\"onSelected(day)\"\n                                    [class.marked]=\"day.marked\"\n                                    [class.on-selected]=\"day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time\"\n                                    [disabled]=\"day.disable\">\n                                <p>{{day.title}}</p>\n                                <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== ''\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <div class=\"days\" *ngFor=\"let day of month.days\">\n                            <button [class]=\"'days-btn ' + day.cssClass\"\n                                    *ngIf=\"day\"\n                                    [class.today]=\"day.isToday\"\n                                    (click)=\"onSelected(day)\"\n                                    [class.marked]=\"day.marked\"\n                                    [class.on-selected]=\"day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time\"\n                                    [disabled]=\"day.disable\">\n                                <p>{{day.title}}</p>\n                                <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                            </button>\n                        </div>\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
                     styles: [
                         "\n            .calendar-page {\n                background-color: #fbfbfb;\n            }\n\n            .month-box{\n                display: inline-block;\n                padding-bottom: 1em;\n                border-bottom: 1px solid #f1f1f1;\n            }\n\n            .days-box {\n                padding: 0.5rem;\n            }\n\n            h4 {\n                font-weight: 400;\n                font-size: 1.8rem;\n                display: block;\n                text-align: center;\n                margin: 1rem 0 0;\n                color: #929292;\n            }\n            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {\n                width: 15%;\n            }\n            .days {\n                width: 14%;\n                float: left;\n                text-align: center;\n                height: 40px;\n            }\n            .days .marked p{\n                color: rgb(59, 151, 247);\n                font-weight:500;\n            }\n\n            .days .today p {\n                border-bottom: 2px solid rgb(59, 151, 247);\n                padding-bottom: 2px;\n            }\n\n            .days .on-selected{\n                transition: background-color .3s;\n                background-color: rgb(201, 225, 250);\n                border: none;\n            }\n\n            .days .on-selected p{\n                color: rgb(59, 151, 247);\n                font-size: 1.3em;\n            }\n\n            button.days-btn {\n                border-radius: 50%;\n                width: 36px;\n                display: block;\n                margin: 0 auto;\n                height: 36px;\n                background-color: transparent;\n                position: relative;\n                z-index:2;\n            }\n\n            button.days-btn p {\n                margin:0;\n                font-size: 1.2em;\n                color: #333;\n            }\n\n            button.days-btn.on-selected small{\n                transition: bottom .3s;\n                bottom: -14px;\n            }\n            \n            button.days-btn small {\n                overflow: hidden;\n                display: block;\n                left: 0;\n                right: 0;\n                bottom: -5px;\n                position: absolute;\n                z-index:1;\n                text-align: center;\n                color: #3b97f7;\n                font-weight: 200;\n            }\n        "
                     ],

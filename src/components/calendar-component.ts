@@ -1,5 +1,5 @@
 import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
-import { NavParams ,ViewController, Content } from 'ionic-angular';
+import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angular';
 
 import * as moment from 'moment';
 
@@ -18,7 +18,12 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 </ion-buttons>
 
 
-                <ion-title>{{title}}</ion-title>
+                <ion-title *ngIf="showYearPicker">
+                    <ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">
+                        <ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>
+                    </ion-select>
+                </ion-title>
+                <ion-title *ngIf="!showYearPicker">{{title}}</ion-title>
             </ion-navbar>
 
             <calendar-week-title
@@ -169,6 +174,10 @@ export class CalendarComponent{
     weekStartDay:number = 0;
     isSaveHistory:boolean;
     countNextMonths:number;
+    showYearPicker:boolean;
+    year: number;
+    years: Array<number>;
+    infiniteScroll: InfiniteScroll;
 
     constructor(
         public params: NavParams,
@@ -196,6 +205,7 @@ export class CalendarComponent{
         let endTime = moment(params.get('to')).valueOf();
         this.options = {
             start:startTime,
+            end:endTime,
             isRadio:params.get('isRadio'),
             range_beg:startTime,
             range_end:endTime,
@@ -225,8 +235,44 @@ export class CalendarComponent{
             this.countNextMonths = 1;
         }
 
-        this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+        this.showYearPicker = (params.get('showYearPicker') || false);
 
+        if(this.showYearPicker) {
+            // init year array
+            this.years = new Array();
+            // getting max and be sure, it is in future (maybe parameter?)
+            let maxYear = (new Date(endTime)).getFullYear();
+            if(maxYear <= 1970){
+                maxYear = (new Date(this.defaultDate)).getFullYear() + 10;
+                this.options.end = new Date(maxYear, 12, 0).getTime();
+            }
+            // min year should be okay, either it will be set or something like 1970 at min
+            let minYear = (new Date(startTime)).getFullYear();
+            // calculating the needed years to be added to array
+            let neededYears = (maxYear - minYear);
+            //pushing years to selection array
+            for(let y = 0; y <= neededYears; y++) {
+                this.years.push(maxYear - y);
+            }
+            // selection-start-year of defaultDate
+            this.year = this.defaultDate.getFullYear();
+            let firstDayOfYear = new Date(this.year, 0, 1);
+            let lastDayOfYear = new Date(this.year, 12, 0);
+            // don't calc over the start / end
+            if(firstDayOfYear.getTime() < this.options.start) {
+                firstDayOfYear = new Date(this.options.start);
+            }
+            if(lastDayOfYear.getTime() > this.options.end) {
+                lastDayOfYear = new Date(this.options.end);
+            }
+            // calcing the month
+            this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+            // sets the range new
+            this.options.range_beg = firstDayOfYear.getTime();
+            this.options.range_end = lastDayOfYear.getTime();
+        } else {
+            this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
+        }
     }
 
     get savedHistory(): SavedDatesCache|null {
@@ -318,7 +364,8 @@ export class CalendarComponent{
         }
     }
 
-    nextMonth(infiniteScroll:any) {
+    nextMonth(infiniteScroll: InfiniteScroll) {
+        this.infiniteScroll = infiniteScroll;
         let len = this.calendarMonths.length;
         let final = this.calendarMonths[len-1];
         let nextTime = moment(final.original.time).add(1,'M').valueOf();
@@ -471,13 +518,43 @@ export class CalendarComponent{
     }
 
     findInitMonthNumber(date: Date): number {
-        const startDate = moment(this.options.start);
-        const defaultDate = moment(date);
+        let startDate = moment(this.options.start);
+        if(this.showYearPicker){
+            startDate = moment(new Date(this.year, 0, 1));
+        }
+        let defaultDate = moment(date);
         const isAfter:boolean = defaultDate.isAfter(startDate);
 
         if(!isAfter) return 0;
 
         return  defaultDate.diff(startDate, 'month');
+    }
+
+    changedYearSelection(){
+        // re-enabling infinite scroll
+        if(this.infiniteScroll !== undefined){
+            this.infiniteScroll.enable(true);
+        }
+        // getting first day and last day of the year
+        let firstDayOfYear = new Date(this.year, 0, 1);
+        let lastDayOfYear = new Date(this.year, 12, 0);
+        // don't calc over the start / end
+        if(firstDayOfYear.getTime() < this.options.start) {
+            firstDayOfYear = new Date(this.options.start);
+        }
+        if(lastDayOfYear.getTime() > this.options.end) {
+            lastDayOfYear = new Date(this.options.end);
+        }
+        // sets the range new
+        this.options.range_beg = firstDayOfYear.getTime();
+        this.options.range_end = lastDayOfYear.getTime();
+        // calcing the months
+        let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
+        this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount );
+        // scrolling to the top
+        setTimeout(() => {
+            this.content.scrollTo(0, 0, 128);
+        }, 300)
     }
 
 }

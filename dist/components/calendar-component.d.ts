@@ -1,5 +1,5 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
-import { NavParams, ViewController, Content } from 'ionic-angular';
+import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
 import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache } from '../calendar.model';
 export declare class CalendarComponent {
     params: NavParams;
@@ -25,6 +25,10 @@ export declare class CalendarComponent {
     weekStartDay: number;
     isSaveHistory: boolean;
     countNextMonths: number;
+    showYearPicker: boolean;
+    year: number;
+    years: Array<number>;
+    infiniteScroll: InfiniteScroll;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
     ionViewDidLoad(): void;
     init(): void;
@@ -32,7 +36,7 @@ export declare class CalendarComponent {
     findCssClass(): void;
     dismiss(): void;
     onSelected(item: CalendarDay): void;
-    nextMonth(infiniteScroll: any): void;
+    nextMonth(infiniteScroll: InfiniteScroll): void;
     backwardsMonth(): void;
     scrollToDefaultDate(): void;
     onScroll($event: any): void;
@@ -42,4 +46,5 @@ export declare class CalendarComponent {
     createCalendarMonth(original: CalendarOriginal): CalendarMonth;
     createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
     findInitMonthNumber(date: Date): number;
+    changedYearSelection(): void;
 }
