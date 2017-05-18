@@ -330,6 +330,8 @@ export class CalendarComponent{
 
             this._savedHistory.from = this.dayTemp[0].time
 
+            this.ref.detectChanges();
+
         }else if(!this.dayTemp[1]){
             if(this.dayTemp[0].time < item.time){
                 this.dayTemp[1] = item;
@@ -337,6 +339,8 @@ export class CalendarComponent{
                 this.dayTemp[1] = this.dayTemp[0];
                 this.dayTemp[0] = item;
             }
+
+            this.ref.detectChanges();
 
             if(this.isSaveHistory) {
                 this.savedHistory = <SavedDatesCache>{
@@ -356,6 +360,7 @@ export class CalendarComponent{
             this.dayTemp[0] = item;
             this.dayTemp[1].selected = false;
             this.dayTemp[1] = null;
+            this.ref.detectChanges();
         }
     }
 

@@ -143,6 +143,7 @@ export var CalendarComponent = (function () {
         if (!this.dayTemp[0]) {
             this.dayTemp[0] = item;
             this._savedHistory.from = this.dayTemp[0].time;
+            this.ref.detectChanges();
         }
         else if (!this.dayTemp[1]) {
             if (this.dayTemp[0].time < item.time) {
@@ -152,6 +153,7 @@ export var CalendarComponent = (function () {
                 this.dayTemp[1] = this.dayTemp[0];
                 this.dayTemp[0] = item;
             }
+            this.ref.detectChanges();
             if (this.isSaveHistory) {
                 this.savedHistory = {
                     type: 'radio',
@@ -168,6 +170,7 @@ export var CalendarComponent = (function () {
             this.dayTemp[0] = item;
             this.dayTemp[1].selected = false;
             this.dayTemp[1] = null;
+            this.ref.detectChanges();
         }
     };
     CalendarComponent.prototype.nextMonth = function (infiniteScroll) {
