@@ -573,6 +573,7 @@ export class CalendarComponent{
         }, 300)
     }
 
+
     isStartSelection(day: CalendarDay): boolean {
         if(this.options.isRadio) {
             return false;
