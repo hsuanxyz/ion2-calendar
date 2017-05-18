@@ -30,10 +30,12 @@ export declare class CalendarComponent {
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
     closeIcon: boolean;
+    debug: boolean;
     constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
     ionViewDidLoad(): void;
     init(): void;
     savedHistory: SavedDatesCache | null;
+    createYearPicker(startTime: number, endTime: number): void;
     findCssClass(): void;
     dismiss(): void;
     onSelected(item: CalendarDay): void;
@@ -48,4 +50,7 @@ export declare class CalendarComponent {
     createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
     findInitMonthNumber(date: Date): number;
     changedYearSelection(): void;
+    isStartSelection(day: CalendarDay): boolean;
+    isEndSelection(day: CalendarDay): boolean;
+    isBetween(day: CalendarDay): boolean;
 }

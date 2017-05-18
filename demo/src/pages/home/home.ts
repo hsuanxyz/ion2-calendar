@@ -23,7 +23,7 @@ export class HomePage {
     if(!this.calendarCtrl.getHistory('1')){
       this.calendarCtrl.setHistory({
         id: '1',
-        from: new Date(2017,4,10).getTime()
+        from: new Date(2017,4,10).getTime(),
       });
     }
 
@@ -31,7 +31,9 @@ export class HomePage {
       id:'1',
       title:'basic demo',
       canBackwardsSelected:true,
-      isSaveHistory:true
+      isSaveHistory:true,
+      showYearPicker:true,
+      closeIcon: true
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} );
@@ -63,7 +65,8 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       id:'4',
       isRadio: false,
-      canBackwardsSelected:true
+      canBackwardsSelected:true,
+      isSaveHistory:true
 
     })
       .then( (res:any) => { console.log(res) })
@@ -97,7 +100,9 @@ export class HomePage {
       monthTitle:'yyyy 年 MM 月 ',
       weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
       closeLabel:'',
-      weekStartDay:1
+      weekStartDay:1,
+      showYearPicker:true,
+
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -152,7 +157,7 @@ export class HomePage {
       cssClass:'my-cal'
     })
       .then( (res:any) => { console.log(res) })
-      
+
       .catch( () => {} )
   }
 
