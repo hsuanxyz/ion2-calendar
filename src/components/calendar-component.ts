@@ -37,7 +37,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
 
         </ion-header>
 
-        <ion-content (ionScroll)="onScroll($event)" class="calendar-page">
+        <ion-content (ionScroll)="onScroll($event)" class="calendar-page" [ngClass]="{'multiSelection': !options.isRadio}">
 
             <div #months>
                 <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
@@ -50,7 +50,10 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                                     (click)="onSelected(day)"
                                     [class.marked]="day.marked"
                                     [class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"
-                                    [disabled]="day.disable">
+                                    [disabled]="day.disable"
+                                    [class.startSelection]="isStartSelection(day)"
+                                    [class.endSelection]="isEndSelection(day)"
+                                    [class.between]="isBetween(day)">
                                 <p>{{day.title}}</p>
                                 <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
                             </button>
@@ -333,7 +336,15 @@ export class CalendarComponent{
 
             this.dayTemp[0] = item;
 
-            this._savedHistory.from = this.dayTemp[0].time
+            if(this._savedHistory.to !== null) {
+                if(this.dayTemp[0].time > this._savedHistory.to){
+                    this._savedHistory.to = this.dayTemp[0].time;
+                } else {
+                    this._savedHistory.from = this.dayTemp[0].time
+                }
+            } else {
+                this._savedHistory.from = this.dayTemp[0].time
+            }
 
             this.ref.detectChanges();
 
@@ -562,4 +573,42 @@ export class CalendarComponent{
         }, 300)
     }
 
+
+    isStartSelection(day: CalendarDay): boolean {
+        if(this.options.isRadio) {
+            return false;
+        }
+        if(this._savedHistory.from === day.time){
+            return true;
+        }
+        if(!day.selected){
+            return false;
+        }
+        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
+    }
+
+    isEndSelection(day: CalendarDay): boolean {
+        if(this.options.isRadio) {
+            return false;
+        }
+        if(this._savedHistory.to === day.time){
+            return true;
+        }
+        if(!day.selected){
+            return false;
+        }
+        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
+    }
+
+    isBetween(day: CalendarDay): boolean{
+        if(this.options.isRadio) {
+            return false;
+        }
+        if(day.time > this._savedHistory.from || (this.dayTemp[0] !== null && day.time > this.dayTemp[0].time)){
+            if(day.time < this._savedHistory.to || (this.dayTemp[1] !== null && day.time < this.dayTemp[1].time)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
