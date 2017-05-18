@@ -107,8 +107,8 @@ export var CalendarComponent = (function () {
         // calcing the month
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
         // sets the range new
-        this.options.range_beg = firstDayOfYear.getTime();
-        this.options.range_end = lastDayOfYear.getTime();
+        // this.options.range_beg = firstDayOfYear.getTime();
+        // this.options.range_end = lastDayOfYear.getTime();
     };
     CalendarComponent.prototype.findCssClass = function () {
         var _this = this;
@@ -213,8 +213,6 @@ export var CalendarComponent = (function () {
         var _this = this;
         var defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
         var defaultDateMonth = this.monthsEle.nativeElement.children[("month-" + defaultDateIndex)].offsetTop;
-        this.debug && console.log(defaultDateIndex);
-        this.debug && console.log(defaultDateMonth);
         if (defaultDateIndex === 0 || defaultDateMonth === 0)
             return;
         setTimeout(function () {
@@ -265,6 +263,8 @@ export var CalendarComponent = (function () {
         var _rangeEnd = this.options.range_end;
         var isBetween = true;
         var disableWee = this.options.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
+        console.log(_rangeBeg);
+        console.log(_rangeEnd);
         if (_rangeBeg > 0 && _rangeEnd > 0) {
             if (!this.scrollBackwards) {
                 isBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
@@ -283,6 +283,7 @@ export var CalendarComponent = (function () {
             }
         }
         var _disable = disableWee || isBetween;
+        console.log(_disable);
         return {
             time: time,
             isToday: isToday,
@@ -356,8 +357,8 @@ export var CalendarComponent = (function () {
             lastDayOfYear = new Date(this.options.end);
         }
         // sets the range new
-        this.options.range_beg = firstDayOfYear.getTime();
-        this.options.range_end = lastDayOfYear.getTime();
+        // this.options.range_beg = firstDayOfYear.getTime();
+        // this.options.range_end = lastDayOfYear.getTime();
         // calcing the months
         var monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount);

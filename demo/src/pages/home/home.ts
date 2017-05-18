@@ -44,7 +44,9 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       id:'2',
       from: new Date(2017,1,1),
-      defaultDate:new Date(2017,4,1)
+      defaultDate:new Date(2017,4,1),
+      showYearPicker:true,
+
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -66,7 +68,9 @@ export class HomePage {
       id:'4',
       isRadio: false,
       canBackwardsSelected:true,
-      isSaveHistory:true
+      isSaveHistory:true,
+      showYearPicker:true,
+
 
     })
       .then( (res:any) => { console.log(res) })
@@ -77,7 +81,9 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       id:'5',
       from: new Date(2017,1,1),
-      to  : new Date(2017,2,5)
+      to  : new Date(2017,2,5),
+      showYearPicker:true,
+
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
@@ -87,7 +93,8 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       id:'6',
       disableWeekdays:[0,6],
-      canBackwardsSelected:true
+      canBackwardsSelected:true,
+      showYearPicker:true,
 
     })
       .then( (res:any) => { console.log(res) })

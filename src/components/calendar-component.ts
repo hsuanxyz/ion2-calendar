@@ -295,8 +295,8 @@ export class CalendarComponent{
         // calcing the month
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
         // sets the range new
-        this.options.range_beg = firstDayOfYear.getTime();
-        this.options.range_end = lastDayOfYear.getTime();
+        // this.options.range_beg = firstDayOfYear.getTime();
+        // this.options.range_end = lastDayOfYear.getTime();
     }
     findCssClass() {
         let cssClass = this.params.get('cssClass');
@@ -412,9 +412,6 @@ export class CalendarComponent{
         let defaultDateIndex = this.findInitMonthNumber(this.defaultDate );
         let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
 
-        this.debug && console.log(defaultDateIndex);
-        this.debug && console.log(defaultDateMonth);
-
         if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
         setTimeout(() => {
             this.content.scrollTo(0,defaultDateMonth,128);
@@ -483,9 +480,8 @@ export class CalendarComponent{
             }
         }
 
-
-
         let _disable = disableWee || isBetween;
+
         return {
             time: time,
             isToday: isToday,
@@ -572,8 +568,8 @@ export class CalendarComponent{
             lastDayOfYear = new Date(this.options.end);
         }
         // sets the range new
-        this.options.range_beg = firstDayOfYear.getTime();
-        this.options.range_end = lastDayOfYear.getTime();
+        // this.options.range_beg = firstDayOfYear.getTime();
+        // this.options.range_end = lastDayOfYear.getTime();
         // calcing the months
         let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount );
