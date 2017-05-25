@@ -295,8 +295,11 @@ export class CalendarComponent{
         // calcing the month
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
         // sets the range new
-        // this.options.range_beg = firstDayOfYear.getTime();
-        // this.options.range_end = lastDayOfYear.getTime();
+
+        // checking whether the start is after firstDayOfYear
+        this.options.range_beg = firstDayOfYear.getTime() < startTime ? startTime :  firstDayOfYear.getTime();
+        // checking whether the end is before lastDayOfYear
+        this.options.range_end = lastDayOfYear.getTime() > endTime ? endTime : lastDayOfYear.getTime();
     }
     findCssClass() {
         let cssClass = this.params.get('cssClass');
@@ -568,8 +571,10 @@ export class CalendarComponent{
             lastDayOfYear = new Date(this.options.end);
         }
         // sets the range new
-        // this.options.range_beg = firstDayOfYear.getTime();
-        // this.options.range_end = lastDayOfYear.getTime();
+        // checking whether the start is after firstDayOfYear
+        this.options.range_beg = firstDayOfYear.getTime() < this.options.start ? this.options.start :  firstDayOfYear.getTime();
+        // checking whether the end is before lastDayOfYear
+        this.options.range_end = lastDayOfYear.getTime() > this.options.end ? this.options.end : lastDayOfYear.getTime();
         // calcing the months
         let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount );
