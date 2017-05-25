@@ -62,7 +62,7 @@ export class CalendarController {
         return new Promise( (resolve, reject) => {
 
             calendarModal.onWillDismiss((data:any)=> {
-                if( data && ( (data.from && data.to) || data.date ) ){
+                if( data && ( (data.from && data.to) || data.time ) ){
                     resolve(data)
                 }else {
                     reject('cancelled')

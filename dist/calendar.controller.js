@@ -33,7 +33,7 @@ export var CalendarController = (function () {
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onWillDismiss(function (data) {
-                if (data && ((data.from && data.to) || data.date)) {
+                if (data && ((data.from && data.to) || data.time)) {
                     resolve(data);
                 }
                 else {

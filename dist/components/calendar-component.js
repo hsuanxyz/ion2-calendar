@@ -49,9 +49,6 @@ export var CalendarComponent = (function () {
         this.closeLabel = params.get('closeLabel');
         this.closeIcon = params.get('closeIcon');
         this.isSaveHistory = params.get('isSaveHistory');
-        if (this.isSaveHistory) {
-            this._savedHistory = this.savedHistory || {};
-        }
         this.countNextMonths = (params.get('countNextMonths') || 3);
         if (this.countNextMonths < 1) {
             this.countNextMonths = 1;
@@ -64,18 +61,6 @@ export var CalendarComponent = (function () {
             this.calendarMonths = this.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
         }
     };
-    Object.defineProperty(CalendarComponent.prototype, "savedHistory", {
-        get: function () {
-            var _savedDatesCache = localStorage.getItem("ion-calendar-" + this._id);
-            var _savedDates = JSON.parse(_savedDatesCache);
-            return _savedDates;
-        },
-        set: function (savedDates) {
-            localStorage.setItem("ion-calendar-" + this._id, JSON.stringify(savedDates));
-        },
-        enumerable: true,
-        configurable: true
-    });
     CalendarComponent.prototype.createYearPicker = function (startTime, endTime) {
         // init year array
         this.years = [];
@@ -122,73 +107,9 @@ export var CalendarComponent = (function () {
             });
         }
     };
-    CalendarComponent.prototype.dismiss = function () {
-        var data = this.dayTemp;
-        this.viewCtrl.dismiss({
-            from: data[0],
-            to: data[1],
-        });
-    };
-    CalendarComponent.prototype.onSelected = function (item) {
-        item.selected = true;
-        this.ref.detectChanges();
-        if (this.options.isRadio) {
-            this.savedHistory = {
-                type: 'radio',
-                id: this._id,
-                from: item.time,
-                to: 0
-            };
-            if (this.isSaveHistory) {
-                this._savedHistory = this.savedHistory;
-            }
-            this.viewCtrl.dismiss({
-                date: Object.assign({}, item)
-            });
-            return;
-        }
-        if (!this.dayTemp[0]) {
-            this.dayTemp[0] = item;
-            if (this._savedHistory.to !== null) {
-                if (this.dayTemp[0].time > this._savedHistory.to) {
-                    this._savedHistory.to = this.dayTemp[0].time;
-                }
-                else {
-                    this._savedHistory.from = this.dayTemp[0].time;
-                }
-            }
-            else {
-                this._savedHistory.from = this.dayTemp[0].time;
-            }
-            this.ref.detectChanges();
-        }
-        else if (!this.dayTemp[1]) {
-            if (this.dayTemp[0].time < item.time) {
-                this.dayTemp[1] = item;
-            }
-            else {
-                this.dayTemp[1] = this.dayTemp[0];
-                this.dayTemp[0] = item;
-            }
-            this.ref.detectChanges();
-            if (this.isSaveHistory) {
-                this.savedHistory = {
-                    type: 'radio',
-                    id: this._id,
-                    from: this.dayTemp[0].time,
-                    to: this.dayTemp[1].time
-                };
-                this._savedHistory = this.savedHistory;
-            }
-            this.dismiss();
-        }
-        else {
-            this.dayTemp[0].selected = false;
-            this.dayTemp[0] = item;
-            this.dayTemp[1].selected = false;
-            this.dayTemp[1] = null;
-            this.ref.detectChanges();
-        }
+    CalendarComponent.prototype.dismiss = function (data) {
+        console.log(data);
+        this.viewCtrl.dismiss(data);
     };
     CalendarComponent.prototype.nextMonth = function (infiniteScroll) {
         this.infiniteScroll = infiniteScroll;
@@ -368,44 +289,9 @@ export var CalendarComponent = (function () {
             _this.content.scrollTo(0, 0, 128);
         }, 300);
     };
-    CalendarComponent.prototype.isStartSelection = function (day) {
-        if (this.options.isRadio) {
-            return false;
-        }
-        if (this._savedHistory.from === day.time) {
-            return true;
-        }
-        if (!day.selected) {
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
-    };
-    CalendarComponent.prototype.isEndSelection = function (day) {
-        if (this.options.isRadio) {
-            return false;
-        }
-        if (this._savedHistory.to === day.time) {
-            return true;
-        }
-        if (!day.selected) {
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
-    };
-    CalendarComponent.prototype.isBetween = function (day) {
-        if (this.options.isRadio) {
-            return false;
-        }
-        if (day.time > this._savedHistory.from || (this.dayTemp[0] !== null && day.time > this.dayTemp[0].time)) {
-            if (day.time < this._savedHistory.to || (this.dayTemp[1] !== null && day.time < this.dayTemp[1].time)) {
-                return true;
-            }
-        }
-        return false;
-    };
     CalendarComponent.decorators = [
         { type: Component, args: [{
-                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"dismiss()\">\n                         <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <ion2-month [month]=\"month\" \n                                    [isRadio]=\"options.isRadio\" \n                                    [history]=\"_savedHistory\" \n                                    [(model)]=\"dayTemp\"></ion2-month>\n                        <!--<div class=\"days\" *ngFor=\"let day of month.days\">-->\n                            <!--<button [class]=\"'days-btn ' + day.cssClass\"-->\n                                    <!--*ngIf=\"day\"-->\n                                    <!--[class.today]=\"day.isToday\"-->\n                                    <!--(click)=\"onSelected(day)\"-->\n                                    <!--[class.marked]=\"day.marked\"-->\n                                    <!--[class.on-selected]=\"day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time\"-->\n                                    <!--[disabled]=\"day.disable\"-->\n                                    <!--[class.startSelection]=\"isStartSelection(day)\"-->\n                                    <!--[class.endSelection]=\"isEndSelection(day)\"-->\n                                    <!--[class.between]=\"isBetween(day)\">-->\n                                <!--<p>{{day.title}}</p>-->\n                                <!--<small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>-->\n                            <!--</button>-->\n                        <!--</div>-->\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"dismiss()\">\n                         <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <div class=\"days-box\">\n                        <ion2-month [month]=\"month\" \n                                    [isRadio]=\"options.isRadio\" \n                                    [(history)]=\"_savedHistory\" \n                                    [isSaveHistory]=\"isSaveHistory\" \n                                    [id]=\"_id\"\n                                    (onChange)=\"dismiss($event)\"\n                                    [(model)]=\"dayTemp\"></ion2-month>\n                        <!--<div class=\"days\" *ngFor=\"let day of month.days\">-->\n                            <!--<button [class]=\"'days-btn ' + day.cssClass\"-->\n                                    <!--*ngIf=\"day\"-->\n                                    <!--[class.today]=\"day.isToday\"-->\n                                    <!--(click)=\"onSelected(day)\"-->\n                                    <!--[class.marked]=\"day.marked\"-->\n                                    <!--[class.on-selected]=\"day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time\"-->\n                                    <!--[disabled]=\"day.disable\"-->\n                                    <!--[class.startSelection]=\"isStartSelection(day)\"-->\n                                    <!--[class.endSelection]=\"isEndSelection(day)\"-->\n                                    <!--[class.between]=\"isBetween(day)\">-->\n                                <!--<p>{{day.title}}</p>-->\n                                <!--<small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>-->\n                            <!--</button>-->\n                        <!--</div>-->\n                    </div>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
                     styles: [
                         "\n            .calendar-page {\n                background-color: #fbfbfb;\n            }\n\n            .month-box{\n                display: inline-block;\n                padding-bottom: 1em;\n                border-bottom: 1px solid #f1f1f1;\n            }\n\n            .days-box {\n                padding: 0.5rem;\n            }\n\n            h4 {\n                font-weight: 400;\n                font-size: 1.8rem;\n                display: block;\n                text-align: center;\n                margin: 1rem 0 0;\n                color: #929292;\n            }\n            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {\n                width: 15%;\n            }\n            .days {\n                width: 14%;\n                float: left;\n                text-align: center;\n                height: 40px;\n            }\n            .days .marked p{\n                color: rgb(59, 151, 247);\n                font-weight:500;\n            }\n\n            .days .today p {\n                border-bottom: 2px solid rgb(59, 151, 247);\n                padding-bottom: 2px;\n            }\n\n            .days .on-selected{\n                transition: background-color .3s;\n                background-color: rgb(201, 225, 250);\n                border: none;\n            }\n\n            .days .on-selected p{\n                color: rgb(59, 151, 247);\n                font-size: 1.3em;\n            }\n\n            button.days-btn {\n                border-radius: 50%;\n                width: 36px;\n                display: block;\n                margin: 0 auto;\n                height: 36px;\n                background-color: transparent;\n                position: relative;\n                z-index:2;\n            }\n\n            button.days-btn p {\n                margin:0;\n                font-size: 1.2em;\n                color: #333;\n            }\n\n            button.days-btn.on-selected small{\n                transition: bottom .3s;\n                bottom: -14px;\n            }\n\n            button.days-btn small {\n                overflow: hidden;\n                display: block;\n                left: 0;\n                right: 0;\n                bottom: -5px;\n                position: absolute;\n                z-index:1;\n                text-align: center;\n                color: #3b97f7;\n                font-weight: 200;\n            }\n        "
                     ],

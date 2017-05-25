@@ -45,7 +45,10 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                     <div class="days-box">
                         <ion2-month [month]="month" 
                                     [isRadio]="options.isRadio" 
-                                    [history]="_savedHistory" 
+                                    [(history)]="_savedHistory" 
+                                    [isSaveHistory]="isSaveHistory" 
+                                    [id]="_id"
+                                    (onChange)="dismiss($event)"
                                     [(model)]="dayTemp"></ion2-month>
                         <!--<div class="days" *ngFor="let day of month.days">-->
                             <!--<button [class]="'days-btn ' + day.cssClass"-->
@@ -240,9 +243,6 @@ export class CalendarComponent{
 
         this.isSaveHistory = params.get('isSaveHistory');
 
-        if(this.isSaveHistory){
-            this._savedHistory = this.savedHistory || {};
-        }
 
         this.countNextMonths = (params.get('countNextMonths') || 3);
         if (this.countNextMonths < 1) {
@@ -258,15 +258,6 @@ export class CalendarComponent{
         }
     }
 
-    get savedHistory(): SavedDatesCache|null {
-        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this._id}`);
-        const _savedDates = <any>JSON.parse(_savedDatesCache);
-        return <SavedDatesCache>_savedDates
-    }
-
-    set savedHistory(savedDates: SavedDatesCache) {
-        localStorage.setItem(`ion-calendar-${this._id}`, JSON.stringify(savedDates));
-    }
 
     createYearPicker(startTime:number, endTime:number){
         // init year array
@@ -316,81 +307,12 @@ export class CalendarComponent{
 
     }
 
-    dismiss() {
-        let data = this.dayTemp;
-        this.viewCtrl.dismiss({
-            from:data[0],
-            to:data[1],
-        });
+    dismiss(data: any) {
+        console.log(data);
+
+        this.viewCtrl.dismiss(data);
     }
 
-    onSelected(item:CalendarDay) {
-        item.selected = true;
-        this.ref.detectChanges();
-
-        if(this.options.isRadio) {
-            this.savedHistory = <SavedDatesCache>{
-                type: 'radio',
-                id: this._id,
-                from: item.time,
-                to:0
-            };
-            if(this.isSaveHistory) {
-                this._savedHistory = this.savedHistory;
-            }
-            this.viewCtrl.dismiss({
-                date:Object.assign({},item)
-            });
-            return;
-        }
-
-        if(!this.dayTemp[0]){
-
-            this.dayTemp[0] = item;
-
-            if(this._savedHistory.to !== null) {
-                if(this.dayTemp[0].time > this._savedHistory.to){
-                    this._savedHistory.to = this.dayTemp[0].time;
-                } else {
-                    this._savedHistory.from = this.dayTemp[0].time
-                }
-            } else {
-                this._savedHistory.from = this.dayTemp[0].time
-            }
-
-            this.ref.detectChanges();
-
-        }else if(!this.dayTemp[1]){
-            if(this.dayTemp[0].time < item.time){
-                this.dayTemp[1] = item;
-            }else {
-                this.dayTemp[1] = this.dayTemp[0];
-                this.dayTemp[0] = item;
-            }
-
-            this.ref.detectChanges();
-
-            if(this.isSaveHistory) {
-                this.savedHistory = <SavedDatesCache>{
-                    type: 'radio',
-                    id: this._id,
-                    from: this.dayTemp[0].time,
-                    to: this.dayTemp[1].time
-                };
-                this._savedHistory = this.savedHistory;
-            }
-
-
-            this.dismiss();
-
-        }else {
-            this.dayTemp[0].selected = false;
-            this.dayTemp[0] = item;
-            this.dayTemp[1].selected = false;
-            this.dayTemp[1] = null;
-            this.ref.detectChanges();
-        }
-    }
 
     nextMonth(infiniteScroll: InfiniteScroll) {
         this.infiniteScroll = infiniteScroll;
@@ -588,42 +510,4 @@ export class CalendarComponent{
         }, 300)
     }
 
-
-    isStartSelection(day: CalendarDay): boolean {
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(this._savedHistory.from === day.time){
-            return true;
-        }
-        if(!day.selected){
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
-    }
-
-    isEndSelection(day: CalendarDay): boolean {
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(this._savedHistory.to === day.time){
-            return true;
-        }
-        if(!day.selected){
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
-    }
-
-    isBetween(day: CalendarDay): boolean{
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(day.time > this._savedHistory.from || (this.dayTemp[0] !== null && day.time > this.dayTemp[0].time)){
-            if(day.time < this._savedHistory.to || (this.dayTemp[1] !== null && day.time < this.dayTemp[1].time)){
-                return true;
-            }
-        }
-        return false;
-    }
 }

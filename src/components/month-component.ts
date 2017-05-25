@@ -27,7 +27,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.today]="day.isToday"
                         (click)="onSelected(day)"
                         [class.marked]="day.marked"
-                        [class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"
+                        [class.on-selected]="day.selected || history?.from === day.time || history?.to === day.time"
                         [disabled]="day.disable"
                         [class.startSelection]="isStartSelection(day)"
                         [class.endSelection]="isEndSelection(day)"
@@ -135,6 +135,8 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     @Input() month: CalendarMonth;
     @Input() isRadio: boolean;
     @Input() history: SavedDatesCache|any = {};
+    @Input() isSaveHistory: boolean;
+    @Input() id: any;
 
     @Output() onChange: EventEmitter<any> = new EventEmitter();
 
@@ -147,7 +149,12 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         public _elementRef: ElementRef,
 
     ) {
+    }
 
+    ngOnInit() {
+        if(this.isSaveHistory){
+            this.history = this.savedHistory || {};
+        }
     }
 
     writeValue(obj: any): void {
@@ -161,9 +168,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
 
     registerOnTouched(fn: any): void {
         this._onTouched = fn;
-    }
-
-    ngOnInit(): void {
     }
 
     private setValue(val: any): any {
@@ -209,8 +213,86 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         return this._date.indexOf(day) === 0 && this.history.to !== day.time;
     }
 
+    get savedHistory(): SavedDatesCache|null {
+        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this.id}`);
+        const _savedDates = <any>JSON.parse(_savedDatesCache);
+        return <SavedDatesCache>_savedDates
+    }
+
+    set savedHistory(savedDates: SavedDatesCache) {
+        localStorage.setItem(`ion-calendar-${this.id}`, JSON.stringify(savedDates));
+    }
+
     onSelected(item: any){
-        console.log(item);
+        item.selected = true;
+        this.ref.detectChanges();
+        if(this.isRadio) {
+            this.savedHistory = <SavedDatesCache>{
+                type: 'radio',
+                id: this.id,
+                from: item.time,
+                to:0
+            };
+            if(this.isSaveHistory) {
+                this.history = this.savedHistory;
+            }
+
+            this.onChange.emit(item);
+
+            return;
+        }
+
+        if(!this._date[0]){
+
+            this._date[0] = item;
+
+            if(this.isSaveHistory){
+                if(this.history.to !== null) {
+                    if(this._date[0].time > this.history.to){
+                        this.history.to = this._date[0].time;
+                    } else {
+                        this.history.from = this._date[0].time
+                    }
+                } else {
+                    this.history.from = this._date[0].time
+                }
+
+                this.ref.detectChanges();
+            }
+
+        }else if(!this._date[1]){
+            if(this._date[0].time < item.time){
+                this._date[1] = item;
+            }else {
+                this._date[1] = this._date[0];
+                this._date[0] = item;
+            }
+
+
+            if(this.isSaveHistory) {
+                this.savedHistory = <SavedDatesCache>{
+                    type: 'radio',
+                    id: this.id,
+                    from: this._date[0].time,
+                    to: this._date[1].time
+                };
+                this.history = this.savedHistory;
+            }
+
+            this.ref.detectChanges();
+
+            this.onChange.emit({
+                from:this._date[0],
+                to:this._date[1],
+            });
+
+        }else {
+            this._date[0].selected = false;
+            this._date[0] = item;
+            this._date[1].selected = false;
+            this._date[1] = null;
+            this.ref.detectChanges();
+        }
     }
 
 }
