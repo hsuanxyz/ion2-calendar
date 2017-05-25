@@ -43,21 +43,25 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
                     <div class="days-box">
-                        <div class="days" *ngFor="let day of month.days">
-                            <button [class]="'days-btn ' + day.cssClass"
-                                    *ngIf="day"
-                                    [class.today]="day.isToday"
-                                    (click)="onSelected(day)"
-                                    [class.marked]="day.marked"
-                                    [class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"
-                                    [disabled]="day.disable"
-                                    [class.startSelection]="isStartSelection(day)"
-                                    [class.endSelection]="isEndSelection(day)"
-                                    [class.between]="isBetween(day)">
-                                <p>{{day.title}}</p>
-                                <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-                            </button>
-                        </div>
+                        <ion2-month [month]="month" 
+                                    [isRadio]="options.isRadio" 
+                                    [history]="_savedHistory" 
+                                    [(model)]="dayTemp"></ion2-month>
+                        <!--<div class="days" *ngFor="let day of month.days">-->
+                            <!--<button [class]="'days-btn ' + day.cssClass"-->
+                                    <!--*ngIf="day"-->
+                                    <!--[class.today]="day.isToday"-->
+                                    <!--(click)="onSelected(day)"-->
+                                    <!--[class.marked]="day.marked"-->
+                                    <!--[class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"-->
+                                    <!--[disabled]="day.disable"-->
+                                    <!--[class.startSelection]="isStartSelection(day)"-->
+                                    <!--[class.endSelection]="isEndSelection(day)"-->
+                                    <!--[class.between]="isBetween(day)">-->
+                                <!--<p>{{day.title}}</p>-->
+                                <!--<small *ngIf="day.subTitle">{{day?.subTitle}}</small>-->
+                            <!--</button>-->
+                        <!--</div>-->
                     </div>
                 </div>
             </div>
