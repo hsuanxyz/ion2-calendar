@@ -1,13 +1,9 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer, Input, Output, EventEmitter,
-    HostListener,OnInit, forwardRef} from '@angular/core';
+import {Component,  ElementRef, ChangeDetectorRef, Renderer, Input, Output, EventEmitter,
+    OnInit, forwardRef} from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import { Platform } from 'ionic-angular';
-
-import * as moment from 'moment';
-
-import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache} from '../calendar.model'
+import {CalendarDay, CalendarMonth, SavedDatesCache} from '../calendar.model'
 
 export const MONTH_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
