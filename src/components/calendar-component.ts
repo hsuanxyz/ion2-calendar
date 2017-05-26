@@ -42,23 +42,13 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
             <div #months>
                 <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
-                    <div class="days-box">
-                        <div class="days" *ngFor="let day of month.days">
-                            <button [class]="'days-btn ' + day.cssClass"
-                                    *ngIf="day"
-                                    [class.today]="day.isToday"
-                                    (click)="onSelected(day)"
-                                    [class.marked]="day.marked"
-                                    [class.on-selected]="day.selected || _savedHistory?.from === day.time || _savedHistory?.to === day.time"
-                                    [disabled]="day.disable"
-                                    [class.startSelection]="isStartSelection(day)"
-                                    [class.endSelection]="isEndSelection(day)"
-                                    [class.between]="isBetween(day)">
-                                <p>{{day.title}}</p>
-                                <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-                            </button>
-                        </div>
-                    </div>
+                        <ion2-month [month]="month" 
+                                    [isRadio]="options.isRadio" 
+                                    [(history)]="_savedHistory" 
+                                    [isSaveHistory]="isSaveHistory" 
+                                    [id]="_id"
+                                    (onChange)="dismiss($event)"
+                                    [(ngModel)]="dayTemp"></ion2-month>
                 </div>
             </div>
 
@@ -79,11 +69,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 padding-bottom: 1em;
                 border-bottom: 1px solid #f1f1f1;
             }
-
-            .days-box {
-                padding: 0.5rem;
-            }
-
+            
             h4 {
                 font-weight: 400;
                 font-size: 1.8rem;
@@ -92,70 +78,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                 margin: 1rem 0 0;
                 color: #929292;
             }
-            .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
-                width: 15%;
-            }
-            .days {
-                width: 14%;
-                float: left;
-                text-align: center;
-                height: 40px;
-            }
-            .days .marked p{
-                color: rgb(59, 151, 247);
-                font-weight:500;
-            }
-
-            .days .today p {
-                border-bottom: 2px solid rgb(59, 151, 247);
-                padding-bottom: 2px;
-            }
-
-            .days .on-selected{
-                transition: background-color .3s;
-                background-color: rgb(201, 225, 250);
-                border: none;
-            }
-
-            .days .on-selected p{
-                color: rgb(59, 151, 247);
-                font-size: 1.3em;
-            }
-
-            button.days-btn {
-                border-radius: 50%;
-                width: 36px;
-                display: block;
-                margin: 0 auto;
-                height: 36px;
-                background-color: transparent;
-                position: relative;
-                z-index:2;
-            }
-
-            button.days-btn p {
-                margin:0;
-                font-size: 1.2em;
-                color: #333;
-            }
-
-            button.days-btn.on-selected small{
-                transition: bottom .3s;
-                bottom: -14px;
-            }
-
-            button.days-btn small {
-                overflow: hidden;
-                display: block;
-                left: 0;
-                right: 0;
-                bottom: -5px;
-                position: absolute;
-                z-index:1;
-                text-align: center;
-                color: #3b97f7;
-                font-weight: 200;
-            }
+           
         `
     ],
     selector: 'calendar-page',
@@ -236,9 +159,6 @@ export class CalendarComponent{
 
         this.isSaveHistory = params.get('isSaveHistory');
 
-        if(this.isSaveHistory){
-            this._savedHistory = this.savedHistory || {};
-        }
 
         this.countNextMonths = (params.get('countNextMonths') || 3);
         if (this.countNextMonths < 1) {
@@ -254,15 +174,6 @@ export class CalendarComponent{
         }
     }
 
-    get savedHistory(): SavedDatesCache|null {
-        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this._id}`);
-        const _savedDates = <any>JSON.parse(_savedDatesCache);
-        return <SavedDatesCache>_savedDates
-    }
-
-    set savedHistory(savedDates: SavedDatesCache) {
-        localStorage.setItem(`ion-calendar-${this._id}`, JSON.stringify(savedDates));
-    }
 
     createYearPicker(startTime:number, endTime:number){
         // init year array
@@ -295,8 +206,11 @@ export class CalendarComponent{
         // calcing the month
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths);
         // sets the range new
-        // this.options.range_beg = firstDayOfYear.getTime();
-        // this.options.range_end = lastDayOfYear.getTime();
+
+        // checking whether the start is after firstDayOfYear
+        this.options.range_beg = firstDayOfYear.getTime() < startTime ? startTime :  firstDayOfYear.getTime();
+        // checking whether the end is before lastDayOfYear
+        this.options.range_end = lastDayOfYear.getTime() > endTime ? endTime : lastDayOfYear.getTime();
     }
     findCssClass() {
         let cssClass = this.params.get('cssClass');
@@ -309,81 +223,12 @@ export class CalendarComponent{
 
     }
 
-    dismiss() {
-        let data = this.dayTemp;
-        this.viewCtrl.dismiss({
-            from:data[0],
-            to:data[1],
-        });
+    dismiss(data: any) {
+        console.log(data);
+
+        this.viewCtrl.dismiss(data);
     }
 
-    onSelected(item:CalendarDay) {
-        item.selected = true;
-        this.ref.detectChanges();
-
-        if(this.options.isRadio) {
-            this.savedHistory = <SavedDatesCache>{
-                type: 'radio',
-                id: this._id,
-                from: item.time,
-                to:0
-            };
-            if(this.isSaveHistory) {
-                this._savedHistory = this.savedHistory;
-            }
-            this.viewCtrl.dismiss({
-                date:Object.assign({},item)
-            });
-            return;
-        }
-
-        if(!this.dayTemp[0]){
-
-            this.dayTemp[0] = item;
-
-            if(this._savedHistory.to !== null) {
-                if(this.dayTemp[0].time > this._savedHistory.to){
-                    this._savedHistory.to = this.dayTemp[0].time;
-                } else {
-                    this._savedHistory.from = this.dayTemp[0].time
-                }
-            } else {
-                this._savedHistory.from = this.dayTemp[0].time
-            }
-
-            this.ref.detectChanges();
-
-        }else if(!this.dayTemp[1]){
-            if(this.dayTemp[0].time < item.time){
-                this.dayTemp[1] = item;
-            }else {
-                this.dayTemp[1] = this.dayTemp[0];
-                this.dayTemp[0] = item;
-            }
-
-            this.ref.detectChanges();
-
-            if(this.isSaveHistory) {
-                this.savedHistory = <SavedDatesCache>{
-                    type: 'radio',
-                    id: this._id,
-                    from: this.dayTemp[0].time,
-                    to: this.dayTemp[1].time
-                };
-                this._savedHistory = this.savedHistory;
-            }
-
-
-            this.dismiss();
-
-        }else {
-            this.dayTemp[0].selected = false;
-            this.dayTemp[0] = item;
-            this.dayTemp[1].selected = false;
-            this.dayTemp[1] = null;
-            this.ref.detectChanges();
-        }
-    }
 
     nextMonth(infiniteScroll: InfiniteScroll) {
         this.infiniteScroll = infiniteScroll;
@@ -568,8 +413,10 @@ export class CalendarComponent{
             lastDayOfYear = new Date(this.options.end);
         }
         // sets the range new
-        // this.options.range_beg = firstDayOfYear.getTime();
-        // this.options.range_end = lastDayOfYear.getTime();
+        // checking whether the start is after firstDayOfYear
+        this.options.range_beg = firstDayOfYear.getTime() < this.options.start ? this.options.start :  firstDayOfYear.getTime();
+        // checking whether the end is before lastDayOfYear
+        this.options.range_end = lastDayOfYear.getTime() > this.options.end ? this.options.end : lastDayOfYear.getTime();
         // calcing the months
         let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
         this.calendarMonths = this.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount );
@@ -579,42 +426,4 @@ export class CalendarComponent{
         }, 300)
     }
 
-
-    isStartSelection(day: CalendarDay): boolean {
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(this._savedHistory.from === day.time){
-            return true;
-        }
-        if(!day.selected){
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 0 && this._savedHistory.to !== day.time;
-    }
-
-    isEndSelection(day: CalendarDay): boolean {
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(this._savedHistory.to === day.time){
-            return true;
-        }
-        if(!day.selected){
-            return false;
-        }
-        return this.dayTemp.indexOf(day) === 1 && this._savedHistory.from !== day.time;
-    }
-
-    isBetween(day: CalendarDay): boolean{
-        if(this.options.isRadio) {
-            return false;
-        }
-        if(day.time > this._savedHistory.from || (this.dayTemp[0] !== null && day.time > this.dayTemp[0].time)){
-            if(day.time < this._savedHistory.to || (this.dayTemp[1] !== null && day.time < this.dayTemp[1].time)){
-                return true;
-            }
-        }
-        return false;
-    }
 }
