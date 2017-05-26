@@ -49,7 +49,7 @@ import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDate
                                     [isSaveHistory]="isSaveHistory" 
                                     [id]="_id"
                                     (onChange)="dismiss($event)"
-                                    [(model)]="dayTemp"></ion2-month>
+                                    [(ngModel)]="dayTemp"></ion2-month>
                         <!--<div class="days" *ngFor="let day of month.days">-->
                             <!--<button [class]="'days-btn ' + day.cssClass"-->
                                     <!--*ngIf="day"-->

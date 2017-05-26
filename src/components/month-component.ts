@@ -163,7 +163,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
 
     registerOnChange(fn: any): void {
         this._onChanged = fn;
-        this.setValue(this._date);
+        // this.setValue(this._date);
     }
 
     registerOnTouched(fn: any): void {
@@ -189,7 +189,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     isBetween(day: CalendarDay): boolean{
-        if(this.isRadio) {
+        if(this.isRadio || !this._date) {
             return false;
         }
         if(day.time > this.history.from || (this._date[0] !== null && day.time > this._date[0].time)){
@@ -243,7 +243,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         }
 
         if(!this._date[0]){
-
             this._date[0] = item;
 
             if(this.isSaveHistory){

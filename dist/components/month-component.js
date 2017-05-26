@@ -24,7 +24,7 @@ export var MonthComponent = (function () {
     };
     MonthComponent.prototype.registerOnChange = function (fn) {
         this._onChanged = fn;
-        this.setValue(this._date);
+        // this.setValue(this._date);
     };
     MonthComponent.prototype.registerOnTouched = function (fn) {
         this._onTouched = fn;
@@ -46,7 +46,7 @@ export var MonthComponent = (function () {
         return this._date.indexOf(day) === 1 && this.history.from !== day.time;
     };
     MonthComponent.prototype.isBetween = function (day) {
-        if (this.isRadio) {
+        if (this.isRadio || !this._date) {
             return false;
         }
         if (day.time > this.history.from || (this._date[0] !== null && day.time > this._date[0].time)) {
