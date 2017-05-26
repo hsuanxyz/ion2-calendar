@@ -41,10 +41,6 @@ export const MONTH_VALUE_ACCESSOR: any = {
     `,
     styles:[
             `
-            .calendar-page {
-                background-color: #fbfbfb;
-            }
-
             .month-box{
                 display: inline-block;
                 padding-bottom: 1em;
@@ -55,14 +51,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
                 padding: 0.5rem;
             }
 
-            h4 {
-                font-weight: 400;
-                font-size: 1.8rem;
-                display: block;
-                text-align: center;
-                margin: 1rem 0 0;
-                color: #929292;
-            }
+      
             .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
                 width: 15%;
             }
