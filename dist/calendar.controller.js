@@ -29,7 +29,9 @@ export var CalendarController = (function () {
             countNextMonths: countNextMonths,
             showYearPicker: showYearPicker,
         };
-        var calendarModal = this.modalCtrl.create(CalendarComponent, options, modalOptions);
+        var calendarModal = this.modalCtrl.create(CalendarComponent, Object.assign({
+            options: options
+        }, options), modalOptions);
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onWillDismiss(function (data) {
