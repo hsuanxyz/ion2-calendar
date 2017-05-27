@@ -1,4 +1,4 @@
-import {Component,  ElementRef, ChangeDetectorRef, Renderer, Input, Output, EventEmitter,
+import {Component, ChangeDetectorRef, Input, Output, EventEmitter,
     OnInit, forwardRef} from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
@@ -130,9 +130,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     _onTouched: Function;
     constructor(
         public ref: ChangeDetectorRef,
-        private _renderer: Renderer,
-        public _elementRef: ElementRef,
-
     ) {
     }
 
@@ -148,7 +145,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
 
     registerOnChange(fn: any): void {
         this._onChanged = fn;
-        // this.setValue(this._date);
     }
 
     registerOnTouched(fn: any): void {

@@ -4,6 +4,7 @@ import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angula
 import * as moment from 'moment';
 
 import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache} from '../calendar.model'
+import {CalendarService} from "../services/calendar.service";
 
 
 @Component({
@@ -117,6 +118,7 @@ export class CalendarComponent{
         public ref: ChangeDetectorRef,
         private _renderer: Renderer,
         public _elementRef: ElementRef,
+        public calSvc: CalendarService,
 
     ) {
         this.findCssClass();
