@@ -1,12 +1,14 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache } from '../calendar.model';
+import { CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache, CalendarControllerOptions } from '../calendar.model';
+import { CalendarService } from "../services/calendar.service";
 export declare class CalendarComponent {
     params: NavParams;
     viewCtrl: ViewController;
     ref: ChangeDetectorRef;
     private _renderer;
     _elementRef: ElementRef;
+    calSvc: CalendarService;
     content: Content;
     monthsEle: ElementRef;
     title: string;
@@ -15,11 +17,6 @@ export declare class CalendarComponent {
     calendarMonths: Array<CalendarMonth>;
     monthTitleFilterStr: string;
     weekdaysTitle: Array<string>;
-    _s: boolean;
-    _id: string;
-    _savedHistory: SavedDatesCache | any;
-    _color: string;
-    options: CalendarOptions;
     defaultDate: Date;
     scrollBackwards: boolean;
     weekStartDay: number;
@@ -30,22 +27,23 @@ export declare class CalendarComponent {
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
     closeIcon: boolean;
+    options: CalendarOptions;
     debug: boolean;
-    constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef);
+    _s: boolean;
+    _id: string;
+    _savedHistory: SavedDatesCache | any;
+    _color: string;
+    _d: CalendarControllerOptions;
+    constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;
-    createYearPicker(startTime: number, endTime: number): void;
     findCssClass(): void;
     dismiss(data: any): void;
+    createYearPicker(startTime: number, endTime: number): void;
     nextMonth(infiniteScroll: InfiniteScroll): void;
     backwardsMonth(): void;
     scrollToDefaultDate(): void;
     onScroll($event: any): void;
-    findDayConfig(day: any): any;
-    createOriginalCalendar(time: number): CalendarOriginal;
-    createCalendarDay(time: number): CalendarDay;
-    createCalendarMonth(original: CalendarOriginal): CalendarMonth;
-    createMonthsByPeriod(startTime: number, monthsNum: number): Array<CalendarMonth>;
     findInitMonthNumber(date: Date): number;
     changedYearSelection(): void;
 }

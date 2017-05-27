@@ -56,7 +56,10 @@ export class CalendarController {
             showYearPicker:showYearPicker,
         };
 
-        let calendarModal = this.modalCtrl.create(CalendarComponent, options,modalOptions);
+        let calendarModal = this.modalCtrl.create(CalendarComponent, Object.assign({
+            options:options
+        },options),modalOptions);
+
         calendarModal.present();
 
         return new Promise( (resolve, reject) => {

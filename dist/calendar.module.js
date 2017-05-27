@@ -5,6 +5,7 @@ import { IonicModule } from "ionic-angular";
 import { CalendarWeekComponent } from "./components/calendar-week-component";
 import { CalendarComponent } from "./components/calendar-component";
 import { MonthComponent } from "./components/month-component";
+import { CalendarService } from "./services/calendar.service";
 export var CalendarModule = (function () {
     function CalendarModule() {
     }
@@ -12,7 +13,7 @@ export var CalendarModule = (function () {
         { type: NgModule, args: [{
                     imports: [IonicModule, CommonModule],
                     declarations: [CalendarComponent, CalendarWeekComponent, MonthComponent],
-                    providers: [CalendarController],
+                    providers: [CalendarController, CalendarService],
                     exports: [],
                     entryComponents: [CalendarComponent,],
                     schemas: [

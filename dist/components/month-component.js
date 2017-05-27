@@ -1,4 +1,4 @@
-import { Component, ElementRef, ChangeDetectorRef, Renderer, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 export var MONTH_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
@@ -6,10 +6,8 @@ export var MONTH_VALUE_ACCESSOR = {
     multi: true
 };
 export var MonthComponent = (function () {
-    function MonthComponent(ref, _renderer, _elementRef) {
+    function MonthComponent(ref) {
         this.ref = ref;
-        this._renderer = _renderer;
-        this._elementRef = _elementRef;
         this.history = {};
         this.onChange = new EventEmitter();
         this._date = [null, null];
@@ -24,7 +22,6 @@ export var MonthComponent = (function () {
     };
     MonthComponent.prototype.registerOnChange = function (fn) {
         this._onChanged = fn;
-        // this.setValue(this._date);
     };
     MonthComponent.prototype.registerOnTouched = function (fn) {
         this._onTouched = fn;
@@ -157,8 +154,6 @@ export var MonthComponent = (function () {
     /** @nocollapse */
     MonthComponent.ctorParameters = function () { return [
         { type: ChangeDetectorRef, },
-        { type: Renderer, },
-        { type: ElementRef, },
     ]; };
     MonthComponent.propDecorators = {
         'month': [{ type: Input },],
