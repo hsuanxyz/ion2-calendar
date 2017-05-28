@@ -1,0 +1,39 @@
+{
+  "extends": [
+    "tslint-eslint-rules"
+  ],
+  "rules": {
+    "no-constant-condition": true,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "no-conditional-assignment": true,
+    "no-extra-boolean-cast": true,
+    "ter-no-irregular-whitespace": [true],
+    "ter-no-sparse-arrays": [true],
+    "valid-typeof": true,
+    "triple-equals": true,
+    "forin": true,
+    "no-multi-spaces": [
+      true,
+      {
+        "exceptions": { "PropertyAssignment": false, "OtherException": "true|false" }
+      }
+    ],
+    "no-duplicate-variable": true,
+    "no-unused-variable": true,
+    "block-spacing": [
+      true,
+      "always"
+    ],
+    "eofline": true,
+    "brace-style": [
+      true,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "indent": [true, "spaces"],
+    "ter-arrow-spacing": [true],
+    "no-var-keyword": true
+  }
+}

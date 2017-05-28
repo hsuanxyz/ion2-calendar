@@ -1,5 +1,4 @@
-import {Component, ChangeDetectorRef, Input, Output, EventEmitter,
-    OnInit, forwardRef} from '@angular/core';
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -8,7 +7,7 @@ import {CalendarDay, CalendarMonth, SavedDatesCache} from '../calendar.model'
 export const MONTH_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => MonthComponent),
-    multi: true
+    multi: true,
 };
 
 @Component({
@@ -112,7 +111,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
                 color: #3b97f7;
                 font-weight: 200;
             }
-        `
+        `,
     ],
 })
 export class MonthComponent implements ControlValueAccessor, OnInit{
@@ -134,7 +133,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     ngOnInit() {
-        if(this.isSaveHistory){
+        if(this.isSaveHistory) {
             this.history = this.savedHistory || {};
         }
     }
@@ -151,11 +150,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         this._onTouched = fn;
     }
 
-    private setValue(val: any): any {
-        this._date = val;
-        this.onChange.emit(this._date);
-    }
-
     isEndSelection(day: CalendarDay): boolean {
         if(this.isRadio) {
             return false;
@@ -169,7 +163,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         return this._date.indexOf(day) === 1 && this.history.from !== day.time;
     }
 
-    isBetween(day: CalendarDay): boolean{
+    isBetween(day: CalendarDay): boolean {
         if(this.isRadio || !this._date) {
             return false;
         }
@@ -204,16 +198,17 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
         localStorage.setItem(`ion-calendar-${this.id}`, JSON.stringify(savedDates));
     }
 
-    onSelected(item: any){
+    onSelected(item: any) {
         item.selected = true;
         this.ref.detectChanges();
         if(this.isRadio) {
-            this.savedHistory = <SavedDatesCache>{
+            this.savedHistory = <SavedDatesCache> {
                 type: 'radio',
                 id: this.id,
                 from: item.time,
-                to:0
+                to:0,
             };
+
             if(this.isSaveHistory) {
                 this.history = this.savedHistory;
             }
@@ -223,10 +218,10 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
             return;
         }
 
-        if(!this._date[0]){
+        if(!this._date[0]) {
             this._date[0] = item;
 
-            if(this.isSaveHistory){
+            if(this.isSaveHistory) {
                 if(this.history.to !== null) {
                     if(this._date[0].time > this.history.to){
                         this.history.to = this._date[0].time;
@@ -240,7 +235,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
                 this.ref.detectChanges();
             }
 
-        }else if(!this._date[1]){
+        }else if(!this._date[1]) {
             if(this._date[0].time < item.time){
                 this._date[1] = item;
             }else {
@@ -254,7 +249,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
                     type: 'radio',
                     id: this.id,
                     from: this._date[0].time,
-                    to: this._date[1].time
+                    to: this._date[1].time,
                 };
                 this.history = this.savedHistory;
             }

@@ -7,7 +7,8 @@
   "scripts": {
     "ngc": "ngc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf aot dist && npm run ngc && gulp copy-scss && gulp dist2nm"
+    "build": "rm -rf aot dist && npm run ngc && gulp copy-scss && gulp dist2nm",
+    "lint": "./node_modules/.bin/tslint -c tslint.json src/**/*.ts"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
     "ionic-angular": "2.3.0",
     "rxjs": "5.0.1",
     "sw-toolbox": "3.4.0",
+    "tslint": "^5.3.2",
+    "tslint-eslint-rules": "^4.1.1",
     "zone.js": "0.7.2"
   },
   "keywords": [

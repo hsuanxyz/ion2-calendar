@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'calendar-week-title',
@@ -6,16 +6,16 @@ import {Component, Input} from '@angular/core';
         <ion-toolbar class="week-toolbar"  no-border-top >
             <ul [class]="'week-title ' + color">
                 <li *ngFor="let w of _weekArray">{{w}}</li>
-            </ul>          
+            </ul>
         </ion-toolbar>
     `,
     styles:[
-        `
+            `
             .week-toolbar{
                 padding: 0;
                 box-shadow: 0 2px 4px rgb(158, 158, 158);
             }
-            
+
             .week-toolbar.toolbar-md {
                 min-height:44px;
             }
@@ -42,8 +42,8 @@ import {Component, Input} from '@angular/core';
             .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
                 width: 15%;
             }
-        `
-    ]
+        `,
+    ],
 })
 
 export class CalendarWeekComponent {
@@ -63,18 +63,17 @@ export class CalendarWeekComponent {
     }
 
     @Input()
-    set weekStart(value: number){
-        if(value === 0 || value === 1 ){
+    set weekStart(value: number) {
+        if(value === 0 || value === 1) {
             this._weekStart = value;
             this.adjustSort();
         }
     }
 
     adjustSort() {
-        if(this._weekStart === 1){
-            this._weekArray.push(this._weekArray.shift())
+        if(this._weekStart === 1) {
+            this._weekArray.push(this._weekArray.shift() )
         }
     }
-
 
 }
