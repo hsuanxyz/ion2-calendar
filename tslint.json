@@ -1,0 +1,22 @@
+{
+  "extends": [
+    "tslint-eslint-rules"
+  ],
+  "rules": {
+    "no-constant-condition": true,
+    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+    "no-conditional-assignment": true,
+    "no-extra-boolean-cast": true,
+    "ter-no-irregular-whitespace": [true],
+    "ter-no-sparse-arrays": [true],
+    "valid-typeof": true,
+    "triple-equals": true,
+    "forin": true,
+    "no-multi-spaces": [
+      true,
+      {
+        "exceptions": { "PropertyAssignment": false, "OtherException": "true|false" }
+      }
+    ]
+  }
+}
