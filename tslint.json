@@ -17,6 +17,23 @@
       {
         "exceptions": { "PropertyAssignment": false, "OtherException": "true|false" }
       }
-    ]
+    ],
+    "no-duplicate-variable": true,
+    "no-unused-variable": true,
+    "block-spacing": [
+      true,
+      "always"
+    ],
+    "eofline": true,
+    "brace-style": [
+      true,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "indent": [true, "spaces"],
+    "ter-arrow-spacing": [true],
+    "no-var-keyword": true
   }
 }
