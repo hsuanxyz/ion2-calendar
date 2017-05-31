@@ -107,6 +107,7 @@ calendar-page {
     }
     &.startSelection{
       border-radius: 50% 0px 0px 50%;
+      background-color: rgb(201, 225, 250);
     }
     &.between{
         background-color: rgba(201, 225, 250, 0.5);
@@ -115,6 +116,7 @@ calendar-page {
     }
     &.endSelection{
         border-radius: 0px 50% 50% 0px;
+      background-color: rgb(201, 225, 250);
     }
   }
 

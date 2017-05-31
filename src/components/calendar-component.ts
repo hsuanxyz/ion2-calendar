@@ -3,7 +3,7 @@ import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angula
 
 import * as moment from 'moment';
 
-import { CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache, CalendarControllerOptions } from '../calendar.model'
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 
 
@@ -45,7 +45,6 @@ import { CalendarService } from "../services/calendar.service";
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
                     <ion2-month [month]="month"
                                 [isRadio]="options.isRadio"
-                                [(history)]="_savedHistory"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
                                 (onChange)="dismiss($event)"
@@ -111,9 +110,18 @@ export class CalendarComponent {
 
     _s: boolean = true;
     _id: string;
-    _savedHistory: SavedDatesCache|any = {};
     _color: string = 'primary';
     _d: CalendarControllerOptions;
+
+    get savedHistory(): Array<CalendarDay|null>|null {
+        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this._id}`);
+        const _savedDates = <any>JSON.parse(_savedDatesCache);
+        return <Array<CalendarDay|null>|null>_savedDates
+    }
+
+    set savedHistory(savedDates: Array<CalendarDay|null>) {
+        localStorage.setItem(`ion-calendar-${this._id}`, JSON.stringify(savedDates));
+    }
 
     constructor(
         private _renderer: Renderer,
@@ -126,6 +134,7 @@ export class CalendarComponent {
     ) {
         this.findCssClass();
         this.init();
+        this.getHistory();
     }
 
     ionViewDidLoad() {
@@ -194,7 +203,16 @@ export class CalendarComponent {
     }
 
     dismiss(data: any) {
-        this.viewCtrl.dismiss(data);
+        // this.viewCtrl.dismiss(data);
+        this.savedHistory = data;
+        this.ref.detectChanges();
+
+    }
+
+    getHistory(){
+        if(this.isSaveHistory){
+            this.dayTemp = this.savedHistory || [null, null];
+        }
     }
 
     createYearPicker(startTime:number, endTime:number) {

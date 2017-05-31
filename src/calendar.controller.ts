@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
-import { ModalOptions, CalendarControllerOptions, SavedDatesCache } from './calendar.model'
+import { ModalOptions, CalendarControllerOptions } from './calendar.model'
 import { CalendarComponent } from "./components/calendar-component";
 
 
@@ -76,7 +76,7 @@ export class CalendarController {
 
     }
 
-    setHistory(param: SavedDatesCache) {
+    setHistory(param: any) {
         localStorage.setItem(`ion-calendar-${param.id}`, JSON.stringify(param));
     }
 
