@@ -3,12 +3,12 @@ import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
 import { CalendarService } from "../services/calendar.service";
 export var CalendarComponent = (function () {
-    function CalendarComponent(params, viewCtrl, ref, _renderer, _elementRef, calSvc) {
+    function CalendarComponent(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
+        this._renderer = _renderer;
+        this._elementRef = _elementRef;
         this.params = params;
         this.viewCtrl = viewCtrl;
         this.ref = ref;
-        this._renderer = _renderer;
-        this._elementRef = _elementRef;
         this.calSvc = calSvc;
         this.dayTemp = [null, null];
         this.monthTitleFilterStr = '';
@@ -90,7 +90,7 @@ export var CalendarComponent = (function () {
         var minYear = (new Date(startTime)).getFullYear();
         // calculating the needed years to be added to array
         var neededYears = (maxYear - minYear);
-        //pushing years to selection array
+        // pushing years to selection array
         for (var y = 0; y <= neededYears; y++) {
             this.years.push(maxYear - y);
         }
@@ -203,20 +203,20 @@ export var CalendarComponent = (function () {
     };
     CalendarComponent.decorators = [
         { type: Component, args: [{
-                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"dismiss()\">\n                         <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                        <ion2-month [month]=\"month\" \n                                    [isRadio]=\"options.isRadio\" \n                                    [(history)]=\"_savedHistory\" \n                                    [isSaveHistory]=\"isSaveHistory\" \n                                    [id]=\"_id\"\n                                    (onChange)=\"dismiss($event)\"\n                                    [(ngModel)]=\"dayTemp\"></ion2-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"dismiss()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion2-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [(history)]=\"_savedHistory\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"dismiss($event)\"\n                                [(ngModel)]=\"dayTemp\"></ion2-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
                     styles: [
-                        "\n            .calendar-page {\n                background-color: #fbfbfb;\n            }\n\n            .month-box{\n                display: inline-block;\n                padding-bottom: 1em;\n                border-bottom: 1px solid #f1f1f1;\n            }\n            \n            h4 {\n                font-weight: 400;\n                font-size: 1.8rem;\n                display: block;\n                text-align: center;\n                margin: 1rem 0 0;\n                color: #929292;\n            }\n           \n        "
+                        "\n            .calendar-page {\n                background-color: #fbfbfb;\n            }\n\n            .month-box{\n                display: inline-block;\n                padding-bottom: 1em;\n                border-bottom: 1px solid #f1f1f1;\n            }\n\n            h4 {\n                font-weight: 400;\n                font-size: 1.8rem;\n                display: block;\n                text-align: center;\n                margin: 1rem 0 0;\n                color: #929292;\n            }\n\n        ",
                     ],
                     selector: 'calendar-page',
                 },] },
     ];
     /** @nocollapse */
     CalendarComponent.ctorParameters = function () { return [
+        { type: Renderer, },
+        { type: ElementRef, },
         { type: NavParams, },
         { type: ViewController, },
         { type: ChangeDetectorRef, },
-        { type: Renderer, },
-        { type: ElementRef, },
         { type: CalendarService, },
     ]; };
     CalendarComponent.propDecorators = {

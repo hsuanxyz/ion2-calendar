@@ -15,10 +15,8 @@ export var CalendarModule = (function () {
                     declarations: [CalendarComponent, CalendarWeekComponent, MonthComponent],
                     providers: [CalendarController, CalendarService],
                     exports: [],
-                    entryComponents: [CalendarComponent,],
-                    schemas: [
-                        CUSTOM_ELEMENTS_SCHEMA
-                    ]
+                    entryComponents: [CalendarComponent],
+                    schemas: [CUSTOM_ELEMENTS_SCHEMA],
                 },] },
     ];
     /** @nocollapse */

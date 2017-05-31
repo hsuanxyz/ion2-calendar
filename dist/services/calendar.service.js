@@ -15,7 +15,7 @@ export var CalendarService = (function () {
             year: year,
             month: month,
             firstWeek: firstWeek,
-            howManyDays: howManyDays
+            howManyDays: howManyDays,
         };
     };
     CalendarService.prototype.findDayConfig = function (day, opt) {
@@ -57,7 +57,7 @@ export var CalendarService = (function () {
             cssClass: dayConfig ? dayConfig.cssClass || '' : '',
             disable: dayConfig ? dayConfig.disable || _disable : _disable,
             title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
-            subTitle: dayConfig ? dayConfig.subTitle || '' : ''
+            subTitle: dayConfig ? dayConfig.subTitle || '' : '',
         };
     };
     CalendarService.prototype.createCalendarMonth = function (original, opt) {
@@ -80,7 +80,7 @@ export var CalendarService = (function () {
         }
         return {
             original: original,
-            days: days
+            days: days,
         };
     };
     CalendarService.prototype.createMonthsByPeriod = function (startTime, monthsNum, opt) {

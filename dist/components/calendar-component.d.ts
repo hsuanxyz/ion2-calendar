@@ -3,11 +3,11 @@ import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angula
 import { CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache, CalendarControllerOptions } from '../calendar.model';
 import { CalendarService } from "../services/calendar.service";
 export declare class CalendarComponent {
+    private _renderer;
+    _elementRef: ElementRef;
     params: NavParams;
     viewCtrl: ViewController;
     ref: ChangeDetectorRef;
-    private _renderer;
-    _elementRef: ElementRef;
     calSvc: CalendarService;
     content: Content;
     monthsEle: ElementRef;
@@ -34,7 +34,7 @@ export declare class CalendarComponent {
     _savedHistory: SavedDatesCache | any;
     _color: string;
     _d: CalendarControllerOptions;
-    constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef, calSvc: CalendarService);
+    constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;
     findCssClass(): void;

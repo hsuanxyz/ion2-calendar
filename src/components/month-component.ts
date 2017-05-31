@@ -13,25 +13,42 @@ export const MONTH_VALUE_ACCESSOR: any = {
 @Component({
     selector: 'ion2-month',
     providers: [MONTH_VALUE_ACCESSOR],
-    template: `
-
-        <div class="days-box">
-            <div class="days" *ngFor="let day of month.days">
-                <button [class]="'days-btn ' + day.cssClass"
-                        *ngIf="day"
-                        [class.today]="day.isToday"
-                        (click)="onSelected(day)"
-                        [class.marked]="day.marked"
-                        [class.on-selected]="day.selected || history?.from === day.time || history?.to === day.time"
-                        [disabled]="day.disable"
-                        [class.startSelection]="isStartSelection(day)"
-                        [class.endSelection]="isEndSelection(day)"
-                        [class.between]="isBetween(day)">
-                    <p>{{day.title}}</p>
-                    <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-                </button>
+    template: `        
+        <ng-template *ngIf="isRadio">
+            <div class="days-box">
+                <div class="days" *ngFor="let day of month.days">
+                    <button [class]="'days-btn ' + day.cssClass"
+                            *ngIf="day"
+                            [class.today]="day.isToday"
+                            (click)="onSelected(day)"
+                            [class.marked]="day.marked"
+                            [class.on-selected]="day.selected || history?.from === day.time || history?.to === day.time"
+                            [disabled]="day.disable">
+                        <p>{{day.title}}</p>
+                        <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                    </button>
+                </div>
             </div>
-        </div>
+        </ng-template>
+        <ng-template *ngIf="!isRadio">
+            <div class="days-box">
+                <div class="days" *ngFor="let day of month.days">
+                    <button [class]="'days-btn ' + day.cssClass"
+                            *ngIf="day"
+                            [class.today]="day.isToday"
+                            (click)="onSelected(day)"
+                            [class.marked]="day.marked"
+                            [class.on-selected]="day.selected || history?.from === day.time || history?.to === day.time"
+                            [disabled]="day.disable"
+                            [class.startSelection]="isStartSelection(day)"
+                            [class.endSelection]="isEndSelection(day)"
+                            [class.between]="isBetween(day)">
+                        <p>{{day.title}}</p>
+                        <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                    </button>
+                </div>
+            </div>
+        </ng-template>
 
     `,
     styles:[
