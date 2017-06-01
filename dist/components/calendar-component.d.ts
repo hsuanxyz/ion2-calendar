@@ -1,13 +1,13 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache, CalendarControllerOptions } from '../calendar.model';
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model';
 import { CalendarService } from "../services/calendar.service";
 export declare class CalendarComponent {
+    private _renderer;
+    _elementRef: ElementRef;
     params: NavParams;
     viewCtrl: ViewController;
     ref: ChangeDetectorRef;
-    private _renderer;
-    _elementRef: ElementRef;
     calSvc: CalendarService;
     content: Content;
     monthsEle: ElementRef;
@@ -31,14 +31,14 @@ export declare class CalendarComponent {
     debug: boolean;
     _s: boolean;
     _id: string;
-    _savedHistory: SavedDatesCache | any;
     _color: string;
     _d: CalendarControllerOptions;
-    constructor(params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, _renderer: Renderer, _elementRef: ElementRef, calSvc: CalendarService);
+    constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;
     findCssClass(): void;
     dismiss(data: any): void;
+    getHistory(): void;
     createYearPicker(startTime: number, endTime: number): void;
     nextMonth(infiniteScroll: InfiniteScroll): void;
     backwardsMonth(): void;

@@ -3,7 +3,7 @@ import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angula
 
 import * as moment from 'moment';
 
-import { CalendarDay, CalendarMonth, CalendarOptions, SavedDatesCache, CalendarControllerOptions } from '../calendar.model'
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 
 
@@ -45,7 +45,6 @@ import { CalendarService } from "../services/calendar.service";
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
                     <ion2-month [month]="month"
                                 [isRadio]="options.isRadio"
-                                [(history)]="_savedHistory"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
                                 (onChange)="dismiss($event)"
@@ -59,29 +58,6 @@ import { CalendarService } from "../services/calendar.service";
 
         </ion-content>
     `,
-    styles:[
-            `
-            .calendar-page {
-                background-color: #fbfbfb;
-            }
-
-            .month-box{
-                display: inline-block;
-                padding-bottom: 1em;
-                border-bottom: 1px solid #f1f1f1;
-            }
-
-            h4 {
-                font-weight: 400;
-                font-size: 1.8rem;
-                display: block;
-                text-align: center;
-                margin: 1rem 0 0;
-                color: #929292;
-            }
-
-        `,
-    ],
     selector: 'calendar-page',
 
 })
@@ -111,7 +87,6 @@ export class CalendarComponent {
 
     _s: boolean = true;
     _id: string;
-    _savedHistory: SavedDatesCache|any = {};
     _color: string = 'primary';
     _d: CalendarControllerOptions;
 
@@ -126,6 +101,7 @@ export class CalendarComponent {
     ) {
         this.findCssClass();
         this.init();
+        this.getHistory();
     }
 
     ionViewDidLoad() {
@@ -194,7 +170,16 @@ export class CalendarComponent {
     }
 
     dismiss(data: any) {
-        this.viewCtrl.dismiss(data);
+        // this.viewCtrl.dismiss(data);
+        this.calSvc.savedHistory(data, this._id);
+        this.ref.detectChanges();
+
+    }
+
+    getHistory(){
+        if(this.isSaveHistory){
+            this.dayTemp = this.calSvc.getHistory(this._id);
+        }
     }
 
     createYearPicker(startTime:number, endTime:number) {

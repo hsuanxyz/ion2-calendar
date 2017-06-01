@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, EventEmitter, OnInit } from '@angular/core';
 import { ControlValueAccessor } from "@angular/forms";
-import { CalendarDay, CalendarMonth, SavedDatesCache } from '../calendar.model';
+import { CalendarDay, CalendarMonth } from '../calendar.model';
 export declare const MONTH_VALUE_ACCESSOR: any;
 export declare class MonthComponent implements ControlValueAccessor, OnInit {
     ref: ChangeDetectorRef;
     month: CalendarMonth;
     isRadio: boolean;
-    history: SavedDatesCache | any;
     isSaveHistory: boolean;
     id: any;
     onChange: EventEmitter<any>;
@@ -18,10 +17,9 @@ export declare class MonthComponent implements ControlValueAccessor, OnInit {
     writeValue(obj: any): void;
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
-    private setValue(val);
     isEndSelection(day: CalendarDay): boolean;
     isBetween(day: CalendarDay): boolean;
     isStartSelection(day: CalendarDay): boolean;
-    savedHistory: SavedDatesCache | null;
+    isSelected(time: number): boolean;
     onSelected(item: any): void;
 }

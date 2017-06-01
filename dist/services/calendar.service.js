@@ -15,7 +15,7 @@ export var CalendarService = (function () {
             year: year,
             month: month,
             firstWeek: firstWeek,
-            howManyDays: howManyDays
+            howManyDays: howManyDays,
         };
     };
     CalendarService.prototype.findDayConfig = function (day, opt) {
@@ -57,7 +57,7 @@ export var CalendarService = (function () {
             cssClass: dayConfig ? dayConfig.cssClass || '' : '',
             disable: dayConfig ? dayConfig.disable || _disable : _disable,
             title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
-            subTitle: dayConfig ? dayConfig.subTitle || '' : ''
+            subTitle: dayConfig ? dayConfig.subTitle || '' : '',
         };
     };
     CalendarService.prototype.createCalendarMonth = function (original, opt) {
@@ -80,7 +80,7 @@ export var CalendarService = (function () {
         }
         return {
             original: original,
-            days: days
+            days: days,
         };
     };
     CalendarService.prototype.createMonthsByPeriod = function (startTime, monthsNum, opt) {
@@ -93,6 +93,20 @@ export var CalendarService = (function () {
             _array.push(this.createCalendarMonth(originalCalendar, opt));
         }
         return _array;
+    };
+    CalendarService.prototype.getHistory = function (id) {
+        var _savedDatesCache = localStorage.getItem("ion-calendar-" + id);
+        var _savedDates;
+        if (_savedDatesCache === 'undefined' || _savedDatesCache === 'null' || !_savedDatesCache) {
+            _savedDates = [null, null];
+        }
+        else {
+            _savedDates = JSON.parse(_savedDatesCache);
+        }
+        return _savedDates;
+    };
+    CalendarService.prototype.savedHistory = function (savedDates, id) {
+        localStorage.setItem("ion-calendar-" + id, JSON.stringify(savedDates));
     };
     CalendarService.decorators = [
         { type: Injectable },

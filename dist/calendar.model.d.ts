@@ -76,8 +76,3 @@ export interface CalendarControllerOptions {
         subTitle?: string;
     }>;
 }
-export interface SavedDatesCache {
-    id: string;
-    from?: number;
-    to?: number;
-}

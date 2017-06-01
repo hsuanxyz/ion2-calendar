@@ -83,8 +83,3 @@ export interface CalendarControllerOptions {
     }>
 }
 
-export interface SavedDatesCache {
-    id:string;
-    from?:number;
-    to?:number;
-}
