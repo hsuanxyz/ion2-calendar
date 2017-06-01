@@ -58,29 +58,6 @@ import { CalendarService } from "../services/calendar.service";
 
         </ion-content>
     `,
-    styles:[
-            `
-            .calendar-page {
-                background-color: #fbfbfb;
-            }
-
-            .month-box{
-                display: inline-block;
-                padding-bottom: 1em;
-                border-bottom: 1px solid #f1f1f1;
-            }
-
-            h4 {
-                font-weight: 400;
-                font-size: 1.8rem;
-                display: block;
-                text-align: center;
-                margin: 1rem 0 0;
-                color: #929292;
-            }
-
-        `,
-    ],
     selector: 'calendar-page',
 
 })

@@ -1,26 +1,4 @@
-@mixin transition-property($args...) {
-    -webkit-transition-property: $args;
-    -moz-transition-property: $args;
-    -ms-transition-property: $args;
-    -o-transition-property: $args;
-    transition-property: $args;
-}
 
-@mixin transition-duration($args...) {
-    -webkit-transition-duration: $args;
-    -moz-transition-duration: $args;
-    -ms-transition-duration: $args;
-    -o-transition-duration: $args;
-    transition-duration: $args;
-}
-
-@mixin transition-timing-function($args...) {
-    -webkit-transition-timing-function: $args;
-    -moz-transition-timing-function: $args;
-    -ms-transition-timing-function: $args;
-    -o-transition-timing-function: $args;
-    transition-timing-function: $args;
-}
 
 calendar-page {
   ion-select {
@@ -42,10 +20,6 @@ calendar-page {
     border-bottom: 1px solid #f1f1f1;
   }
 
-  .days-box {
-    padding: 0.5rem;
-  }
-
   h4 {
     font-weight: 400;
     font-size: 1.8rem;
@@ -54,96 +28,6 @@ calendar-page {
     margin: 1rem 0 0;
     color: #929292;
   }
-  .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
-    width: 15%;
-  }
-
-  .days {
-    width: 14%;
-    float: left;
-    text-align: center;
-    height: 40px;
-  }
-  .days .marked p{
-    color: rgb(59, 151, 247);
-    font-weight:500;
-  }
-
-  .days .today p {
-    border-bottom: 2px solid rgb(59, 151, 247);
-    padding-bottom: 2px;
-  }
-
-  .days .on-selected{
-    background-color: rgb(201, 225, 250);
-    border: none;
-  }
-
-  .days .on-selected p{
-    color: rgb(59, 151, 247);
-    font-size: 1.3em;
-  }
-
-  button.days-btn {
-    border-radius: 50%;
-    width: 36px;
-    display: block;
-    margin: 0 auto;
-    height: 36px;
-    background-color: transparent;
-    position: relative;
-    z-index:2;
-    &.startSelection,
-    &.endSelection,
-    &.between{
-        @include transition-property(
-            border-radius,
-            background-color);
-        @include transition-duration(300ms);
-        @include transition-timing-function(ease-in-out);
-    }
-    &.startSelection.endSelection{
-      border-radius: 50%;
-    }
-    &.startSelection{
-      border-radius: 50% 0px 0px 50%;
-      background-color: rgb(201, 225, 250);
-    }
-    &.between{
-        background-color: rgba(201, 225, 250, 0.5);
-        width: 100%;
-        border-radius: 0px;
-    }
-    &.endSelection{
-        border-radius: 0px 50% 50% 0px;
-      background-color: rgb(201, 225, 250);
-    }
-  }
-
-  button.days-btn p {
-    margin:0;
-    font-size: 1.2em;
-    color: #333;
-  }
-
-  button.days-btn.on-selected small{
-    transition: bottom .3s;
-    bottom: -14px;
-  }
-
-  button.days-btn small {
-    overflow: hidden;
-    display: block;
-    left: 0;
-    right: 0;
-    bottom: -5px;
-    position: absolute;
-    z-index:1;
-    text-align: center;
-    color: #3b97f7;
-    font-weight: 200;
-  }
-
 
 }
 

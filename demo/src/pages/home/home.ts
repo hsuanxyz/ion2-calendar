@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import {CalendarController} from "ion2-calendar";
-import {SavedDatesCache} from "../../../../src/calendar.model";
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -19,13 +18,6 @@ export class HomePage {
   }
 
   basic() {
-
-    if(!this.calendarCtrl.getHistory('1')){
-      this.calendarCtrl.setHistory({
-        id: '1',
-        from: new Date(2017,4,10).getTime(),
-      });
-    }
 
     this.calendarCtrl.openCalendar({
       id:'1',
