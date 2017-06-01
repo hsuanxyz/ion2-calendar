@@ -33,7 +33,6 @@ export declare class CalendarComponent {
     _id: string;
     _color: string;
     _d: CalendarControllerOptions;
-    savedHistory: Array<CalendarDay | null> | null;
     constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;

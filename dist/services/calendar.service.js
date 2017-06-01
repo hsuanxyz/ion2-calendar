@@ -94,6 +94,20 @@ export var CalendarService = (function () {
         }
         return _array;
     };
+    CalendarService.prototype.getHistory = function (id) {
+        var _savedDatesCache = localStorage.getItem("ion-calendar-" + id);
+        var _savedDates;
+        if (_savedDatesCache === 'undefined' || _savedDatesCache === 'null' || !_savedDatesCache) {
+            _savedDates = [null, null];
+        }
+        else {
+            _savedDates = JSON.parse(_savedDatesCache);
+        }
+        return _savedDates;
+    };
+    CalendarService.prototype.savedHistory = function (savedDates, id) {
+        localStorage.setItem("ion-calendar-" + id, JSON.stringify(savedDates));
+    };
     CalendarService.decorators = [
         { type: Injectable },
     ];

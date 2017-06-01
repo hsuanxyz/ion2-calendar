@@ -90,16 +90,6 @@ export class CalendarComponent {
     _color: string = 'primary';
     _d: CalendarControllerOptions;
 
-    get savedHistory(): Array<CalendarDay|null>|null {
-        const _savedDatesCache = localStorage.getItem(`ion-calendar-${this._id}`);
-        const _savedDates = <any>JSON.parse(_savedDatesCache);
-        return <Array<CalendarDay|null>|null>_savedDates
-    }
-
-    set savedHistory(savedDates: Array<CalendarDay|null>) {
-        localStorage.setItem(`ion-calendar-${this._id}`, JSON.stringify(savedDates));
-    }
-
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
@@ -181,14 +171,14 @@ export class CalendarComponent {
 
     dismiss(data: any) {
         // this.viewCtrl.dismiss(data);
-        this.savedHistory = data;
+        this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
 
     }
 
     getHistory(){
         if(this.isSaveHistory){
-            this.dayTemp = this.savedHistory || [null, null];
+            this.dayTemp = this.calSvc.getHistory(this._id);
         }
     }
 

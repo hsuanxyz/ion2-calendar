@@ -21,18 +21,6 @@ export var CalendarComponent = (function () {
         this.init();
         this.getHistory();
     }
-    Object.defineProperty(CalendarComponent.prototype, "savedHistory", {
-        get: function () {
-            var _savedDatesCache = localStorage.getItem("ion-calendar-" + this._id);
-            var _savedDates = JSON.parse(_savedDatesCache);
-            return _savedDates;
-        },
-        set: function (savedDates) {
-            localStorage.setItem("ion-calendar-" + this._id, JSON.stringify(savedDates));
-        },
-        enumerable: true,
-        configurable: true
-    });
     CalendarComponent.prototype.ionViewDidLoad = function () {
         this.scrollToDefaultDate();
         if (this.content.enableScrollListener && this.scrollBackwards) {
@@ -88,12 +76,12 @@ export var CalendarComponent = (function () {
     };
     CalendarComponent.prototype.dismiss = function (data) {
         // this.viewCtrl.dismiss(data);
-        this.savedHistory = data;
+        this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
     };
     CalendarComponent.prototype.getHistory = function () {
         if (this.isSaveHistory) {
-            this.dayTemp = this.savedHistory || [null, null];
+            this.dayTemp = this.calSvc.getHistory(this._id);
         }
     };
     CalendarComponent.prototype.createYearPicker = function (startTime, endTime) {
