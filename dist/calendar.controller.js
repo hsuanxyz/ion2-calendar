@@ -35,8 +35,16 @@ export var CalendarController = (function () {
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onWillDismiss(function (data) {
-                if (data && ((data.from && data.to) || data.time)) {
-                    resolve(data);
+                var result = {};
+                if (data && Array.isArray(data)) {
+                    if (options.isRadio) {
+                        result.date = data[0];
+                    }
+                    else {
+                        result.from = data[0];
+                        result.to = data[1];
+                    }
+                    resolve(result);
                 }
                 else {
                     reject('cancelled');

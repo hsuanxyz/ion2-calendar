@@ -13,11 +13,14 @@ import { CalendarService } from "../services/calendar.service";
             <ion-navbar [color]="_color">
 
                 <ion-buttons start>
-                    <button ion-button clear *ngIf="closeLabel !== '' && !closeIcon" (click)="dismiss()">
+                    <button ion-button clear *ngIf="closeLabel !== '' && !closeIcon" (click)="onCancel()">
                         {{closeLabel}}
                     </button>
-                    <button ion-button icon-only clear *ngIf="closeLabel === '' || closeIcon" (click)="dismiss()">
+                    <button ion-button icon-only clear *ngIf="closeLabel === '' || closeIcon" (click)="onCancel()">
                         <ion-icon name="close"></ion-icon>
+                    </button>
+                    <button ion-button icon-only clear [disabled]="!canDone()" (click)="done()">
+                        <ion-icon name="checkmark"></ion-icon>
                     </button>
                 </ion-buttons>
 
@@ -47,7 +50,7 @@ import { CalendarService } from "../services/calendar.service";
                                 [isRadio]="options.isRadio"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
-                                (onChange)="dismiss($event)"
+                                (onChange)="onChange($event)"
                                 [(ngModel)]="dayTemp"></ion2-month>
                 </div>
             </div>
@@ -169,11 +172,29 @@ export class CalendarComponent {
 
     }
 
-    dismiss(data: any) {
-        // this.viewCtrl.dismiss(data);
+    onChange(data: any) {
         this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
+    }
 
+    onCancel() {
+        this.viewCtrl.dismiss();
+    }
+
+    done() {
+        this.viewCtrl.dismiss(this.dayTemp);
+    }
+
+    canDone(): boolean {
+        if(!Array.isArray(this.dayTemp)){
+            return false
+        }
+
+        if(this._d.isRadio){
+            return !!(this.dayTemp[0] && this.dayTemp[0].time);
+        }else {
+            return !!(this.dayTemp[0] && this.dayTemp[1]) && !!( this.dayTemp[0].time && this.dayTemp[1].time);
+        }
     }
 
     getHistory(){
@@ -280,7 +301,6 @@ export class CalendarComponent {
             },180)
         }
     }
-
 
     findInitMonthNumber(date: Date): number {
         let startDate = moment(this.options.start);

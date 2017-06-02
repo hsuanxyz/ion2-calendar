@@ -7,6 +7,8 @@ import { CalendarComponent } from "./components/calendar-component";
 
 @Injectable()
 export class CalendarController {
+
+    isRadio: boolean;
     constructor(
         public modalCtrl: ModalController
     ) { }
@@ -65,8 +67,19 @@ export class CalendarController {
         return new Promise( (resolve, reject) => {
 
             calendarModal.onWillDismiss((data:any)=> {
-                if( data && ( (data.from && data.to) || data.time ) ){
-                    resolve(data)
+                let result: {
+                    date?: any;
+                    from?: any;
+                    to?: any;
+                } = {};
+                if(data && Array.isArray(data)){
+                    if(options.isRadio){
+                        result.date = data[0];
+                    }else {
+                        result.from = data[0];
+                        result.to = data[1];
+                    }
+                    resolve(result)
                 }else {
                     reject('cancelled')
                 }
