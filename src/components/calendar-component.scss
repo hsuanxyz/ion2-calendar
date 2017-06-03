@@ -2,7 +2,8 @@
 
 calendar-page {
   ion-select {
-    .select-icon>.select-icon-inner{
+    max-width: unset;
+    .select-icon>.select-icon-inner, .select-text{
       color: #fff !important;
     }
     &.select-ios{

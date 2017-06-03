@@ -10,9 +10,18 @@ import { CalendarService } from "../services/calendar.service";
 @Component({
     template: `
         <ion-header>
+            
             <ion-navbar [color]="_color">
 
                 <ion-buttons start>
+                    <ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">
+                        <ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>
+                    </ion-select>
+                </ion-buttons>
+
+                <ion-title>{{title}}</ion-title>
+                
+                <ion-buttons end>
                     <button ion-button clear *ngIf="closeLabel !== '' && !closeIcon" (click)="onCancel()">
                         {{closeLabel}}
                     </button>
@@ -24,13 +33,6 @@ import { CalendarService } from "../services/calendar.service";
                     </button>
                 </ion-buttons>
 
-
-                <ion-title *ngIf="showYearPicker">
-                    <ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">
-                        <ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>
-                    </ion-select>
-                </ion-title>
-                <ion-title *ngIf="!showYearPicker">{{title}}</ion-title>
             </ion-navbar>
 
             <calendar-week-title

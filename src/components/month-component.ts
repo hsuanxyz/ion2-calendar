@@ -14,7 +14,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
     selector: 'ion2-month',
     providers: [MONTH_VALUE_ACCESSOR],
     template: `        
-        <ng-template *ngIf="isRadio">
+        <div *ngIf="isRadio">
             <div class="days-box">
                 <div class="days" *ngFor="let day of month.days">
                     <button [class]="'days-btn ' + day.cssClass"
@@ -29,8 +29,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                     </button>
                 </div>
             </div>
-        </ng-template>
-        <ng-template *ngIf="!isRadio">
+        </div>
+        <div *ngIf="!isRadio">
             <div class="days-box">
                 <div class="days" *ngFor="let day of month.days">
                     <button [class]="'days-btn ' + day.cssClass"
@@ -48,7 +48,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
                     </button>
                 </div>
             </div>
-        </ng-template>
+        </div>
 
     `,
 })
