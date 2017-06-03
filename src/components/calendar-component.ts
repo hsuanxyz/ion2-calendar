@@ -13,7 +13,7 @@ import { CalendarService } from "../services/calendar.service";
             
             <ion-navbar [color]="_color">
 
-                <ion-buttons start>
+                <ion-buttons start [hidden]="!showYearPicker">
                     <ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">
                         <ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>
                     </ion-select>
@@ -227,6 +227,7 @@ export class CalendarComponent {
             this.years.push(maxYear - y);
         }
 
+        this.years.reverse();
         // selection-start-year of defaultDate
         this.year = this.defaultDate.getFullYear();
         let firstDayOfYear = new Date(this.year, 0, 1);
