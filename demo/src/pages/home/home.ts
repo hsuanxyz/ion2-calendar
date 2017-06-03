@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { NavController } from 'ionic-angular';
 import {CalendarController} from "ion2-calendar";
+import {Observable, Observer} from 'rxjs';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -16,6 +17,7 @@ export class HomePage {
   ) {
 
   }
+
 
   basic() {
 

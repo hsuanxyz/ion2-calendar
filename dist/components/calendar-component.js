@@ -74,10 +74,26 @@ export var CalendarComponent = (function () {
             });
         }
     };
-    CalendarComponent.prototype.dismiss = function (data) {
-        // this.viewCtrl.dismiss(data);
+    CalendarComponent.prototype.onChange = function (data) {
         this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
+    };
+    CalendarComponent.prototype.onCancel = function () {
+        this.viewCtrl.dismiss();
+    };
+    CalendarComponent.prototype.done = function () {
+        this.viewCtrl.dismiss(this.dayTemp);
+    };
+    CalendarComponent.prototype.canDone = function () {
+        if (!Array.isArray(this.dayTemp)) {
+            return false;
+        }
+        if (this._d.isRadio) {
+            return !!(this.dayTemp[0] && this.dayTemp[0].time);
+        }
+        else {
+            return !!(this.dayTemp[0] && this.dayTemp[1]) && !!(this.dayTemp[0].time && this.dayTemp[1].time);
+        }
     };
     CalendarComponent.prototype.getHistory = function () {
         if (this.isSaveHistory) {
@@ -210,7 +226,7 @@ export var CalendarComponent = (function () {
     };
     CalendarComponent.decorators = [
         { type: Component, args: [{
-                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"dismiss()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"dismiss()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion2-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"dismiss($event)\"\n                                [(ngModel)]=\"dayTemp\"></ion2-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+                    template: "\n        <ion-header>\n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"onCancel()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"onCancel()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button icon-only clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <ion-icon name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n\n                <ion-title *ngIf=\"showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-title>\n                <ion-title *ngIf=\"!showYearPicker\">{{title}}</ion-title>\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion2-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\"></ion2-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
                     selector: 'calendar-page',
                 },] },
     ];

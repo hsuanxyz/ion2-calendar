@@ -37,7 +37,10 @@ export declare class CalendarComponent {
     ionViewDidLoad(): void;
     init(): void;
     findCssClass(): void;
-    dismiss(data: any): void;
+    onChange(data: any): void;
+    onCancel(): void;
+    done(): void;
+    canDone(): boolean;
     getHistory(): void;
     createYearPicker(startTime: number, endTime: number): void;
     nextMonth(infiniteScroll: InfiniteScroll): void;
