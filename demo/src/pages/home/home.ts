@@ -31,7 +31,6 @@ export class HomePage {
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} );
-
   }
 
   setDefaultDate() {
