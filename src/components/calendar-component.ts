@@ -112,9 +112,9 @@ export class CalendarComponent {
     ionViewDidLoad() {
         this.scrollToDefaultDate();
 
-        if(this.content.enableScrollListener && this.scrollBackwards ){
-            this.content.enableScrollListener();
-        }
+        // if(this.content.enableScrollListener && this.scrollBackwards ){
+        //     this.content.enableScrollListener();
+        // }
     }
 
     init(){
