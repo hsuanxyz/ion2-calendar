@@ -1,6 +1,9 @@
+/**
+ * Created by hsuanlee on 27/05/2017.
+ */
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
-export var CalendarService = (function () {
+var CalendarService = (function () {
     function CalendarService() {
     }
     CalendarService.prototype.createOriginalCalendar = function (time) {
@@ -108,11 +111,12 @@ export var CalendarService = (function () {
     CalendarService.prototype.savedHistory = function (savedDates, id) {
         localStorage.setItem("ion-calendar-" + id, JSON.stringify(savedDates));
     };
-    CalendarService.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    CalendarService.ctorParameters = function () { return []; };
     return CalendarService;
 }());
+export { CalendarService };
+CalendarService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+CalendarService.ctorParameters = function () { return []; };
 //# sourceMappingURL=calendar.service.js.map

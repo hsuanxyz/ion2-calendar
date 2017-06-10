@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
+import {CalendarController } from "ion2-calendar";
 
-import { NavController } from 'ionic-angular';
-import {CalendarController} from "ion2-calendar";
-import {Observable, Observer} from 'rxjs';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -10,9 +8,7 @@ import {Observable, Observer} from 'rxjs';
 export class HomePage {
 
   days:Array<any> = [];
-
   constructor(
-    public navCtrl: NavController,
     public calendarCtrl: CalendarController
   ) {
 

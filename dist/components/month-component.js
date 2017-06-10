@@ -5,7 +5,7 @@ export var MONTH_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return MonthComponent; }),
     multi: true,
 };
-export var MonthComponent = (function () {
+var MonthComponent = (function () {
     function MonthComponent(ref) {
         this.ref = ref;
         this.onChange = new EventEmitter();
@@ -97,24 +97,25 @@ export var MonthComponent = (function () {
         this.onChange.emit(this._date);
         this.ref.detectChanges();
     };
-    MonthComponent.decorators = [
-        { type: Component, args: [{
-                    selector: 'ion2-month',
-                    providers: [MONTH_VALUE_ACCESSOR],
-                    template: "        \n        <div *ngIf=\"isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div *ngIf=\"!isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\"\n                            [class.startSelection]=\"isStartSelection(day)\"\n                            [class.endSelection]=\"isEndSelection(day)\"\n                            [class.between]=\"isBetween(day)\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n\n    ",
-                },] },
-    ];
-    /** @nocollapse */
-    MonthComponent.ctorParameters = function () { return [
-        { type: ChangeDetectorRef, },
-    ]; };
-    MonthComponent.propDecorators = {
-        'month': [{ type: Input },],
-        'isRadio': [{ type: Input },],
-        'isSaveHistory': [{ type: Input },],
-        'id': [{ type: Input },],
-        'onChange': [{ type: Output },],
-    };
     return MonthComponent;
 }());
+export { MonthComponent };
+MonthComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ion-calendar-month',
+                providers: [MONTH_VALUE_ACCESSOR],
+                template: "        \n        <div *ngIf=\"isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div *ngIf=\"!isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\"\n                            [class.startSelection]=\"isStartSelection(day)\"\n                            [class.endSelection]=\"isEndSelection(day)\"\n                            [class.between]=\"isBetween(day)\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n\n    ",
+            },] },
+];
+/** @nocollapse */
+MonthComponent.ctorParameters = function () { return [
+    { type: ChangeDetectorRef, },
+]; };
+MonthComponent.propDecorators = {
+    'month': [{ type: Input },],
+    'isRadio': [{ type: Input },],
+    'isSaveHistory': [{ type: Input },],
+    'id': [{ type: Input },],
+    'onChange': [{ type: Output },],
+};
 //# sourceMappingURL=month-component.js.map

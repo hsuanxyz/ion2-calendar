@@ -8,6 +8,7 @@ import { CalendarService } from "../services/calendar.service";
 
 
 @Component({
+    selector: 'ion-calendar-modal',
     template: `
         <ion-header>
             
@@ -35,11 +36,11 @@ import { CalendarService } from "../services/calendar.service";
 
             </ion-navbar>
 
-            <calendar-week-title
+            <ion-calendar-week
                     [color]="_color"
                     [weekArray]="weekdaysTitle"
                     [weekStart]="weekStartDay">
-            </calendar-week-title>
+            </ion-calendar-week>
 
         </ion-header>
 
@@ -48,12 +49,14 @@ import { CalendarService } from "../services/calendar.service";
             <div #months>
                 <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
-                    <ion2-month [month]="month"
+                    <ion-calendar-month [month]="month"
                                 [isRadio]="options.isRadio"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
                                 (onChange)="onChange($event)"
-                                [(ngModel)]="dayTemp"></ion2-month>
+                                [(ngModel)]="dayTemp">
+                        
+                    </ion-calendar-month>
                 </div>
             </div>
 
@@ -63,7 +66,6 @@ import { CalendarService } from "../services/calendar.service";
 
         </ion-content>
     `,
-    selector: 'calendar-page',
 
 })
 export class CalendarComponent {
@@ -111,10 +113,6 @@ export class CalendarComponent {
 
     ionViewDidLoad() {
         this.scrollToDefaultDate();
-
-        // if(this.content.enableScrollListener && this.scrollBackwards ){
-        //     this.content.enableScrollListener();
-        // }
     }
 
     init(){

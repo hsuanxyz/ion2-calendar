@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@
 import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
 import { CalendarService } from "../services/calendar.service";
-export var CalendarComponent = (function () {
+var CalendarComponent = (function () {
     function CalendarComponent(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
         this._renderer = _renderer;
         this._elementRef = _elementRef;
@@ -23,9 +23,6 @@ export var CalendarComponent = (function () {
     }
     CalendarComponent.prototype.ionViewDidLoad = function () {
         this.scrollToDefaultDate();
-        if (this.content.enableScrollListener && this.scrollBackwards) {
-            this.content.enableScrollListener();
-        }
     };
     CalendarComponent.prototype.init = function () {
         var params = this.params;
@@ -161,7 +158,7 @@ export var CalendarComponent = (function () {
     CalendarComponent.prototype.scrollToDefaultDate = function () {
         var _this = this;
         var defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
-        var defaultDateMonth = this.monthsEle.nativeElement.children[("month-" + defaultDateIndex)].offsetTop;
+        var defaultDateMonth = this.monthsEle.nativeElement.children["month-" + defaultDateIndex].offsetTop;
         if (defaultDateIndex === 0 || defaultDateMonth === 0)
             return;
         setTimeout(function () {
@@ -225,25 +222,26 @@ export var CalendarComponent = (function () {
             _this.content.scrollTo(0, 0, 128);
         }, 300);
     };
-    CalendarComponent.decorators = [
-        { type: Component, args: [{
-                    template: "\n        <ion-header>\n            \n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start [hidden]=\"!showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-buttons>\n\n                <ion-title>{{title}}</ion-title>\n                \n                <ion-buttons end>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"onCancel()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"onCancel()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button icon-only clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <ion-icon name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n            </ion-navbar>\n\n            <calendar-week-title\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </calendar-week-title>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion2-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\"></ion2-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
-                    selector: 'calendar-page',
-                },] },
-    ];
-    /** @nocollapse */
-    CalendarComponent.ctorParameters = function () { return [
-        { type: Renderer, },
-        { type: ElementRef, },
-        { type: NavParams, },
-        { type: ViewController, },
-        { type: ChangeDetectorRef, },
-        { type: CalendarService, },
-    ]; };
-    CalendarComponent.propDecorators = {
-        'content': [{ type: ViewChild, args: [Content,] },],
-        'monthsEle': [{ type: ViewChild, args: ['months',] },],
-    };
     return CalendarComponent;
 }());
+export { CalendarComponent };
+CalendarComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ion-calendar-modal',
+                template: "\n        <ion-header>\n            \n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start [hidden]=\"!showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-buttons>\n\n                <ion-title>{{title}}</ion-title>\n                \n                <ion-buttons end>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"onCancel()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"onCancel()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button icon-only clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <ion-icon name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n            </ion-navbar>\n\n            <ion-calendar-week\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </ion-calendar-week>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion-calendar-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\">\n                        \n                    </ion-calendar-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+            },] },
+];
+/** @nocollapse */
+CalendarComponent.ctorParameters = function () { return [
+    { type: Renderer, },
+    { type: ElementRef, },
+    { type: NavParams, },
+    { type: ViewController, },
+    { type: ChangeDetectorRef, },
+    { type: CalendarService, },
+]; };
+CalendarComponent.propDecorators = {
+    'content': [{ type: ViewChild, args: [Content,] },],
+    'monthsEle': [{ type: ViewChild, args: ['months',] },],
+};
 //# sourceMappingURL=calendar-component.js.map

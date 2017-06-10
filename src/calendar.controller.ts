@@ -59,7 +59,7 @@ export class CalendarController {
         };
 
         let calendarModal = this.modalCtrl.create(CalendarComponent, Object.assign({
-            options:options
+            options:options,
         },options),modalOptions);
 
         calendarModal.present();

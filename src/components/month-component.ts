@@ -11,7 +11,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: 'ion2-month',
+    selector: 'ion-calendar-month',
     providers: [MONTH_VALUE_ACCESSOR],
     template: `        
         <div *ngIf="isRadio">

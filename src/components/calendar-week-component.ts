@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-    selector: 'calendar-week-title',
+    selector: 'ion-calendar-week',
     template:`
         <ion-toolbar class="week-toolbar"  no-border-top >
             <ul [class]="'week-title ' + color">

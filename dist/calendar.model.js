@@ -1,16 +1,19 @@
-export var CalendarMonth = (function () {
+var CalendarMonth = (function () {
     function CalendarMonth() {
     }
     return CalendarMonth;
 }());
-export var DayConfig = (function () {
+export { CalendarMonth };
+var DayConfig = (function () {
     function DayConfig() {
     }
     return DayConfig;
 }());
-export var CalendarOptions = (function () {
+export { DayConfig };
+var CalendarOptions = (function () {
     function CalendarOptions() {
     }
     return CalendarOptions;
 }());
+export { CalendarOptions };
 //# sourceMappingURL=calendar.model.js.map

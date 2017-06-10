@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { CalendarComponent } from "./components/calendar-component";
-export var CalendarController = (function () {
+var CalendarController = (function () {
     function CalendarController(modalCtrl) {
         this.modalCtrl = modalCtrl;
     }
@@ -30,7 +30,7 @@ export var CalendarController = (function () {
             showYearPicker: showYearPicker,
         };
         var calendarModal = this.modalCtrl.create(CalendarComponent, Object.assign({
-            options: options
+            options: options,
         }, options), modalOptions);
         calendarModal.present();
         return new Promise(function (resolve, reject) {
@@ -64,13 +64,14 @@ export var CalendarController = (function () {
     CalendarController.prototype.removeHistory = function (id) {
         localStorage.removeItem("ion-calendar-" + id);
     };
-    CalendarController.decorators = [
-        { type: Injectable },
-    ];
-    /** @nocollapse */
-    CalendarController.ctorParameters = function () { return [
-        { type: ModalController, },
-    ]; };
     return CalendarController;
 }());
+export { CalendarController };
+CalendarController.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+CalendarController.ctorParameters = function () { return [
+    { type: ModalController, },
+]; };
 //# sourceMappingURL=calendar.controller.js.map
