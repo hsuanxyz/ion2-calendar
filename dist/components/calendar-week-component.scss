@@ -1,9 +1,8 @@
-
+@import "../variables";
 
 ion-calendar-week {
     .week-toolbar{
         padding: 0;
-        box-shadow: 0 2px 4px rgb(158, 158, 158);
     }
 
     .week-toolbar.toolbar-md {
@@ -16,7 +15,7 @@ ion-calendar-week {
         color:#fff;
         height: 44px;
         width: 100%;
-        background-color: rgb(59, 151, 247);
+        background-color: color($cal-colors, primary);
         padding: 15px 0;
     }
 

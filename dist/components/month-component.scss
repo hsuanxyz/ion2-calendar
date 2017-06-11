@@ -92,6 +92,11 @@ ion-calendar-month{
     &.endSelection{
       border-radius: 0 50% 50% 0;
       background-color: color($cal-colors,primary);
+
+      p{
+        color: #fff;
+      }
+
     }
   }
 
