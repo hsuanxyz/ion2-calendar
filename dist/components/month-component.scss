@@ -1,3 +1,5 @@
+@import "../variables";
+
 @mixin transition-property($args...) {
   -webkit-transition-property: $args;
   -moz-transition-property: $args;
@@ -22,12 +24,6 @@
   transition-timing-function: $args;
 }
 
-$color-default: #3b97f7;
-$color-secondary: #32db64;
-$color-danger: #f53d3d;
-$color-light: #f4f4f4;
-$color-dark: #222;
-
 ion-calendar-month{
   .days-box {
     padding: 0.5rem;
@@ -44,17 +40,17 @@ ion-calendar-month{
     height: 40px;
   }
   .days .marked p{
-    color: $color-default;
+    color: color($cal-colors, primary);
     font-weight:500;
   }
 
   .days .today p {
-    border-bottom: 2px solid $color-default;
+    border-bottom: 2px solid color($cal-colors, primary);
     padding-bottom: 2px;
   }
 
   .days .on-selected{
-    background-color: $color-default;
+    background-color: color($cal-colors, primary);
     border: none;
 
     & p{
@@ -86,16 +82,16 @@ ion-calendar-month{
     }
     &.startSelection{
       border-radius: 50% 0 0 50%;
-      background-color: $color-default;
+      background-color: color($cal-colors, primary);
     }
     &.between{
-      background-color: lighten($color-default,30%);
+      background-color: lighten(color($cal-colors, primary) ,30%);
       width: 100%;
       border-radius: 0;
     }
     &.endSelection{
       border-radius: 0 50% 50% 0;
-      background-color: $color-default;
+      background-color: color($cal-colors,primary);
     }
   }
 
@@ -119,7 +115,7 @@ ion-calendar-month{
     position: absolute;
     z-index:1;
     text-align: center;
-    color: $color-default;
+    color: color($cal-colors,primary);
     font-weight: 200;
   }
 }
