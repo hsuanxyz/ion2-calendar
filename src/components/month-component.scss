@@ -22,6 +22,12 @@
   transition-timing-function: $args;
 }
 
+$color-default: #3b97f7;
+$color-secondary: #32db64;
+$color-danger: #f53d3d;
+$color-light: #f4f4f4;
+$color-dark: #222;
+
 ion-calendar-month{
   .days-box {
     padding: 0.5rem;
@@ -38,23 +44,23 @@ ion-calendar-month{
     height: 40px;
   }
   .days .marked p{
-    color: rgb(59, 151, 247);
+    color: $color-default;
     font-weight:500;
   }
 
   .days .today p {
-    border-bottom: 2px solid rgb(59, 151, 247);
+    border-bottom: 2px solid $color-default;
     padding-bottom: 2px;
   }
 
   .days .on-selected{
-    background-color: rgb(201, 225, 250);
+    background-color: $color-default;
     border: none;
-  }
 
-  .days .on-selected p{
-    color: rgb(59, 151, 247);
-    font-size: 1.3em;
+    & p{
+      color: #fff;
+      font-size: 1.3em;
+    }
   }
 
   button.days-btn {
@@ -79,17 +85,17 @@ ion-calendar-month{
       border-radius: 50%;
     }
     &.startSelection{
-      border-radius: 50% 0px 0px 50%;
-      background-color: rgb(201, 225, 250);
+      border-radius: 50% 0 0 50%;
+      background-color: $color-default;
     }
     &.between{
-      background-color: rgba(201, 225, 250, 0.5);
+      background-color: lighten($color-default,30%);
       width: 100%;
-      border-radius: 0px;
+      border-radius: 0;
     }
     &.endSelection{
-      border-radius: 0px 50% 50% 0px;
-      background-color: rgb(201, 225, 250);
+      border-radius: 0 50% 50% 0;
+      background-color: $color-default;
     }
   }
 
@@ -113,7 +119,7 @@ ion-calendar-month{
     position: absolute;
     z-index:1;
     text-align: center;
-    color: #3b97f7;
+    color: $color-default;
     font-weight: 200;
   }
 }
