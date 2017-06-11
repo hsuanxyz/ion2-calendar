@@ -9,41 +9,6 @@ import { Component, Input } from '@angular/core';
             </ul>
         </ion-toolbar>
     `,
-    styles:[
-            `
-            .week-toolbar{
-                padding: 0;
-                box-shadow: 0 2px 4px rgb(158, 158, 158);
-            }
-
-            .week-toolbar.toolbar-md {
-                min-height:44px;
-            }
-
-
-            .week-title {
-                margin: 0;
-                color:#fff;
-                height: 44px;
-                width: 100%;
-                background-color: rgb(59, 151, 247);
-                padding: 15px 0;
-            }
-
-
-            .week-title li {
-                list-style-type:none;
-                display: block;
-                float: left;
-                width: 14%;
-                text-align: center;
-            }
-
-            .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
-                width: 15%;
-            }
-        `,
-    ],
 })
 
 export class CalendarWeekComponent {
