@@ -45,8 +45,7 @@ ion-calendar-month{
   }
 
   .days .today p {
-    border-bottom: 2px solid color($cal-colors, primary);
-    padding-bottom: 2px;
+    color: color($cal-colors, primary);
   }
 
   .days .on-selected{
