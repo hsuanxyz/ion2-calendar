@@ -14,42 +14,43 @@ export const MONTH_VALUE_ACCESSOR: any = {
     selector: 'ion-calendar-month',
     providers: [MONTH_VALUE_ACCESSOR],
     template: `        
-        <div *ngIf="isRadio">
-            <div class="days-box">
-                <div class="days" *ngFor="let day of month.days">
-                    <button [class]="'days-btn ' + day.cssClass"
-                            *ngIf="day"
-                            [class.today]="day.isToday"
-                            (click)="onSelected(day)"
-                            [class.marked]="day.marked"
-                            [class.on-selected]="isSelected(day.time)"
-                            [disabled]="day.disable">
-                        <p>{{day.title}}</p>
-                        <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-                    </button>
+        <div [class]="color">
+            <div *ngIf="isRadio">
+                <div class="days-box">
+                    <div class="days" *ngFor="let day of month.days">
+                        <button [class]="'days-btn ' + day.cssClass"
+                                *ngIf="day"
+                                [class.today]="day.isToday"
+                                (click)="onSelected(day)"
+                                [class.marked]="day.marked"
+                                [class.on-selected]="isSelected(day.time)"
+                                [disabled]="day.disable">
+                            <p>{{day.title}}</p>
+                            <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!isRadio">
+                <div class="days-box">
+                    <div class="days" *ngFor="let day of month.days">
+                        <button [class]="'days-btn ' + day.cssClass"
+                                *ngIf="day"
+                                [class.today]="day.isToday"
+                                (click)="onSelected(day)"
+                                [class.marked]="day.marked"
+                                [class.on-selected]="isSelected(day.time)"
+                                [disabled]="day.disable"
+                                [class.startSelection]="isStartSelection(day)"
+                                [class.endSelection]="isEndSelection(day)"
+                                [class.between]="isBetween(day)">
+                            <p>{{day.title}}</p>
+                            <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div *ngIf="!isRadio">
-            <div class="days-box">
-                <div class="days" *ngFor="let day of month.days">
-                    <button [class]="'days-btn ' + day.cssClass"
-                            *ngIf="day"
-                            [class.today]="day.isToday"
-                            (click)="onSelected(day)"
-                            [class.marked]="day.marked"
-                            [class.on-selected]="isSelected(day.time)"
-                            [disabled]="day.disable"
-                            [class.startSelection]="isStartSelection(day)"
-                            [class.endSelection]="isEndSelection(day)"
-                            [class.between]="isBetween(day)">
-                        <p>{{day.title}}</p>
-                        <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-                    </button>
-                </div>
-            </div>
-        </div>
-
     `,
 })
 export class MonthComponent implements ControlValueAccessor, OnInit{
@@ -58,6 +59,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     @Input() isRadio: boolean;
     @Input() isSaveHistory: boolean;
     @Input() id: any;
+    @Input() color: string = 'primary';
 
     @Output() onChange: EventEmitter<any> = new EventEmitter();
 
