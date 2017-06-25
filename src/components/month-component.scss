@@ -40,16 +40,13 @@ ion-calendar-month{
     height: 40px;
   }
   .days .marked p{
-    color: color($cal-colors, primary);
     font-weight:500;
   }
 
   .days .today p {
-    color: color($cal-colors, primary);
   }
 
   .days .on-selected{
-    background-color: color($cal-colors, primary);
     border: none;
 
     & p{
@@ -81,17 +78,13 @@ ion-calendar-month{
     }
     &.startSelection{
       border-radius: 50% 0 0 50%;
-      background-color: color($cal-colors, primary);
     }
     &.between{
-      background-color: lighten(color($cal-colors, primary) ,30%);
       width: 100%;
       border-radius: 0;
     }
     &.endSelection{
       border-radius: 0 50% 50% 0;
-      background-color: color($cal-colors,primary);
-
       p{
         color: #fff;
       }
@@ -119,7 +112,26 @@ ion-calendar-month{
     position: absolute;
     z-index:1;
     text-align: center;
-    color: color($cal-colors,primary);
     font-weight: 200;
+  }
+
+  .primary {
+
+    button.days-btn small,
+    .days .marked p,
+    .days .today p  {
+      color: color($cal-colors, primary);
+    }
+
+    .days .on-selected,
+    button.days-btn.startSelection,
+    button.days-btn.endSelection {
+      background-color: color($cal-colors,primary);
+    }
+
+    button.days-btn.between {
+      background-color: lighten(color($cal-colors, primary) ,30%);
+    }
+
   }
 }
