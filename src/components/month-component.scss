@@ -136,4 +136,16 @@ ion-calendar-month{
   .primary {
     @include month-color();
   }
+
+  .secondary {
+    @include month-color('secondary');
+  }
+
+  .danger {
+    @include month-color('danger');
+  }
+
+  .dark {
+    @include month-color('dark');
+  }
 }
