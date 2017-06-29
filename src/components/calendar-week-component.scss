@@ -19,13 +19,20 @@ ion-calendar-week {
     }
 
 
-    .week-title {
-        margin: 0;
-        color:#fff;
-        height: 44px;
-        width: 100%;
-        background-color: color($cal-colors, primary);
-        padding: 15px 0;
+    .week-title.primary {
+        @include week-title('primary');
+    }
+
+    .week-title.secondary {
+        @include week-title('secondary');
+    }
+
+    .week-title.danger {
+        @include week-title('danger');
+    }
+
+    .week-title.dark {
+        @include week-title('dark');
     }
 
 
