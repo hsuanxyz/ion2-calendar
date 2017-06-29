@@ -1,5 +1,14 @@
 @import "../variables";
 
+@mixin week-title($color: primary) {
+        margin: 0;
+        color:#fff;
+        height: 44px;
+        width: 100%;
+        background-color: color($cal-colors, $color);
+        padding: 15px 0;
+}
+
 ion-calendar-week {
     .week-toolbar{
         padding: 0;
