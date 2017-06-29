@@ -31,6 +31,10 @@
     color: color($cal-colors, $color);
   }
 
+  .days .today.on-selected p  {
+    color: #fff;
+  }
+
   .days .on-selected,
   button.days-btn.startSelection,
   button.days-btn.endSelection {
@@ -59,9 +63,6 @@ ion-calendar-month{
   }
   .days .marked p{
     font-weight:500;
-  }
-
-  .days .today p {
   }
 
   .days .on-selected{
