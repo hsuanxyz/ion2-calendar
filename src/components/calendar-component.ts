@@ -53,6 +53,7 @@ import { CalendarService } from "../services/calendar.service";
                                 [isRadio]="options.isRadio"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
+                                [color]="_color"
                                 (onChange)="onChange($event)"
                                 [(ngModel)]="dayTemp">
                         
