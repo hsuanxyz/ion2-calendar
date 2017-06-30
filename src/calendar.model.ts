@@ -69,6 +69,7 @@ export interface CalendarControllerOptions {
     closeLabel?:string;
     closeIcon?:boolean;
     monthTitle?:string;
+    color?:string;
     canBackwardsSelected?:boolean;
     title?:string;
     defaultDate?:Date;

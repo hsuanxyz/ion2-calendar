@@ -138,6 +138,7 @@ export class CalendarComponent {
         this.scrollBackwards = this._d.canBackwardsSelected;
         this.weekStartDay = this._d.weekStartDay;
         this._id = this._d.id;
+        this._color = this._d.color;
 
         this.monthTitleFilterStr = this._d.monthTitle;
         this.weekdaysTitle = this._d.weekdaysTitle;
