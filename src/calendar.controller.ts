@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
 import { ModalOptions, CalendarControllerOptions } from './calendar.model'
-import { CalendarComponent } from "./components/calendar-component";
+import { CalendarComponent } from "./components/calendar.modal";
 
 
 @Injectable()
 export class CalendarController {
 
     isRadio: boolean;
+
     constructor(
-        public modalCtrl: ModalController
+        public modalCtrl: ModalController,
     ) { }
 
     openCalendar(calendarOptions: CalendarControllerOptions, modalOptions:ModalOptions = {}):any {
@@ -28,6 +29,7 @@ export class CalendarController {
             closeLabel = 'cancel',
             closeIcon = false,
             id = '',
+            color = 'primary',
             isSaveHistory = false,
             monthTitle = 'MMM yyyy',
             title = 'Calendar',
@@ -47,6 +49,7 @@ export class CalendarController {
             closeLabel:closeLabel,
             closeIcon:closeIcon,
             id:id,
+            color:color,
             isSaveHistory:isSaveHistory,
             defaultDate:calendarOptions.defaultDate || from ,
             disableWeekdays:disableWeekdays,
@@ -66,7 +69,7 @@ export class CalendarController {
 
         return new Promise( (resolve, reject) => {
 
-            calendarModal.onWillDismiss((data:any)=> {
+            calendarModal.onWillDismiss((data:any) => {
                 let result: {
                     date?: any;
                     from?: any;
@@ -85,7 +88,6 @@ export class CalendarController {
                 }
             });
         });
-
 
     }
 

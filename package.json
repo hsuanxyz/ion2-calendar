@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "ngc": "ngc",
+    "ngc": "ngc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf aot dist && npm run ngc && gulp copy-scss && gulp dist2nm",
     "lint": "./node_modules/.bin/tslint -c tslint.json src/**/*.ts"

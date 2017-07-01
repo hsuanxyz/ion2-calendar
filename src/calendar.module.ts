@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarController } from './calendar.controller';
 import { IonicModule } from "ionic-angular";
-import { CalendarWeekComponent } from "./components/calendar-week-component";
-import { CalendarComponent } from "./components/calendar-component";
-import { MonthComponent } from "./components/month-component";
+import { CalendarWeekComponent } from "./components/calendar-week.component";
+import { CalendarComponent } from "./components/calendar.modal";
+import { MonthComponent } from "./components/month.component";
 import { CalendarService } from "./services/calendar.service";
 
 @NgModule({
