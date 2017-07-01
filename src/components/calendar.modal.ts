@@ -69,7 +69,7 @@ import { CalendarService } from "../services/calendar.service";
     `,
 
 })
-export class CalendarComponent {
+export class CalendarModal {
     @ViewChild(Content) content: Content;
     @ViewChild('months') monthsEle: ElementRef;
 

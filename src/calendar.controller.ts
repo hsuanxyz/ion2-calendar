@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 
 import { ModalOptions, CalendarControllerOptions } from './calendar.model'
-import { CalendarComponent } from "./components/calendar.modal";
+import { CalendarModal } from "./components/calendar.modal";
 
 
 @Injectable()
@@ -61,7 +61,7 @@ export class CalendarController {
             showYearPicker:showYearPicker,
         };
 
-        let calendarModal = this.modalCtrl.create(CalendarComponent, Object.assign({
+        let calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
             options:options,
         },options),modalOptions);
 

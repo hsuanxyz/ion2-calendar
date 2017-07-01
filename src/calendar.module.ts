@@ -7,16 +7,16 @@ import { CommonModule } from '@angular/common';
 import { CalendarController } from './calendar.controller';
 import { IonicModule } from "ionic-angular";
 import { CalendarWeekComponent } from "./components/calendar-week.component";
-import { CalendarComponent } from "./components/calendar.modal";
+import { CalendarModal } from "./components/calendar.modal";
 import { MonthComponent } from "./components/month.component";
 import { CalendarService } from "./services/calendar.service";
 
 @NgModule({
   imports: [IonicModule, CommonModule],
-  declarations: [CalendarComponent, CalendarWeekComponent, MonthComponent],
+  declarations: [CalendarModal, CalendarWeekComponent, MonthComponent],
   providers: [CalendarController, CalendarService],
   exports:[],
-  entryComponents: [CalendarComponent],
+  entryComponents: [CalendarModal],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CalendarModule { }
