@@ -21,6 +21,8 @@ import { CalendarService } from "../services/calendar.service";
                 <ion-icon name="ios-arrow-forward"></ion-icon>
             </div>
         </div>
+        
+        <ion-calendar-week></ion-calendar-week>
     `,
 
 })
