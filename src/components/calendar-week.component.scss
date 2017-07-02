@@ -1,8 +1,8 @@
 @import "../variables";
 
-@mixin week-title($color: primary) {
+@mixin week-title($color: primary, $background-color: #fff) {
         margin: 0;
-        color:#fff;
+        color:$background-color;
         height: 44px;
         width: 100%;
         background-color: color($cal-colors, $color);
@@ -33,6 +33,10 @@ ion-calendar-week {
 
     .week-title.dark {
         @include week-title('dark');
+    }
+
+    .week-title.light {
+        @include week-title(light, #9e9e9e);
     }
 
 

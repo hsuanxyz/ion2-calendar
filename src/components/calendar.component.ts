@@ -22,7 +22,7 @@ import { CalendarService } from "../services/calendar.service";
             </div>
         </div>
         
-        <ion-calendar-week></ion-calendar-week>
+        <ion-calendar-week color="light"></ion-calendar-week>
     `,
 
 })
