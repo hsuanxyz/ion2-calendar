@@ -10,12 +10,13 @@ import { CalendarWeekComponent } from "./components/calendar-week.component";
 import { CalendarModal } from "./components/calendar.modal";
 import { MonthComponent } from "./components/month.component";
 import { CalendarService } from "./services/calendar.service";
+import {CalendarComponent} from './components/calendar.component';
 
 @NgModule({
   imports: [IonicModule, CommonModule],
-  declarations: [CalendarModal, CalendarWeekComponent, MonthComponent],
+  declarations: [CalendarModal, CalendarWeekComponent, MonthComponent, CalendarComponent],
   providers: [CalendarController, CalendarService],
-  exports:[],
+  exports:[CalendarComponent],
   entryComponents: [CalendarModal],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
