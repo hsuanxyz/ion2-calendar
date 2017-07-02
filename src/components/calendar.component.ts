@@ -10,7 +10,17 @@ import { CalendarService } from "../services/calendar.service";
 @Component({
     selector: 'ion-calendar',
     template: `
-        <div>Hello</div>
+        <div class="title">
+            <div class="text">
+                April 2017
+            </div>
+            <div ion-button clear class="back">
+                <ion-icon name="ios-arrow-back"></ion-icon>
+            </div>
+            <div ion-button clear class="forward">
+                <ion-icon name="ios-arrow-forward"></ion-icon>
+            </div>
+        </div>
     `,
 
 })
@@ -29,7 +39,7 @@ export class CalendarComponent {
     }
 
     ionViewDidLoad() {
-        
+
     }
 
 }
