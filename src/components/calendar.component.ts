@@ -23,10 +23,17 @@ import { CalendarService } from "../services/calendar.service";
         </div>
         
         <ion-calendar-week color="light"></ion-calendar-week>
+        
+        <ion-calendar-month [month]="month">
+            
+        </ion-calendar-month>
+        
     `,
 
 })
 export class CalendarComponent {
+
+    month: any;
 
     constructor(
         private _renderer: Renderer,
@@ -37,7 +44,11 @@ export class CalendarComponent {
         public calSvc: CalendarService,
 
     ) {
-
+        this.month = this.calSvc.createMonthsByPeriod(
+            new Date(2017,4).getTime(),
+            1,
+            this.calSvc.safeOpt({from: new Date(2017,4)}),
+        )[0]
     }
 
     ionViewDidLoad() {
