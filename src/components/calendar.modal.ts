@@ -29,8 +29,9 @@ import { CalendarService } from "../services/calendar.service";
                     <button ion-button icon-only clear *ngIf="closeLabel === '' || closeIcon" (click)="onCancel()">
                         <ion-icon name="close"></ion-icon>
                     </button>
-                    <button ion-button icon-only clear [disabled]="!canDone()" (click)="done()">
-                        <ion-icon name="checkmark"></ion-icon>
+                    <button ion-button clear [disabled]="!canDone()" (click)="done()">
+                        <span *ngIf="doneLabel !== '' && !doneIcon">{{doneLabel}}</span>
+                        <ion-icon *ngIf="doneIcon" name="checkmark"></ion-icon>
                     </button>
                 </ion-buttons>
 
@@ -75,6 +76,9 @@ export class CalendarModal {
 
     title: string;
     closeLabel: string;
+    closeIcon: boolean;
+    doneLabel: string;
+    doneIcon: boolean;
     dayTemp: Array<CalendarDay|null> = [null,null];
     calendarMonths: Array<CalendarMonth>;
     monthTitleFilterStr = '';
@@ -88,7 +92,6 @@ export class CalendarModal {
     year: number;
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
-    closeIcon: boolean;
     options: CalendarOptions;
 
     debug = true;
@@ -145,6 +148,8 @@ export class CalendarModal {
         this.title = this._d.title;
         this.closeLabel = this._d.closeLabel;
         this.closeIcon = this._d.closeIcon;
+        this.doneLabel = this._d.doneLabel;
+        this.doneIcon = this._d.doneIcon;
 
         this.isSaveHistory = this._d.isSaveHistory;
 

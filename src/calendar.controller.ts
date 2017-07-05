@@ -3,6 +3,7 @@ import { ModalController } from 'ionic-angular';
 
 import { ModalOptions, CalendarControllerOptions } from './calendar.model'
 import { CalendarModal } from "./components/calendar.modal";
+import {CalendarService} from './services/calendar.service';
 
 
 @Injectable()
@@ -12,54 +13,13 @@ export class CalendarController {
 
     constructor(
         public modalCtrl: ModalController,
+        public calSvc: CalendarService,
     ) { }
 
     openCalendar(calendarOptions: CalendarControllerOptions, modalOptions:ModalOptions = {}):any {
 
-        let _arr:Array<any> = [];
 
-        let {
-            from = new Date(),
-            to = 0,
-            cssClass = '',
-            weekStartDay = 0,
-            isRadio = true,
-            canBackwardsSelected = false,
-            disableWeekdays = _arr,
-            closeLabel = 'cancel',
-            closeIcon = false,
-            id = '',
-            color = 'primary',
-            isSaveHistory = false,
-            monthTitle = 'MMM yyyy',
-            title = 'Calendar',
-            weekdaysTitle = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_"),
-            daysConfig = _arr,
-            countNextMonths = 3,
-            showYearPicker = false,
-        } = calendarOptions || {};
-
-        let options: CalendarControllerOptions = {
-            from:from,
-            to:to,
-            cssClass:cssClass,
-            isRadio:isRadio,
-            weekStartDay:weekStartDay,
-            canBackwardsSelected:canBackwardsSelected,
-            closeLabel:closeLabel,
-            closeIcon:closeIcon,
-            id:id,
-            color:color,
-            isSaveHistory:isSaveHistory,
-            defaultDate:calendarOptions.defaultDate || from ,
-            disableWeekdays:disableWeekdays,
-            monthTitle:monthTitle,
-            title:title,
-            weekdaysTitle:weekdaysTitle,
-            daysConfig:daysConfig,
-            countNextMonths:countNextMonths,
-            showYearPicker:showYearPicker,
-        };
+        let options = this.calSvc.safeOpt(calendarOptions);
 
         let calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
             options:options,
