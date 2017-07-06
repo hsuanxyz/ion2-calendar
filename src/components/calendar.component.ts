@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
+import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer, Input} from '@angular/core';
 import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angular';
 
 import * as moment from 'moment';
@@ -24,7 +24,7 @@ import { CalendarService } from "../services/calendar.service";
         
         <ion-calendar-week color="light"></ion-calendar-week>
         
-        <ion-calendar-month [month]="month">
+        <ion-calendar-month [month]="month" [color]="color">
             
         </ion-calendar-month>
         
@@ -35,6 +35,7 @@ export class CalendarComponent {
 
     month: any;
 
+    @Input() color: string = 'primary';
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
