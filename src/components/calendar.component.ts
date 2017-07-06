@@ -3,7 +3,7 @@ import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angula
 
 import * as moment from 'moment';
 
-import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
+import {CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions, Colors} from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 
 
@@ -35,7 +35,7 @@ export class CalendarComponent {
 
     month: any;
 
-    @Input() color: string = 'primary';
+    @Input() color: Colors = 'primary';
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,

@@ -86,3 +86,5 @@ export interface CalendarControllerOptions {
     }>
 }
 
+export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
+
