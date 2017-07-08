@@ -12,7 +12,7 @@ import { CalendarService } from "../services/calendar.service";
     template: `
         <div class="title">
             <div class="text">
-                April 2017
+                {{month.original.time | date: titleFormat}}
             </div>
             <div ion-button clear class="back">
                 <ion-icon name="ios-arrow-back"></ion-icon>
@@ -35,9 +35,10 @@ import { CalendarService } from "../services/calendar.service";
 })
 export class CalendarComponent implements OnInit{
 
-    month: any;
+    month: CalendarMonth;
 
     @Input() color: Colors = 'primary';
+    @Input() titleFormat = 'MMM yyyy';
     @Input() weekStartDay: number = 0;
     @Input() disableWeekdays: Array<number> = [];
     constructor(
@@ -57,7 +58,6 @@ export class CalendarComponent implements OnInit{
     }
 
     ngOnInit() {
-        console.log(this.weekStartDay);
         this.month = this.calSvc.createMonthsByPeriod(
             new Date().getTime(),
             1,
