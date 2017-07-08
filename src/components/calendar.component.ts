@@ -39,6 +39,7 @@ export class CalendarComponent implements OnInit{
 
     @Input() color: Colors = 'primary';
     @Input() weekStartDay: number = 0;
+    @Input() disableWeekdays: Array<number> = [];
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
@@ -63,6 +64,7 @@ export class CalendarComponent implements OnInit{
             this.calSvc.safeOpt({
                 from: new Date(),
                 weekStartDay: this.weekStartDay,
+                disableWeekdays: this.disableWeekdays,
             }),
         )[0];
     }
