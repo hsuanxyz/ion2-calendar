@@ -1,4 +1,4 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer, Input} from '@angular/core';
+import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer, Input, OnInit} from '@angular/core';
 import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angular';
 
 import * as moment from 'moment';
@@ -22,7 +22,9 @@ import { CalendarService } from "../services/calendar.service";
             </div>
         </div>
         
-        <ion-calendar-week color="light"></ion-calendar-week>
+        <ion-calendar-week color="light" 
+                           [weekStart]="weekStartDay">
+        </ion-calendar-week>
         
         <ion-calendar-month [month]="month" [color]="color">
             
@@ -31,11 +33,12 @@ import { CalendarService } from "../services/calendar.service";
     `,
 
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit{
 
     month: any;
 
     @Input() color: Colors = 'primary';
+    @Input() weekStartDay: number = 0;
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
@@ -45,15 +48,23 @@ export class CalendarComponent {
         public calSvc: CalendarService,
 
     ) {
-        this.month = this.calSvc.createMonthsByPeriod(
-            new Date(2017,4).getTime(),
-            1,
-            this.calSvc.safeOpt({from: new Date(2017,4)}),
-        )[0]
+
     }
 
     ionViewDidLoad() {
 
+    }
+
+    ngOnInit() {
+        console.log(this.weekStartDay);
+        this.month = this.calSvc.createMonthsByPeriod(
+            new Date().getTime(),
+            1,
+            this.calSvc.safeOpt({
+                from: new Date(),
+                weekStartDay: this.weekStartDay,
+            }),
+        )[0];
     }
 
 }
