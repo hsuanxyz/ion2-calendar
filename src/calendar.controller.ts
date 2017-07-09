@@ -29,7 +29,7 @@ export class CalendarController {
 
         return new Promise( (resolve, reject) => {
 
-            calendarModal.onWillDismiss((data:any) => {
+            calendarModal.onDidDismiss((data:any) => {
                 let result: {
                     date?: any;
                     from?: any;
