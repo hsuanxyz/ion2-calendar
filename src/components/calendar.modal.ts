@@ -164,7 +164,11 @@ export class CalendarModal {
         if(this.showYearPicker) {
             this.createYearPicker(startTime, endTime)
         }else{
-            this.calendarMonths = this.calSvc.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths, this._d);
+            this.calendarMonths = this.calSvc.createMonthsByPeriod(
+                startTime,
+                this.findInitMonthNumber(this.defaultDate) + this.countNextMonths,
+                this._d,
+            );
         }
     }
 
@@ -182,6 +186,10 @@ export class CalendarModal {
     onChange(data: any) {
         this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
+
+        if(this._d.autoDone && this.canDone()){
+            this.done();
+        }
     }
 
     onCancel() {

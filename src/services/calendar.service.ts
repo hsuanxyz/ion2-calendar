@@ -17,6 +17,7 @@ export class CalendarService {
         let _arr:Array<any> = [];
 
         let {
+            autoDone = false,
             from = new Date(),
             to = 0,
             cssClass = '',
@@ -40,6 +41,7 @@ export class CalendarService {
         } = calendarOptions || {};
 
         let options: CalendarControllerOptions = {
+            autoDone: autoDone,
             from:from,
             to:to,
             cssClass:cssClass,

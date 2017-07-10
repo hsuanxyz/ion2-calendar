@@ -57,15 +57,16 @@ export interface ModalOptions {
 }
 
 export interface CalendarControllerOptions {
-    from?:Date,
-    cssClass?:string,
-    to?:Date|number,
+    autoDone?: boolean;
+    from?:Date;
+    cssClass?:string;
+    to?:Date|number;
     isRadio?:boolean;
     id?:string;
     isSaveHistory?:boolean;
     weekStartDay?:number;
-    disableWeekdays?:Array<number>,
-    weekdaysTitle?:Array<string>,
+    disableWeekdays?:Array<number>;
+    weekdaysTitle?:Array<string>;
     closeLabel?:string;
     doneLabel?:string;
     closeIcon?:boolean;
