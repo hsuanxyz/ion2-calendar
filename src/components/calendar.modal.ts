@@ -24,8 +24,8 @@ import { CalendarService } from "../services/calendar.service";
                 
                 <ion-buttons end>
                     <button ion-button clear (click)="onCancel()">
-                        <span *ngIf="closeLabel === '' || closeIcon">{{closeLabel}}</span>
-                        <ion-icon *ngIf="closeLabel === '' || closeIcon" name="close"></ion-icon>
+                        <span *ngIf="closeLabel !== '' && !closeIcon">{{closeLabel}}</span>
+                        <ion-icon *ngIf="closeIcon" name="close"></ion-icon>
                     </button>
                     <button ion-button *ngIf="!_d.autoDone" clear [disabled]="!canDone()" (click)="done()">
                         <span *ngIf="doneLabel !== '' && !doneIcon">{{doneLabel}}</span>
