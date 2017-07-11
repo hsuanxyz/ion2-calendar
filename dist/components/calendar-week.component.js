@@ -46,4 +46,4 @@ CalendarWeekComponent.propDecorators = {
     'weekArray': [{ type: Input },],
     'weekStart': [{ type: Input },],
 };
-//# sourceMappingURL=calendar-week-component.js.map
+//# sourceMappingURL=calendar-week.component.js.map

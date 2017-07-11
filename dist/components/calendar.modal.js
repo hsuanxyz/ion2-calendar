@@ -2,8 +2,8 @@ import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@
 import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
 import { CalendarService } from "../services/calendar.service";
-var CalendarComponent = (function () {
-    function CalendarComponent(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
+var CalendarModal = (function () {
+    function CalendarModal(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
         this._renderer = _renderer;
         this._elementRef = _elementRef;
         this.params = params;
@@ -21,10 +21,10 @@ var CalendarComponent = (function () {
         this.init();
         this.getHistory();
     }
-    CalendarComponent.prototype.ionViewDidLoad = function () {
+    CalendarModal.prototype.ionViewDidLoad = function () {
         this.scrollToDefaultDate();
     };
-    CalendarComponent.prototype.init = function () {
+    CalendarModal.prototype.init = function () {
         var params = this.params;
         this._d = params.get('options');
         var startTime = moment(this._d.from).valueOf();
@@ -43,11 +43,14 @@ var CalendarComponent = (function () {
         this.scrollBackwards = this._d.canBackwardsSelected;
         this.weekStartDay = this._d.weekStartDay;
         this._id = this._d.id;
+        this._color = this._d.color;
         this.monthTitleFilterStr = this._d.monthTitle;
         this.weekdaysTitle = this._d.weekdaysTitle;
         this.title = this._d.title;
         this.closeLabel = this._d.closeLabel;
         this.closeIcon = this._d.closeIcon;
+        this.doneLabel = this._d.doneLabel;
+        this.doneIcon = this._d.doneIcon;
         this.isSaveHistory = this._d.isSaveHistory;
         this.countNextMonths = this._d.countNextMonths;
         if (this.countNextMonths < 1) {
@@ -61,7 +64,7 @@ var CalendarComponent = (function () {
             this.calendarMonths = this.calSvc.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths, this._d);
         }
     };
-    CalendarComponent.prototype.findCssClass = function () {
+    CalendarModal.prototype.findCssClass = function () {
         var _this = this;
         var cssClass = this.params.get('cssClass');
         if (cssClass) {
@@ -71,17 +74,20 @@ var CalendarComponent = (function () {
             });
         }
     };
-    CalendarComponent.prototype.onChange = function (data) {
+    CalendarModal.prototype.onChange = function (data) {
         this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
+        if (this._d.autoDone && this.canDone()) {
+            this.done();
+        }
     };
-    CalendarComponent.prototype.onCancel = function () {
+    CalendarModal.prototype.onCancel = function () {
         this.viewCtrl.dismiss();
     };
-    CalendarComponent.prototype.done = function () {
+    CalendarModal.prototype.done = function () {
         this.viewCtrl.dismiss(this.dayTemp);
     };
-    CalendarComponent.prototype.canDone = function () {
+    CalendarModal.prototype.canDone = function () {
         if (!Array.isArray(this.dayTemp)) {
             return false;
         }
@@ -92,12 +98,12 @@ var CalendarComponent = (function () {
             return !!(this.dayTemp[0] && this.dayTemp[1]) && !!(this.dayTemp[0].time && this.dayTemp[1].time);
         }
     };
-    CalendarComponent.prototype.getHistory = function () {
+    CalendarModal.prototype.getHistory = function () {
         if (this.isSaveHistory) {
             this.dayTemp = this.calSvc.getHistory(this._id);
         }
     };
-    CalendarComponent.prototype.createYearPicker = function (startTime, endTime) {
+    CalendarModal.prototype.createYearPicker = function (startTime, endTime) {
         // init year array
         this.years = [];
         // getting max and be sure, it is in future (maybe parameter?)
@@ -134,7 +140,7 @@ var CalendarComponent = (function () {
         // checking whether the end is before lastDayOfYear
         this.options.range_end = lastDayOfYear.getTime() > endTime ? endTime : lastDayOfYear.getTime();
     };
-    CalendarComponent.prototype.nextMonth = function (infiniteScroll) {
+    CalendarModal.prototype.nextMonth = function (infiniteScroll) {
         this.infiniteScroll = infiniteScroll;
         var len = this.calendarMonths.length;
         var final = this.calendarMonths[len - 1];
@@ -148,14 +154,14 @@ var CalendarComponent = (function () {
         infiniteScroll.complete();
         var _a;
     };
-    CalendarComponent.prototype.backwardsMonth = function () {
+    CalendarModal.prototype.backwardsMonth = function () {
         var first = this.calendarMonths[0];
         var firstTime = moment(first.original.time).subtract(1, 'M').valueOf();
         (_a = this.calendarMonths).unshift.apply(_a, this.calSvc.createMonthsByPeriod(firstTime, 1, this._d));
         this.ref.detectChanges();
         var _a;
     };
-    CalendarComponent.prototype.scrollToDefaultDate = function () {
+    CalendarModal.prototype.scrollToDefaultDate = function () {
         var _this = this;
         var defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
         var defaultDateMonth = this.monthsEle.nativeElement.children["month-" + defaultDateIndex].offsetTop;
@@ -165,7 +171,7 @@ var CalendarComponent = (function () {
             _this.content.scrollTo(0, defaultDateMonth, 128);
         }, 300);
     };
-    CalendarComponent.prototype.onScroll = function ($event) {
+    CalendarModal.prototype.onScroll = function ($event) {
         var _this = this;
         if (!this.scrollBackwards)
             return;
@@ -182,7 +188,7 @@ var CalendarComponent = (function () {
             }, 180);
         }
     };
-    CalendarComponent.prototype.findInitMonthNumber = function (date) {
+    CalendarModal.prototype.findInitMonthNumber = function (date) {
         var startDate = moment(this.options.start);
         var defaultDate = moment(date);
         var isAfter = defaultDate.isAfter(startDate);
@@ -193,7 +199,7 @@ var CalendarComponent = (function () {
         }
         return defaultDate.diff(startDate, 'month');
     };
-    CalendarComponent.prototype.changedYearSelection = function () {
+    CalendarModal.prototype.changedYearSelection = function () {
         var _this = this;
         // re-enabling infinite scroll
         if (this.infiniteScroll !== undefined) {
@@ -222,17 +228,17 @@ var CalendarComponent = (function () {
             _this.content.scrollTo(0, 0, 128);
         }, 300);
     };
-    return CalendarComponent;
+    return CalendarModal;
 }());
-export { CalendarComponent };
-CalendarComponent.decorators = [
+export { CalendarModal };
+CalendarModal.decorators = [
     { type: Component, args: [{
                 selector: 'ion-calendar-modal',
-                template: "\n        <ion-header>\n            \n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start [hidden]=\"!showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-buttons>\n\n                <ion-title>{{title}}</ion-title>\n                \n                <ion-buttons end>\n                    <button ion-button clear *ngIf=\"closeLabel !== '' && !closeIcon\" (click)=\"onCancel()\">\n                        {{closeLabel}}\n                    </button>\n                    <button ion-button icon-only clear *ngIf=\"closeLabel === '' || closeIcon\" (click)=\"onCancel()\">\n                        <ion-icon name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button icon-only clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <ion-icon name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n            </ion-navbar>\n\n            <ion-calendar-week\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </ion-calendar-week>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion-calendar-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\">\n                        \n                    </ion-calendar-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
+                template: "\n        <ion-header>\n            \n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start [hidden]=\"!showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-buttons>\n\n                <ion-title>{{title}}</ion-title>\n                \n                <ion-buttons end>\n                    <button ion-button clear (click)=\"onCancel()\">\n                        <span *ngIf=\"closeLabel !== '' && !closeIcon\">{{closeLabel}}</span>\n                        <ion-icon *ngIf=\"closeIcon\" name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button *ngIf=\"!_d.autoDone\" clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <span *ngIf=\"doneLabel !== '' && !doneIcon\">{{doneLabel}}</span>\n                        <ion-icon *ngIf=\"doneIcon\" name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n            </ion-navbar>\n\n            <ion-calendar-week\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </ion-calendar-week>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion-calendar-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                [color]=\"_color\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\">\n                        \n                    </ion-calendar-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
             },] },
 ];
 /** @nocollapse */
-CalendarComponent.ctorParameters = function () { return [
+CalendarModal.ctorParameters = function () { return [
     { type: Renderer, },
     { type: ElementRef, },
     { type: NavParams, },
@@ -240,8 +246,8 @@ CalendarComponent.ctorParameters = function () { return [
     { type: ChangeDetectorRef, },
     { type: CalendarService, },
 ]; };
-CalendarComponent.propDecorators = {
+CalendarModal.propDecorators = {
     'content': [{ type: ViewChild, args: [Content,] },],
     'monthsEle': [{ type: ViewChild, args: ['months',] },],
 };
-//# sourceMappingURL=calendar-component.js.map
+//# sourceMappingURL=calendar.modal.js.map

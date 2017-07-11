@@ -1,6 +1,7 @@
 import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions } from '../calendar.model';
 export declare class CalendarService {
     constructor();
+    safeOpt(calendarOptions: CalendarControllerOptions): CalendarControllerOptions;
     createOriginalCalendar(time: number): CalendarOriginal;
     findDayConfig(day: any, opt: CalendarControllerOptions): any;
     createCalendarDay(time: number, opt: CalendarControllerOptions): CalendarDay;

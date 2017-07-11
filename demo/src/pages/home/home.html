@@ -5,6 +5,11 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-calendar [color]="'secondary'"
+                [weekStartDay]="1"
+                [disableWeekdays]="[0,1]"></ion-calendar>
+
   <ion-list>
     <button ion-item (click)="basic()">
       basic

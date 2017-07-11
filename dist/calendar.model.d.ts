@@ -51,6 +51,7 @@ export interface ModalOptions {
     leaveAnimation?: string;
 }
 export interface CalendarControllerOptions {
+    autoDone?: boolean;
     from?: Date;
     cssClass?: string;
     to?: Date | number;
@@ -61,8 +62,11 @@ export interface CalendarControllerOptions {
     disableWeekdays?: Array<number>;
     weekdaysTitle?: Array<string>;
     closeLabel?: string;
+    doneLabel?: string;
     closeIcon?: boolean;
+    doneIcon?: boolean;
     monthTitle?: string;
+    color?: string;
     canBackwardsSelected?: boolean;
     title?: string;
     defaultDate?: Date;
@@ -76,3 +80,4 @@ export interface CalendarControllerOptions {
         subTitle?: string;
     }>;
 }
+export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark';

@@ -8,6 +8,7 @@ export var MONTH_VALUE_ACCESSOR = {
 var MonthComponent = (function () {
     function MonthComponent(ref) {
         this.ref = ref;
+        this.color = 'primary';
         this.onChange = new EventEmitter();
         this._date = [null, null];
     }
@@ -104,7 +105,7 @@ MonthComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ion-calendar-month',
                 providers: [MONTH_VALUE_ACCESSOR],
-                template: "        \n        <div *ngIf=\"isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n        <div *ngIf=\"!isRadio\">\n            <div class=\"days-box\">\n                <div class=\"days\" *ngFor=\"let day of month.days\">\n                    <button [class]=\"'days-btn ' + day.cssClass\"\n                            *ngIf=\"day\"\n                            [class.today]=\"day.isToday\"\n                            (click)=\"onSelected(day)\"\n                            [class.marked]=\"day.marked\"\n                            [class.on-selected]=\"isSelected(day.time)\"\n                            [disabled]=\"day.disable\"\n                            [class.startSelection]=\"isStartSelection(day)\"\n                            [class.endSelection]=\"isEndSelection(day)\"\n                            [class.between]=\"isBetween(day)\">\n                        <p>{{day.title}}</p>\n                        <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                    </button>\n                </div>\n            </div>\n        </div>\n\n    ",
+                template: "        \n        <div [class]=\"color\">\n            <div *ngIf=\"isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"!isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\"\n                                [class.startSelection]=\"isStartSelection(day)\"\n                                [class.endSelection]=\"isEndSelection(day)\"\n                                [class.between]=\"isBetween(day)\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    ",
             },] },
 ];
 /** @nocollapse */
@@ -116,6 +117,7 @@ MonthComponent.propDecorators = {
     'isRadio': [{ type: Input },],
     'isSaveHistory': [{ type: Input },],
     'id': [{ type: Input },],
+    'color': [{ type: Input },],
     'onChange': [{ type: Output },],
 };
-//# sourceMappingURL=month-component.js.map
+//# sourceMappingURL=month.component.js.map
