@@ -38,6 +38,7 @@ export declare class CalendarOptions {
     start: number;
     end: number;
     isRadio: boolean;
+    isRange: boolean;
     monthTitle: string;
     range_beg: number;
     range_end: number;
@@ -56,6 +57,7 @@ export interface CalendarControllerOptions {
     cssClass?: string;
     to?: Date | number;
     isRadio?: boolean;
+    isRange?: boolean;
     id?: string;
     isSaveHistory?: boolean;
     weekStartDay?: number;
