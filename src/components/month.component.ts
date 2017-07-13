@@ -2,7 +2,7 @@ import { Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forw
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
-import {CalendarDay, CalendarMonth} from '../calendar.model'
+import { CalendarDay, CalendarMonth } from '../calendar.model'
 
 export const MONTH_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -15,7 +15,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
     providers: [MONTH_VALUE_ACCESSOR],
     template: `        
         <div [class]="color">
-            <div *ngIf="isRadio">
+            <div *ngIf="!isRange">
                 <div class="days-box">
                     <div class="days" *ngFor="let day of month.days">
                         <button [class]="'days-btn ' + day.cssClass"
@@ -31,7 +31,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
                     </div>
                 </div>
             </div>
-            <div *ngIf="!isRadio">
+            <div *ngIf="isRange">
                 <div class="days-box">
                     <div class="days" *ngFor="let day of month.days">
                         <button [class]="'days-btn ' + day.cssClass"
@@ -53,17 +53,18 @@ export const MONTH_VALUE_ACCESSOR: any = {
         </div>
     `,
 })
-export class MonthComponent implements ControlValueAccessor, OnInit{
+export class MonthComponent implements ControlValueAccessor, OnInit {
 
     @Input() month: CalendarMonth;
     @Input() isRadio: boolean;
+    @Input() isRange: boolean;
     @Input() isSaveHistory: boolean;
     @Input() id: any;
     @Input() color: string = 'primary';
 
     @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-    _date: Array<CalendarDay|null> = [null,null];
+    _date: Array<CalendarDay | null> = [null, null];
 
     _onChanged: Function;
     _onTouched: Function;
@@ -75,7 +76,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     ngOnInit() {
-        this._date = [null,null];
+        this._date = [null, null];
     }
 
     writeValue(obj: any): void {
@@ -91,7 +92,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     isEndSelection(day: CalendarDay): boolean {
-        if(this.isRadio || !Array.isArray(this._date) || this._date[1] === null) {
+        if (this.isRadio || !Array.isArray(this._date) || this._date[1] === null) {
             return false;
         }
 
@@ -100,22 +101,22 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
 
     isBetween(day: CalendarDay): boolean {
 
-        if(this.isRadio || !Array.isArray(this._date)) {
+        if (this.isRadio || !Array.isArray(this._date)) {
             return false;
         }
 
         let start = 0;
         let end = 0;
 
-        if(this._date[0] === null){
+        if (this._date[0] === null) {
             return false
-        }else {
+        } else {
             start = this._date[0].time;
         }
 
-        if(this._date[1] === null){
+        if (this._date[1] === null) {
             return false
-        }else {
+        } else {
             end = this._date[1].time;
         }
 
@@ -124,7 +125,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     isStartSelection(day: CalendarDay): boolean {
-        if(this.isRadio || !Array.isArray(this._date) || this._date[0] === null) {
+        if (this.isRadio || !Array.isArray(this._date) || this._date[0] === null) {
             return false;
         }
 
@@ -132,52 +133,50 @@ export class MonthComponent implements ControlValueAccessor, OnInit{
     }
 
     isSelected(time: number): boolean {
-        if(Array.isArray(this._date)){
-
-            if(this._date[0] !== null){
-                return time === this._date[0].time
-            }
-
-            if(this._date[1] !== null){
-                return time === this._date[1].time
-            }
-        }else {
-            return false
+        if (!Array.isArray(this._date))
+            return false;
+        // Remove null values
+        this._date = this._date.filter(a => a);
+        if (this._date.length !== 0) {
+            if (this._date.filter((date) => {
+                return date.time === time;
+            }).length > 0)
+                return true;
+            return false;
         }
     }
 
     onSelected(item: any) {
         item.selected = true;
         this.ref.detectChanges();
-        if(this.isRadio) {
+        if (this.isRadio) {
             this._date[0] = item;
-
             this.onChange.emit(this._date);
-            return;
-        }
-
-        if(this._date[0] === null) {
-            this._date[0] = item;
-
-            this.ref.detectChanges();
-
-        }else if(this._date[1] === null) {
-            if(this._date[0].time < item.time){
-                this._date[1] = item;
-            }else {
-                this._date[1] = this._date[0];
+        } else if (this.isRange) {
+            if (this._date[0] === null) {
                 this._date[0] = item;
+                this.ref.detectChanges();
+            } else if (this._date[1] === null) {
+                if (this._date[0].time < item.time) {
+                    this._date[1] = item;
+                } else {
+                    this._date[1] = this._date[0];
+                    this._date[0] = item;
+                }
+                this.ref.detectChanges();
+            } else {
+                this._date[0] = item;
+                this._date[1] = null;
             }
-
+            this.onChange.emit(this._date);
             this.ref.detectChanges();
-        }else {
-            this._date[0] = item;
-            this._date[1] = null;
+        } else {
+            if (this._date.filter((date) => date.time === item.time).length > 0)
+                this._date = this._date.filter((date) => date.time !== item.time);
+            else
+                this._date.push(item);
+            this.onChange.emit(this._date);
         }
-
-        this.onChange.emit(this._date);
-
-        this.ref.detectChanges();
 
     }
 

@@ -21,13 +21,16 @@ var CalendarController = (function () {
                     if (options.isRadio) {
                         result.date = data[0];
                     }
-                    else {
+                    else if (options.isRange) {
                         result.from = data[0];
                         result.to = data[1];
                     }
+                    else {
+                        result.date = data;
+                    }
                     resolve(result);
                 }
-                else {
+                else if (data) {
                     reject('cancelled');
                 }
             });

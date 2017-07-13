@@ -19,34 +19,35 @@ export interface CalendarDay {
     title?: string;
     subTitle?: string;
     marked?: boolean;
-    style?:{
+    style?: {
         title?: string;
         subTitle?: string;
     }
 }
 
 export class CalendarMonth {
-    original:CalendarOriginal;
-    days: Array<CalendarDay|void>
+    original: CalendarOriginal;
+    days: Array<CalendarDay | void>
 }
 
 export class DayConfig {
-    date:Date;
-    marked?:boolean;
-    disable?:boolean;
-    title?:string;
-    subTitle?:string
+    date: Date;
+    marked?: boolean;
+    disable?: boolean;
+    title?: string;
+    subTitle?: string
 }
 
 export class CalendarOptions {
-    start:number;
-    end:number;
-    isRadio:boolean;
-    monthTitle:string;
-    range_beg:number;
-    range_end:number;
-    daysConfig:Array<DayConfig>;
-    disableWeekdays:Array<number>
+    start: number;
+    end: number;
+    isRadio: boolean;
+    isRange: boolean;
+    monthTitle: string;
+    range_beg: number;
+    range_end: number;
+    daysConfig: Array<DayConfig>;
+    disableWeekdays: Array<number>
 }
 
 export interface ModalOptions {
@@ -58,32 +59,33 @@ export interface ModalOptions {
 
 export interface CalendarControllerOptions {
     autoDone?: boolean;
-    from?:Date;
-    cssClass?:string;
-    to?:Date|number;
-    isRadio?:boolean;
-    id?:string;
-    isSaveHistory?:boolean;
-    weekStartDay?:number;
-    disableWeekdays?:Array<number>;
-    weekdaysTitle?:Array<string>;
-    closeLabel?:string;
-    doneLabel?:string;
-    closeIcon?:boolean;
-    doneIcon?:boolean;
-    monthTitle?:string;
-    color?:string;
-    canBackwardsSelected?:boolean;
-    title?:string;
-    defaultDate?:Date;
-    countNextMonths?:number;
-    showYearPicker?:boolean;
-    daysConfig?:Array<{
-        date:Date;
-        cssClass?:string,
-        marked?:boolean;
-        title?:string;
-        subTitle?:string;
+    from?: Date;
+    cssClass?: string;
+    to?: Date | number;
+    isRadio?: boolean;
+    isRange?: boolean;
+    id?: string;
+    isSaveHistory?: boolean;
+    weekStartDay?: number;
+    disableWeekdays?: Array<number>;
+    weekdaysTitle?: Array<string>;
+    closeLabel?: string;
+    doneLabel?: string;
+    closeIcon?: boolean;
+    doneIcon?: boolean;
+    monthTitle?: string;
+    color?: string;
+    canBackwardsSelected?: boolean;
+    title?: string;
+    defaultDate?: Date;
+    countNextMonths?: number;
+    showYearPicker?: boolean;
+    daysConfig?: Array<{
+        date: Date;
+        cssClass?: string,
+        marked?: boolean;
+        title?: string;
+        subTitle?: string;
     }>
 }
 
