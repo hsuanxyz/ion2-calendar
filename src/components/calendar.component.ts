@@ -12,7 +12,7 @@ import { CalendarService } from "../services/calendar.service";
     template: `
         <div class="title">
             <div class="text">
-                {{month.original.time | date: titleFormat}}
+                {{monthOpt.original.time | date: titleFormat}}
             </div>
             <div ion-button clear class="back">
                 <ion-icon name="ios-arrow-back"></ion-icon>
@@ -21,21 +21,22 @@ import { CalendarService } from "../services/calendar.service";
                 <ion-icon name="ios-arrow-forward"></ion-icon>
             </div>
         </div>
-        
-        <ion-calendar-week color="light" 
+
+        <ion-calendar-week color="light"
                            [weekStart]="weekStartDay">
         </ion-calendar-week>
-        
-        <ion-calendar-month [month]="month" [color]="color">
-            
+
+        <ion-calendar-month [month]="monthOpt" [color]="color">
+
         </ion-calendar-month>
-        
+
     `,
 
 })
 export class CalendarComponent implements OnInit{
 
-    month: CalendarMonth;
+    monthOpt: CalendarMonth;
+    monthDate: Date = new Date();
 
     @Input() color: Colors = 'primary';
     @Input() titleFormat = 'MMM yyyy';
@@ -58,11 +59,19 @@ export class CalendarComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.month = this.calSvc.createMonthsByPeriod(
-            new Date().getTime(),
+        this.monthOpt = this.createMonth()
+    }
+
+    createMonth(date?: any) {
+        if(!moment.isDate(date)){
+            date = this.monthDate
+        }
+        date = new Date(date);
+        return this.calSvc.createMonthsByPeriod(
+            date.getTime(),
             1,
             this.calSvc.safeOpt({
-                from: new Date(),
+                from: date,
                 weekStartDay: this.weekStartDay,
                 disableWeekdays: this.disableWeekdays,
             }),
