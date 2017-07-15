@@ -14,7 +14,7 @@ import { CalendarService } from "../services/calendar.service";
             <div class="text">
                 {{monthOpt.original.time | date: titleFormat}}
             </div>
-            <div ion-button clear class="back">
+            <div ion-button clear class="back" (click)="nextMonth()">
                 <ion-icon name="ios-arrow-back"></ion-icon>
             </div>
             <div ion-button clear class="forward">
@@ -76,6 +76,11 @@ export class CalendarComponent implements OnInit{
                 disableWeekdays: this.disableWeekdays,
             }),
         )[0];
+    }
+
+    nextMonth() {
+        this.monthDate = moment(this.monthDate).add(1, 'months').toDate();
+        this.monthOpt = this.createMonth();
     }
 
 }
