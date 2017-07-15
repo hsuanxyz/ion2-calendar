@@ -17,7 +17,7 @@ import { CalendarService } from "../services/calendar.service";
             <div ion-button clear class="back" (click)="nextMonth()">
                 <ion-icon name="ios-arrow-back"></ion-icon>
             </div>
-            <div ion-button clear class="forward">
+            <div ion-button clear class="forward" (click)="backMonth()">
                 <ion-icon name="ios-arrow-forward"></ion-icon>
             </div>
         </div>
@@ -80,6 +80,11 @@ export class CalendarComponent implements OnInit{
 
     nextMonth() {
         this.monthDate = moment(this.monthDate).add(1, 'months').toDate();
+        this.monthOpt = this.createMonth();
+    }
+
+    backMonth() {
+        this.monthDate = moment(this.monthDate).subtract(1, 'months').toDate();
         this.monthOpt = this.createMonth();
     }
 
