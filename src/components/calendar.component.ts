@@ -14,10 +14,10 @@ import { CalendarService } from "../services/calendar.service";
             <div class="text">
                 {{monthOpt.original.time | date: titleFormat}}
             </div>
-            <div ion-button clear class="back" (click)="nextMonth()">
+            <div ion-button clear class="back" (click)="backMonth()">
                 <ion-icon name="ios-arrow-back"></ion-icon>
             </div>
-            <div ion-button clear class="forward" (click)="backMonth()">
+            <div ion-button clear class="forward" (click)="nextMonth()">
                 <ion-icon name="ios-arrow-forward"></ion-icon>
             </div>
         </div>
@@ -42,6 +42,7 @@ export class CalendarComponent implements OnInit{
     @Input() titleFormat = 'MMM yyyy';
     @Input() weekStartDay: number = 0;
     @Input() disableWeekdays: Array<number> = [];
+    @Input() from: number = new Date().getTime();
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
@@ -59,19 +60,25 @@ export class CalendarComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.monthOpt = this.createMonth()
+
+        if(!moment.isDate(new Date(this.from))){
+            this.from = new Date().getTime();
+            console.warn('form is not a Date type')
+        }else {
+            this.from = moment(this.from).valueOf();
+        }
+
+        this.monthOpt = this.createMonth();
+
     }
 
-    createMonth(date?: any) {
-        if(!moment.isDate(date)){
-            date = this.monthDate
-        }
-        date = new Date(date);
+    createMonth(date: number = this.from) {
+
         return this.calSvc.createMonthsByPeriod(
-            date.getTime(),
+            date,
             1,
             this.calSvc.safeOpt({
-                from: date,
+                from: new Date(date),
                 weekStartDay: this.weekStartDay,
                 disableWeekdays: this.disableWeekdays,
             }),
@@ -79,12 +86,12 @@ export class CalendarComponent implements OnInit{
     }
 
     nextMonth() {
-        this.monthDate = moment(this.monthDate).add(1, 'months').toDate();
+        this.from = moment(this.from).add(1, 'months').valueOf();
         this.monthOpt = this.createMonth();
     }
 
     backMonth() {
-        this.monthDate = moment(this.monthDate).subtract(1, 'months').toDate();
+        this.from = moment(this.from).subtract(1, 'months').valueOf();
         this.monthOpt = this.createMonth();
     }
 
