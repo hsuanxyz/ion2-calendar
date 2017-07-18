@@ -54,7 +54,7 @@ export class CalendarController {
     }
 
     setHistory(param: any) {
-        localStorage.setItem(`ion-calendar-${param.id}`, JSON.stringify(param));
+        localStorage.setItem(`ion-calendar-${param.id}`, JSON.stringify(param.date));
     }
 
     getHistory(id: any): Object {

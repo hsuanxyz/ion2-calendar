@@ -127,7 +127,7 @@ export class CalendarService {
             selected: false,
             marked: dayConfig ? dayConfig.marked || false : false,
             cssClass: dayConfig ? dayConfig.cssClass || '' : '',
-            disable: dayConfig ? dayConfig.disable || _disable : _disable,
+            disable: dayConfig ? dayConfig.disable && _disable : _disable,
             title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
             subTitle: dayConfig ? dayConfig.subTitle || '' : '',
         }

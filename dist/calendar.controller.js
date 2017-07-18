@@ -37,7 +37,7 @@ var CalendarController = (function () {
         });
     };
     CalendarController.prototype.setHistory = function (param) {
-        localStorage.setItem("ion-calendar-" + param.id, JSON.stringify(param));
+        localStorage.setItem("ion-calendar-" + param.id, JSON.stringify(param.date));
     };
     CalendarController.prototype.getHistory = function (id) {
         var _history = localStorage.getItem("ion-calendar-" + id);
