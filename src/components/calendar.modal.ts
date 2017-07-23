@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
-import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
+import { NavParams ,ViewController, Content, InfiniteScroll } from 'ionic-angular';
 
 import * as moment from 'moment';
 
@@ -50,7 +50,6 @@ import { CalendarService } from "../services/calendar.service";
                     <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
                     <ion-calendar-month [month]="month"
                                 [isRadio]="options.isRadio"
-                                [isRange]="options.isRange"
                                 [isSaveHistory]="isSaveHistory"
                                 [id]="_id"
                                 [color]="_color"
@@ -78,7 +77,7 @@ export class CalendarModal {
     closeIcon: boolean;
     doneLabel: string;
     doneIcon: boolean;
-    dayTemp: Array<CalendarDay | null> = [null, null];
+    dayTemp: Array<CalendarDay|null> = [null,null];
     calendarMonths: Array<CalendarMonth>;
     monthTitleFilterStr = '';
     weekdaysTitle: Array<string> = [];
@@ -118,7 +117,7 @@ export class CalendarModal {
         this.scrollToDefaultDate();
     }
 
-    init() {
+    init(){
         const params = this.params;
 
         this._d = params.get('options');
@@ -126,15 +125,14 @@ export class CalendarModal {
         let endTime = moment(this._d.to).valueOf();
 
         this.options = {
-            start: startTime,
-            end: endTime,
-            isRadio: params.get('isRadio'),
-            isRange: params.get('isRange'),
-            range_beg: startTime,
-            range_end: endTime,
-            daysConfig: params.get('daysConfig'),
-            disableWeekdays: params.get('disableWeekdays'),
-            monthTitle: params.get('monthTitle'),
+            start:startTime,
+            end:endTime,
+            isRadio:params.get('isRadio'),
+            range_beg:startTime,
+            range_end:endTime,
+            daysConfig:params.get('daysConfig'),
+            disableWeekdays:params.get('disableWeekdays'),
+            monthTitle:params.get('monthTitle'),
         };
 
         this.defaultDate = this._d.defaultDate;
@@ -161,9 +159,9 @@ export class CalendarModal {
 
         this.showYearPicker = this._d.showYearPicker;
 
-        if (this.showYearPicker) {
+        if(this.showYearPicker) {
             this.createYearPicker(startTime, endTime)
-        } else {
+        }else{
             this.calendarMonths = this.calSvc.createMonthsByPeriod(
                 startTime,
                 this.findInitMonthNumber(this.defaultDate) + this.countNextMonths,
@@ -176,7 +174,7 @@ export class CalendarModal {
         let cssClass = this.params.get('cssClass');
 
         if (cssClass) {
-            cssClass.split(' ').forEach((cssClass: string) => {
+            cssClass.split(' ').forEach( (cssClass: string) => {
                 if (cssClass.trim() !== '') this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, true);
             });
         }
@@ -185,10 +183,9 @@ export class CalendarModal {
 
     onChange(data: any) {
         this.calSvc.savedHistory(data, this._id);
-        this.dayTemp = data;
         this.ref.detectChanges();
 
-        if (this._d.autoDone && this.canDone()) {
+        if(this._d.autoDone && this.canDone()){
             this.done();
         }
     }
@@ -202,29 +199,30 @@ export class CalendarModal {
     }
 
     canDone(): boolean {
-        if (!Array.isArray(this.dayTemp)) {
+        if(!Array.isArray(this.dayTemp)){
             return false
         }
-        if (this._d.isRadio || (!this._d.isRange && !this._d.isRadio)) {
+
+        if(this._d.isRadio){
             return !!(this.dayTemp[0] && this.dayTemp[0].time);
-        } else {
-            return !!(this.dayTemp[0] && this.dayTemp[1]) && !!(this.dayTemp[0].time && this.dayTemp[1].time);
+        }else {
+            return !!(this.dayTemp[0] && this.dayTemp[1]) && !!( this.dayTemp[0].time && this.dayTemp[1].time);
         }
     }
 
-    getHistory() {
-        if (this.isSaveHistory) {
+    getHistory(){
+        if(this.isSaveHistory){
             this.dayTemp = this.calSvc.getHistory(this._id);
         }
     }
 
-    createYearPicker(startTime: number, endTime: number) {
+    createYearPicker(startTime:number, endTime:number) {
         // init year array
         this.years = [];
         // getting max and be sure, it is in future (maybe parameter?)
         let maxYear = (new Date(endTime)).getFullYear();
 
-        if (maxYear <= 1970) {
+        if(maxYear <= 1970) {
             maxYear = (new Date(this.defaultDate)).getFullYear() + 10;
             this.options.end = new Date(maxYear, 12, 0).getTime();
         }
@@ -236,7 +234,7 @@ export class CalendarModal {
         let neededYears = (maxYear - minYear);
 
         // pushing years to selection array
-        for (let y = 0; y <= neededYears; y++) {
+        for(let y = 0; y <= neededYears; y++) {
             this.years.push(maxYear - y);
         }
 
@@ -247,18 +245,18 @@ export class CalendarModal {
         let lastDayOfYear = new Date(this.year, 12, 0);
 
         // don't calc over the start / end
-        if (firstDayOfYear.getTime() < this.options.start) {
+        if(firstDayOfYear.getTime() < this.options.start) {
             firstDayOfYear = new Date(this.options.start);
         }
 
-        if (lastDayOfYear.getTime() > this.options.end) {
+        if(lastDayOfYear.getTime() > this.options.end) {
             lastDayOfYear = new Date(this.options.end);
         }
         // calcing the month
-        this.calendarMonths = this.calSvc.createMonthsByPeriod(
+        this.calendarMonths = this.calSvc.createMonthsByPeriod (
             firstDayOfYear.getTime(),
             this.findInitMonthNumber(this.defaultDate) + this.countNextMonths,
-            this._d);
+            this._d );
         // sets the range new
 
         // checking whether the start is after firstDayOfYear
@@ -271,60 +269,60 @@ export class CalendarModal {
     nextMonth(infiniteScroll: InfiniteScroll) {
         this.infiniteScroll = infiniteScroll;
         let len = this.calendarMonths.length;
-        let final = this.calendarMonths[len - 1];
-        let nextTime = moment(final.original.time).add(1, 'M').valueOf();
-        let rangeEnd = this.options.range_end ? moment(this.options.range_end).subtract(1, 'M') : 0;
+        let final = this.calendarMonths[len-1];
+        let nextTime = moment(final.original.time).add(1,'M').valueOf();
+        let rangeEnd = this.options.range_end ? moment(this.options.range_end).subtract(1,'M') : 0;
 
-        if (len <= 0 || (rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd))) {
+        if( len <= 0 || ( rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd) ) ) {
             infiniteScroll.enable(false);
             return;
         }
 
-        this.calendarMonths.push(...this.calSvc.createMonthsByPeriod(nextTime, 1, this._d));
+        this.calendarMonths.push(...this.calSvc.createMonthsByPeriod(nextTime,1,this._d));
         infiniteScroll.complete();
 
     }
 
     backwardsMonth() {
         let first = this.calendarMonths[0];
-        let firstTime = moment(first.original.time).subtract(1, 'M').valueOf();
+        let firstTime = moment(first.original.time).subtract(1,'M').valueOf();
         this.calendarMonths.unshift(...this.calSvc.createMonthsByPeriod(firstTime, 1, this._d));
         this.ref.detectChanges();
     }
 
     scrollToDefaultDate() {
-        let defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
+        let defaultDateIndex = this.findInitMonthNumber(this.defaultDate );
         let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
 
-        if (defaultDateIndex === 0 || defaultDateMonth === 0) return;
+        if(defaultDateIndex === 0 || defaultDateMonth === 0) return;
         setTimeout(() => {
-            this.content.scrollTo(0, defaultDateMonth, 128);
-        }, 300)
+            this.content.scrollTo(0,defaultDateMonth,128);
+        },300)
     }
 
     onScroll($event: any) {
-        if (!this.scrollBackwards) return;
-        if ($event.scrollTop <= 200 && this._s) {
+        if(!this.scrollBackwards) return;
+        if($event.scrollTop <= 200 && this._s) {
             this._s = !1;
             let lastHeight = this.content.getContentDimensions().scrollHeight;
-            setTimeout(() => {
+            setTimeout( () => {
                 this.backwardsMonth();
                 let nowHeight = this.content.getContentDimensions().scrollHeight;
-                this.content.scrollTo(0, nowHeight - lastHeight, 0)
+                this.content.scrollTo(0,nowHeight-lastHeight,0)
                     .then(() => {
                         this._s = !0;
                     })
-            }, 180)
+            },180)
         }
     }
 
     findInitMonthNumber(date: Date): number {
         let startDate = moment(this.options.start);
         let defaultDate = moment(date);
-        const isAfter: boolean = defaultDate.isAfter(startDate);
-        if (!isAfter) return 0;
+        const isAfter:boolean = defaultDate.isAfter(startDate);
+        if(!isAfter) return 0;
 
-        if (this.showYearPicker) {
+        if(this.showYearPicker){
             startDate = moment(new Date(this.year, 0, 1));
         }
 
@@ -334,17 +332,17 @@ export class CalendarModal {
 
     changedYearSelection() {
         // re-enabling infinite scroll
-        if (this.infiniteScroll !== undefined) {
+        if(this.infiniteScroll !== undefined){
             this.infiniteScroll.enable(true);
         }
         // getting first day and last day of the year
         let firstDayOfYear = new Date(this.year, 0, 1);
         let lastDayOfYear = new Date(this.year, 12, 0);
         // don't calc over the start / end
-        if (firstDayOfYear.getTime() < this.options.start) {
+        if(firstDayOfYear.getTime() < this.options.start) {
             firstDayOfYear = new Date(this.options.start);
         }
-        if (lastDayOfYear.getTime() > this.options.end) {
+        if(lastDayOfYear.getTime() > this.options.end) {
             lastDayOfYear = new Date(this.options.end);
         }
         // sets the range new
@@ -354,7 +352,7 @@ export class CalendarModal {
         this.options.range_end = lastDayOfYear.getTime() > this.options.end ? this.options.end : lastDayOfYear.getTime();
         // calcing the months
         let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
-        this.calendarMonths = this.calSvc.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount, this._d);
+        this.calendarMonths = this.calSvc.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount, this._d );
         // scrolling to the top
         setTimeout(() => {
             this.content.scrollTo(0, 0, 128);
