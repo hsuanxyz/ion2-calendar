@@ -62,6 +62,7 @@ export interface CalendarControllerOptions {
     cssClass?:string;
     to?:Date|number;
     isRadio?:boolean;
+    pickMode?: PickMode;
     id?:string;
     isSaveHistory?:boolean;
     weekStartDay?:number;
@@ -88,4 +89,4 @@ export interface CalendarControllerOptions {
 }
 
 export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
-
+export type PickMode = 'multi' | 'single' | 'range'
