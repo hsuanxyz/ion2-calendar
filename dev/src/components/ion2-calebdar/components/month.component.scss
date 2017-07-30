@@ -1,0 +1,152 @@
+@import "../variables";
+
+@mixin transition-property($args...) {
+  -webkit-transition-property: $args;
+  -moz-transition-property: $args;
+  -ms-transition-property: $args;
+  -o-transition-property: $args;
+  transition-property: $args;
+}
+
+@mixin transition-duration($args...) {
+  -webkit-transition-duration: $args;
+  -moz-transition-duration: $args;
+  -ms-transition-duration: $args;
+  -o-transition-duration: $args;
+  transition-duration: $args;
+}
+
+@mixin transition-timing-function($args...) {
+  -webkit-transition-timing-function: $args;
+  -moz-transition-timing-function: $args;
+  -ms-transition-timing-function: $args;
+  -o-transition-timing-function: $args;
+  transition-timing-function: $args;
+}
+
+@mixin month-color($color: primary) {
+  button.days-btn small,
+  .days .marked p,
+  .days .today p  {
+    color: color($cal-colors, $color);
+  }
+
+  .days .today.on-selected p  {
+    color: #fff;
+  }
+
+  .days .on-selected,
+  button.days-btn.startSelection,
+  button.days-btn.endSelection {
+    background-color: color($cal-colors, $color);
+  }
+
+  button.days-btn.between {
+    background-color: lighten(color($cal-colors, $color) ,30%);
+  }
+}
+
+ion-calendar-month{
+  .days-box {
+    padding: 0.5rem;
+  }
+
+  .days:nth-of-type(7n), .days:nth-of-type(7n+1) {
+    width: 15%;
+  }
+
+  .days {
+    width: 14%;
+    float: left;
+    text-align: center;
+    height: 40px;
+  }
+  .days .marked p{
+    font-weight:500;
+  }
+
+  .days .on-selected{
+    border: none;
+
+    & p{
+      color: #fff;
+      font-size: 1.3em;
+    }
+  }
+
+  button.days-btn {
+    border-radius: 50%;
+    width: 36px;
+    display: block;
+    margin: 0 auto;
+    height: 36px;
+    background-color: transparent;
+    position: relative;
+    z-index:2;
+    &.startSelection,
+    &.endSelection,
+    &.between{
+      @include transition-property(
+                      border-radius,
+                      background-color);
+      @include transition-duration(300ms);
+      @include transition-timing-function(ease-in-out);
+    }
+    &.startSelection.endSelection{
+      border-radius: 50%;
+    }
+    &.startSelection{
+      border-radius: 50% 0 0 50%;
+    }
+    &.between{
+      width: 100%;
+      border-radius: 0;
+    }
+    &.endSelection{
+      border-radius: 0 50% 50% 0;
+      p{
+        color: #fff;
+      }
+
+    }
+  }
+
+  button.days-btn p {
+    margin:0;
+    font-size: 1.2em;
+    color: #333;
+  }
+
+  button.days-btn.on-selected small{
+    transition: bottom .3s;
+    bottom: -14px;
+  }
+
+  button.days-btn small {
+    overflow: hidden;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    position: absolute;
+    z-index:1;
+    text-align: center;
+    font-weight: 200;
+  }
+
+  .primary {
+    @include month-color();
+  }
+
+  .secondary {
+    @include month-color('secondary');
+  }
+
+  .danger {
+    @include month-color('danger');
+  }
+
+  .dark {
+    @include month-color('dark');
+  }
+}

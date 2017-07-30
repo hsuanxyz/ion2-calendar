@@ -1,0 +1,51 @@
+ion-calendar {
+
+  $btn-width : 30px;
+
+  padding: 10px 20px;
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: #fff;
+  width: 100%;
+
+  .title {
+
+    padding:0 $btn-width 0 $btn-width;
+    overflow: hidden;
+
+    .back, .forward, .text {
+      display: block;
+      position: relative;
+      float: left;
+      min-height: 32px;
+      margin: 0;
+      padding: 0;
+      font-size: 15px;
+    }
+
+    .back, .forward{
+      color: #757575;
+    }
+
+    .back {
+      margin-left: -100%;
+      left: -$btn-width;
+      width: $btn-width;
+    }
+
+    .forward {
+      margin-left: -$btn-width;
+      right: -$btn-width;
+      width: $btn-width;
+    }
+
+    .text {
+      width: 100%;
+      text-align: center;
+      line-height: 32px;
+    }
+  }
+
+}
+
+
