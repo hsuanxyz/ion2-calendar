@@ -38,7 +38,6 @@ export declare class CalendarOptions {
     start: number;
     end: number;
     isRadio: boolean;
-    isRange: boolean;
     monthTitle: string;
     range_beg: number;
     range_end: number;
@@ -57,7 +56,7 @@ export interface CalendarControllerOptions {
     cssClass?: string;
     to?: Date | number;
     isRadio?: boolean;
-    isRange?: boolean;
+    pickMode?: PickMode;
     id?: string;
     isSaveHistory?: boolean;
     weekStartDay?: number;
@@ -83,3 +82,4 @@ export interface CalendarControllerOptions {
     }>;
 }
 export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark';
+export declare type PickMode = 'multi' | 'single' | 'range';

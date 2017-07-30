@@ -1,4 +1,10 @@
-import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 export var MONTH_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
@@ -57,15 +63,15 @@ var MonthComponent = (function () {
         return this._date[0].time === day.time && this._date[1] !== null;
     };
     MonthComponent.prototype.isSelected = function (time) {
-        if (!Array.isArray(this._date))
-            return false;
-        // Remove null values
-        this._date = this._date.filter(function (a) { return a; });
-        if (this._date.length !== 0) {
-            if (this._date.filter(function (date) {
-                return date.time === time;
-            }).length > 0)
-                return true;
+        if (Array.isArray(this._date)) {
+            if (this._date[0] !== null) {
+                return time === this._date[0].time;
+            }
+            if (this._date[1] !== null) {
+                return time === this._date[1].time;
+            }
+        }
+        else {
             return false;
         }
     };
@@ -75,58 +81,55 @@ var MonthComponent = (function () {
         if (this.isRadio) {
             this._date[0] = item;
             this.onChange.emit(this._date);
+            return;
         }
-        else if (this.isRange) {
-            if (this._date[0] === null) {
-                this._date[0] = item;
-                this.ref.detectChanges();
-            }
-            else if (this._date[1] === null) {
-                if (this._date[0].time < item.time) {
-                    this._date[1] = item;
-                }
-                else {
-                    this._date[1] = this._date[0];
-                    this._date[0] = item;
-                }
-                this.ref.detectChanges();
+        if (this._date[0] === null) {
+            this._date[0] = item;
+            this.ref.detectChanges();
+        }
+        else if (this._date[1] === null) {
+            if (this._date[0].time < item.time) {
+                this._date[1] = item;
             }
             else {
+                this._date[1] = this._date[0];
                 this._date[0] = item;
-                this._date[1] = null;
             }
-            this.onChange.emit(this._date);
             this.ref.detectChanges();
         }
         else {
-            if (this._date.filter(function (date) { return date.time === item.time; }).length > 0)
-                this._date = this._date.filter(function (date) { return date.time !== item.time; });
-            else
-                this._date.push(item);
-            this.onChange.emit(this._date);
+            this._date[0] = item;
+            this._date[1] = null;
         }
+        this.onChange.emit(this._date);
+        this.ref.detectChanges();
     };
     return MonthComponent;
 }());
+__decorate([
+    Input()
+], MonthComponent.prototype, "month", void 0);
+__decorate([
+    Input()
+], MonthComponent.prototype, "isRadio", void 0);
+__decorate([
+    Input()
+], MonthComponent.prototype, "isSaveHistory", void 0);
+__decorate([
+    Input()
+], MonthComponent.prototype, "id", void 0);
+__decorate([
+    Input()
+], MonthComponent.prototype, "color", void 0);
+__decorate([
+    Output()
+], MonthComponent.prototype, "onChange", void 0);
+MonthComponent = __decorate([
+    Component({
+        selector: 'ion-calendar-month',
+        providers: [MONTH_VALUE_ACCESSOR],
+        template: "        \n        <div [class]=\"color\">\n            <div *ngIf=\"isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"!isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\"\n                                [class.startSelection]=\"isStartSelection(day)\"\n                                [class.endSelection]=\"isEndSelection(day)\"\n                                [class.between]=\"isBetween(day)\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    ",
+    })
+], MonthComponent);
 export { MonthComponent };
-MonthComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ion-calendar-month',
-                providers: [MONTH_VALUE_ACCESSOR],
-                template: "        \n        <div [class]=\"color\">\n            <div *ngIf=\"!isRange\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"isRange\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\"\n                                [class.startSelection]=\"isStartSelection(day)\"\n                                [class.endSelection]=\"isEndSelection(day)\"\n                                [class.between]=\"isBetween(day)\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    ",
-            },] },
-];
-/** @nocollapse */
-MonthComponent.ctorParameters = function () { return [
-    { type: ChangeDetectorRef, },
-]; };
-MonthComponent.propDecorators = {
-    'month': [{ type: Input },],
-    'isRadio': [{ type: Input },],
-    'isRange': [{ type: Input },],
-    'isSaveHistory': [{ type: Input },],
-    'id': [{ type: Input },],
-    'color': [{ type: Input },],
-    'onChange': [{ type: Output },],
-};
 //# sourceMappingURL=month.component.js.map

@@ -6,7 +6,6 @@ export declare class MonthComponent implements ControlValueAccessor, OnInit {
     ref: ChangeDetectorRef;
     month: CalendarMonth;
     isRadio: boolean;
-    isRange: boolean;
     isSaveHistory: boolean;
     id: any;
     color: string;

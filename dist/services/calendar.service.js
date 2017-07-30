@@ -1,3 +1,9 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 /**
  * Created by hsuanlee on 27/05/2017.
  */
@@ -8,14 +14,13 @@ var CalendarService = (function () {
     }
     CalendarService.prototype.safeOpt = function (calendarOptions) {
         var _arr = [];
-        var _a = calendarOptions || {}, _b = _a.autoDone, autoDone = _b === void 0 ? false : _b, _c = _a.from, from = _c === void 0 ? new Date() : _c, _d = _a.to, to = _d === void 0 ? 0 : _d, _e = _a.cssClass, cssClass = _e === void 0 ? '' : _e, _f = _a.weekStartDay, weekStartDay = _f === void 0 ? 0 : _f, _g = _a.isRadio, isRadio = _g === void 0 ? true : _g, _h = _a.isRange, isRange = _h === void 0 ? false : _h, _j = _a.canBackwardsSelected, canBackwardsSelected = _j === void 0 ? false : _j, _k = _a.disableWeekdays, disableWeekdays = _k === void 0 ? _arr : _k, _l = _a.closeLabel, closeLabel = _l === void 0 ? 'cancel' : _l, _m = _a.closeIcon, closeIcon = _m === void 0 ? false : _m, _o = _a.doneLabel, doneLabel = _o === void 0 ? 'done' : _o, _p = _a.doneIcon, doneIcon = _p === void 0 ? false : _p, _q = _a.id, id = _q === void 0 ? '' : _q, _r = _a.color, color = _r === void 0 ? 'primary' : _r, _s = _a.isSaveHistory, isSaveHistory = _s === void 0 ? false : _s, _t = _a.monthTitle, monthTitle = _t === void 0 ? 'MMM yyyy' : _t, _u = _a.title, title = _u === void 0 ? 'Calendar' : _u, _v = _a.weekdaysTitle, weekdaysTitle = _v === void 0 ? "Di_Lu_Ma_Me_Je_Ve_Sa".split("_") : _v, _w = _a.daysConfig, daysConfig = _w === void 0 ? _arr : _w, _x = _a.countNextMonths, countNextMonths = _x === void 0 ? 3 : _x, _y = _a.showYearPicker, showYearPicker = _y === void 0 ? false : _y;
+        var _a = calendarOptions || {}, _b = _a.autoDone, autoDone = _b === void 0 ? false : _b, _c = _a.from, from = _c === void 0 ? new Date() : _c, _d = _a.to, to = _d === void 0 ? 0 : _d, _e = _a.cssClass, cssClass = _e === void 0 ? '' : _e, _f = _a.weekStartDay, weekStartDay = _f === void 0 ? 0 : _f, _g = _a.isRadio, isRadio = _g === void 0 ? true : _g, _h = _a.canBackwardsSelected, canBackwardsSelected = _h === void 0 ? false : _h, _j = _a.disableWeekdays, disableWeekdays = _j === void 0 ? _arr : _j, _k = _a.closeLabel, closeLabel = _k === void 0 ? 'cancel' : _k, _l = _a.closeIcon, closeIcon = _l === void 0 ? false : _l, _m = _a.doneLabel, doneLabel = _m === void 0 ? 'done' : _m, _o = _a.doneIcon, doneIcon = _o === void 0 ? false : _o, _p = _a.id, id = _p === void 0 ? '' : _p, _q = _a.color, color = _q === void 0 ? 'primary' : _q, _r = _a.isSaveHistory, isSaveHistory = _r === void 0 ? false : _r, _s = _a.monthTitle, monthTitle = _s === void 0 ? 'MMM yyyy' : _s, _t = _a.title, title = _t === void 0 ? 'Calendar' : _t, _u = _a.weekdaysTitle, weekdaysTitle = _u === void 0 ? "Di_Lu_Ma_Me_Je_Ve_Sa".split("_") : _u, _v = _a.daysConfig, daysConfig = _v === void 0 ? _arr : _v, _w = _a.countNextMonths, countNextMonths = _w === void 0 ? 3 : _w, _x = _a.showYearPicker, showYearPicker = _x === void 0 ? false : _x;
         var options = {
             autoDone: autoDone,
             from: from,
             to: to,
             cssClass: cssClass,
             isRadio: isRadio,
-            isRange: isRange,
             weekStartDay: weekStartDay,
             canBackwardsSelected: canBackwardsSelected,
             closeLabel: closeLabel,
@@ -143,10 +148,8 @@ var CalendarService = (function () {
     };
     return CalendarService;
 }());
+CalendarService = __decorate([
+    Injectable()
+], CalendarService);
 export { CalendarService };
-CalendarService.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-CalendarService.ctorParameters = function () { return []; };
 //# sourceMappingURL=calendar.service.js.map

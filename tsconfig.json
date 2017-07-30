@@ -14,6 +14,7 @@
     "node_modules",
     "dist",
     "demo",
+    "dev",
     "aot"
   ],
   "angularCompilerOptions": {

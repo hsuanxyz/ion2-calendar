@@ -1,7 +1,11 @@
-import { Component, ElementRef, ChangeDetectorRef, Renderer, Input } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+import { Component, Input } from '@angular/core';
 import * as moment from 'moment';
-import { CalendarService } from "../services/calendar.service";
 var CalendarComponent = (function () {
     function CalendarComponent(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
         this._renderer = _renderer;
@@ -47,27 +51,26 @@ var CalendarComponent = (function () {
     };
     return CalendarComponent;
 }());
+__decorate([
+    Input()
+], CalendarComponent.prototype, "color", void 0);
+__decorate([
+    Input()
+], CalendarComponent.prototype, "titleFormat", void 0);
+__decorate([
+    Input()
+], CalendarComponent.prototype, "weekStartDay", void 0);
+__decorate([
+    Input()
+], CalendarComponent.prototype, "disableWeekdays", void 0);
+__decorate([
+    Input()
+], CalendarComponent.prototype, "from", void 0);
+CalendarComponent = __decorate([
+    Component({
+        selector: 'ion-calendar',
+        template: "\n        <div class=\"title\">\n            <div class=\"text\">\n                {{monthOpt.original.time | date: titleFormat}}\n            </div>\n            <div ion-button clear class=\"back\" (click)=\"backMonth()\">\n                <ion-icon name=\"ios-arrow-back\"></ion-icon>\n            </div>\n            <div ion-button clear class=\"forward\" (click)=\"nextMonth()\">\n                <ion-icon name=\"ios-arrow-forward\"></ion-icon>\n            </div>\n        </div>\n\n        <ion-calendar-week color=\"light\"\n                           [weekStart]=\"weekStartDay\">\n        </ion-calendar-week>\n\n        <ion-calendar-month [month]=\"monthOpt\" [color]=\"color\">\n\n        </ion-calendar-month>\n\n    ",
+    })
+], CalendarComponent);
 export { CalendarComponent };
-CalendarComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ion-calendar',
-                template: "\n        <div class=\"title\">\n            <div class=\"text\">\n                {{monthOpt.original.time | date: titleFormat}}\n            </div>\n            <div ion-button clear class=\"back\" (click)=\"backMonth()\">\n                <ion-icon name=\"ios-arrow-back\"></ion-icon>\n            </div>\n            <div ion-button clear class=\"forward\" (click)=\"nextMonth()\">\n                <ion-icon name=\"ios-arrow-forward\"></ion-icon>\n            </div>\n        </div>\n\n        <ion-calendar-week color=\"light\"\n                           [weekStart]=\"weekStartDay\">\n        </ion-calendar-week>\n\n        <ion-calendar-month [month]=\"monthOpt\" [color]=\"color\">\n\n        </ion-calendar-month>\n\n    ",
-            },] },
-];
-/** @nocollapse */
-CalendarComponent.ctorParameters = function () { return [
-    { type: Renderer, },
-    { type: ElementRef, },
-    { type: NavParams, },
-    { type: ViewController, },
-    { type: ChangeDetectorRef, },
-    { type: CalendarService, },
-]; };
-CalendarComponent.propDecorators = {
-    'color': [{ type: Input },],
-    'titleFormat': [{ type: Input },],
-    'weekStartDay': [{ type: Input },],
-    'disableWeekdays': [{ type: Input },],
-    'from': [{ type: Input },],
-};
 //# sourceMappingURL=calendar.component.js.map

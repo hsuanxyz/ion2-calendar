@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { CalendarController } from '../../components/ion2-calebdar'
+import { CalendarController } from '../../components/ion2-calendar'
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
