@@ -86,9 +86,7 @@ ion-calendar-month{
     &.startSelection,
     &.endSelection,
     &.between{
-      @include transition-property(
-                      border-radius,
-                      background-color);
+      @include transition-property(background-color);
       @include transition-duration(300ms);
       @include transition-timing-function(ease-in-out);
     }
