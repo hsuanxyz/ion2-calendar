@@ -80,7 +80,7 @@ export class CalendarComponent implements OnInit{
             this.calSvc.safeOpt({
                 from: new Date(date),
                 weekStartDay: this.weekStartDay,
-                disableWeekdays: this.disableWeekdays,
+                disableWeekdays: this.disableWeekdays
             }),
         )[0];
     }
