@@ -114,7 +114,7 @@ export class CalendarService {
 
 
       if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add('day', 1);
+        let _addTime = _time.add( 1, 'day');
         isBetween = !_addTime.isAfter(_rangeBeg);
       } else {
         isBetween = false;
