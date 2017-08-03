@@ -265,14 +265,23 @@ daysConfig() {
 4. Push to the branch: git push origin my-new-feature
 5. Submit a pull request :D
 
-# Development
+### Development
 
 ```bash
-cd ion2-calendar
+cd ./dev
+npm install
+npm run ionic:serve
+# do something in ./dev/src/components/ion2-calendar
+```
+
+### Build
+
+```bash
+cd ./
 npm install
 npm run build
-# output ./dist files
 ```
+
 [![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
