@@ -33,8 +33,8 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "2.1.3",
-    "@ionic/cli-plugin-ionic-angular": "1.4.0",
-    "ionic": "3.6.0",
+    "@ionic/cli-plugin-ionic-angular": "1.4.1",
+    "ionic": "3.7.0",
     "tslint-eslint-rules": "^4.1.1",
     "typescript": "2.3.4"
   },
