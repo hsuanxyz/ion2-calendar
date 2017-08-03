@@ -43,7 +43,7 @@ import {CalendarService} from '../services/calendar.service';
 
     </ion-header>
 
-    <ion-content (ionScroll)="onScroll($event)" class="calendar-page" [ngClass]="{'multiSelection': !options.isRadio}">
+    <ion-content (ionScroll)="onScroll($event)" class="calendar-page" [ngClass]="{'multi-selection': options.pickMode === 'multi'}">
 
       <div #months>
         <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
@@ -202,7 +202,7 @@ export class CalendarModal {
       return false
     }
 
-    if (this._d.isRadio) {
+    if (this._d.pickMode === 'single') {
       return !!(this.dayTemp[0] && this.dayTemp[0].time);
     } else {
       return !!(this.dayTemp[0] && this.dayTemp[1]) && !!( this.dayTemp[0].time && this.dayTemp[1].time);
