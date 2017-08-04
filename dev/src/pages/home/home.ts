@@ -72,6 +72,9 @@ export class HomePage {
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
       disableWeekdays:[0,6],
+      weekStartDay: 1,
+      weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
+      monthTitle:'yyyy 年 MM 月 ',
       canBackwardsSelected:true,
 
     })

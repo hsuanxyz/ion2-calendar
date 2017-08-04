@@ -151,15 +151,9 @@ export class CalendarService {
         days.shift();
         days.push(null);
       } else {
-        days.unshift(null);
-        days.pop();
+        days.unshift(...new Array(6).fill(null));
       }
     }
-
-    console.log({
-      original: original,
-      days: days,
-    })
 
     return {
       original: original,
