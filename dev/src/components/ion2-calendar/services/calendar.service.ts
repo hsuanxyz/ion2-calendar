@@ -149,12 +149,17 @@ export class CalendarService {
     if (weekStartDay === 1) {
       if (days[0] === null) {
         days.shift();
-        days.push(...new Array(1).fill(null));
+        days.push(null);
       } else {
         days.unshift(null);
         days.pop();
       }
     }
+
+    console.log({
+      original: original,
+      days: days,
+    })
 
     return {
       original: original,
