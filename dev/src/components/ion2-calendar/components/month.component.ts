@@ -90,7 +90,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isEndSelection(day: CalendarDay): boolean {
-    if (this.isRadio || !Array.isArray(this._date) || this._date[1] === null) {
+    if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[1] === null) {
       return false;
     }
 
@@ -99,7 +99,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
 
   isBetween(day: CalendarDay): boolean {
 
-    if (this.isRadio || !Array.isArray(this._date)) {
+    if (this.pickMode !== 'range' || !Array.isArray(this._date)) {
       return false;
     }
 
@@ -123,7 +123,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isStartSelection(day: CalendarDay): boolean {
-    if (this.isRadio || !Array.isArray(this._date) || this._date[0] === null) {
+    if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[0] === null) {
       return false;
     }
 
@@ -148,7 +148,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   onSelected(item: any) {
     item.selected = true;
     this.ref.detectChanges();
-    if (this.isRadio) {
+    if (this.pickMode === 'single') {
       this._date[0] = item;
 
       this.onChange.emit(this._date);
