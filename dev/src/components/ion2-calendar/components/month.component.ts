@@ -56,7 +56,6 @@ export const MONTH_VALUE_ACCESSOR: any = {
 export class MonthComponent implements ControlValueAccessor, OnInit {
 
   @Input() month: CalendarMonth;
-  @Input() isRadio: boolean;
   @Input() pickMode: PickMode;
   @Input() isSaveHistory: boolean;
   @Input() id: any;

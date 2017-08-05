@@ -49,7 +49,6 @@ import {CalendarService} from '../services/calendar.service';
         <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
           <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
           <ion-calendar-month [month]="month"
-                              [isRadio]="options.isRadio"
                               [pickMode]="options.pickMode"
                               [isSaveHistory]="isSaveHistory"
                               [id]="_id"
