@@ -54,7 +54,7 @@ import {CalendarService} from '../services/calendar.service';
                               [id]="_id"
                               [color]="_color"
                               (onChange)="onChange($event)"
-                              [(ngModel)]="dayTemp">
+                              [(ngModel)]="datesTemp">
 
           </ion-calendar-month>
         </div>
@@ -77,7 +77,7 @@ export class CalendarModal {
   closeIcon: boolean;
   doneLabel: string;
   doneIcon: boolean;
-  dayTemp: Array<CalendarDay | null> = [null, null];
+  datesTemp: Array<CalendarDay | null> = [null, null];
   calendarMonths: Array<CalendarMonth>;
   monthTitleFilterStr = '';
   weekdaysTitle: Array<string> = [];
@@ -193,24 +193,24 @@ export class CalendarModal {
   }
 
   done() {
-    this.viewCtrl.dismiss(this.dayTemp);
+    this.viewCtrl.dismiss(this.datesTemp);
   }
 
   canDone(): boolean {
-    if (!Array.isArray(this.dayTemp)) {
+    if (!Array.isArray(this.datesTemp)) {
       return false
     }
 
     if (this._d.pickMode === 'single') {
-      return !!(this.dayTemp[0] && this.dayTemp[0].time);
+      return !!(this.datesTemp[0] && this.datesTemp[0].time);
     } else {
-      return !!(this.dayTemp[0] && this.dayTemp[1]) && !!( this.dayTemp[0].time && this.dayTemp[1].time);
+      return !!(this.datesTemp[0] && this.datesTemp[1]) && !!( this.datesTemp[0].time && this.datesTemp[1].time);
     }
   }
 
   getHistory() {
     if (this.isSaveHistory) {
-      this.dayTemp = this.calSvc.getHistory(this._id);
+      this.datesTemp = this.calSvc.getHistory(this._id);
     }
   }
 
