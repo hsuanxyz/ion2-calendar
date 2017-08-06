@@ -201,11 +201,17 @@ export class CalendarModal {
       return false
     }
 
-    if (this._d.pickMode === 'single') {
-      return !!(this.datesTemp[0] && this.datesTemp[0].time);
-    } else {
-      return !!(this.datesTemp[0] && this.datesTemp[1]) && !!( this.datesTemp[0].time && this.datesTemp[1].time);
+    switch (this._d.pickMode) {
+      case 'single':
+        return !!(this.datesTemp[0] && this.datesTemp[0].time);
+      case 'range':
+        return !!(this.datesTemp[0] && this.datesTemp[1]) && !!( this.datesTemp[0].time && this.datesTemp[1].time);
+      case 'multi':
+        return this.datesTemp.every(e => !!e && !!e.time);
+      default:
+        return false;
     }
+
   }
 
   getHistory() {
