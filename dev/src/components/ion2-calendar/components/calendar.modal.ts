@@ -184,7 +184,7 @@ export class CalendarModal {
     this.calSvc.savedHistory(data, this._id);
     this.ref.detectChanges();
 
-    if (this._d.autoDone && this.canDone()) {
+    if (this._d.pickMode !== 'multi' && this._d.autoDone && this.canDone()) {
       this.done();
     }
   }
