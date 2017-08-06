@@ -29,6 +29,14 @@ export class HomePage {
       .catch( () => {} );
   }
 
+  multi() {
+    this.calendarCtrl.openCalendar({
+      pickMode: 'multi'
+    })
+      .then( (res:any) => { console.log(res) })
+      .catch( () => {} );
+  }
+
   setDefaultDate() {
     this.calendarCtrl.openCalendar({
       from: new Date(2017,1,1),
@@ -38,6 +46,7 @@ export class HomePage {
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
   }
+
 
 
   setCssClass() {
@@ -88,8 +97,6 @@ export class HomePage {
       weekdaysTitle:["天","一", "二", "三", "四", "五", "六"],
       closeLabel:'关闭',
       weekStartDay:1,
-      pickMode: 'multi'
-
     })
       .then( (res:any) => { console.log(res) })
       .catch( () => {} )
