@@ -180,6 +180,7 @@ export class CalendarModal {
   }
 
   onChange(data: any) {
+    this.datesTemp = data;
     this.calSvc.savedHistory(data, this._id);
     this.ref.detectChanges();
 
@@ -205,9 +206,9 @@ export class CalendarModal {
       case 'single':
         return !!(this.datesTemp[0] && this.datesTemp[0].time);
       case 'range':
-        return !!(this.datesTemp[0] && this.datesTemp[1]) && !!( this.datesTemp[0].time && this.datesTemp[1].time);
+        return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
       case 'multi':
-        return this.datesTemp.every(e => !!e && !!e.time);
+        return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e && !!e.time);
       default:
         return false;
     }

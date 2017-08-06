@@ -39,10 +39,12 @@ export class CalendarService {
       showYearPicker = false,
     } = calendarOptions || {};
 
-    if (isRadio) {
-      pickMode = 'single'
-    } else {
-      pickMode = 'range'
+    if (pickMode !== 'multi') {
+      if (isRadio) {
+        pickMode = 'single'
+      } else {
+        pickMode = 'range'
+      }
     }
 
     return {

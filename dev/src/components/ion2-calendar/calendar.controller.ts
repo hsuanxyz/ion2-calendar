@@ -20,7 +20,6 @@ export class CalendarController {
 
 
         let options = this.calSvc.safeOpt(calendarOptions);
-
         let calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
             options:options,
         },options),modalOptions);

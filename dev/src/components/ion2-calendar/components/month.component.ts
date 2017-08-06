@@ -69,7 +69,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   _onTouched: Function;
 
   constructor(public ref: ChangeDetectorRef,) {
-
   }
 
   ngOnInit() {
@@ -141,7 +140,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
           return time === this._date[1].time
         }
       } else {
-        return this._date.findIndex(e => e.time === time) !== -1;
+        return this._date.findIndex(e => e !== null && e.time === time) !== -1;
       }
 
     } else {
@@ -183,9 +182,20 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
       this.onChange.emit(this._date);
     }
 
+    if (this.pickMode === 'multi') {
 
+      const index = this._date.findIndex(e => e !== null && e.time === item.time);
 
-    this.ref.detectChanges();
+      if (index === -1) {
+        this._date.push(item);
+      } else {
+        this._date.splice(index, 1);
+      }
+      this.onChange.emit(this._date.filter(e => e !== null));
+      console.log(this._date.filter(e => e !== null))
+    }
+
+      this.ref.detectChanges();
 
   }
 
