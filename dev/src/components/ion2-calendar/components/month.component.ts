@@ -63,7 +63,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-  _date: Array<CalendarDay | null> = [null, null];
+  _date: Array<CalendarDay | null> = [];
 
   _onChanged: Function;
   _onTouched: Function;
@@ -73,7 +73,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
-    this._date = [null, null];
+    this._date = [];
   }
 
   writeValue(obj: any): void {
@@ -132,13 +132,18 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   isSelected(time: number): boolean {
     if (Array.isArray(this._date)) {
 
-      if (this._date[0] !== null) {
-        return time === this._date[0].time
+      if (this.pickMode !== 'multi') {
+        if (this._date[0] !== null) {
+          return time === this._date[0].time
+        }
+
+        if (this._date[1] !== null) {
+          return time === this._date[1].time
+        }
+      } else {
+        return this._date.findIndex(e => e.time === time) !== -1;
       }
 
-      if (this._date[1] !== null) {
-        return time === this._date[1].time
-      }
     } else {
       return false
     }
@@ -147,6 +152,8 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   onSelected(item: any) {
     item.selected = true;
     this.ref.detectChanges();
+
+
     if (this.pickMode === 'single') {
       this._date[0] = item;
 
@@ -154,26 +161,29 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
       return;
     }
 
-    if (this._date[0] === null) {
-      this._date[0] = item;
-
-      this.ref.detectChanges();
-
-    } else if (this._date[1] === null) {
-      if (this._date[0].time < item.time) {
-        this._date[1] = item;
-      } else {
-        this._date[1] = this._date[0];
+    if (this.pickMode === 'range') {
+      if (this._date[0] === null) {
         this._date[0] = item;
-      }
 
-      this.ref.detectChanges();
-    } else {
-      this._date[0] = item;
-      this._date[1] = null;
+        this.ref.detectChanges();
+
+      } else if (this._date[1] === null) {
+        if (this._date[0].time < item.time) {
+          this._date[1] = item;
+        } else {
+          this._date[1] = this._date[0];
+          this._date[0] = item;
+        }
+
+        this.ref.detectChanges();
+      } else {
+        this._date[0] = item;
+        this._date[1] = null;
+      }
+      this.onChange.emit(this._date);
     }
 
-    this.onChange.emit(this._date);
+
 
     this.ref.detectChanges();
 
