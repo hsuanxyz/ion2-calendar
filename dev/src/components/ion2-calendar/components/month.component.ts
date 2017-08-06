@@ -192,7 +192,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
         this._date.splice(index, 1);
       }
       this.onChange.emit(this._date.filter(e => e !== null));
-      console.log(this._date.filter(e => e !== null))
     }
 
       this.ref.detectChanges();
