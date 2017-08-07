@@ -47,7 +47,7 @@ import {CalendarService} from '../services/calendar.service';
 
       <div #months>
         <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
-          <h4 class="text-center month-title">{{month.original.date | date:monthTitleFilterStr}}</h4>
+          <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
           <ion-calendar-month [month]="month"
                               [pickMode]="options.pickMode"
                               [isSaveHistory]="isSaveHistory"
@@ -79,7 +79,7 @@ export class CalendarModal {
   doneIcon: boolean;
   datesTemp: Array<CalendarDay | null> = [null, null];
   calendarMonths: Array<CalendarMonth>;
-  monthTitleFilterStr = '';
+  monthFormatFilterStr = '';
   weekdaysTitle: Array<string> = [];
   defaultDate: Date;
   scrollBackwards: boolean;
@@ -130,7 +130,7 @@ export class CalendarModal {
       range_end: endTime,
       daysConfig: params.get('daysConfig'),
       disableWeekdays: params.get('disableWeekdays'),
-      monthTitle: params.get('monthTitle'),
+      monthFormat: params.get('monthFormat'),
     };
 
     this.defaultDate = this._d.defaultDate;
@@ -139,7 +139,7 @@ export class CalendarModal {
     this._id = this._d.id;
     this._color = this._d.color;
 
-    this.monthTitleFilterStr = this._d.monthTitle;
+    this.monthFormatFilterStr = this._d.monthFormat;
     this.weekdaysTitle = this._d.weekdaysTitle;
     this.title = this._d.title;
     this.closeLabel = this._d.closeLabel;

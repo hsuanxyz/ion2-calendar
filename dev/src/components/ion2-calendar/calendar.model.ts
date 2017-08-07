@@ -43,7 +43,7 @@ export class CalendarOptions {
   end: number;
   isRadio: boolean;
   pickMode: string;
-  monthTitle: string;
+  monthFormat: string;
   range_beg: number;
   range_end: number;
   daysConfig: Array<DayConfig>;
@@ -73,7 +73,7 @@ export interface CalendarControllerOptions {
   doneLabel?: string;
   closeIcon?: boolean;
   doneIcon?: boolean;
-  monthTitle?: string;
+  monthFormat?: string;
   color?: string;
   canBackwardsSelected?: boolean;
   title?: string;
