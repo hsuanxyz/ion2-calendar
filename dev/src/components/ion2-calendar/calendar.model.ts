@@ -35,7 +35,8 @@ export class DayConfig {
   marked?: boolean;
   disable?: boolean;
   title?: string;
-  subTitle?: string
+  subTitle?: string;
+  cssClass?: string;
 }
 
 export class CalendarOptions {
@@ -80,13 +81,7 @@ export interface CalendarControllerOptions {
   defaultDate?: Date;
   countNextMonths?: number;
   showYearPicker?: boolean;
-  daysConfig?: Array<{
-    date: Date;
-    cssClass?: string,
-    marked?: boolean;
-    title?: string;
-    subTitle?: string;
-  }>
+  daysConfig?: Array<DayConfig>
 }
 
 export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
