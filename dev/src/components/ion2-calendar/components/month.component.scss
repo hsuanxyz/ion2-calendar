@@ -42,9 +42,9 @@
   }
 
   button.days-btn.between {
-    background-color: lighten(color($cal-colors, $color), 30%);
+    background-color: color($cal-colors, $color);
     p {
-      color: color($cal-colors, $color);
+      color: #fff;
     }
   }
 }
@@ -79,7 +79,7 @@ ion-calendar-month {
   }
 
   button.days-btn {
-    border-radius: 50%;
+    border-radius: 36px;
     width: 36px;
     display: block;
     margin: 0 auto;
@@ -94,18 +94,18 @@ ion-calendar-month {
       @include transition-duration(300ms);
       @include transition-timing-function(ease-in-out);
     }
-    &.startSelection.endSelection {
-      border-radius: 50%;
-    }
+
     &.startSelection {
-      border-radius: 50% 0 0 50%;
+      width: 100%;
+      border-radius: 22.25px 0 0 22.25px;
     }
     &.between {
       width: 100%;
       border-radius: 0;
     }
     &.endSelection {
-      border-radius: 0 50% 50% 0;
+      width: 100%;
+      border-radius: 0 22.25px 22.25px 0;
       p {
         color: #fff;
       }
