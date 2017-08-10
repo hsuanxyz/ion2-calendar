@@ -33,17 +33,18 @@ export const MONTH_VALUE_ACCESSOR: any = {
       </div>
       <div *ngIf="pickMode === 'range'">
         <div class="days-box">
-          <div class="days" *ngFor="let day of month.days">
+          <div class="days"
+               *ngFor="let day of month.days"
+               [class.startSelection]="isStartSelection(day)"
+               [class.endSelection]="isEndSelection(day)"
+               [class.between]="isBetween(day)">
             <button [class]="'days-btn ' + day.cssClass"
                     *ngIf="day"
                     [class.today]="day.isToday"
                     (click)="onSelected(day)"
                     [class.marked]="day.marked"
                     [class.on-selected]="isSelected(day.time)"
-                    [disabled]="day.disable"
-                    [class.startSelection]="isStartSelection(day)"
-                    [class.endSelection]="isEndSelection(day)"
-                    [class.between]="isBetween(day)">
+                    [disabled]="day.disable">
               <p>{{day.title}}</p>
               <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
             </button>
@@ -88,6 +89,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isEndSelection(day: CalendarDay): boolean {
+    if(!day) return;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[1] === null) {
       return false;
     }
@@ -96,6 +98,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isBetween(day: CalendarDay): boolean {
+    if(!day) return;
 
     if (this.pickMode !== 'range' || !Array.isArray(this._date)) {
       return false;
@@ -121,6 +124,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isStartSelection(day: CalendarDay): boolean {
+    if(!day) return;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[0] === null) {
       return false;
     }
@@ -129,6 +133,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isSelected(time: number): boolean {
+
     if (Array.isArray(this._date)) {
 
       if (this.pickMode !== 'multi') {
@@ -194,7 +199,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
       this.onChange.emit(this._date.filter(e => e !== null));
     }
 
-      this.ref.detectChanges();
+    this.ref.detectChanges();
 
   }
 

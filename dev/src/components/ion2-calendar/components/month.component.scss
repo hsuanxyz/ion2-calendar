@@ -31,23 +31,72 @@
     color: color($cal-colors, $color);
   }
 
-  .days .today.on-selected p, .days .marked.on-selected p{
+  .days .today.on-selected p, .days .marked.on-selected p {
     color: #fff;
   }
 
-
-
   .days .on-selected,
-  button.days-btn.startSelection,
-  button.days-btn.endSelection {
+  .startSelection button.days-btn,
+  .endSelection button.days-btn {
     background-color: color($cal-colors, $color);
   }
 
-  button.days-btn.between {
-    background-color: lighten(color($cal-colors, $color), 0%);
+  .startSelection {
+    position: relative;
+    &:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block;
+      background-color: lighten(color($cal-colors, $color), 8%);
+    }
+  }
+
+  .endSelection {
+    position: relative;
+    &:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background-color: lighten(color($cal-colors, $color), 8%);
+    }
+  }
+
+  .startSelection button.days-btn  {
+    border-radius: 50%
+  }
+  .between button.days-btn {
+    background-color: lighten(color($cal-colors, $color), 8%);
+    width: 100%;
+    border-radius: 0;
     p {
       color: #fff;
     }
+  }
+  .endSelection button.days-btn {
+    border-radius: 50%;
+    p {
+      color: #fff;
+    }
+  }
+
+  .startSelection,
+  .endSelection,
+  .between {
+
+    button.days-btn {
+      @include transition-property(background-color);
+      @include transition-duration(180ms);
+      @include transition-timing-function(ease-out);
+    }
+
   }
 }
 
@@ -89,30 +138,6 @@ ion-calendar-month {
     background-color: transparent;
     position: relative;
     z-index: 2;
-    &.startSelection,
-    &.endSelection,
-    &.between {
-      @include transition-property(background-color);
-      @include transition-duration(300ms);
-      @include transition-timing-function(ease-in-out);
-    }
-
-    &.startSelection {
-      width: 100%;
-      border-radius: 22.25px 0 0 22.25px;
-    }
-    &.between {
-      width: 100%;
-      border-radius: 0;
-    }
-    &.endSelection {
-      width: 100%;
-      border-radius: 0 22.25px 22.25px 0;
-      p {
-        color: #fff;
-      }
-
-    }
   }
 
   button.days-btn p {
