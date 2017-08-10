@@ -51,7 +51,7 @@
       top: 0;
       right: 0;
       display: block;
-      background-color: lighten(color($cal-colors, $color), 8%);
+      background-color: lighten(color($cal-colors, $color), 12%);
     }
   }
 
@@ -65,7 +65,7 @@
       top: 0;
       left: 0;
       display: block;
-      background-color: lighten(color($cal-colors, $color), 8%);
+      background-color: lighten(color($cal-colors, $color), 12%);
     }
   }
 
@@ -73,7 +73,7 @@
     border-radius: 50%
   }
   .between button.days-btn {
-    background-color: lighten(color($cal-colors, $color), 8%);
+    background-color: lighten(color($cal-colors, $color), 12%);
     width: 100%;
     border-radius: 0;
     p {
@@ -85,6 +85,10 @@
     p {
       color: #fff;
     }
+  }
+
+  .days.between {
+    background-color: lighten(color($cal-colors, $color), 12%);
   }
 
   .startSelection,
@@ -113,7 +117,8 @@ ion-calendar-month {
     width: 14%;
     float: left;
     text-align: center;
-    height: 40px;
+    height: 36px;
+    margin-bottom: 5px;
   }
   .days .marked p {
     font-weight: 500;
