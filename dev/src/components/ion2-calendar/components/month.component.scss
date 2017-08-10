@@ -31,9 +31,11 @@
     color: color($cal-colors, $color);
   }
 
-  .days .today.on-selected p {
+  .days .today.on-selected p, .days .marked.on-selected p{
     color: #fff;
   }
+
+
 
   .days .on-selected,
   button.days-btn.startSelection,
@@ -42,7 +44,7 @@
   }
 
   button.days-btn.between {
-    background-color: color($cal-colors, $color);
+    background-color: lighten(color($cal-colors, $color), 0%);
     p {
       color: #fff;
     }
