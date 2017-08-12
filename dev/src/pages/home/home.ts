@@ -61,7 +61,8 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       cssClass: 'my-class',
       color: 'secondary',
-      isRadio: false,
+      pickMode: 'range',
+      autoDone: true
     })
       .then((res: any) => {
         console.log(res)
@@ -72,9 +73,8 @@ export class HomePage {
 
   dateRange() {
     this.calendarCtrl.openCalendar({
-      isRadio: false,
+      pickMode: 'range',
       canBackwardsSelected: true,
-      autoDone: true
     })
       .then((res: any) => {
         console.log(res)

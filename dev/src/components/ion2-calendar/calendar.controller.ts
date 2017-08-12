@@ -24,6 +24,7 @@ export class CalendarController {
             options:options,
         },options),modalOptions);
 
+        console.log(options)
         calendarModal.present();
 
         return new Promise( (resolve, reject) => {

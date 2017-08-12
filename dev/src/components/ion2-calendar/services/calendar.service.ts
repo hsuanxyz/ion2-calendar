@@ -20,7 +20,6 @@ export class CalendarService {
       to = 0,
       cssClass = '',
       weekStartDay = 0,
-      isRadio = true,
       canBackwardsSelected = false,
       disableWeekdays = [],
       closeLabel = 'cancel',
@@ -39,20 +38,12 @@ export class CalendarService {
       showYearPicker = false,
     } = calendarOptions || {};
 
-    if (pickMode !== 'multi') {
-      if (isRadio) {
-        pickMode = 'single'
-      } else {
-        pickMode = 'range'
-      }
-    }
 
     return {
       autoDone: autoDone,
       from: from,
       to: to,
       cssClass: cssClass,
-      isRadio: isRadio,
       weekStartDay: weekStartDay,
       canBackwardsSelected: canBackwardsSelected,
       closeLabel: closeLabel,

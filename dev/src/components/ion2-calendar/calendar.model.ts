@@ -63,7 +63,6 @@ export interface CalendarControllerOptions {
   from?: Date;
   cssClass?: string;
   to?: Date | number;
-  isRadio?: boolean;
   pickMode?: string;
   id?: string;
   isSaveHistory?: boolean;
