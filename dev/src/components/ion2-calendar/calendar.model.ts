@@ -68,7 +68,7 @@ export interface CalendarControllerOptions {
   isSaveHistory?: boolean;
   weekStartDay?: number;
   disableWeekdays?: Array<number>;
-  weekdaysTitle?: Array<string>;
+  weekdays?: Array<string>;
   closeLabel?: string;
   doneLabel?: string;
   closeIcon?: boolean;

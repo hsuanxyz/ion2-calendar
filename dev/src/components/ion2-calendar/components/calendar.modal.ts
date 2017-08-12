@@ -37,7 +37,7 @@ import {CalendarService} from '../services/calendar.service';
 
       <ion-calendar-week
         [color]="_color"
-        [weekArray]="weekdaysTitle"
+        [weekArray]="weekdays"
         [weekStart]="weekStartDay">
       </ion-calendar-week>
 
@@ -80,7 +80,7 @@ export class CalendarModal {
   datesTemp: Array<CalendarDay | null> = [null, null];
   calendarMonths: Array<CalendarMonth>;
   monthFormatFilterStr = '';
-  weekdaysTitle: Array<string> = [];
+  weekdays: Array<string> = [];
   defaultDate: Date;
   scrollBackwards: boolean;
   weekStartDay: number = 0;
@@ -140,7 +140,7 @@ export class CalendarModal {
     this._color = this._d.color;
 
     this.monthFormatFilterStr = this._d.monthFormat;
-    this.weekdaysTitle = this._d.weekdaysTitle;
+    this.weekdays = this._d.weekdays;
     this.title = this._d.title;
     this.closeLabel = this._d.closeLabel;
     this.closeIcon = this._d.closeIcon;
