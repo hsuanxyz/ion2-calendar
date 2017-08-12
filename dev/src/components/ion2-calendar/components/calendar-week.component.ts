@@ -13,7 +13,7 @@ import { Component, Input } from '@angular/core';
 
 export class CalendarWeekComponent {
 
-    _weekArray: string[] = "Di_Lu_Ma_Me_Je_Ve_Sa".split("_");
+    _weekArray: string[] = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     _weekStart: number = 0;
     @Input() color:string = 'primary';
 

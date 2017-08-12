@@ -32,7 +32,7 @@ export class CalendarService {
       isSaveHistory = false,
       monthFormat = 'MMM yyyy',
       title = 'Calendar',
-      weekdaysTitle = 'Di_Lu_Ma_Me_Je_Ve_Sa'.split('_'),
+      weekdaysTitle = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       daysConfig = [],
       countNextMonths = 3,
       showYearPicker = false,
