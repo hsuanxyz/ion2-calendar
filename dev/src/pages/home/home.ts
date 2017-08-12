@@ -99,7 +99,7 @@ export class HomePage {
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
       disableWeekdays: [0, 6],
-      weekStartDay: 1,
+      weekStart: 1,
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       monthFormat: 'yyyy 年 MM 月 ',
       canBackwardsSelected: true,
@@ -117,7 +117,7 @@ export class HomePage {
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       closeLabel: '关闭',
-      weekStartDay: 1,
+      weekStart: 1,
     })
       .then((res: any) => {
         console.log(res)

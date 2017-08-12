@@ -19,7 +19,7 @@ export class CalendarService {
       from = new Date(),
       to = 0,
       cssClass = '',
-      weekStartDay = 0,
+      weekStart = 0,
       canBackwardsSelected = false,
       disableWeekdays = [],
       closeLabel = 'cancel',
@@ -44,7 +44,7 @@ export class CalendarService {
       from: from,
       to: to,
       cssClass: cssClass,
-      weekStartDay: weekStartDay,
+      weekStart: weekStart,
       canBackwardsSelected: canBackwardsSelected,
       closeLabel: closeLabel,
       closeIcon: closeIcon,
@@ -137,9 +137,9 @@ export class CalendarService {
       days[i] = this.createCalendarDay(itemTime, opt);
     }
 
-    let weekStartDay = opt.weekStartDay;
+    let weekStart = opt.weekStart;
 
-    if (weekStartDay === 1) {
+    if (weekStart === 1) {
       if (days[0] === null) {
         days.shift();
         days.push(null);

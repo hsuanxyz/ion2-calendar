@@ -66,7 +66,7 @@ export interface CalendarControllerOptions {
   pickMode?: string;
   id?: string;
   isSaveHistory?: boolean;
-  weekStartDay?: number;
+  weekStart?: number;
   disableWeekdays?: Array<number>;
   weekdays?: Array<string>;
   closeLabel?: string;
