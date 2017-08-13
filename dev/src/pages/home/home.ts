@@ -20,10 +20,11 @@ export class HomePage {
   basic() {
 
     this.calendarCtrl.openCalendar({
-      title: 'basic demo',
+      title: 'BASIC',
       canBackwardsSelected: true,
-      color: 'secondary',
-      doneIcon: true
+      color: 'dark',
+      doneIcon: true,
+      closeIcon: true
     })
       .then((res: any) => {
         console.log(res)
@@ -34,7 +35,8 @@ export class HomePage {
 
   multi() {
     this.calendarCtrl.openCalendar({
-      pickMode: 'multi'
+      pickMode: 'multi',
+      title: 'MULTI',
     })
       .then((res: any) => {
         console.log(res)
@@ -74,7 +76,9 @@ export class HomePage {
   dateRange() {
     this.calendarCtrl.openCalendar({
       pickMode: 'range',
+      title: 'RANGE',
       canBackwardsSelected: true,
+      color: 'danger'
     })
       .then((res: any) => {
         console.log(res)
@@ -83,11 +87,10 @@ export class HomePage {
       })
   }
 
-  maxAndMin() {
+  optional() {
     this.calendarCtrl.openCalendar({
       from: new Date(2017, 1, 1),
       to: new Date(2017, 2, 5),
-
     })
       .then((res: any) => {
         console.log(res)
@@ -99,11 +102,7 @@ export class HomePage {
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
       disableWeekdays: [0, 6],
-      weekStart: 1,
-      weekdays: ['天', '一', '二', '三', '四', '五', '六'],
-      monthFormat: 'yyyy 年 MM 月 ',
       canBackwardsSelected: true,
-
     })
       .then((res: any) => {
         console.log(res)
@@ -112,11 +111,10 @@ export class HomePage {
       })
   }
 
-  settingDisplay() {
+  local() {
     this.calendarCtrl.openCalendar({
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
-      closeLabel: '关闭',
       weekStart: 1,
     })
       .then((res: any) => {
