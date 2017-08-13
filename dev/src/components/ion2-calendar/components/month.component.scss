@@ -31,6 +31,10 @@
     color: color($cal-colors, $color);
   }
 
+  .days .today p {
+    font-weight: 700;
+  }
+
   .days .today.on-selected p, .days .marked.on-selected p {
     color: #fff;
   }
