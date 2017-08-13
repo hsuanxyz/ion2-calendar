@@ -101,7 +101,7 @@ export class HomePage {
 
   disableWeekdays() {
     this.calendarCtrl.openCalendar({
-      disableWeekdays: [0, 6],
+      disableWeeks: [0, 6],
       canBackwardsSelected: true,
     })
       .then((res: any) => {

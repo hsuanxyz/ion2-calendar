@@ -21,7 +21,7 @@ export class CalendarService {
       cssClass = '',
       weekStart = 0,
       canBackwardsSelected = false,
-      disableWeekdays = [],
+      disableWeeks = [],
       closeLabel = 'CANCEL',
       closeIcon = false,
       doneLabel = 'DONE',
@@ -55,7 +55,7 @@ export class CalendarService {
       color: color,
       isSaveHistory: isSaveHistory,
       defaultDate: calendarOptions.defaultDate || from,
-      disableWeekdays: disableWeekdays,
+      disableWeeks: disableWeeks,
       monthFormat: monthFormat,
       title: title,
       weekdays: weekdays,
@@ -96,7 +96,7 @@ export class CalendarService {
     let _rangeBeg = moment(opt.from).valueOf();
     let _rangeEnd = moment(opt.to).valueOf();
     let isBetween = true;
-    let disableWee = opt.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
+    let disableWee = opt.disableWeeks.indexOf(_time.toDate().getDay()) !== -1;
     if (_rangeBeg > 0 && _rangeEnd > 0) {
       if (!opt.canBackwardsSelected) {
         isBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');

@@ -48,7 +48,7 @@ export class CalendarOptions {
   range_beg: number;
   range_end: number;
   daysConfig: Array<DayConfig>;
-  disableWeekdays: Array<number>
+  disableWeeks: Array<number>
 }
 
 export interface ModalOptions {
@@ -67,7 +67,7 @@ export interface CalendarControllerOptions {
   id?: string;
   isSaveHistory?: boolean;
   weekStart?: number;
-  disableWeekdays?: Array<number>;
+  disableWeeks?: Array<number>;
   weekdays?: Array<string>;
   closeLabel?: string;
   doneLabel?: string;

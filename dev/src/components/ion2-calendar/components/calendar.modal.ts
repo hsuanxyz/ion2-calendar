@@ -129,7 +129,7 @@ export class CalendarModal {
       range_beg: startTime,
       range_end: endTime,
       daysConfig: params.get('daysConfig'),
-      disableWeekdays: params.get('disableWeekdays'),
+      disableWeeks: params.get('disableWeeks'),
       monthFormat: params.get('monthFormat'),
     };
 
