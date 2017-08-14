@@ -1,18 +1,28 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Home</ion-title>
+    <ion-title>
+      DEMO
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-calendar [color]="'secondary'"
-                [weekStartDay]="1"
-                [disableWeekdays]="[0,1]"></ion-calendar>
-
   <ion-list>
     <button ion-item (click)="basic()">
       basic
+    </button>
+    <button ion-item (click)="multi()">
+      multi
+    </button>
+    <button ion-item (click)="dateRange()">
+      date range
+    </button>
+    <button ion-item (click)="local()">
+      local
+    </button>
+    <button ion-item (click)="disableWeekdays()">
+      disable weekdays
     </button>
     <button ion-item (click)="setDefaultDate()">
       set default date
@@ -20,20 +30,12 @@
     <button ion-item (click)="setCssClass()">
       set css class
     </button>
-    <button ion-item (click)="dateRange()">
-      date range
-    </button>
-    <button ion-item (click)="maxAndMin()">
+    <button ion-item (click)="optional()">
       set the optional range
-    </button>
-    <button ion-item (click)="disableWeekdays()">
-      disable weekdays (rest)
-    </button>
-    <button ion-item (click)="settingDisplay()">
-      setting display format
     </button>
     <button ion-item (click)="daysConfig  ()">
       days config
     </button>
   </ion-list>
+
 </ion-content>

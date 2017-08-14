@@ -1,61 +1,26 @@
-# ion2-calendar DEMO
+This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
 
+## How to use this template
 
-## Running
-* Clone this repository: `https://github.com/HsuanXyz/ion2-calendar.git`.
-* `cd demo`
-* Run `npm install` from the project root.
-* If you do not install the ionic CLI (`npm install -g ionic`)
-* Run `ionic serve` in a terminal from the project root.
+*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
 
-## File Structure
+To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+
+### With the Ionic CLI:
+
+Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+
+```bash
+$ sudo npm install -g ionic cordova
+$ ionic start myBlank blank
 ```
-.
-├── LICENSE
-├── README.md
-├── config.xml
-├── ionic.config.json
-├── package.json
-├── resources
-├── src
-│   ├── index.html
-│   ├── app
-│   │   ├── app.component.ts
-│   │   ├── app.html
-│   │   ├── app.module.ts
-│   │   ├── app.scss
-│   │   └── main.ts
-│   ├── assets
-│   ├── pages
-│   │   ├── about
-│   │   │   ├── about.html
-│   │   │   ├── about.scss
-│   │   │   └── about.ts
-│   │   ├── contact
-│   │   │   ├── contact.html
-│   │   │   ├── contact.scss
-│   │   │   └── contact.ts
-│   │   ├── home
-│   │   │   ├── home.html         *  template
-│   │   │   ├── home.scss         
-│   │   │   └── home.ts           *  code
-│   │   └── tabs
-│   │       ├── tabs.html
-│   │       └── tabs.ts
-│   ├── service-worker.js
-│   └── theme
-│       └── variables.scss
-├── tsconfig.json
-└── tslint.json
+
+Then, to run it, cd into `myBlank` and run:
+
+```bash
+$ ionic cordova platform add ios
+$ ionic cordova run ios
 ```
-## Environment
-```
-Cordova CLI: 6.4.0
-Ionic Framework Version: 2.1.0
-Ionic CLI Version: 2.1.18
-Ionic App Lib Version: 2.1.9
-Ionic App Scripts Version: 1.1.3
-OS: macOS Sierra
-Node Version: v6.9.2
-Xcode version: Xcode 8.2.1 Build version 8C1002
-```
+
+Substitute ios for android if not on a Mac.
+
