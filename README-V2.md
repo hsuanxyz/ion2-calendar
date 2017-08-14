@@ -1,11 +1,10 @@
-<h1 align="center">ion2-calendar</h1>
+# 📅 ion2-calendar
 
-<p align="center">
 [![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
 [![NPM version][npm-image]][npm-url]
 [![Downloads][downloads-image]][downloads-url]
 [![MIT License][license-image]][license-url]
-</p>
+
 
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
 
