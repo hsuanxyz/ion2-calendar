@@ -1,12 +1,7 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-import { Component, ViewChild } from '@angular/core';
-import { Content } from 'ionic-angular';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
+import { NavParams, ViewController, Content } from 'ionic-angular';
 import * as moment from 'moment';
+import { CalendarService } from '../services/calendar.service';
 var CalendarModal = (function () {
     function CalendarModal(_renderer, _elementRef, params, viewCtrl, ref, calSvc) {
         this._renderer = _renderer;
@@ -15,10 +10,10 @@ var CalendarModal = (function () {
         this.viewCtrl = viewCtrl;
         this.ref = ref;
         this.calSvc = calSvc;
-        this.dayTemp = [null, null];
-        this.monthTitleFilterStr = '';
-        this.weekdaysTitle = [];
-        this.weekStartDay = 0;
+        this.datesTemp = [null, null];
+        this.monthFormatFilterStr = '';
+        this.weekdays = [];
+        this.weekStart = 0;
         this.debug = true;
         this._s = true;
         this._color = 'primary';
@@ -38,19 +33,20 @@ var CalendarModal = (function () {
             start: startTime,
             end: endTime,
             isRadio: params.get('isRadio'),
+            pickMode: this._d.pickMode,
             range_beg: startTime,
             range_end: endTime,
             daysConfig: params.get('daysConfig'),
-            disableWeekdays: params.get('disableWeekdays'),
-            monthTitle: params.get('monthTitle'),
+            disableWeeks: params.get('disableWeeks'),
+            monthFormat: params.get('monthFormat'),
         };
         this.defaultDate = this._d.defaultDate;
         this.scrollBackwards = this._d.canBackwardsSelected;
-        this.weekStartDay = this._d.weekStartDay;
+        this.weekStart = this._d.weekStart;
         this._id = this._d.id;
         this._color = this._d.color;
-        this.monthTitleFilterStr = this._d.monthTitle;
-        this.weekdaysTitle = this._d.weekdaysTitle;
+        this.monthFormatFilterStr = this._d.monthFormat;
+        this.weekdays = this._d.weekdays;
         this.title = this._d.title;
         this.closeLabel = this._d.closeLabel;
         this.closeIcon = this._d.closeIcon;
@@ -80,9 +76,10 @@ var CalendarModal = (function () {
         }
     };
     CalendarModal.prototype.onChange = function (data) {
+        this.datesTemp = data;
         this.calSvc.savedHistory(data, this._id);
         this.ref.detectChanges();
-        if (this._d.autoDone && this.canDone()) {
+        if (this._d.pickMode !== 'multi' && this._d.autoDone && this.canDone()) {
             this.done();
         }
     };
@@ -90,22 +87,26 @@ var CalendarModal = (function () {
         this.viewCtrl.dismiss();
     };
     CalendarModal.prototype.done = function () {
-        this.viewCtrl.dismiss(this.dayTemp);
+        this.viewCtrl.dismiss(this.datesTemp);
     };
     CalendarModal.prototype.canDone = function () {
-        if (!Array.isArray(this.dayTemp)) {
+        if (!Array.isArray(this.datesTemp)) {
             return false;
         }
-        if (this._d.isRadio) {
-            return !!(this.dayTemp[0] && this.dayTemp[0].time);
-        }
-        else {
-            return !!(this.dayTemp[0] && this.dayTemp[1]) && !!(this.dayTemp[0].time && this.dayTemp[1].time);
+        switch (this._d.pickMode) {
+            case 'single':
+                return !!(this.datesTemp[0] && this.datesTemp[0].time);
+            case 'range':
+                return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
+            case 'multi':
+                return this.datesTemp.length > 0 && this.datesTemp.every(function (e) { return !!e && !!e.time; });
+            default:
+                return false;
         }
     };
     CalendarModal.prototype.getHistory = function () {
         if (this.isSaveHistory) {
-            this.dayTemp = this.calSvc.getHistory(this._id);
+            this.datesTemp = this.calSvc.getHistory(this._id);
         }
     };
     CalendarModal.prototype.createYearPicker = function (startTime, endTime) {
@@ -235,17 +236,24 @@ var CalendarModal = (function () {
     };
     return CalendarModal;
 }());
-__decorate([
-    ViewChild(Content)
-], CalendarModal.prototype, "content", void 0);
-__decorate([
-    ViewChild('months')
-], CalendarModal.prototype, "monthsEle", void 0);
-CalendarModal = __decorate([
-    Component({
-        selector: 'ion-calendar-modal',
-        template: "\n        <ion-header>\n            \n            <ion-navbar [color]=\"_color\">\n\n                <ion-buttons start [hidden]=\"!showYearPicker\">\n                    <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n                        <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n                    </ion-select>\n                </ion-buttons>\n\n                <ion-title>{{title}}</ion-title>\n                \n                <ion-buttons end>\n                    <button ion-button clear (click)=\"onCancel()\">\n                        <span *ngIf=\"closeLabel !== '' && !closeIcon\">{{closeLabel}}</span>\n                        <ion-icon *ngIf=\"closeIcon\" name=\"close\"></ion-icon>\n                    </button>\n                    <button ion-button *ngIf=\"!_d.autoDone\" clear [disabled]=\"!canDone()\" (click)=\"done()\">\n                        <span *ngIf=\"doneLabel !== '' && !doneIcon\">{{doneLabel}}</span>\n                        <ion-icon *ngIf=\"doneIcon\" name=\"checkmark\"></ion-icon>\n                    </button>\n                </ion-buttons>\n\n            </ion-navbar>\n\n            <ion-calendar-week\n                    [color]=\"_color\"\n                    [weekArray]=\"weekdaysTitle\"\n                    [weekStart]=\"weekStartDay\">\n            </ion-calendar-week>\n\n        </ion-header>\n\n        <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multiSelection': !options.isRadio}\">\n\n            <div #months>\n                <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n                    <h4 class=\"text-center month-title\">{{month.original.date | date:monthTitleFilterStr}}</h4>\n                    <ion-calendar-month [month]=\"month\"\n                                [isRadio]=\"options.isRadio\"\n                                [isSaveHistory]=\"isSaveHistory\"\n                                [id]=\"_id\"\n                                [color]=\"_color\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"dayTemp\">\n                        \n                    </ion-calendar-month>\n                </div>\n            </div>\n\n            <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n                <ion-infinite-scroll-content></ion-infinite-scroll-content>\n            </ion-infinite-scroll>\n\n        </ion-content>\n    ",
-    })
-], CalendarModal);
 export { CalendarModal };
+CalendarModal.decorators = [
+    { type: Component, args: [{
+                selector: 'ion-calendar-modal',
+                template: "\n    <ion-header>\n\n      <ion-navbar [color]=\"_color\">\n\n        <ion-buttons start [hidden]=\"!showYearPicker\">\n          <ion-select [(ngModel)]=\"year\" (ngModelChange)=\"changedYearSelection()\" interface=\"popover\">\n            <ion-option *ngFor=\"let y of years\" value=\"{{y}}\">{{y}}</ion-option>\n          </ion-select>\n        </ion-buttons>\n\n        <ion-title>{{title}}</ion-title>\n\n        <ion-buttons end>\n          <button ion-button clear (click)=\"onCancel()\">\n            <span *ngIf=\"closeLabel !== '' && !closeIcon\">{{closeLabel}}</span>\n            <ion-icon *ngIf=\"closeIcon\" name=\"close\"></ion-icon>\n          </button>\n          <button ion-button *ngIf=\"!_d.autoDone\" clear [disabled]=\"!canDone()\" (click)=\"done()\">\n            <span *ngIf=\"doneLabel !== '' && !doneIcon\">{{doneLabel}}</span>\n            <ion-icon *ngIf=\"doneIcon\" name=\"checkmark\"></ion-icon>\n          </button>\n        </ion-buttons>\n\n      </ion-navbar>\n\n      <ion-calendar-week\n        [color]=\"_color\"\n        [weekArray]=\"weekdays\"\n        [weekStart]=\"weekStart\">\n      </ion-calendar-week>\n\n    </ion-header>\n\n    <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\" [ngClass]=\"{'multi-selection': options.pickMode === 'multi'}\">\n\n      <div #months>\n        <div *ngFor=\"let month of calendarMonths;let i = index;\" class=\"month-box\" [attr.id]=\"'month-' + i\">\n          <h4 class=\"text-center month-title\">{{month.original.date | date:monthFormatFilterStr}}</h4>\n          <ion-calendar-month [month]=\"month\"\n                              [pickMode]=\"options.pickMode\"\n                              [isSaveHistory]=\"isSaveHistory\"\n                              [id]=\"_id\"\n                              [color]=\"_color\"\n                              (onChange)=\"onChange($event)\"\n                              [(ngModel)]=\"datesTemp\">\n\n          </ion-calendar-month>\n        </div>\n      </div>\n\n      <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n        <ion-infinite-scroll-content></ion-infinite-scroll-content>\n      </ion-infinite-scroll>\n\n    </ion-content>\n  ",
+            },] },
+];
+/** @nocollapse */
+CalendarModal.ctorParameters = function () { return [
+    { type: Renderer, },
+    { type: ElementRef, },
+    { type: NavParams, },
+    { type: ViewController, },
+    { type: ChangeDetectorRef, },
+    { type: CalendarService, },
+]; };
+CalendarModal.propDecorators = {
+    'content': [{ type: ViewChild, args: [Content,] },],
+    'monthsEle': [{ type: ViewChild, args: ['months',] },],
+};
 //# sourceMappingURL=calendar.modal.js.map

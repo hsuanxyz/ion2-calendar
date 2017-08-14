@@ -1,11 +1,5 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 export var MONTH_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return MonthComponent; }),
@@ -16,10 +10,10 @@ var MonthComponent = (function () {
         this.ref = ref;
         this.color = 'primary';
         this.onChange = new EventEmitter();
-        this._date = [null, null];
+        this._date = [];
     }
     MonthComponent.prototype.ngOnInit = function () {
-        this._date = [null, null];
+        this._date = [];
     };
     MonthComponent.prototype.writeValue = function (obj) {
         this._date = obj;
@@ -31,13 +25,17 @@ var MonthComponent = (function () {
         this._onTouched = fn;
     };
     MonthComponent.prototype.isEndSelection = function (day) {
-        if (this.isRadio || !Array.isArray(this._date) || this._date[1] === null) {
+        if (!day)
+            return;
+        if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[1] === null) {
             return false;
         }
         return this._date[1].time === day.time;
     };
     MonthComponent.prototype.isBetween = function (day) {
-        if (this.isRadio || !Array.isArray(this._date)) {
+        if (!day)
+            return;
+        if (this.pickMode !== 'range' || !Array.isArray(this._date)) {
             return false;
         }
         var start = 0;
@@ -57,18 +55,25 @@ var MonthComponent = (function () {
         return day.time < end && day.time > start;
     };
     MonthComponent.prototype.isStartSelection = function (day) {
-        if (this.isRadio || !Array.isArray(this._date) || this._date[0] === null) {
+        if (!day)
+            return;
+        if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[0] === null) {
             return false;
         }
         return this._date[0].time === day.time && this._date[1] !== null;
     };
     MonthComponent.prototype.isSelected = function (time) {
         if (Array.isArray(this._date)) {
-            if (this._date[0] !== null) {
-                return time === this._date[0].time;
+            if (this.pickMode !== 'multi') {
+                if (this._date[0] !== null) {
+                    return time === this._date[0].time;
+                }
+                if (this._date[1] !== null) {
+                    return time === this._date[1].time;
+                }
             }
-            if (this._date[1] !== null) {
-                return time === this._date[1].time;
+            else {
+                return this._date.findIndex(function (e) { return e !== null && e.time === time; }) !== -1;
             }
         }
         else {
@@ -78,58 +83,64 @@ var MonthComponent = (function () {
     MonthComponent.prototype.onSelected = function (item) {
         item.selected = true;
         this.ref.detectChanges();
-        if (this.isRadio) {
+        if (this.pickMode === 'single') {
             this._date[0] = item;
             this.onChange.emit(this._date);
             return;
         }
-        if (this._date[0] === null) {
-            this._date[0] = item;
-            this.ref.detectChanges();
-        }
-        else if (this._date[1] === null) {
-            if (this._date[0].time < item.time) {
-                this._date[1] = item;
+        if (this.pickMode === 'range') {
+            if (this._date[0] === null) {
+                this._date[0] = item;
+                this.ref.detectChanges();
+            }
+            else if (this._date[1] === null) {
+                if (this._date[0].time < item.time) {
+                    this._date[1] = item;
+                }
+                else {
+                    this._date[1] = this._date[0];
+                    this._date[0] = item;
+                }
+                this.ref.detectChanges();
             }
             else {
-                this._date[1] = this._date[0];
                 this._date[0] = item;
+                this._date[1] = null;
             }
-            this.ref.detectChanges();
+            this.onChange.emit(this._date);
         }
-        else {
-            this._date[0] = item;
-            this._date[1] = null;
+        if (this.pickMode === 'multi') {
+            var index = this._date.findIndex(function (e) { return e !== null && e.time === item.time; });
+            if (index === -1) {
+                this._date.push(item);
+            }
+            else {
+                this._date.splice(index, 1);
+            }
+            this.onChange.emit(this._date.filter(function (e) { return e !== null; }));
         }
-        this.onChange.emit(this._date);
         this.ref.detectChanges();
     };
     return MonthComponent;
 }());
-__decorate([
-    Input()
-], MonthComponent.prototype, "month", void 0);
-__decorate([
-    Input()
-], MonthComponent.prototype, "isRadio", void 0);
-__decorate([
-    Input()
-], MonthComponent.prototype, "isSaveHistory", void 0);
-__decorate([
-    Input()
-], MonthComponent.prototype, "id", void 0);
-__decorate([
-    Input()
-], MonthComponent.prototype, "color", void 0);
-__decorate([
-    Output()
-], MonthComponent.prototype, "onChange", void 0);
-MonthComponent = __decorate([
-    Component({
-        selector: 'ion-calendar-month',
-        providers: [MONTH_VALUE_ACCESSOR],
-        template: "        \n        <div [class]=\"color\">\n            <div *ngIf=\"isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n            <div *ngIf=\"!isRadio\">\n                <div class=\"days-box\">\n                    <div class=\"days\" *ngFor=\"let day of month.days\">\n                        <button [class]=\"'days-btn ' + day.cssClass\"\n                                *ngIf=\"day\"\n                                [class.today]=\"day.isToday\"\n                                (click)=\"onSelected(day)\"\n                                [class.marked]=\"day.marked\"\n                                [class.on-selected]=\"isSelected(day.time)\"\n                                [disabled]=\"day.disable\"\n                                [class.startSelection]=\"isStartSelection(day)\"\n                                [class.endSelection]=\"isEndSelection(day)\"\n                                [class.between]=\"isBetween(day)\">\n                            <p>{{day.title}}</p>\n                            <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                        </button>\n                    </div>\n                </div>\n            </div>\n        </div>\n    ",
-    })
-], MonthComponent);
 export { MonthComponent };
+MonthComponent.decorators = [
+    { type: Component, args: [{
+                selector: 'ion-calendar-month',
+                providers: [MONTH_VALUE_ACCESSOR],
+                template: "\n    <div [class]=\"color\">\n      <div *ngIf=\"pickMode !== 'range'\">\n        <div class=\"days-box\">\n          <div class=\"days\" *ngFor=\"let day of month.days\">\n            <button [class]=\"'days-btn ' + day.cssClass\"\n                    *ngIf=\"day\"\n                    [class.today]=\"day.isToday\"\n                    (click)=\"onSelected(day)\"\n                    [class.marked]=\"day.marked\"\n                    [class.on-selected]=\"isSelected(day.time)\"\n                    [disabled]=\"day.disable\">\n              <p>{{day.title}}</p>\n              <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n            </button>\n          </div>\n        </div>\n      </div>\n      <div *ngIf=\"pickMode === 'range'\">\n        <div class=\"days-box\">\n          <div class=\"days\"\n               *ngFor=\"let day of month.days\"\n               [class.startSelection]=\"isStartSelection(day)\"\n               [class.endSelection]=\"isEndSelection(day)\"\n               [class.between]=\"isBetween(day)\">\n            <button [class]=\"'days-btn ' + day.cssClass\"\n                    *ngIf=\"day\"\n                    [class.today]=\"day.isToday\"\n                    (click)=\"onSelected(day)\"\n                    [class.marked]=\"day.marked\"\n                    [class.on-selected]=\"isSelected(day.time)\"\n                    [disabled]=\"day.disable\">\n              <p>{{day.title}}</p>\n              <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n            </button>\n          </div>\n        </div>\n      </div>\n    </div>\n  ",
+            },] },
+];
+/** @nocollapse */
+MonthComponent.ctorParameters = function () { return [
+    { type: ChangeDetectorRef, },
+]; };
+MonthComponent.propDecorators = {
+    'month': [{ type: Input },],
+    'pickMode': [{ type: Input },],
+    'isSaveHistory': [{ type: Input },],
+    'id': [{ type: Input },],
+    'color': [{ type: Input },],
+    'onChange': [{ type: Output },],
+};
 //# sourceMappingURL=month.component.js.map

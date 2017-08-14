@@ -1,11 +1,11 @@
 {
   "name": "ion2-calendar",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.5",
   "description": "A date picker for ionic2 ",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "ngc": "tsc -p tsconfig.json",
+    "ngc": "ngc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "rm -rf aot dist src && gulp dev2src && npm run ngc && gulp copy-scss",
     "build:demo": "npm run build && gulp dist2nm",
@@ -17,6 +17,10 @@
     "url": "https://github.com/HsuanXyz/ion2-calendar.git"
   },
   "devDependencies": {
+    "gulp": "^3.9.1",
+    "moment": "^2.18.1",
+    "typescript": "^2.0.9",
+    "tslint": "^5.3.2",
     "@angular/common": "4.1.2",
     "@angular/compiler": "4.1.2",
     "@angular/compiler-cli": "4.1.2",
@@ -45,9 +49,6 @@
   "author": "HsuanLee",
   "license": "MIT",
   "dependencies": {
-    "gulp": "^3.9.1",
-    "moment": "^2.18.1",
-    "typescript": "^2.0.9",
-    "tslint": "^5.3.2"
+    "moment": "^2.18.1"
   }
 }

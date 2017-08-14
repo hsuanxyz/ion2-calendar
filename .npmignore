@@ -13,6 +13,8 @@ CVS
 npm-debug.log
 tsconfig.json
 demo/
+dev/
 node_modules/
-src/
 aot/
+tslint.json/
+tsconfig.json/

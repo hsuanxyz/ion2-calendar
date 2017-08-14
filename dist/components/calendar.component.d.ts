@@ -13,8 +13,8 @@ export declare class CalendarComponent implements OnInit {
     monthDate: Date;
     color: Colors;
     titleFormat: string;
-    weekStartDay: number;
-    disableWeekdays: Array<number>;
+    weekStart: number;
+    disableWeeks: Array<number>;
     from: number;
     constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;

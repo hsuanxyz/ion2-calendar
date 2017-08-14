@@ -2,7 +2,7 @@
  * Created by hsuanlee on 27/05/2017.
  */
 import { Injectable } from '@angular/core';
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions } from '../calendar.model'
+import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig } from '../calendar.model'
 import * as moment from 'moment';
 
 
@@ -13,7 +13,7 @@ export class CalendarService {
 
   }
 
-  safeOpt(calendarOptions: CalendarControllerOptions) {
+  safeOpt(calendarOptions: CalendarControllerOptions): CalendarControllerOptions {
     let {
       autoDone = false,
       from = new Date(),

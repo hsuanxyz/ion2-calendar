@@ -1,11 +1,7 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 import { Injectable } from '@angular/core';
+import { ModalController } from 'ionic-angular';
 import { CalendarModal } from "./components/calendar.modal";
+import { CalendarService } from './services/calendar.service';
 var CalendarController = (function () {
     function CalendarController(modalCtrl, calSvc) {
         this.modalCtrl = modalCtrl;
@@ -17,19 +13,29 @@ var CalendarController = (function () {
         var calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
             options: options,
         }, options), modalOptions);
+        console.log(options);
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onDidDismiss(function (data) {
-                var result = {};
+                var res;
                 if (data && Array.isArray(data)) {
-                    if (options.isRadio) {
-                        result.date = data[0];
+                    switch (options.pickMode) {
+                        case 'single':
+                            res = { date: data[0] };
+                            break;
+                        case 'range':
+                            res = {
+                                from: data[0],
+                                to: data[1],
+                            };
+                            break;
+                        case 'multi':
+                            res = data;
+                            break;
+                        default:
+                            res = data;
                     }
-                    else {
-                        result.from = data[0];
-                        result.to = data[1];
-                    }
-                    resolve(result);
+                    resolve(res);
                 }
                 else {
                     reject('cancelled');
@@ -51,8 +57,13 @@ var CalendarController = (function () {
     };
     return CalendarController;
 }());
-CalendarController = __decorate([
-    Injectable()
-], CalendarController);
 export { CalendarController };
+CalendarController.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+CalendarController.ctorParameters = function () { return [
+    { type: ModalController, },
+    { type: CalendarService, },
+]; };
 //# sourceMappingURL=calendar.controller.js.map

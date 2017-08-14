@@ -1,11 +1,11 @@
 import { ChangeDetectorRef, EventEmitter, OnInit } from '@angular/core';
-import { ControlValueAccessor } from "@angular/forms";
-import { CalendarDay, CalendarMonth } from '../calendar.model';
+import { ControlValueAccessor } from '@angular/forms';
+import { CalendarDay, CalendarMonth, PickMode } from '../calendar.model';
 export declare const MONTH_VALUE_ACCESSOR: any;
 export declare class MonthComponent implements ControlValueAccessor, OnInit {
     ref: ChangeDetectorRef;
     month: CalendarMonth;
-    isRadio: boolean;
+    pickMode: PickMode;
     isSaveHistory: boolean;
     id: any;
     color: string;

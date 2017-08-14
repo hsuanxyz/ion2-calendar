@@ -1,9 +1,3 @@
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
 /**
  * Created by hsuanlee on 27/05/2017.
  */
@@ -13,33 +7,31 @@ var CalendarService = (function () {
     function CalendarService() {
     }
     CalendarService.prototype.safeOpt = function (calendarOptions) {
-        var _arr = [];
-        var _a = calendarOptions || {}, _b = _a.autoDone, autoDone = _b === void 0 ? false : _b, _c = _a.from, from = _c === void 0 ? new Date() : _c, _d = _a.to, to = _d === void 0 ? 0 : _d, _e = _a.cssClass, cssClass = _e === void 0 ? '' : _e, _f = _a.weekStartDay, weekStartDay = _f === void 0 ? 0 : _f, _g = _a.isRadio, isRadio = _g === void 0 ? true : _g, _h = _a.canBackwardsSelected, canBackwardsSelected = _h === void 0 ? false : _h, _j = _a.disableWeekdays, disableWeekdays = _j === void 0 ? _arr : _j, _k = _a.closeLabel, closeLabel = _k === void 0 ? 'cancel' : _k, _l = _a.closeIcon, closeIcon = _l === void 0 ? false : _l, _m = _a.doneLabel, doneLabel = _m === void 0 ? 'done' : _m, _o = _a.doneIcon, doneIcon = _o === void 0 ? false : _o, _p = _a.id, id = _p === void 0 ? '' : _p, _q = _a.color, color = _q === void 0 ? 'primary' : _q, _r = _a.isSaveHistory, isSaveHistory = _r === void 0 ? false : _r, _s = _a.monthTitle, monthTitle = _s === void 0 ? 'MMM yyyy' : _s, _t = _a.title, title = _t === void 0 ? 'Calendar' : _t, _u = _a.weekdaysTitle, weekdaysTitle = _u === void 0 ? "Di_Lu_Ma_Me_Je_Ve_Sa".split("_") : _u, _v = _a.daysConfig, daysConfig = _v === void 0 ? _arr : _v, _w = _a.countNextMonths, countNextMonths = _w === void 0 ? 3 : _w, _x = _a.showYearPicker, showYearPicker = _x === void 0 ? false : _x;
-        var options = {
+        var _a = calendarOptions || {}, _b = _a.autoDone, autoDone = _b === void 0 ? false : _b, _c = _a.from, from = _c === void 0 ? new Date() : _c, _d = _a.to, to = _d === void 0 ? 0 : _d, _e = _a.cssClass, cssClass = _e === void 0 ? '' : _e, _f = _a.weekStart, weekStart = _f === void 0 ? 0 : _f, _g = _a.canBackwardsSelected, canBackwardsSelected = _g === void 0 ? false : _g, _h = _a.disableWeeks, disableWeeks = _h === void 0 ? [] : _h, _j = _a.closeLabel, closeLabel = _j === void 0 ? 'CANCEL' : _j, _k = _a.closeIcon, closeIcon = _k === void 0 ? false : _k, _l = _a.doneLabel, doneLabel = _l === void 0 ? 'DONE' : _l, _m = _a.doneIcon, doneIcon = _m === void 0 ? false : _m, _o = _a.id, id = _o === void 0 ? '' : _o, _p = _a.pickMode, pickMode = _p === void 0 ? 'single' : _p, _q = _a.color, color = _q === void 0 ? 'primary' : _q, _r = _a.isSaveHistory, isSaveHistory = _r === void 0 ? false : _r, _s = _a.monthFormat, monthFormat = _s === void 0 ? 'MMM yyyy' : _s, _t = _a.title, title = _t === void 0 ? 'CALENDAR' : _t, _u = _a.weekdays, weekdays = _u === void 0 ? ['S', 'M', 'T', 'W', 'T', 'F', 'S'] : _u, _v = _a.daysConfig, daysConfig = _v === void 0 ? [] : _v, _w = _a.countNextMonths, countNextMonths = _w === void 0 ? 3 : _w, _x = _a.showYearPicker, showYearPicker = _x === void 0 ? false : _x;
+        return {
             autoDone: autoDone,
             from: from,
             to: to,
             cssClass: cssClass,
-            isRadio: isRadio,
-            weekStartDay: weekStartDay,
+            weekStart: weekStart,
             canBackwardsSelected: canBackwardsSelected,
             closeLabel: closeLabel,
             closeIcon: closeIcon,
             doneLabel: doneLabel,
             doneIcon: doneIcon,
             id: id,
+            pickMode: pickMode,
             color: color,
             isSaveHistory: isSaveHistory,
             defaultDate: calendarOptions.defaultDate || from,
-            disableWeekdays: disableWeekdays,
-            monthTitle: monthTitle,
+            disableWeeks: disableWeeks,
+            monthFormat: monthFormat,
             title: title,
-            weekdaysTitle: weekdaysTitle,
+            weekdays: weekdays,
             daysConfig: daysConfig,
             countNextMonths: countNextMonths,
             showYearPicker: showYearPicker,
         };
-        return options;
     };
     CalendarService.prototype.createOriginalCalendar = function (time) {
         var date = new Date(time);
@@ -68,7 +60,7 @@ var CalendarService = (function () {
         var _rangeBeg = moment(opt.from).valueOf();
         var _rangeEnd = moment(opt.to).valueOf();
         var isBetween = true;
-        var disableWee = opt.disableWeekdays.indexOf(_time.toDate().getDay()) !== -1;
+        var disableWee = opt.disableWeeks.indexOf(_time.toDate().getDay()) !== -1;
         if (_rangeBeg > 0 && _rangeEnd > 0) {
             if (!opt.canBackwardsSelected) {
                 isBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
@@ -79,7 +71,7 @@ var CalendarService = (function () {
         }
         else if (_rangeBeg > 0 && _rangeEnd === 0) {
             if (!opt.canBackwardsSelected) {
-                var _addTime = _time.add('day', 1);
+                var _addTime = _time.add(1, 'day');
                 isBetween = !_addTime.isAfter(_rangeBeg);
             }
             else {
@@ -105,15 +97,14 @@ var CalendarService = (function () {
             var itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
             days[i] = this.createCalendarDay(itemTime, opt);
         }
-        var weekStartDay = opt.weekStartDay;
-        if (weekStartDay === 1) {
+        var weekStart = opt.weekStart;
+        if (weekStart === 1) {
             if (days[0] === null) {
                 days.shift();
-                days.push.apply(days, new Array(1).fill(null));
+                days.push(null);
             }
             else {
-                days.unshift(null);
-                days.pop();
+                days.unshift.apply(days, new Array(6).fill(null));
             }
         }
         return {
@@ -148,8 +139,10 @@ var CalendarService = (function () {
     };
     return CalendarService;
 }());
-CalendarService = __decorate([
-    Injectable()
-], CalendarService);
 export { CalendarService };
+CalendarService.decorators = [
+    { type: Injectable },
+];
+/** @nocollapse */
+CalendarService.ctorParameters = function () { return []; };
 //# sourceMappingURL=calendar.service.js.map

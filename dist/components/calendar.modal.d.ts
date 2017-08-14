@@ -1,7 +1,7 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
 import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model';
-import { CalendarService } from "../services/calendar.service";
+import { CalendarService } from '../services/calendar.service';
 export declare class CalendarModal {
     private _renderer;
     _elementRef: ElementRef;
@@ -16,13 +16,13 @@ export declare class CalendarModal {
     closeIcon: boolean;
     doneLabel: string;
     doneIcon: boolean;
-    dayTemp: Array<CalendarDay | null>;
+    datesTemp: Array<CalendarDay | null>;
     calendarMonths: Array<CalendarMonth>;
-    monthTitleFilterStr: string;
-    weekdaysTitle: Array<string>;
+    monthFormatFilterStr: string;
+    weekdays: Array<string>;
     defaultDate: Date;
     scrollBackwards: boolean;
-    weekStartDay: number;
+    weekStart: number;
     isSaveHistory: boolean;
     countNextMonths: number;
     showYearPicker: boolean;

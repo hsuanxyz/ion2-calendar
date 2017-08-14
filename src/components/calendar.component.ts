@@ -23,7 +23,7 @@ import { CalendarService } from "../services/calendar.service";
         </div>
 
         <ion-calendar-week color="light"
-                           [weekStart]="weekStartDay">
+                           [weekStart]="weekStart">
         </ion-calendar-week>
 
         <ion-calendar-month [month]="monthOpt" [color]="color">
@@ -40,8 +40,8 @@ export class CalendarComponent implements OnInit{
 
     @Input() color: Colors = 'primary';
     @Input() titleFormat = 'MMM yyyy';
-    @Input() weekStartDay: number = 0;
-    @Input() disableWeekdays: Array<number> = [];
+    @Input() weekStart: number = 0;
+    @Input() disableWeeks: Array<number> = [];
     @Input() from: number = new Date().getTime();
     constructor(
         private _renderer: Renderer,
@@ -79,8 +79,8 @@ export class CalendarComponent implements OnInit{
             1,
             this.calSvc.safeOpt({
                 from: new Date(date),
-                weekStartDay: this.weekStartDay,
-                disableWeekdays: this.disableWeekdays,
+                weekStart: this.weekStart,
+                disableWeeks: this.disableWeeks
             }),
         )[0];
     }

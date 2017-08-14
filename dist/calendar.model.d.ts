@@ -33,16 +33,18 @@ export declare class DayConfig {
     disable?: boolean;
     title?: string;
     subTitle?: string;
+    cssClass?: string;
 }
 export declare class CalendarOptions {
     start: number;
     end: number;
     isRadio: boolean;
-    monthTitle: string;
+    pickMode: string;
+    monthFormat: string;
     range_beg: number;
     range_end: number;
     daysConfig: Array<DayConfig>;
-    disableWeekdays: Array<number>;
+    disableWeeks: Array<number>;
 }
 export interface ModalOptions {
     showBackdrop?: boolean;
@@ -55,31 +57,24 @@ export interface CalendarControllerOptions {
     from?: Date;
     cssClass?: string;
     to?: Date | number;
-    isRadio?: boolean;
-    pickMode?: PickMode;
+    pickMode?: string;
     id?: string;
     isSaveHistory?: boolean;
-    weekStartDay?: number;
-    disableWeekdays?: Array<number>;
-    weekdaysTitle?: Array<string>;
+    weekStart?: number;
+    disableWeeks?: Array<number>;
+    weekdays?: Array<string>;
     closeLabel?: string;
     doneLabel?: string;
     closeIcon?: boolean;
     doneIcon?: boolean;
-    monthTitle?: string;
+    monthFormat?: string;
     color?: string;
     canBackwardsSelected?: boolean;
     title?: string;
     defaultDate?: Date;
     countNextMonths?: number;
     showYearPicker?: boolean;
-    daysConfig?: Array<{
-        date: Date;
-        cssClass?: string;
-        marked?: boolean;
-        title?: string;
-        subTitle?: string;
-    }>;
+    daysConfig?: Array<DayConfig>;
 }
 export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark';
 export declare type PickMode = 'multi' | 'single' | 'range';
