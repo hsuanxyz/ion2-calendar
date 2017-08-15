@@ -77,7 +77,7 @@ export interface CalendarControllerOptions {
   color?: string;
   canBackwardsSelected?: boolean;
   title?: string;
-  defaultDate?: Date;
+  defaultScrollTo?: Date;
   countNextMonths?: number;
   showYearPicker?: boolean;
   daysConfig?: Array<DayConfig>

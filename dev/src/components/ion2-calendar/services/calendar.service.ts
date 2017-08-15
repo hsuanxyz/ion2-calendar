@@ -54,7 +54,7 @@ export class CalendarService {
       pickMode: pickMode,
       color: color,
       isSaveHistory: isSaveHistory,
-      defaultDate: calendarOptions.defaultDate || from,
+      defaultScrollTo: calendarOptions.defaultScrollTo || from,
       disableWeeks: disableWeeks,
       monthFormat: monthFormat,
       title: title,

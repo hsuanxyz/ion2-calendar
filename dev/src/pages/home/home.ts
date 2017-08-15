@@ -48,7 +48,7 @@ export class HomePage {
   setDefaultDate() {
     this.calendarCtrl.openCalendar({
       from: new Date(2017, 1, 1),
-      defaultDate: new Date(2017, 4, 1),
+      defaultScrollTo: new Date(2017, 4, 1),
 
     })
       .then((res: any) => {
