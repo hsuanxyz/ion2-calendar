@@ -108,6 +108,7 @@ export class CalendarModal {
     this.findCssClass();
     this.init();
     this.getHistory();
+    this.initDefaultDate();
   }
 
   ionViewDidLoad() {
@@ -165,6 +166,33 @@ export class CalendarModal {
         this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
         this._d,
       );
+    }
+  }
+
+  initDefaultDate() {
+    switch (this._d.pickMode) {
+      case 'single':
+        if (this._d.defaultDate) {
+          this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDate), this._d);
+        }
+        break;
+      case 'range':
+        if (this._d.defaultDateRange) {
+          if (this._d.defaultDateRange.from) {
+            this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.from), this._d);
+          }
+          if (this._d.defaultDateRange.to) {
+            this.datesTemp[1] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.to), this._d);
+          }
+        }
+        break;
+      case 'multi':
+        if (this._d.defaultDates && this._d.defaultDates.length) {
+          this.datesTemp = this._d.defaultDates.map(e => this.calSvc.createCalendarDay(this._getDayTime(e), this._d));
+        }
+        break;
+      default:
+        this.datesTemp = [null, null]
     }
   }
 
@@ -364,4 +392,7 @@ export class CalendarModal {
     }, 300)
   }
 
+  _getDayTime(date: any): number {
+    return moment(moment(date).format('YYYY-MM-DD')).valueOf();
+  }
 }

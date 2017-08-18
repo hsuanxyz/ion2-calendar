@@ -78,10 +78,14 @@ export interface CalendarControllerOptions {
   canBackwardsSelected?: boolean;
   title?: string;
   defaultScrollTo?: Date;
+  defaultDate?: DefaultDate;
+  defaultDates?: DefaultDate[];
+  defaultDateRange?: { from:DefaultDate, to?: DefaultDate } | null;
   countNextMonths?: number;
   showYearPicker?: boolean;
   daysConfig?: Array<DayConfig>
 }
 
+export type DefaultDate = Date | string | number | null;
 export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
 export type PickMode = 'multi' | 'single' | 'range'

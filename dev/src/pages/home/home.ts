@@ -37,6 +37,7 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       pickMode: 'multi',
       title: 'MULTI',
+      defaultDates: [new Date(2017, 7, 20), new Date(2017, 7, 18).getTime()]
     })
       .then((res: any) => {
         console.log(res)
@@ -112,10 +113,12 @@ export class HomePage {
   }
 
   local() {
+
     this.calendarCtrl.openCalendar({
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
+      defaultDate: new Date()
     })
       .then((res: any) => {
         console.log(res)
