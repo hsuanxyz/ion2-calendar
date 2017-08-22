@@ -87,6 +87,16 @@ export interface CalendarControllerOptions {
   daysConfig?: Array<DayConfig>
 }
 
+export class CalendarResult {
+  time: number;
+  unix: number;
+  date: Date;
+  format: string;
+  year: number;
+  month: number;
+  day: number;
+}
+
 export type DefaultDate = Date | string | number | null;
 export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
 export type PickMode = 'multi' | 'single' | 'range'
