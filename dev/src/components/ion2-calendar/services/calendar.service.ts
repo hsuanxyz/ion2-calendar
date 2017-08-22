@@ -2,7 +2,7 @@
  * Created by hsuanlee on 27/05/2017.
  */
 import { Injectable } from '@angular/core';
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig } from '../calendar.model'
+import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig, CalendarResult} from '../calendar.model'
 import * as moment from 'moment';
 
 
@@ -192,21 +192,34 @@ export class CalendarService {
     let result: any;
     switch (pickMode) {
       case 'single':
-        result = { date: original[0] };
+        result = this._multiFormat(original[0]);
         break;
       case 'range':
         result = {
-          from: original[0],
-          to: original[1],
+          from: this._multiFormat(original[0]),
+          to: this._multiFormat(original[1]),
         };
         break;
       case 'multi':
-        result = original;
+        result = original.map(e => this._multiFormat(e));
         break;
       default:
         result = original;
     }
     return result;
+  }
+
+  _multiFormat(data: CalendarDay): CalendarResult {
+    const _moment = moment(data.time);
+    return {
+      time: _moment.valueOf(),
+      unix: _moment.unix(),
+      date: _moment.toDate(),
+      format: _moment.format('YYYY-MM-DD'),
+      year: _moment.year(),
+      month: _moment.month() + 1,
+      day: _moment.date()
+    }
   }
 
 }
