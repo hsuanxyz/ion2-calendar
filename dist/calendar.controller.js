@@ -8,34 +8,17 @@ var CalendarController = (function () {
         this.calSvc = calSvc;
     }
     CalendarController.prototype.openCalendar = function (calendarOptions, modalOptions) {
+        var _this = this;
         if (modalOptions === void 0) { modalOptions = {}; }
         var options = this.calSvc.safeOpt(calendarOptions);
         var calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
             options: options,
         }, options), modalOptions);
-        console.log(options);
         calendarModal.present();
         return new Promise(function (resolve, reject) {
             calendarModal.onDidDismiss(function (data) {
-                var res;
                 if (data && Array.isArray(data)) {
-                    switch (options.pickMode) {
-                        case 'single':
-                            res = { date: data[0] };
-                            break;
-                        case 'range':
-                            res = {
-                                from: data[0],
-                                to: data[1],
-                            };
-                            break;
-                        case 'multi':
-                            res = data;
-                            break;
-                        default:
-                            res = data;
-                    }
-                    resolve(res);
+                    resolve(_this.calSvc.wrapResult(data, options.pickMode));
                 }
                 else {
                     reject('cancelled');

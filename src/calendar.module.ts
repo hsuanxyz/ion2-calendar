@@ -16,7 +16,6 @@ import { CalendarComponent } from './components/calendar.component';
 export function calendarController (
   modalCtrl: ModalController,
   calSvc: CalendarService,
-
 ) {
   return new CalendarController(modalCtrl, calSvc);
 }

@@ -2,7 +2,7 @@
  * Created by hsuanlee on 27/05/2017.
  */
 import { Injectable } from '@angular/core';
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig } from '../calendar.model'
+import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig, CalendarResult} from '../calendar.model'
 import * as moment from 'moment';
 
 
@@ -54,7 +54,10 @@ export class CalendarService {
       pickMode: pickMode,
       color: color,
       isSaveHistory: isSaveHistory,
-      defaultDate: calendarOptions.defaultDate || from,
+      defaultScrollTo: calendarOptions.defaultScrollTo || from,
+      defaultDate: calendarOptions.defaultDate || null,
+      defaultDates: calendarOptions.defaultDates || null,
+      defaultDateRange: calendarOptions.defaultDateRange || null,
       disableWeeks: disableWeeks,
       monthFormat: monthFormat,
       title: title,
@@ -183,6 +186,40 @@ export class CalendarService {
 
   savedHistory(savedDates: Array<CalendarDay | null>, id: string | number) {
     localStorage.setItem(`ion-calendar-${id}`, JSON.stringify(savedDates));
+  }
+
+  wrapResult(original: CalendarDay[], pickMode: string) {
+    let result: any;
+    switch (pickMode) {
+      case 'single':
+        result = this._multiFormat(original[0]);
+        break;
+      case 'range':
+        result = {
+          from: this._multiFormat(original[0]),
+          to: this._multiFormat(original[1]),
+        };
+        break;
+      case 'multi':
+        result = original.map(e => this._multiFormat(e));
+        break;
+      default:
+        result = original;
+    }
+    return result;
+  }
+
+  _multiFormat(data: CalendarDay): CalendarResult {
+    const _moment = moment(data.time);
+    return {
+      time: _moment.valueOf(),
+      unix: _moment.unix(),
+      dateObj: _moment.toDate(),
+      string: _moment.format('YYYY-MM-DD'),
+      years: _moment.year(),
+      months: _moment.month() + 1,
+      date: _moment.date()
+    }
   }
 
 }

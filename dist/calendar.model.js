@@ -16,4 +16,10 @@ var CalendarOptions = (function () {
     return CalendarOptions;
 }());
 export { CalendarOptions };
+var CalendarResult = (function () {
+    function CalendarResult() {
+    }
+    return CalendarResult;
+}());
+export { CalendarResult };
 //# sourceMappingURL=calendar.model.js.map

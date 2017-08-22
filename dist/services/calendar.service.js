@@ -23,7 +23,10 @@ var CalendarService = (function () {
             pickMode: pickMode,
             color: color,
             isSaveHistory: isSaveHistory,
-            defaultDate: calendarOptions.defaultDate || from,
+            defaultScrollTo: calendarOptions.defaultScrollTo || from,
+            defaultDate: calendarOptions.defaultDate || null,
+            defaultDates: calendarOptions.defaultDates || null,
+            defaultDateRange: calendarOptions.defaultDateRange || null,
             disableWeeks: disableWeeks,
             monthFormat: monthFormat,
             title: title,
@@ -136,6 +139,39 @@ var CalendarService = (function () {
     };
     CalendarService.prototype.savedHistory = function (savedDates, id) {
         localStorage.setItem("ion-calendar-" + id, JSON.stringify(savedDates));
+    };
+    CalendarService.prototype.wrapResult = function (original, pickMode) {
+        var _this = this;
+        var result;
+        switch (pickMode) {
+            case 'single':
+                result = this._multiFormat(original[0]);
+                break;
+            case 'range':
+                result = {
+                    from: this._multiFormat(original[0]),
+                    to: this._multiFormat(original[1]),
+                };
+                break;
+            case 'multi':
+                result = original.map(function (e) { return _this._multiFormat(e); });
+                break;
+            default:
+                result = original;
+        }
+        return result;
+    };
+    CalendarService.prototype._multiFormat = function (data) {
+        var _moment = moment(data.time);
+        return {
+            time: _moment.valueOf(),
+            unix: _moment.unix(),
+            dateObj: _moment.toDate(),
+            string: _moment.format('YYYY-MM-DD'),
+            years: _moment.year(),
+            months: _moment.month() + 1,
+            date: _moment.date()
+        };
     };
     return CalendarService;
 }());

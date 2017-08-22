@@ -55,6 +55,7 @@ export interface ModalOptions {
 export interface CalendarControllerOptions {
     autoDone?: boolean;
     from?: Date;
+    format?: string;
     cssClass?: string;
     to?: Date | number;
     pickMode?: string;
@@ -71,10 +72,26 @@ export interface CalendarControllerOptions {
     color?: string;
     canBackwardsSelected?: boolean;
     title?: string;
-    defaultDate?: Date;
+    defaultScrollTo?: Date;
+    defaultDate?: DefaultDate;
+    defaultDates?: DefaultDate[];
+    defaultDateRange?: {
+        from: DefaultDate;
+        to?: DefaultDate;
+    } | null;
     countNextMonths?: number;
     showYearPicker?: boolean;
     daysConfig?: Array<DayConfig>;
 }
+export declare class CalendarResult {
+    time: number;
+    unix: number;
+    dateObj: Date;
+    string: string;
+    years: number;
+    months: number;
+    date: number;
+}
+export declare type DefaultDate = Date | string | number | null;
 export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark';
 export declare type PickMode = 'multi' | 'single' | 'range';

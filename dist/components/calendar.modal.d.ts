@@ -20,7 +20,7 @@ export declare class CalendarModal {
     calendarMonths: Array<CalendarMonth>;
     monthFormatFilterStr: string;
     weekdays: Array<string>;
-    defaultDate: Date;
+    defaultScrollTo: Date;
     scrollBackwards: boolean;
     weekStart: number;
     isSaveHistory: boolean;
@@ -38,6 +38,7 @@ export declare class CalendarModal {
     constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;
+    initDefaultDate(): void;
     findCssClass(): void;
     onChange(data: any): void;
     onCancel(): void;
@@ -51,4 +52,5 @@ export declare class CalendarModal {
     onScroll($event: any): void;
     findInitMonthNumber(date: Date): number;
     changedYearSelection(): void;
+    _getDayTime(date: any): number;
 }

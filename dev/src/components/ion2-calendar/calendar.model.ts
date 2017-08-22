@@ -90,11 +90,11 @@ export interface CalendarControllerOptions {
 export class CalendarResult {
   time: number;
   unix: number;
-  date: Date;
-  format: string;
-  year: number;
-  month: number;
-  day: number;
+  dateObj: Date;
+  string: string;
+  years: number;
+  months: number;
+  date: number;
 }
 
 export type DefaultDate = Date | string | number | null;

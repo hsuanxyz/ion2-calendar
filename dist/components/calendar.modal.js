@@ -20,6 +20,7 @@ var CalendarModal = (function () {
         this.findCssClass();
         this.init();
         this.getHistory();
+        this.initDefaultDate();
     }
     CalendarModal.prototype.ionViewDidLoad = function () {
         this.scrollToDefaultDate();
@@ -40,7 +41,7 @@ var CalendarModal = (function () {
             disableWeeks: params.get('disableWeeks'),
             monthFormat: params.get('monthFormat'),
         };
-        this.defaultDate = this._d.defaultDate;
+        this.defaultScrollTo = this._d.defaultScrollTo;
         this.scrollBackwards = this._d.canBackwardsSelected;
         this.weekStart = this._d.weekStart;
         this._id = this._d.id;
@@ -62,7 +63,34 @@ var CalendarModal = (function () {
             this.createYearPicker(startTime, endTime);
         }
         else {
-            this.calendarMonths = this.calSvc.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultDate) + this.countNextMonths, this._d);
+            this.calendarMonths = this.calSvc.createMonthsByPeriod(startTime, this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths, this._d);
+        }
+    };
+    CalendarModal.prototype.initDefaultDate = function () {
+        var _this = this;
+        switch (this._d.pickMode) {
+            case 'single':
+                if (this._d.defaultDate) {
+                    this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDate), this._d);
+                }
+                break;
+            case 'range':
+                if (this._d.defaultDateRange) {
+                    if (this._d.defaultDateRange.from) {
+                        this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.from), this._d);
+                    }
+                    if (this._d.defaultDateRange.to) {
+                        this.datesTemp[1] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.to), this._d);
+                    }
+                }
+                break;
+            case 'multi':
+                if (this._d.defaultDates && this._d.defaultDates.length) {
+                    this.datesTemp = this._d.defaultDates.map(function (e) { return _this.calSvc.createCalendarDay(_this._getDayTime(e), _this._d); });
+                }
+                break;
+            default:
+                this.datesTemp = [null, null];
         }
     };
     CalendarModal.prototype.findCssClass = function () {
@@ -115,7 +143,7 @@ var CalendarModal = (function () {
         // getting max and be sure, it is in future (maybe parameter?)
         var maxYear = (new Date(endTime)).getFullYear();
         if (maxYear <= 1970) {
-            maxYear = (new Date(this.defaultDate)).getFullYear() + 10;
+            maxYear = (new Date(this.defaultScrollTo)).getFullYear() + 10;
             this.options.end = new Date(maxYear, 12, 0).getTime();
         }
         // min year should be okay, either it will be set or something like 1970 at min
@@ -127,8 +155,8 @@ var CalendarModal = (function () {
             this.years.push(maxYear - y);
         }
         this.years.reverse();
-        // selection-start-year of defaultDate
-        this.year = this.defaultDate.getFullYear();
+        // selection-start-year of defaultScrollTo
+        this.year = this.defaultScrollTo.getFullYear();
         var firstDayOfYear = new Date(this.year, 0, 1);
         var lastDayOfYear = new Date(this.year, 12, 0);
         // don't calc over the start / end
@@ -139,7 +167,7 @@ var CalendarModal = (function () {
             lastDayOfYear = new Date(this.options.end);
         }
         // calcing the month
-        this.calendarMonths = this.calSvc.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultDate) + this.countNextMonths, this._d);
+        this.calendarMonths = this.calSvc.createMonthsByPeriod(firstDayOfYear.getTime(), this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths, this._d);
         // sets the range new
         // checking whether the start is after firstDayOfYear
         this.options.range_beg = firstDayOfYear.getTime() < startTime ? startTime : firstDayOfYear.getTime();
@@ -169,7 +197,7 @@ var CalendarModal = (function () {
     };
     CalendarModal.prototype.scrollToDefaultDate = function () {
         var _this = this;
-        var defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
+        var defaultDateIndex = this.findInitMonthNumber(this.defaultScrollTo);
         var defaultDateMonth = this.monthsEle.nativeElement.children["month-" + defaultDateIndex].offsetTop;
         if (defaultDateIndex === 0 || defaultDateMonth === 0)
             return;
@@ -196,14 +224,14 @@ var CalendarModal = (function () {
     };
     CalendarModal.prototype.findInitMonthNumber = function (date) {
         var startDate = moment(this.options.start);
-        var defaultDate = moment(date);
-        var isAfter = defaultDate.isAfter(startDate);
+        var defaultScrollTo = moment(date);
+        var isAfter = defaultScrollTo.isAfter(startDate);
         if (!isAfter)
             return 0;
         if (this.showYearPicker) {
             startDate = moment(new Date(this.year, 0, 1));
         }
-        return defaultDate.diff(startDate, 'month');
+        return defaultScrollTo.diff(startDate, 'month');
     };
     CalendarModal.prototype.changedYearSelection = function () {
         var _this = this;
@@ -233,6 +261,9 @@ var CalendarModal = (function () {
         setTimeout(function () {
             _this.content.scrollTo(0, 0, 128);
         }, 300);
+    };
+    CalendarModal.prototype._getDayTime = function (date) {
+        return moment(moment(date).format('YYYY-MM-DD')).valueOf();
     };
     return CalendarModal;
 }());

@@ -188,7 +188,7 @@ export class CalendarService {
     localStorage.setItem(`ion-calendar-${id}`, JSON.stringify(savedDates));
   }
 
-  wrapResult(original, pickMode) {
+  wrapResult(original: CalendarDay[], pickMode: string) {
     let result: any;
     switch (pickMode) {
       case 'single':
@@ -214,11 +214,11 @@ export class CalendarService {
     return {
       time: _moment.valueOf(),
       unix: _moment.unix(),
-      date: _moment.toDate(),
-      format: _moment.format('YYYY-MM-DD'),
-      year: _moment.year(),
-      month: _moment.month() + 1,
-      day: _moment.date()
+      dateObj: _moment.toDate(),
+      string: _moment.format('YYYY-MM-DD'),
+      years: _moment.year(),
+      months: _moment.month() + 1,
+      date: _moment.date()
     }
   }
 

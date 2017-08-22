@@ -81,7 +81,7 @@ export class CalendarModal {
   calendarMonths: Array<CalendarMonth>;
   monthFormatFilterStr = '';
   weekdays: Array<string> = [];
-  defaultDate: Date;
+  defaultScrollTo: Date;
   scrollBackwards: boolean;
   weekStart: number = 0;
   isSaveHistory: boolean;
@@ -108,6 +108,7 @@ export class CalendarModal {
     this.findCssClass();
     this.init();
     this.getHistory();
+    this.initDefaultDate();
   }
 
   ionViewDidLoad() {
@@ -133,7 +134,7 @@ export class CalendarModal {
       monthFormat: params.get('monthFormat'),
     };
 
-    this.defaultDate = this._d.defaultDate;
+    this.defaultScrollTo = this._d.defaultScrollTo;
     this.scrollBackwards = this._d.canBackwardsSelected;
     this.weekStart = this._d.weekStart;
     this._id = this._d.id;
@@ -162,9 +163,36 @@ export class CalendarModal {
     } else {
       this.calendarMonths = this.calSvc.createMonthsByPeriod(
         startTime,
-        this.findInitMonthNumber(this.defaultDate) + this.countNextMonths,
+        this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
         this._d,
       );
+    }
+  }
+
+  initDefaultDate() {
+    switch (this._d.pickMode) {
+      case 'single':
+        if (this._d.defaultDate) {
+          this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDate), this._d);
+        }
+        break;
+      case 'range':
+        if (this._d.defaultDateRange) {
+          if (this._d.defaultDateRange.from) {
+            this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.from), this._d);
+          }
+          if (this._d.defaultDateRange.to) {
+            this.datesTemp[1] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.to), this._d);
+          }
+        }
+        break;
+      case 'multi':
+        if (this._d.defaultDates && this._d.defaultDates.length) {
+          this.datesTemp = this._d.defaultDates.map(e => this.calSvc.createCalendarDay(this._getDayTime(e), this._d));
+        }
+        break;
+      default:
+        this.datesTemp = [null, null]
     }
   }
 
@@ -228,7 +256,7 @@ export class CalendarModal {
     let maxYear = (new Date(endTime)).getFullYear();
 
     if (maxYear <= 1970) {
-      maxYear = (new Date(this.defaultDate)).getFullYear() + 10;
+      maxYear = (new Date(this.defaultScrollTo)).getFullYear() + 10;
       this.options.end = new Date(maxYear, 12, 0).getTime();
     }
 
@@ -244,8 +272,8 @@ export class CalendarModal {
     }
 
     this.years.reverse();
-    // selection-start-year of defaultDate
-    this.year = this.defaultDate.getFullYear();
+    // selection-start-year of defaultScrollTo
+    this.year = this.defaultScrollTo.getFullYear();
     let firstDayOfYear = new Date(this.year, 0, 1);
     let lastDayOfYear = new Date(this.year, 12, 0);
 
@@ -260,7 +288,7 @@ export class CalendarModal {
     // calcing the month
     this.calendarMonths = this.calSvc.createMonthsByPeriod(
       firstDayOfYear.getTime(),
-      this.findInitMonthNumber(this.defaultDate) + this.countNextMonths,
+      this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
       this._d);
     // sets the range new
 
@@ -296,7 +324,7 @@ export class CalendarModal {
   }
 
   scrollToDefaultDate() {
-    let defaultDateIndex = this.findInitMonthNumber(this.defaultDate);
+    let defaultDateIndex = this.findInitMonthNumber(this.defaultScrollTo);
     let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
 
     if (defaultDateIndex === 0 || defaultDateMonth === 0) return;
@@ -323,8 +351,8 @@ export class CalendarModal {
 
   findInitMonthNumber(date: Date): number {
     let startDate = moment(this.options.start);
-    let defaultDate = moment(date);
-    const isAfter: boolean = defaultDate.isAfter(startDate);
+    let defaultScrollTo = moment(date);
+    const isAfter: boolean = defaultScrollTo.isAfter(startDate);
     if (!isAfter) return 0;
 
     if (this.showYearPicker) {
@@ -332,7 +360,7 @@ export class CalendarModal {
     }
 
 
-    return defaultDate.diff(startDate, 'month');
+    return defaultScrollTo.diff(startDate, 'month');
   }
 
   changedYearSelection() {
@@ -364,4 +392,7 @@ export class CalendarModal {
     }, 300)
   }
 
+  _getDayTime(date: any): number {
+    return moment(moment(date).format('YYYY-MM-DD')).valueOf();
+  }
 }
