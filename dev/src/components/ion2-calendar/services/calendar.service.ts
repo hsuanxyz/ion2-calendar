@@ -188,4 +188,25 @@ export class CalendarService {
     localStorage.setItem(`ion-calendar-${id}`, JSON.stringify(savedDates));
   }
 
+  wrapResult(original, pickMode) {
+    let result: any;
+    switch (pickMode) {
+      case 'single':
+        result = { date: original[0] };
+        break;
+      case 'range':
+        result = {
+          from: original[0],
+          to: original[1],
+        };
+        break;
+      case 'multi':
+        result = original;
+        break;
+      default:
+        result = original;
+    }
+    return result;
+  }
+
 }

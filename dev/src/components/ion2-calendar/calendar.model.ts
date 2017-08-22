@@ -61,6 +61,7 @@ export interface ModalOptions {
 export interface CalendarControllerOptions {
   autoDone?: boolean;
   from?: Date;
+  format?: string;
   cssClass?: string;
   to?: Date | number;
   pickMode?: string;
