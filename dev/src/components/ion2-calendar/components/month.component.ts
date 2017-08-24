@@ -157,7 +157,6 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
     item.selected = true;
     this.ref.detectChanges();
 
-
     if (this.pickMode === 'single') {
       this._date[0] = item;
 

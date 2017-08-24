@@ -12,7 +12,7 @@ import { CalendarService } from "../services/calendar.service";
     template: `
         <div class="title">
             <div class="text">
-                {{monthOpt.original.time | date: titleFormat}}
+                {{monthOpt.original.time | date: _d.monthFormat}}
             </div>
             <div ion-button clear class="back" (click)="backMonth()">
                 <ion-icon name="ios-arrow-back"></ion-icon>
@@ -23,10 +23,15 @@ import { CalendarService } from "../services/calendar.service";
         </div>
 
         <ion-calendar-week color="light"
-                           [weekStart]="weekStart">
+                           [weekStart]="_d.weekStart">
         </ion-calendar-week>
 
-        <ion-calendar-month [month]="monthOpt" [color]="color">
+        <ion-calendar-month 
+          (onChange)="_onChange($event)" 
+          [(ngModel)]="_date" 
+          [month]="monthOpt" 
+          [pickMode]="_d.pickMode"
+          [color]="_d.color">
 
         </ion-calendar-month>
 
@@ -38,11 +43,10 @@ export class CalendarComponent implements OnInit{
     monthOpt: CalendarMonth;
     monthDate: Date = new Date();
 
-    @Input() color: Colors = 'primary';
-    @Input() titleFormat = 'MMM yyyy';
-    @Input() weekStart: number = 0;
-    @Input() disableWeeks: Array<number> = [];
-    @Input() from: number = new Date().getTime();
+    _d: CalendarControllerOptions;
+    _date: any[] = [null, null];
+    @Input() options: CalendarControllerOptions;
+
     constructor(
         private _renderer: Renderer,
         public _elementRef: ElementRef,
@@ -50,9 +54,8 @@ export class CalendarComponent implements OnInit{
         public viewCtrl: ViewController,
         public ref: ChangeDetectorRef,
         public calSvc: CalendarService,
-
     ) {
-
+      this._d = this.calSvc.safeOpt(this.options || {});
     }
 
     ionViewDidLoad() {
@@ -61,38 +64,26 @@ export class CalendarComponent implements OnInit{
 
     ngOnInit() {
 
-        if(!moment.isDate(new Date(this.from))){
-            this.from = new Date().getTime();
-            console.warn('form is not a Date type')
-        }else {
-            this.from = moment(this.from).valueOf();
-        }
-
-        this.monthOpt = this.createMonth();
+        this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
 
     }
 
-    createMonth(date: number = this.from) {
-
-        return this.calSvc.createMonthsByPeriod(
-            date,
-            1,
-            this.calSvc.safeOpt({
-                from: new Date(date),
-                weekStart: this.weekStart,
-                disableWeeks: this.disableWeeks
-            }),
-        )[0];
+    createMonth(date) {
+      return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
     }
 
     nextMonth() {
-        this.from = moment(this.from).add(1, 'months').valueOf();
-        this.monthOpt = this.createMonth();
+        const nextTime = moment(this.monthOpt.original.time).add(1, 'months').valueOf();
+        this.monthOpt = this.createMonth(nextTime);
     }
 
     backMonth() {
-        this.from = moment(this.from).subtract(1, 'months').valueOf();
-        this.monthOpt = this.createMonth();
+        const backTime = moment(this.monthOpt.original.time).subtract(1, 'months').valueOf();
+        this.monthOpt = this.createMonth(backTime);
     }
+
+  _onChange(value) {
+      console.log(value)
+  }
 
 }
