@@ -22,7 +22,7 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       title: 'BASIC',
       canBackwardsSelected: true,
-      color: 'dark',
+      color: 'cal-color',
       doneIcon: true,
       closeIcon: true
     })

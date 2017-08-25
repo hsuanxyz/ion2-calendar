@@ -1,4 +1,3 @@
-@import "../variables";
 
 @mixin transition-property($args...) {
   -webkit-transition-property: $args;
@@ -24,11 +23,11 @@
   transition-timing-function: $args;
 }
 
-@mixin month-color($color: primary) {
+@mixin month-color($background-color: primary, $color: #fff) {
   button.days-btn small,
   .days .marked p,
   .days .today p {
-    color: color($cal-colors, $color);
+    color: color($colors, $background-color);
   }
 
   .days .today p {
@@ -36,13 +35,15 @@
   }
 
   .days .today.on-selected p, .days .marked.on-selected p {
-    color: #fff;
+    color: $color;
   }
 
   .days .on-selected,
   .startSelection button.days-btn,
   .endSelection button.days-btn {
-    background-color: color($cal-colors, $color);
+    background-color: color($colors, $background-color);
+    color: $color;
+
   }
 
   .startSelection {
@@ -55,7 +56,7 @@
       top: 0;
       right: 0;
       display: block;
-      background-color: lighten(color($cal-colors, $color), 12%);
+      background-color: lighten(color($colors, $background-color), 12%);
     }
   }
 
@@ -69,7 +70,7 @@
       top: 0;
       left: 0;
       display: block;
-      background-color: lighten(color($cal-colors, $color), 12%);
+      background-color: lighten(color($colors, $background-color), 12%);
     }
   }
 
@@ -77,22 +78,26 @@
     border-radius: 50%
   }
   .between button.days-btn {
-    background-color: lighten(color($cal-colors, $color), 12%);
+    background-color: lighten(color($colors, $background-color), 12%);
     width: 100%;
     border-radius: 0;
     p {
-      color: #fff;
+      color: $color;
     }
   }
   .endSelection button.days-btn {
     border-radius: 50%;
     p {
-      color: #fff;
+      color: $color;
     }
   }
 
   .days.between {
-    background-color: lighten(color($cal-colors, $color), 12%);
+    background-color: lighten(color($colors, $background-color), 12%);
+  }
+
+  .days .on-selected p {
+    color: $color;
   }
 
   .startSelection,
@@ -130,9 +135,7 @@ ion-calendar-month {
 
   .days .on-selected {
     border: none;
-
     p {
-      color: #fff;
       font-size: 1.3em;
     }
 
@@ -177,14 +180,22 @@ ion-calendar-month {
   }
 
   .secondary {
-    @include month-color('secondary');
+    @include month-color(secondary);
   }
 
   .danger {
-    @include month-color('danger');
+    @include month-color(danger);
   }
 
   .dark {
-    @include month-color('dark');
+    @include month-color(dark);
+  }
+
+  .light {
+    @include month-color(light, #a0a0a0);
+  }
+
+  .cal-color {
+    @include month-color(cal-color);
   }
 }

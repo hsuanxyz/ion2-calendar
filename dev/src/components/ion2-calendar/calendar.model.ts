@@ -98,5 +98,5 @@ export class CalendarResult {
 }
 
 export type DefaultDate = Date | string | number | null;
-export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark'
+export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | string
 export type PickMode = 'multi' | 'single' | 'range'

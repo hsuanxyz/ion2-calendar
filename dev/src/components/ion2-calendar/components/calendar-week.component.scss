@@ -1,11 +1,10 @@
-@import "../variables";
 
-@mixin week-title($color: primary, $background-color: #fff) {
+@mixin week-title($background-color: primary, $color: #fff) {
         margin: 0;
-        color:$background-color;
+        color:$color;
         height: 44px;
         width: 100%;
-        background-color: color($cal-colors, $color);
+        background-color: color($colors, $background-color);
         padding: 15px 0;
 }
 
@@ -20,23 +19,27 @@ ion-calendar-week {
 
 
     .week-title.primary {
-        @include week-title('primary');
+        @include week-title(primary);
     }
 
     .week-title.secondary {
-        @include week-title('secondary');
+        @include week-title(secondary);
     }
 
     .week-title.danger {
-        @include week-title('danger');
+        @include week-title(danger);
     }
 
     .week-title.dark {
-        @include week-title('dark');
+        @include week-title(dark);
     }
 
     .week-title.light {
         @include week-title(light, #9e9e9e);
+    }
+
+    .week-title.cal-color {
+        @include week-title(cal-color);
     }
 
 
