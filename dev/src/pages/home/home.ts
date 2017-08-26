@@ -3,6 +3,7 @@ import {NavController} from 'ionic-angular';
 
 import {CalendarController} from '../../components/ion2-calendar'
 import {DayConfig} from '../../components/ion2-calendar/calendar.model';
+import * as moment from 'moment';
 
 @Component({
   selector: 'page-home',
@@ -11,10 +12,14 @@ import {DayConfig} from '../../components/ion2-calendar/calendar.model';
 export class HomePage {
 
   days: Array<any> = [];
-
+  date: string = moment().format('YYYY-MM-DD');
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {
 
+  }
+
+  onChange($event) {
+    console.log($event)
   }
 
   basic() {

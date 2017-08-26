@@ -8,7 +8,7 @@
 
 <ion-content>
 
-  <ion-calendar></ion-calendar>
+  <ion-calendar [(ngModel)]="date"  (onChange)="onChange($event)"></ion-calendar>
 
   <ion-list>
     <button ion-item (click)="basic()">
