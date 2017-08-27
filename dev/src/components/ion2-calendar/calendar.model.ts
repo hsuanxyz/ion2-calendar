@@ -30,7 +30,7 @@ export class CalendarMonth {
   days: Array<CalendarDay | void>
 }
 
-export class DayConfig {
+export interface DayConfig {
   date: Date;
   marked?: boolean;
   disable?: boolean;
@@ -84,6 +84,18 @@ export interface CalendarControllerOptions {
   defaultDateRange?: { from:DefaultDate, to?: DefaultDate } | null;
   countNextMonths?: number;
   showYearPicker?: boolean;
+  daysConfig?: Array<DayConfig>
+}
+
+export interface CalendarComponentOptions {
+  from?: Date | number;
+  to?: Date | number;
+  pickMode?: string;
+  weekStart?: number;
+  disableWeeks?: Array<number>;
+  weekdays?: Array<string>;
+  monthFormat?: string;
+  color?: string;
   daysConfig?: Array<DayConfig>
 }
 

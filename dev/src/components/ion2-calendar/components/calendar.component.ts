@@ -6,7 +6,10 @@ import {NavParams, ViewController, Content, InfiniteScroll} from 'ionic-angular'
 
 import * as moment from 'moment';
 
-import {CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions, Colors} from '../calendar.model'
+import {
+  CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions, Colors,
+  CalendarComponentOptions
+} from '../calendar.model'
 import {CalendarService} from "../services/calendar.service";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
@@ -53,7 +56,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   monthOpt: CalendarMonth;
   monthDate: Date = new Date();
-  @Input() options: CalendarControllerOptions;
+  @Input() options: CalendarComponentOptions;
   @Input() format: string = 'YYYY-MM-DD';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
