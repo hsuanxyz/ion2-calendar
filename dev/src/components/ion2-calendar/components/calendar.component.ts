@@ -54,6 +54,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   monthOpt: CalendarMonth;
   monthDate: Date = new Date();
   @Input() options: CalendarControllerOptions;
+  @Input() format: string = 'YYYY-MM-DD';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarControllerOptions;
@@ -77,12 +78,11 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   ngOnInit() {
     this._d = this.calSvc.safeOpt(this.options || {});
     this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
-    this._calendarValue = moment(this._d.format).format('YYYY-MM-DD');
+    this._calendarValue = moment(this._d.format).format(this.format);
   }
 
   writeValue(obj: any): void {
     this._writeValue(obj);
-    console.log(obj);
   }
 
   registerOnChange(fn: any): void {
@@ -110,7 +110,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   onChanged($event) {
     switch (this._d.pickMode) {
       case 'single':
-        const date = moment($event[0].time).format('YYYY-MM-DD');
+        const date = moment($event[0].time).format(this.format);
         this._onChanged(date);
         this.onChange.emit(date);
         break;
@@ -118,8 +118,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       case 'range':
         if ($event[0] && $event[1]) {
           const rangeDate = {
-            from: moment($event[0].time).format('YYYY-MM-DD'),
-            to: moment($event[1].time).format('YYYY-MM-DD')
+            from: moment($event[0].time).format(this.format),
+            to: moment($event[1].time).format(this.format)
           };
           this._onChanged(rangeDate);
           this.onChange.emit(rangeDate);
@@ -131,7 +131,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
         for (let i = 0; i < $event.length; i ++) {
           if ($event[i] && $event[i].time) {
-            dates.push(moment($event[i].time).format('YYYY-MM-DD'))
+            dates.push(moment($event[i].time).format(this.format))
           }
         }
 
@@ -148,17 +148,17 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     if (!value) return;
     switch (this._d.pickMode) {
       case 'single':
-        const date = moment(value, 'YYYY-MM-DD');
+        const date = moment(value, this.format);
         this._calendarMonthValue[0] = this.calSvc.createCalendarDay(date.valueOf(), this._d);
         break;
 
       case 'range':
           if (value.from) {
-            const from = moment(value.from, 'YYYY-MM-DD');
+            const from = moment(value.from, this.format);
             this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
           }
           if (value.to) {
-            const to = moment(value.to, 'YYYY-MM-DD');
+            const to = moment(value.to, this.format);
             this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
           }
         break;
@@ -166,7 +166,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       case 'multi':
         if (Array.isArray(value)) {
           this._calendarMonthValue = value.map(e => {
-            return this.calSvc.createCalendarDay(moment(e, 'YYYY-MM-DD').valueOf(), this._d);
+            return this.calSvc.createCalendarDay(moment(e, this.format).valueOf(), this._d);
           });
         } else {
           this._calendarMonthValue = [];

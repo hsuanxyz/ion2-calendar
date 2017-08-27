@@ -13,6 +13,7 @@ export class HomePage {
 
   days: Array<any> = [];
   date = [];
+  format = 'YYYY-MM-DD';
   options: CalendarControllerOptions = {
     pickMode: 'multi'
   };
