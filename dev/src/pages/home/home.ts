@@ -12,9 +12,9 @@ import * as moment from 'moment';
 export class HomePage {
 
   days: Array<any> = [];
-  date = {from: "2017-08-27", to: "2017-08-29"};
+  date = [];
   options: CalendarControllerOptions = {
-    pickMode: 'range'
+    pickMode: 'multi'
   };
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {
