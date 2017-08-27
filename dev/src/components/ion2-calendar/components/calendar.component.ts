@@ -35,7 +35,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       </div>
     </div>
 
-    <ion-calendar-week color="light"
+    <ion-calendar-week color="transparent"
                        [weekStart]="_d.weekStart">
     </ion-calendar-week>
 

@@ -127,6 +127,7 @@ export class HomePage {
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
+      color: 'light',
       defaultDate: new Date()
     })
       .then((res: any) => {
