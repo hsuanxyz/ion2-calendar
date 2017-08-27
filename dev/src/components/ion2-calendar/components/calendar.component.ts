@@ -68,7 +68,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
               public viewCtrl: ViewController,
               public ref: ChangeDetectorRef,
               public calSvc: CalendarService,) {
-    this._d = this.calSvc.safeOpt(this.options || {});
   }
 
   ionViewDidLoad() {
@@ -76,6 +75,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   ngOnInit() {
+    this._d = this.calSvc.safeOpt(this.options || {});
     this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
     this._calendarValue = moment(this._d.format).format('YYYY-MM-DD');
   }
@@ -114,6 +114,17 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         this._onChanged(date);
         this.onChange.emit(date);
         break;
+      case 'range':
+        if ($event[0] && $event[1]) {
+          const rangeDate = {
+            from: moment($event[0].time).format('YYYY-MM-DD'),
+            to: moment($event[1].time).format('YYYY-MM-DD')
+          };
+          this._onChanged(rangeDate);
+          this.onChange.emit(rangeDate);
+        }
+
+        break;
       default:
 
     }
@@ -125,6 +136,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       case 'single':
         const date = moment(value, 'YYYY-MM-DD');
         this._calendarMonthValue[0] = this.calSvc.createCalendarDay(date.valueOf(), this._d);
+        break;
+      case 'range':
+          if (value.from) {
+            const from = moment(value.from, 'YYYY-MM-DD');
+            this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
+          }
+          if (value.to) {
+            const to = moment(value.to, 'YYYY-MM-DD');
+            this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
+          }
         break;
       default:
 

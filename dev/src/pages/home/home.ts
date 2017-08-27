@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
 
 import {CalendarController} from '../../components/ion2-calendar'
-import {DayConfig} from '../../components/ion2-calendar/calendar.model';
+import {CalendarControllerOptions, DayConfig} from '../../components/ion2-calendar/calendar.model';
 import * as moment from 'moment';
 
 @Component({
@@ -12,7 +12,10 @@ import * as moment from 'moment';
 export class HomePage {
 
   days: Array<any> = [];
-  date: string = moment().format('YYYY-MM-DD');
+  date = {from: "2017-08-27", to: "2017-08-29"};
+  options: CalendarControllerOptions = {
+    pickMode: 'range'
+  };
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {
 
