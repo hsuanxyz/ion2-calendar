@@ -63,8 +63,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _d: CalendarControllerOptions;
   _calendarMonthValue: any[] = [null, null];
   _calendarValue: any;
-  _onChanged: Function;
-  _onTouched: Function;
+  _onChanged: Function = () => {};
+  _onTouched: Function = () => {};
 
   constructor(private _renderer: Renderer,
               public _elementRef: ElementRef,
