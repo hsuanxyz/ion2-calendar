@@ -20,15 +20,13 @@ export class HomePage {
     pickMode: 'multi'
   };
   optionsRange: CalendarComponentOptions = {
+    from: new Date(2000, 0),
+    to: new Date(2020, 11, 31),
     pickMode: 'range'
   };
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {
 
-  }
-
-  onChange($event) {
-    console.log($event)
   }
 
   basic() {

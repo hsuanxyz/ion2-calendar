@@ -27,12 +27,12 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       <div class="text">
         {{monthOpt.original.time | date: _d.monthFormat}}
       </div>
-      <div ion-button clear class="back" (click)="backMonth()">
+      <button ion-button clear class="back" [disabled]="!canBack()" (click)="backMonth()">
         <ion-icon name="ios-arrow-back"></ion-icon>
-      </div>
-      <div ion-button clear class="forward" (click)="nextMonth()">
+      </button>
+      <button ion-button clear class="forward" [disabled]="!canNext()" (click)="nextMonth()">
         <ion-icon name="ios-arrow-forward"></ion-icon>
-      </div>
+      </button>
     </div>
 
     <ion-calendar-week color="transparent"
@@ -79,7 +79,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit() {
     this._d = this.calSvc.safeOpt(this.options || {});
-    this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
+    this.monthOpt = this.createMonth(new Date().getTime());
   }
 
   writeValue(obj: any): void {
@@ -88,7 +88,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       if (this._calendarMonthValue[0] && this._calendarMonthValue[0].time) {
         this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
       } else {
-        this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
+        this.monthOpt = this.createMonth(new Date().getTime());
       }
     }
     console.log(this._calendarMonthValue[0])
@@ -111,9 +111,19 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(nextTime);
   }
 
+  canNext() {
+    if (!this._d.to) return true;
+    return this.monthOpt.original.time < moment(this._d.to).valueOf();
+  }
+
   backMonth() {
     const backTime = moment(this.monthOpt.original.time).subtract(1, 'months').valueOf();
     this.monthOpt = this.createMonth(backTime);
+  }
+
+  canBack() {
+    if (!this._d.from) return true;
+    return this.monthOpt.original.time > moment(this._d.from).valueOf();
   }
 
   onChanged($event) {
