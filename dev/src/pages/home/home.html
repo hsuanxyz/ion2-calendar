@@ -8,11 +8,6 @@
 
 <ion-content>
 
-  <ion-calendar [(ngModel)]="date"
-                [options]="options"
-                [format]="format"
-                (onChange)="onChange($event)"></ion-calendar>
-
   <ion-list>
     <button ion-item (click)="basic()">
       basic
@@ -38,9 +33,49 @@
     <button ion-item (click)="optional()">
       set the optional range
     </button>
-    <button ion-item (click)="daysConfig  ()">
+    <button ion-item (click)="daysConfig()">
       days config
     </button>
+
   </ion-list>
+
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        basic
+      </ion-card-title>
+      <ion-calendar [(ngModel)]="date"
+                    [format]="format">
+      </ion-calendar>
+      <p>{{date}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        multi
+      </ion-card-title>
+      <ion-calendar [(ngModel)]="dateMulti"
+                    [options]="optionsMulti"
+                    [format]="format">
+      </ion-calendar>
+      <p>{{dateMulti | json}}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-title>
+        range
+      </ion-card-title>
+      <ion-calendar [(ngModel)]="dateRangeObj"
+                    [options]="optionsRange"
+                    [format]="format">
+      </ion-calendar>
+      <p>{{dateRangeObj | json}}</p>
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

@@ -12,10 +12,15 @@ import * as moment from 'moment';
 export class HomePage {
 
   days: Array<any> = [];
-  date = [];
+  date: string;
+  dateMulti = [];
+  dateRangeObj: any;
   format = 'YYYY-MM-DD';
-  options: CalendarComponentOptions = {
+  optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi'
+  };
+  optionsRange: CalendarComponentOptions = {
+    pickMode: 'range'
   };
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {

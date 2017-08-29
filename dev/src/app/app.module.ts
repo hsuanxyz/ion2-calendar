@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { CalendarModule } from '../components/ion2-calendar'
+import { CalendarModule, CALENDAR_COMPONENTS } from '../components/ion2-calendar'
 
 @NgModule({
   declarations: [
@@ -15,9 +15,9 @@ import { CalendarModule } from '../components/ion2-calendar'
     HomePage
   ],
   imports: [
+    IonicModule.forRoot(MyApp),
     BrowserModule,
     CalendarModule,
-    IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
