@@ -168,7 +168,10 @@ daysConfig() {
 | to              | Date          |  0 (Infinite) | end date    |
 | title           | string        | `'CALENDAR'`  | title       |
 | color           | string        | `'primary'`   | 'primary', 'secondary', 'danger', 'light', 'dark' |
-| defaultDate     | Date          | none          | let the view scroll to the default date|
+| defaultScrollTo | Date          | none          | let the view scroll to the default date|
+| defaultDate     | Date          | none          | default date data, apply to single|
+| defaultDates    | Array<Date>   | none          | default dates data, apply to multi |
+| defaultDateRange | { from: Date, to: Date }  | none  | default date-range data, apply to range |
 | cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
 | canBackwardsSelected        | boolean        | `false`        | can backwards selected |
 | pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
@@ -202,9 +205,9 @@ daysConfig() {
 ### Output Promise
 | pickMode      | Type  |
 | ------------- | ----- |
-| single        | { date:  ***Day*** }  |
-| range         | { from: ***Day***, to: ***Day*** }  |
-| multi         | Array<***Day***>   |
+| single        | { date:  ***CalendarResult*** }  |
+| range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
+| multi         | Array<***CalendarResult***>   |
 
 ### Day
 | Name          | Type    | Description |
@@ -214,6 +217,18 @@ daysConfig() {
 | disable       | boolean | disable           |
 | title         | string  | displayed title   |
 | subTitle      | string  | subTitle subTitle |
+
+### CalendarResult
+| Name          | Type    | 
+| ------------- | ------- |
+| time          | number  |
+| unix          | number  |
+| dateObj       | Date    |
+| string        | string  |
+| years         | number  |
+| months        | number  |
+| date          | number  |
+
 
 # Contributing
 
