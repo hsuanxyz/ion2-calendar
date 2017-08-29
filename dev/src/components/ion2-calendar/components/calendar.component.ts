@@ -62,7 +62,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   _d: CalendarControllerOptions;
   _calendarMonthValue: any[] = [null, null];
-  _calendarValue: any;
   _onChanged: Function = () => {};
   _onTouched: Function = () => {};
 
@@ -81,11 +80,18 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   ngOnInit() {
     this._d = this.calSvc.safeOpt(this.options || {});
     this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
-    this._calendarValue = moment(this._d.format).format(this.format);
   }
 
   writeValue(obj: any): void {
-    this._writeValue(obj);
+    if (obj) {
+      this._writeValue(obj);
+      if (this._calendarMonthValue[0] && this._calendarMonthValue[0].time) {
+        this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
+      } else {
+        this.monthOpt = this.createMonth(moment(this._d.from).valueOf());
+      }
+    }
+    console.log(this._calendarMonthValue[0])
   }
 
   registerOnChange(fn: any): void {
