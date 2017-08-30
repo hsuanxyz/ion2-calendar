@@ -1,6 +1,6 @@
 ion-calendar {
 
-  $btn-width : 30px;
+  $btn-width: 30px;
 
   padding: 10px 20px;
   box-sizing: border-box;
@@ -10,7 +10,7 @@ ion-calendar {
 
   .title {
 
-    padding:0 $btn-width 0 $btn-width;
+    padding: 0 $btn-width 0 $btn-width;
     overflow: hidden;
 
     .back, .forward, .text {
@@ -23,7 +23,7 @@ ion-calendar {
       font-size: 15px;
     }
 
-    .back, .forward{
+    .back, .forward {
       color: #757575;
     }
 

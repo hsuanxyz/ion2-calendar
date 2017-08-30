@@ -1,8 +1,8 @@
-import {Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forwardRef} from '@angular/core';
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
 
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
-import {CalendarDay, CalendarMonth, PickMode} from '../calendar.model'
+import { CalendarDay, CalendarMonth, PickMode } from '../calendar.model'
 
 export const MONTH_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -89,7 +89,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isEndSelection(day: CalendarDay): boolean {
-    if(!day) return;
+    if (!day) return;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[1] === null) {
       return false;
     }
@@ -98,7 +98,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isBetween(day: CalendarDay): boolean {
-    if(!day) return;
+    if (!day) return;
 
     if (this.pickMode !== 'range' || !Array.isArray(this._date)) {
       return false;
@@ -124,7 +124,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isStartSelection(day: CalendarDay): boolean {
-    if(!day) return;
+    if (!day) return;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[0] === null) {
       return false;
     }

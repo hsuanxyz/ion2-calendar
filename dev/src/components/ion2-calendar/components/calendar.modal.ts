@@ -1,11 +1,8 @@
-import {Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer} from '@angular/core';
-import {NavParams, ViewController, Content, InfiniteScroll} from 'ionic-angular';
-
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
+import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
+import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
-
-import {CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions} from '../calendar.model'
-import {CalendarService} from '../services/calendar.service';
-
 
 @Component({
   selector: 'ion-calendar-modal',
@@ -43,7 +40,8 @@ import {CalendarService} from '../services/calendar.service';
 
     </ion-header>
 
-    <ion-content (ionScroll)="onScroll($event)" class="calendar-page" [ngClass]="{'multi-selection': options.pickMode === 'multi'}">
+    <ion-content (ionScroll)="onScroll($event)" class="calendar-page"
+                 [ngClass]="{'multi-selection': options.pickMode === 'multi'}">
 
       <div #months>
         <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
@@ -342,9 +340,9 @@ export class CalendarModal {
         this.backwardsMonth();
         let nowHeight = this.content.getContentDimensions().scrollHeight;
         this.content.scrollTo(0, nowHeight - lastHeight, 0)
-          .then(() => {
-            this._s = !0;
-          })
+        .then(() => {
+          this._s = !0;
+        })
       }, 180)
     }
   }

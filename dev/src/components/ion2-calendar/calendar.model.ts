@@ -1,6 +1,3 @@
-/**
- * Created by hsuanlee on 2017/4/26.
- */
 export interface CalendarOriginal {
   time: number;
   date: Date;
@@ -81,7 +78,7 @@ export interface CalendarControllerOptions {
   defaultScrollTo?: Date;
   defaultDate?: DefaultDate;
   defaultDates?: DefaultDate[];
-  defaultDateRange?: { from:DefaultDate, to?: DefaultDate } | null;
+  defaultDateRange?: { from: DefaultDate, to?: DefaultDate } | null;
   countNextMonths?: number;
   showYearPicker?: boolean;
   daysConfig?: Array<DayConfig>

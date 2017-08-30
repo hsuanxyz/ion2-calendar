@@ -1,17 +1,21 @@
 import {
-  Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer, Input, OnInit, Output,
-  EventEmitter, forwardRef
+  Component,
+  ElementRef,
+  ChangeDetectorRef,
+  Renderer,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  forwardRef
 } from '@angular/core';
-import {NavParams, ViewController, Content, InfiniteScroll} from 'ionic-angular';
+import { NavParams, ViewController } from 'ionic-angular';
+
+import { CalendarMonth, CalendarControllerOptions, CalendarComponentOptions } from '../calendar.model'
+import { CalendarService } from "../services/calendar.service";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import * as moment from 'moment';
-
-import {
-  CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions, Colors,
-  CalendarComponentOptions
-} from '../calendar.model'
-import {CalendarService} from "../services/calendar.service";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 export const ION_CAL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -62,8 +66,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   _d: CalendarControllerOptions;
   _calendarMonthValue: any[] = [null, null];
-  _onChanged: Function = () => {};
-  _onTouched: Function = () => {};
+  _onChanged: Function = () => {
+  };
+  _onTouched: Function = () => {
+  };
 
   constructor(private _renderer: Renderer,
               public _elementRef: ElementRef,
@@ -148,7 +154,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       case 'multi':
         let dates = [];
 
-        for (let i = 0; i < $event.length; i ++) {
+        for (let i = 0; i < $event.length; i++) {
           if ($event[i] && $event[i].time) {
             dates.push(moment($event[i].time).format(this.format))
           }
@@ -172,14 +178,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         break;
 
       case 'range':
-          if (value.from) {
-            const from = moment(value.from, this.format);
-            this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
-          }
-          if (value.to) {
-            const to = moment(value.to, this.format);
-            this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
-          }
+        if (value.from) {
+          const from = moment(value.from, this.format);
+          this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
+        }
+        if (value.to) {
+          const to = moment(value.to, this.format);
+          this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
+        }
         break;
 
       case 'multi':

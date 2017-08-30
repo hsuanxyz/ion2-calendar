@@ -1,18 +1,12 @@
-/**
- * Created by youyou on 16/12/4.
- */
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-
 import { CalendarController } from './calendar.controller';
 import { IonicModule, ModalController } from 'ionic-angular';
 import { CalendarService } from "./services/calendar.service";
 import { CALENDAR_COMPONENTS } from "./components/index";
 
 
-export function calendarController (
-  modalCtrl: ModalController,
-  calSvc: CalendarService,
-) {
+export function calendarController(modalCtrl: ModalController,
+                                   calSvc: CalendarService,) {
   return new CalendarController(modalCtrl, calSvc);
 }
 
@@ -21,12 +15,13 @@ export function calendarController (
   declarations: CALENDAR_COMPONENTS,
   exports: CALENDAR_COMPONENTS,
   entryComponents: CALENDAR_COMPONENTS,
-  providers: [ {
+  providers: [{
     provide: CalendarController,
     useFactory: calendarController,
     deps: [ModalController, CalendarService],
   }, CalendarService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class CalendarModule { }
+export class CalendarModule {
+}
 

@@ -1,12 +1,10 @@
-
-
 ion-calendar-modal {
   ion-select {
     max-width: unset;
-    .select-icon>.select-icon-inner, .select-text{
+    .select-icon > .select-icon-inner, .select-text {
       color: #fff !important;
     }
-    &.select-ios{
+    &.select-ios {
       max-width: unset;
     }
   }
@@ -15,7 +13,7 @@ ion-calendar-modal {
     background-color: #fbfbfb;
   }
 
-  .month-box{
+  .month-box {
     display: inline-block;
     padding-bottom: 1em;
     border-bottom: 1px solid #f1f1f1;

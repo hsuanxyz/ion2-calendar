@@ -1,10 +1,10 @@
-/**
- * Created by hsuanlee on 27/05/2017.
- */
 import { Injectable } from '@angular/core';
 import {
-  CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig, CalendarResult,
-  CalendarComponentOptions
+  CalendarOriginal,
+  CalendarDay,
+  CalendarMonth,
+  CalendarControllerOptions,
+  CalendarResult
 } from '../calendar.model'
 import * as moment from 'moment';
 
@@ -113,7 +113,7 @@ export class CalendarService {
 
 
       if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add( 1, 'day');
+        let _addTime = _time.add(1, 'day');
         isBetween = !_addTime.isAfter(_rangeBeg);
       } else {
         isBetween = false;
