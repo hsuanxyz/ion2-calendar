@@ -11,20 +11,23 @@ import * as moment from 'moment';
 
       <ion-navbar [color]="_color">
 
-        <ion-buttons start [hidden]="!showYearPicker">
-          <ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">
-            <ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>
-          </ion-select>
-        </ion-buttons>
+        <!--<ion-buttons start [hidden]="!showYearPicker">-->
+          <!--<ion-select [(ngModel)]="year" (ngModelChange)="changedYearSelection()" interface="popover">-->
+            <!--<ion-option *ngFor="let y of years" value="{{y}}">{{y}}</ion-option>-->
+          <!--</ion-select>-->
+        <!--</ion-buttons>-->
 
-        <ion-title>{{title}}</ion-title>
-
-        <ion-buttons end>
+        <ion-buttons start>
           <button ion-button clear (click)="onCancel()">
             <span *ngIf="closeLabel !== '' && !closeIcon">{{closeLabel}}</span>
             <ion-icon *ngIf="closeIcon" name="close"></ion-icon>
           </button>
-          <button ion-button *ngIf="!_d.autoDone" clear [disabled]="!canDone()" (click)="done()">
+        </ion-buttons>
+        
+        <ion-title>{{title}}</ion-title>
+
+        <ion-buttons end>
+              <button ion-button *ngIf="!_d.autoDone" clear [disabled]="!canDone()" (click)="done()">
             <span *ngIf="doneLabel !== '' && !doneIcon">{{doneLabel}}</span>
             <ion-icon *ngIf="doneIcon" name="checkmark"></ion-icon>
           </button>
