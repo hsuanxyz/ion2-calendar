@@ -1,10 +1,13 @@
-/**
- * Created by hsuanlee on 27/05/2017.
- */
 import { Injectable } from '@angular/core';
-import {CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, DayConfig, CalendarResult} from '../calendar.model'
+import {
+  CalendarOriginal,
+  CalendarDay,
+  CalendarMonth,
+  CalendarControllerOptions,
+  CalendarResult,
+  DayConfig
+} from '../calendar.model'
 import * as moment from 'moment';
-
 
 @Injectable()
 export class CalendarService {
@@ -13,7 +16,9 @@ export class CalendarService {
 
   }
 
-  safeOpt(calendarOptions: CalendarControllerOptions): CalendarControllerOptions {
+  safeOpt(calendarOptions: any): CalendarControllerOptions {
+    const _disableWeeks: number[] = [];
+    const _daysConfig: DayConfig[] = [];
     let {
       autoDone = false,
       from = new Date(),
@@ -21,7 +26,7 @@ export class CalendarService {
       cssClass = '',
       weekStart = 0,
       canBackwardsSelected = false,
-      disableWeeks = [],
+      disableWeeks = _disableWeeks,
       closeLabel = 'CANCEL',
       closeIcon = false,
       doneLabel = 'DONE',
@@ -33,7 +38,7 @@ export class CalendarService {
       monthFormat = 'MMM yyyy',
       title = 'CALENDAR',
       weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      daysConfig = [],
+      daysConfig = _daysConfig,
       countNextMonths = 3,
       showYearPicker = false,
     } = calendarOptions || {};
@@ -110,7 +115,7 @@ export class CalendarService {
 
 
       if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add( 1, 'day');
+        let _addTime = _time.add(1, 'day');
         isBetween = !_addTime.isAfter(_rangeBeg);
       } else {
         isBetween = false;

@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
-import {CalendarController, DayConfig} from 'ion2-calendar'
+import { CalendarComponentOptions, CalendarController, DayConfig } from 'ion2-calendar'
 
 @Component({
   selector: 'page-home',
@@ -10,6 +10,18 @@ import {CalendarController, DayConfig} from 'ion2-calendar'
 export class HomePage {
 
   days: Array<any> = [];
+  date: string;
+  dateMulti = [];
+  dateRangeObj: any;
+  format = 'YYYY-MM-DD';
+  optionsMulti: CalendarComponentOptions = {
+    pickMode: 'multi'
+  };
+  optionsRange: CalendarComponentOptions = {
+    from: new Date(2000, 0),
+    to: new Date(2020, 11, 31),
+    pickMode: 'range'
+  };
 
   constructor(public navCtrl: NavController,
               public calendarCtrl: CalendarController,) {
@@ -21,40 +33,41 @@ export class HomePage {
     this.calendarCtrl.openCalendar({
       title: 'BASIC',
       canBackwardsSelected: true,
-      color: 'dark',
+      color: 'cal-color',
       doneIcon: true,
       closeIcon: true
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      });
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    });
   }
 
   multi() {
     this.calendarCtrl.openCalendar({
       pickMode: 'multi',
       title: 'MULTI',
+      defaultDates: [new Date(2017, 7, 20), new Date(2017, 7, 18).getTime()]
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      });
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    });
   }
 
   setDefaultDate() {
     this.calendarCtrl.openCalendar({
       from: new Date(2017, 1, 1),
-      defaultDate: new Date(2017, 4, 1),
+      defaultScrollTo: new Date(2017, 4, 1),
 
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
 
@@ -65,11 +78,11 @@ export class HomePage {
       pickMode: 'range',
       autoDone: true
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
   dateRange() {
@@ -79,11 +92,11 @@ export class HomePage {
       canBackwardsSelected: true,
       color: 'danger'
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
   optional() {
@@ -91,11 +104,11 @@ export class HomePage {
       from: new Date(2017, 1, 1),
       to: new Date(2017, 2, 5),
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
   disableWeekdays() {
@@ -103,24 +116,27 @@ export class HomePage {
       disableWeeks: [0, 6],
       canBackwardsSelected: true,
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
   local() {
+
     this.calendarCtrl.openCalendar({
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
+      color: 'light',
+      defaultDate: new Date()
     })
-      .then((res: any) => {
-        console.log(res)
-      })
-      .catch(() => {
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
+    .catch(() => {
+    })
   }
 
   daysConfig() {
@@ -170,12 +186,12 @@ export class HomePage {
       daysConfig: _daysConfig,
       cssClass: 'my-cal',
     })
-      .then((res: any) => {
-        console.log(res)
-      })
+    .then((res: any) => {
+      console.log(res)
+    })
 
-      .catch(() => {
-      })
+    .catch(() => {
+    })
   }
 
 }

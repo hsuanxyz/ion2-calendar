@@ -1,25 +1,29 @@
-import { ElementRef, ChangeDetectorRef, Renderer, OnInit } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
-import { CalendarMonth, Colors } from '../calendar.model';
+import { OnInit, EventEmitter } from '@angular/core';
+import { CalendarMonth, CalendarControllerOptions, CalendarComponentOptions } from '../calendar.model';
 import { CalendarService } from "../services/calendar.service";
-export declare class CalendarComponent implements OnInit {
-    private _renderer;
-    _elementRef: ElementRef;
-    params: NavParams;
-    viewCtrl: ViewController;
-    ref: ChangeDetectorRef;
+import { ControlValueAccessor } from '@angular/forms';
+export declare const ION_CAL_VALUE_ACCESSOR: any;
+export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     calSvc: CalendarService;
     monthOpt: CalendarMonth;
-    monthDate: Date;
-    color: Colors;
-    titleFormat: string;
-    weekStart: number;
-    disableWeeks: Array<number>;
-    from: number;
-    constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
+    options: CalendarComponentOptions;
+    format: string;
+    onChange: EventEmitter<any>;
+    _d: CalendarControllerOptions;
+    _calendarMonthValue: any[];
+    _onChanged: Function;
+    _onTouched: Function;
+    constructor(calSvc: CalendarService);
     ionViewDidLoad(): void;
     ngOnInit(): void;
-    createMonth(date?: number): CalendarMonth;
+    writeValue(obj: any): void;
+    registerOnChange(fn: any): void;
+    registerOnTouched(fn: any): void;
+    createMonth(date: number): CalendarMonth;
     nextMonth(): void;
+    canNext(): boolean;
     backMonth(): void;
+    canBack(): boolean;
+    onChanged($event: any[]): void;
+    _writeValue(value: any): void;
 }

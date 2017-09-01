@@ -4,12 +4,6 @@ var CalendarMonth = (function () {
     return CalendarMonth;
 }());
 export { CalendarMonth };
-var DayConfig = (function () {
-    function DayConfig() {
-    }
-    return DayConfig;
-}());
-export { DayConfig };
 var CalendarOptions = (function () {
     function CalendarOptions() {
     }

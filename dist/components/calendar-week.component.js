@@ -36,7 +36,7 @@ export { CalendarWeekComponent };
 CalendarWeekComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ion-calendar-week',
-                template: "\n        <ion-toolbar class=\"week-toolbar\"  no-border-top >\n            <ul [class]=\"'week-title ' + color\">\n                <li *ngFor=\"let w of _weekArray\">{{w}}</li>\n            </ul>\n        </ion-toolbar>\n    ",
+                template: "\n    <ion-toolbar class=\"week-toolbar\" no-border-top>\n      <ul [class]=\"'week-title ' + color\">\n        <li *ngFor=\"let w of _weekArray\">{{w}}</li>\n      </ul>\n    </ion-toolbar>\n  ",
             },] },
 ];
 /** @nocollapse */

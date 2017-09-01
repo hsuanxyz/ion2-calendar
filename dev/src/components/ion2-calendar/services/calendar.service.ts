@@ -4,10 +4,10 @@ import {
   CalendarDay,
   CalendarMonth,
   CalendarControllerOptions,
-  CalendarResult
+  CalendarResult,
+  DayConfig
 } from '../calendar.model'
 import * as moment from 'moment';
-
 
 @Injectable()
 export class CalendarService {
@@ -17,6 +17,8 @@ export class CalendarService {
   }
 
   safeOpt(calendarOptions: any): CalendarControllerOptions {
+    const _disableWeeks: number[] = [];
+    const _daysConfig: DayConfig[] = [];
     let {
       autoDone = false,
       from = new Date(),
@@ -24,7 +26,7 @@ export class CalendarService {
       cssClass = '',
       weekStart = 0,
       canBackwardsSelected = false,
-      disableWeeks = [],
+      disableWeeks = _disableWeeks,
       closeLabel = 'CANCEL',
       closeIcon = false,
       doneLabel = 'DONE',
@@ -36,7 +38,7 @@ export class CalendarService {
       monthFormat = 'MMM yyyy',
       title = 'CALENDAR',
       weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-      daysConfig = [],
+      daysConfig = _daysConfig,
       countNextMonths = 3,
       showYearPicker = false,
     } = calendarOptions || {};

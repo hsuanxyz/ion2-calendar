@@ -1,15 +1,11 @@
 import {
   Component,
-  ElementRef,
-  ChangeDetectorRef,
-  Renderer,
   Input,
   OnInit,
   Output,
   EventEmitter,
   forwardRef
 } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
 
 import { CalendarMonth, CalendarControllerOptions, CalendarComponentOptions } from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
@@ -59,7 +55,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
 
   monthOpt: CalendarMonth;
-  monthDate: Date = new Date();
   @Input() options: CalendarComponentOptions;
   @Input() format: string = 'YYYY-MM-DD';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
@@ -71,12 +66,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _onTouched: Function = () => {
   };
 
-  constructor(private _renderer: Renderer,
-              public _elementRef: ElementRef,
-              public params: NavParams,
-              public viewCtrl: ViewController,
-              public ref: ChangeDetectorRef,
-              public calSvc: CalendarService,) {
+  constructor(public calSvc: CalendarService) {
   }
 
   ionViewDidLoad() {
@@ -108,7 +98,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
-  createMonth(date) {
+  createMonth(date: number) {
     return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
   }
 
@@ -132,7 +122,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this.monthOpt.original.time > moment(this._d.from).valueOf();
   }
 
-  onChanged($event) {
+  onChanged($event: any[]) {
     switch (this._d.pickMode) {
       case 'single':
         const date = moment($event[0].time).format(this.format);

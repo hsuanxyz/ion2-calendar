@@ -1,6 +1,3 @@
-/**
- * Created by hsuanlee on 2017/4/26.
- */
 export interface CalendarOriginal {
     time: number;
     date: Date;
@@ -27,7 +24,7 @@ export declare class CalendarMonth {
     original: CalendarOriginal;
     days: Array<CalendarDay | void>;
 }
-export declare class DayConfig {
+export interface DayConfig {
     date: Date;
     marked?: boolean;
     disable?: boolean;
@@ -83,6 +80,17 @@ export interface CalendarControllerOptions {
     showYearPicker?: boolean;
     daysConfig?: Array<DayConfig>;
 }
+export interface CalendarComponentOptions {
+    from?: Date | number;
+    to?: Date | number;
+    pickMode?: string;
+    weekStart?: number;
+    disableWeeks?: Array<number>;
+    weekdays?: Array<string>;
+    monthFormat?: string;
+    color?: string;
+    daysConfig?: Array<DayConfig>;
+}
 export declare class CalendarResult {
     time: number;
     unix: number;
@@ -93,5 +101,5 @@ export declare class CalendarResult {
     date: number;
 }
 export declare type DefaultDate = Date | string | number | null;
-export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark';
+export declare type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | string;
 export declare type PickMode = 'multi' | 'single' | 'range';

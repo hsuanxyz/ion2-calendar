@@ -31,7 +31,7 @@ import * as moment from 'moment';
             <span *ngIf="doneLabel !== '' && !doneIcon">{{doneLabel}}</span>
             <ion-icon *ngIf="doneIcon" name="checkmark"></ion-icon>
           </button>
-        
+
         </ion-buttons>
 
       </ion-navbar>
