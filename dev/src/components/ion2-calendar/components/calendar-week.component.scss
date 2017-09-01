@@ -1,9 +1,11 @@
+@import "../functions";
+
 @mixin week-title($background-color: primary, $color: #fff) {
   margin: 0;
   color: $color;
   height: 44px;
   width: 100%;
-  background-color: color($colors, $background-color);
+  background-color: bindColors($background-color);
   padding: 15px 0;
 }
 

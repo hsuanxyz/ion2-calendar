@@ -1,3 +1,5 @@
+@import "../functions";
+
 @mixin transition-property($args...) {
   -webkit-transition-property: $args;
   -moz-transition-property: $args;
@@ -26,7 +28,7 @@
   button.days-btn small,
   .days .marked p,
   .days .today p {
-    color: color($colors, $background-color);
+    color: bindColors($background-color);
   }
 
   .days .today p {
@@ -40,7 +42,7 @@
   .days .on-selected,
   .startSelection button.days-btn,
   .endSelection button.days-btn {
-    background-color: color($colors, $background-color);
+    background-color: bindColors($background-color);
     color: $color;
 
   }
@@ -55,7 +57,7 @@
       top: 0;
       right: 0;
       display: block;
-      background-color: lighten(color($colors, $background-color), 12%);
+      background-color: lighten(bindColors($background-color), 12%);
     }
   }
 
@@ -69,7 +71,7 @@
       top: 0;
       left: 0;
       display: block;
-      background-color: lighten(color($colors, $background-color), 12%);
+      background-color: lighten(bindColors($background-color), 12%);
     }
   }
 
@@ -77,7 +79,7 @@
     border-radius: 50%
   }
   .between button.days-btn {
-    background-color: lighten(color($colors, $background-color), 12%);
+    background-color: lighten(bindColors($background-color), 12%);
     width: 100%;
     border-radius: 0;
     p {
@@ -92,7 +94,7 @@
   }
 
   .days.between {
-    background-color: lighten(color($colors, $background-color), 12%);
+    background-color: lighten(bindColors($background-color), 12%);
   }
 
   .days .on-selected p {
