@@ -1,31 +1,36 @@
-# ion2-calendar
+# 📅 ion2-calendar
 
 [![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
-
-A configurable and selectable range dates calendar component for ionic2
-
-[![NPM](https://nodei.co/npm/ion2-calendar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ion2-calendar/)
-
-[中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][downloads-url]
+[![MIT License][license-image]][license-url]
 
 
-![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
 
 > English is not my native language; please excuse typing errors.
+[中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
 
-### install
+- Support date range.
+- Support multi date.
+- Support HTML components.
+- Disable weekdays or weekends.
+- Setting days event.
+- Setting localization.
+- Material design.
 
-  *if you do not use moment*
-`$ npm install moment --save`
+# Demo
+live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 
-`$ npm install ion2-calendar --save`
+# Usage
+### Installation
+`$ npm install ion2-calendar@2.0.0-beta.7 moment --save`
 
-### import module
+### Import module
 
 ```javascript
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 ...
 import { CalendarModule } from "ion2-calendar";
@@ -43,16 +48,118 @@ import { CalendarModule } from "ion2-calendar";
   entryComponents: [
     MyApp,
     ...
-  ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  ]
 })
 export class AppModule {}
 ```
-### Use
+
+# Components Mode
+
+### Basic
+
+```html
+<ion-calendar [(ngModel)]="date"
+              (onChange)="onChange($event)"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
 ```javascript
 import { Component } from '@angular/core';
 
-import {CalendarController} from "ion2-calendar/dist";
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  date: string;
+  constructor() { }
+
+  onChange($event) {
+    console.log($event);
+  }
+  ...
+}
+```
+
+### Date range
+
+```html
+<ion-calendar [(ngModel)]="dateRange"
+              [options]="optionsRange"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
+```javascript
+import { Component } from '@angular/core';
+import { CalendarComponentOptions } from 'ion2-calendar'
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  dateRange: { from: string; to: string; };
+  optionsRange: CalendarComponentOptions = {
+    pickMode: 'range'
+  };
+  constructor() { }
+  ...
+}
+```
+
+### Multi Date
+
+```html
+<ion-calendar [(ngModel)]="dateMulti"
+              [options]="optionsMulti"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
+```javascript
+import { Component } from '@angular/core';
+import { CalendarComponentOptions } from 'ion2-calendar'
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  dateMulti: string[];
+  optionsMulti: CalendarComponentOptions = {
+    pickMode: 'multi'
+  };
+  constructor() { }
+  ...
+}
+```
+
+### Input Properties
+| Name            | Type          | Default        | Description |
+| --------------- | ------------- | -------------- | ----------- |
+| options         | CalendarComponentOptions| null | options     |
+| format          | string        | 'YYYY-MM-DD'   | value format |
+
+### CalendarComponentOptions
+| Name            | Type          | Default       | Description |
+| --------------- | ------------- | ------------- | ----------- |
+| from            | Date          | `new Date()`  | start date  |
+| to              | Date          |  0 (Infinite) | end date    |
+| color           | string        | `'primary'`   | 'primary', 'secondary', 'danger', 'light', 'dark' |
+| pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
+| disableWeeks | Array<number> | `[]`          | week to be disabled (0-6)                   |
+| monthFormat      | string        | `'MMM yyyy'`  | month title format  |
+| weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text |
+| weekStart    | number        | `0` (0 or 1)           | set week start day |
+| daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
+
+# Modal Mode
+
+### Basic
+Import ion2-calendar in component controller.
+```javascript
+import { Component } from '@angular/core';
+import { CalendarController } from "ion2-calendar";
 
 @Component({
   selector: 'page-home',
@@ -62,133 +169,94 @@ export class HomePage {
 
   constructor(
     public calendarCtrl: CalendarController
-  ) {
+  ) { }
 
-  }
-
-  openCalendar(){
+  openCalendar() {
     this.calendarCtrl.openCalendar({
-      from:new Date()
+      title: 'Basic'
+      from: new Date()
     })
-    .then( res => { console.log(res) } );
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 
 }
 ```
 
-# Demo
-[DEMO](https://hsuanxyz.github.io/demo/ion2-calendar/)
-
-### date
-
-![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
-
-```typescript
- basic() {
+### Date range
+Set pickMode to 'range'.
+```javascript
+openCalendar() {
     this.calendarCtrl.openCalendar({
-      title:'basic demo',
+      pickMode: 'range'
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
-### date range
-
-![date range](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
-
-```typescript
-dateRange() {
+### Multi Date
+Set pickMode to 'multi'.
+```javascript
+openCalendar() {
     this.calendarCtrl.openCalendar({
-      isRadio: false,
+      pickMode: 'multi'
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
-### disable weekdays
-
-![disable weekdays](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
-
-```typescript
-  disableWeekdays() {
+### Disable weeks
+Use index eg: `[0, 6]` denote Sunday and Saturday.
+```javascript
+  openCalendar() {
     this.calendarCtrl.openCalendar({
-      disableWeekdays:[0,6]
+      disableWeeks: [0,6]
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 ```
 
-### weekdays title format
+### Localization
 
-![weekdays title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
-
-### month title format
-
-![month title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
-
-```typescript
- settingDisplay() {
+```javascript
+ openCalendar() {
     this.calendarCtrl.openCalendar({
-      monthTitle:' MMMM-yy ',
-      weekdaysTitle:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      closeLabel:''
+      monthFormat: 'yyyy 年 MM 月 ',
+      weekdays: ['天', '一', '二', '三', '四', '五', '六'],
+      weekStart: 1,
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 ```
-### days config
-
-![days config](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
-
-```typescript
+### Days config
+Configure a day.
+```javascript
 daysConfig() {
 
     let _daysConfig = [
       {
-        date:new Date(2017,0,1),
-        subTitle:'New Year\'s',
-        marked:true
+        date: new Date(2017,0,1),
+        subTitle: 'New Year\'s',
+        marked: true
       },
       {
-        date:new Date(2017,1,14),
-        subTitle:'Valentine\'s',
-        disable:true
-      },
-      {
-        date:new Date(2017,3,1),
-        subTitle:'April Fools',
-        marked:true
-      },
-      {
-        date:new Date(2017,3,7),
-        subTitle:'World Health',
-        marked:true
-      },
-      {
-        date:new Date(2017,4,31),
-        subTitle:'No-Smoking',
-        marked:true
-      },
-      {
-        date:new Date(2017,5,1),
-        subTitle:'Children\'s',
-        marked:true
+        date: new Date(2017,1,14),
+        subTitle: 'Valentine\'s',
+        disable: true
       }
     ];
 
-    _daysConfig.push(...this.days);
-
     this.calendarCtrl.openCalendar({
       from: new Date(2017,0,1),
-      to  : new Date(2017,11.1),
-      daysConfig:_daysConfig
+      to: new Date(2017,11.1),
+      daysConfig: _daysConfig
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
@@ -201,16 +269,23 @@ daysConfig() {
 | --------------- | ------------- | ------------- | ----------- |
 | from            | Date          | `new Date()`  | start date  |
 | to              | Date          |  0 (Infinite) | end date    |
-| title           | string        | `'Calendar'`  | title       |
-| defaultDate     | Date          | none          | let the view scroll to the default date|
+| title           | string        | `'CALENDAR'`  | title       |
+| color           | string        | `'primary'`   | 'primary', 'secondary', 'danger', 'light', 'dark' |
+| defaultScrollTo | Date          | none          | let the view scroll to the default date|
+| defaultDate     | Date          | none          | default date data, apply to single|
+| defaultDates    | Array<Date>   | none          | default dates data, apply to multi |
+| defaultDateRange | { from: Date, to: Date }  | none  | default date-range data, apply to range |
 | cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
 | canBackwardsSelected        | boolean        | `false`        | can backwards selected |
-| isRadio         | boolean       | `true`        | true for one day ,false for range dates     |
-| disableWeekdays | Array<number> | `[]`          | week to be disabled (0-6)                   |
-| closeLabel      | string        | `cancel`      | cancel button label ,can be an empty string |
-| monthTitle      | string        | `'MMM yyyy'`  | month title format  |
-| weekdaysTitle   | Array<string> | `"Di_Lu_Ma_Me_Je_Ve_Sa".split("_")` | weeks title |
-| weekStartDay    | number        | `0` (0 or 1)           | set week start day |
+| pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
+| disableWeeks | Array<number> | `[]`          | week to be disabled (0-6)                   |
+| closeLabel      | string        | `CANCEL`      | cancel button label |
+| doneLabel      | string        | `DONE`      | done button label |
+| closeIcon      | boolean        | `false`      | show cancel button icon |
+| doneIcon      | boolean        | `false`      | show done button icon  |
+| monthFormat      | string        | `'MMM yyyy'`  | month title format  |
+| weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text |
+| weekStart    | number        | `0` (0 or 1)           | set week start day |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
 
 #### DaysConfig
@@ -220,8 +295,8 @@ daysConfig() {
 | date          | Date          | required | configured days |
 | marked        | boolean       | false    | highlight color |
 | disable       | boolean       | false    | disable         |
-| title         | string        | none     | displayed title example:'today'       |
-| subTitle      | string        | none     | subTitle subTitle example:'christmas' |
+| title         | string        | none     | displayed title eg: `'today'`      |
+| subTitle      | string        | none     | subTitle subTitle eg: `'New Year\'s'` |
 
 ### ModalOptions
 | Name            | Type          | Default       | Description |
@@ -231,11 +306,11 @@ daysConfig() {
 
 
 ### Output Promise
-| Name          | Type  | Description |
-| ------------- | ----- | ----------- |
-| from          | ***Day***   | start date If `isRadio` it is `false` |
-| to            | ***Day***   | end date If `isRadio` it is `false`   |
-| date          | ***Day***   | date If `isRadio` it is `true`        |
+| pickMode      | Type  |
+| ------------- | ----- |
+| single        | { date:  ***CalendarResult*** }  |
+| range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
+| multi         | Array<***CalendarResult***>   |
 
 ### Day
 | Name          | Type    | Description |
@@ -246,16 +321,16 @@ daysConfig() {
 | title         | string  | displayed title   |
 | subTitle      | string  | subTitle subTitle |
 
-
-### TODO
-
-1. ~~Add style settings.~~
-2. ~~Add default date, let the view scroll to the default date.~~
-3. To today
-4. ~~Scroll backwards ([#2](https://github.com/HsuanXyz/ion2-calendar/issues/2))~~
-5. ~~Settings week start day([#5](https://github.com/HsuanXyz/ion2-calendar/issues/5))~~
-
-
+### CalendarResult
+| Name          | Type    |
+| ------------- | ------- |
+| time          | number  |
+| unix          | number  |
+| dateObj       | Date    |
+| string        | string  |
+| years         | number  |
+| months        | number  |
+| date          | number  |
 
 # Contributing
 
@@ -282,7 +357,7 @@ npm install
 npm run build
 ```
 
-[![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
+## Thanks for reading
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
