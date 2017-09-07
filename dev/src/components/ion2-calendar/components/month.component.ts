@@ -1,4 +1,6 @@
-import { Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forwardRef } from '@angular/core';
+import {
+  Component, ChangeDetectorRef, Input, Output, EventEmitter, OnInit, forwardRef,
+} from '@angular/core';
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -15,42 +17,49 @@ export const MONTH_VALUE_ACCESSOR: any = {
   providers: [MONTH_VALUE_ACCESSOR],
   template: `
     <div [class]="color">
-      <div *ngIf="pickMode !== 'range'">
+      <ng-template [ngIf]="pickMode !== 'range'" [ngIfElse]="rangeBox">
         <div class="days-box">
-          <div class="days" *ngFor="let day of month.days">
-            <button [class]="'days-btn ' + day.cssClass"
-                    *ngIf="day"
-                    [class.today]="day.isToday"
-                    (click)="onSelected(day)"
-                    [class.marked]="day.marked"
-                    [class.on-selected]="isSelected(day.time)"
-                    [disabled]="day.disable">
-              <p>{{day.title}}</p>
-              <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-            </button>
-          </div>
+          <ng-template ngFor let-day [ngForOf]="month.days" [ngForTrackBy]="trackByTime">
+            <div class="days">
+              <ng-container *ngIf="day">
+                <button [class]="'days-btn ' + day.cssClass"
+                        [class.today]="day.isToday"
+                        (click)="onSelected(day)"
+                        [class.marked]="day.marked"
+                        [class.on-selected]="isSelected(day.time)"
+                        [disabled]="day.disable">
+                  <p>{{day.title}}</p>
+                  <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                </button>
+              </ng-container>
+            </div>
+          </ng-template>
         </div>
-      </div>
-      <div *ngIf="pickMode === 'range'">
+      </ng-template>
+       
+      <ng-template #rangeBox>
         <div class="days-box">
-          <div class="days"
-               *ngFor="let day of month.days"
-               [class.startSelection]="isStartSelection(day)"
-               [class.endSelection]="isEndSelection(day)"
-               [class.between]="isBetween(day)">
-            <button [class]="'days-btn ' + day.cssClass"
-                    *ngIf="day"
-                    [class.today]="day.isToday"
-                    (click)="onSelected(day)"
-                    [class.marked]="day.marked"
-                    [class.on-selected]="isSelected(day.time)"
-                    [disabled]="day.disable">
-              <p>{{day.title}}</p>
-              <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
-            </button>
-          </div>
+          <ng-template ngFor let-day [ngForOf]="month.days" [ngForTrackBy]="trackByTime">
+            <div class="days"
+                 [class.startSelection]="isStartSelection(day)"
+                 [class.endSelection]="isEndSelection(day)"
+                 [class.between]="isBetween(day)">
+              <ng-container *ngIf="day">
+                <button [class]="'days-btn ' + day.cssClass"
+                        [class.today]="day.isToday"
+                        (click)="onSelected(day)"
+                        [class.marked]="day.marked"
+                        [class.on-selected]="isSelected(day.time)"
+                        [disabled]="day.disable">
+                  <p>{{day.title}}</p>
+                  <small *ngIf="day.subTitle">{{day?.subTitle}}</small>
+                </button>
+              </ng-container>
+             
+            </div>
+          </ng-template>
         </div>
-      </div>
+      </ng-template>
     </div>
   `,
 })
@@ -88,8 +97,12 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
+  trackByTime(index, item) {
+    return item ? item.time : index;
+  }
+
   isEndSelection(day: CalendarDay): boolean {
-    if (!day) return;
+    if (!day) return false;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[1] === null) {
       return false;
     }
@@ -98,7 +111,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isBetween(day: CalendarDay): boolean {
-    if (!day) return;
+    if (!day) return false;
 
     if (this.pickMode !== 'range' || !Array.isArray(this._date)) {
       return false;
@@ -124,7 +137,7 @@ export class MonthComponent implements ControlValueAccessor, OnInit {
   }
 
   isStartSelection(day: CalendarDay): boolean {
-    if (!day) return;
+    if (!day) return false;
     if (this.pickMode !== 'range' || !Array.isArray(this._date) || this._date[0] === null) {
       return false;
     }

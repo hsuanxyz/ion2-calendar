@@ -48,18 +48,21 @@ import * as moment from 'moment';
                  [ngClass]="{'multi-selection': options.pickMode === 'multi'}">
 
       <div #months>
-        <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
-          <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
-          <ion-calendar-month [month]="month"
-                              [pickMode]="options.pickMode"
-                              [isSaveHistory]="isSaveHistory"
-                              [id]="_id"
-                              [color]="_color"
-                              (onChange)="onChange($event)"
-                              [(ngModel)]="datesTemp">
+        <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByTime" let-i="index">
+          <div class="month-box" [attr.id]="'month-' + i">
+            <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
+            <ion-calendar-month [month]="month"
+                                [pickMode]="options.pickMode"
+                                [isSaveHistory]="isSaveHistory"
+                                [id]="_id"
+                                [color]="_color"
+                                (onChange)="onChange($event)"
+                                [(ngModel)]="datesTemp">
 
-          </ion-calendar-month>
-        </div>
+            </ion-calendar-month>
+          </div>
+        </ng-template>
+      
       </div>
 
       <ion-infinite-scroll (ionInfinite)="nextMonth($event)">

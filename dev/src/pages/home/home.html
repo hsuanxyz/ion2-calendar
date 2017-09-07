@@ -45,7 +45,8 @@
       <ion-card-title>
         basic
       </ion-card-title>
-      <ion-calendar [(ngModel)]="date"
+      <ion-calendar class="my-calendar"
+                    [(ngModel)]="date"
                     [format]="format">
       </ion-calendar>
       <p>{{date}}</p>
