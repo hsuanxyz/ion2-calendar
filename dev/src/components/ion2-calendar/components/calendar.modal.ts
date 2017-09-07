@@ -120,7 +120,7 @@ export class CalendarModal {
   init() {
     const params = this.params;
 
-    this._d = params.get('options');
+    this._d = this.calSvc.safeOpt(params.get('options'));
     let startTime = moment(this._d.from).valueOf();
     let endTime = moment(this._d.to).valueOf();
 
@@ -224,7 +224,9 @@ export class CalendarModal {
   }
 
   done() {
-    this.viewCtrl.dismiss(this.datesTemp);
+    this.viewCtrl.dismiss(
+      this.calSvc.wrapResult(this.datesTemp, this._d.pickMode)
+    );
   }
 
   canDone(): boolean {

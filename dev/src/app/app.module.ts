@@ -7,7 +7,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { CalendarModule, CALENDAR_COMPONENTS } from '../components/ion2-calendar'
+import { CalendarModule } from '../components/ion2-calendar'
 
 @NgModule({
   declarations: [

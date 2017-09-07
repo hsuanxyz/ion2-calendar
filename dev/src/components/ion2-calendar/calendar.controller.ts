@@ -13,6 +13,12 @@ export class CalendarController {
               public calSvc: CalendarService,) {
   }
 
+  /**
+   * @deprecated
+   * @param {CalendarControllerOptions} calendarOptions
+   * @param {ModalOptions} modalOptions
+   * @returns {any}
+   */
   openCalendar(calendarOptions: CalendarControllerOptions, modalOptions: ModalOptions = {}): any {
 
 
@@ -26,8 +32,8 @@ export class CalendarController {
     return new Promise((resolve, reject) => {
 
       calendarModal.onDidDismiss((data: any) => {
-        if (data && Array.isArray(data)) {
-          resolve(this.calSvc.wrapResult(data, options.pickMode));
+        if (data) {
+          resolve(data);
         } else {
           reject('cancelled')
         }
