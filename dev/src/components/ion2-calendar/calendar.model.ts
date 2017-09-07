@@ -80,6 +80,9 @@ export interface CalendarControllerOptions {
   defaultDates?: DefaultDate[];
   defaultDateRange?: { from: DefaultDate, to?: DefaultDate } | null;
   countNextMonths?: number;
+  /**
+   * @deprecated this version notwork
+   */
   showYearPicker?: boolean;
   daysConfig?: Array<DayConfig>
 }
