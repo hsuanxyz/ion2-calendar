@@ -7,7 +7,7 @@ import {
   forwardRef
 } from '@angular/core';
 
-import { CalendarMonth, CalendarControllerOptions, CalendarComponentOptions } from '../calendar.model'
+import { CalendarMonth, CalendarModalOptions, CalendarComponentOptions } from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -59,7 +59,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Input() format: string = 'YYYY-MM-DD';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
-  _d: CalendarControllerOptions;
+  _d: CalendarModalOptions;
   _calendarMonthValue: any[] = [null, null];
   _onChanged: Function = () => {
   };

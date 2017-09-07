@@ -55,7 +55,7 @@ export interface ModalOptions {
   leaveAnimation?: string;
 }
 
-export interface CalendarControllerOptions {
+export interface CalendarModalOptions {
   autoDone?: boolean;
   from?: Date;
   format?: string;

@@ -3,7 +3,7 @@ import { ModalController, NavController } from 'ionic-angular';
 
 import {CalendarController} from '../../components/ion2-calendar'
 import {
-  CalendarComponentOptions, CalendarControllerOptions,
+  CalendarComponentOptions, CalendarModalOptions,
   DayConfig
 } from '../../components/ion2-calendar/calendar.model';
 import * as moment from 'moment';
@@ -72,7 +72,7 @@ export class HomePage {
   }
 
   dateRange() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       pickMode: 'range',
       title: 'RANGE',
       canBackwardsSelected: true,
@@ -91,7 +91,7 @@ export class HomePage {
   }
 
   setDefaultDate() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       from: new Date(2017, 1, 1),
       defaultScrollTo: new Date(2017, 4, 1),
       defaultDate:  new Date(2017, 4, 1)
@@ -110,7 +110,7 @@ export class HomePage {
   }
 
   setCssClass() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       cssClass: 'my-class',
       color: 'secondary',
       pickMode: 'range',
@@ -129,7 +129,7 @@ export class HomePage {
   }
 
   optional() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       from: new Date(2017, 1, 1),
       to: new Date(2017, 2, 5),
     };
@@ -146,7 +146,7 @@ export class HomePage {
   }
 
   disableWeekdays() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       disableWeeks: [0, 6],
       canBackwardsSelected: true,
     };
@@ -163,7 +163,7 @@ export class HomePage {
   }
 
   local() {
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
@@ -191,7 +191,7 @@ export class HomePage {
       })
     }
 
-    const options: CalendarControllerOptions = {
+    const options: CalendarModalOptions = {
       from: new Date(2017, 0, 1),
       to: new Date(2017, 11.1),
       daysConfig: _daysConfig,

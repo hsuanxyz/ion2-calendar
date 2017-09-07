@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
 
@@ -99,7 +99,7 @@ export class CalendarModal {
   _s: boolean = true;
   _id: string;
   _color: string = 'primary';
-  _d: CalendarControllerOptions;
+  _d: CalendarModalOptions;
 
   constructor(private _renderer: Renderer,
               public _elementRef: ElementRef,
