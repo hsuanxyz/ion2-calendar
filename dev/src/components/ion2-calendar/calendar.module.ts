@@ -4,7 +4,6 @@ import { IonicModule, ModalController } from 'ionic-angular';
 import { CalendarService } from "./services/calendar.service";
 import { CALENDAR_COMPONENTS } from "./components/index";
 
-
 export function calendarController(modalCtrl: ModalController,
                                    calSvc: CalendarService,) {
   return new CalendarController(modalCtrl, calSvc);

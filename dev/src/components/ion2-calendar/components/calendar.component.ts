@@ -87,7 +87,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         this.monthOpt = this.createMonth(new Date().getTime());
       }
     }
-    console.log(this._calendarMonthValue[0])
   }
 
   registerOnChange(fn: any): void {
