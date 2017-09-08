@@ -195,6 +195,9 @@ ion-calendar-month {
 
   .light {
     @include month-color(light, #a0a0a0);
+    .days .today p {
+      color: #565656;
+    }
   }
 
   .cal-color {
