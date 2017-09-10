@@ -1,25 +1,34 @@
-# ion2-calendar
+# 📅 ion2-calendar
 
 [![Dependency Status](https://david-dm.org/HsuanXyz/ion2-calendar.svg)](https://david-dm.org/HsuanXyz/ion2-calendar)
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][downloads-url] [![MIT License][license-image]][license-url]
+[![NPM version][npm-image]][npm-url]
+[![Downloads][downloads-image]][downloads-url]
+[![MIT License][license-image]][license-url]
 
-一个可配置与可选择范围日期的ionic2日历组件
 
-[![NPM](https://nodei.co/npm/ion2-calendar.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/ion2-calendar/)
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
 
-![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-gif.gif?raw=true)
 
+- 支持日期范围
+- 支持多选
+- 支持HTML组件
+- 可按周数禁用日期
+- 可按天设置事件
+- 支持本地化
+- Material 风格
+
+# Demo
+live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 
 # 使用
-### 安装
-`$ npm install ion2-calendar --save`
-#### 如果你没有安装 moment
-`$ npm install moment --save`
+### 按照
+`$ npm install ion2-calendar@2.0.0-beta.7 moment --save`
+
 ### 引入模块
 
 ```javascript
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 ...
 import { CalendarModule } from "ion2-calendar";
@@ -37,16 +46,118 @@ import { CalendarModule } from "ion2-calendar";
   entryComponents: [
     MyApp,
     ...
-  ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  ]
 })
 export class AppModule {}
 ```
-### 使用
+
+# 组件模式
+
+### 基本
+
+```html
+<ion-calendar [(ngModel)]="date"
+              (onChange)="onChange($event)"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
 ```javascript
 import { Component } from '@angular/core';
 
-import {CalendarController} from "ion2-calendar/dist";
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  date: string;
+  constructor() { }
+
+  onChange($event) {
+    console.log($event);
+  }
+  ...
+}
+```
+
+### 日期范围
+
+```html
+<ion-calendar [(ngModel)]="dateRange"
+              [options]="optionsRange"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
+```javascript
+import { Component } from '@angular/core';
+import { CalendarComponentOptions } from 'ion2-calendar'
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  dateRange: { from: string; to: string; };
+  optionsRange: CalendarComponentOptions = {
+    pickMode: 'range'
+  };
+  constructor() { }
+  ...
+}
+```
+
+### 日期多选
+
+```html
+<ion-calendar [(ngModel)]="dateMulti"
+              [options]="optionsMulti"
+              [format]="'YYYY-MM-DD'">
+</ion-calendar>
+```
+
+```javascript
+import { Component } from '@angular/core';
+import { CalendarComponentOptions } from 'ion2-calendar'
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  dateMulti: string[];
+  optionsMulti: CalendarComponentOptions = {
+    pickMode: 'multi'
+  };
+  constructor() { }
+  ...
+}
+```
+
+### 组件属性
+| Name            | Type          | Default        | Description |
+| --------------- | ------------- | -------------- | ----------- |
+| options         | CalendarComponentOptions| null | 配置选项对象     |
+| format          | string        | 'YYYY-MM-DD'   | 格式 |
+
+### CalendarComponentOptions
+| Name            | Type          | Default       | Description |
+| --------------- | ------------- | ------------- | ----------- |
+| from            | Date          | `new Date()`  | 开始日期  |
+| to              | Date          |  0 (Infinite) | 结束日期    |
+| color           | string        | `'primary'`   | 颜色 'primary', 'secondary', 'danger', 'light', 'dark' |
+| pickMode         | string       | `single`        | 模式 'multi', 'range', 'single'     |
+| disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
+| monthFormat      | string        | `'MMM yyyy'`  | 标题格式  |
+| weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 每周显示文本 |
+| weekStart    | number        | `0` (0 or 1)           | 每周从星期几开始 |
+| daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
+
+# 模态框模式
+
+### 基本 
+Import ion2-calendar in component controller.
+```javascript
+import { Component } from '@angular/core';
+import { CalendarController } from "ion2-calendar";
 
 @Component({
   selector: 'page-home',
@@ -56,197 +167,195 @@ export class HomePage {
 
   constructor(
     public calendarCtrl: CalendarController
-  ) {
+  ) { }
 
-  }
-
-  openCalendar(){
+  openCalendar() {
     this.calendarCtrl.openCalendar({
-      from:new Date()
+      title: 'Basic'
+      from: new Date()
     })
-    .then( res => { console.log(res) } );
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 
 }
 ```
 
-# 演示
-[DEMO](https://hsuanxyz.github.io/demo/ion2-calendar/)
-### 选择单个日期
-![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%8D%95%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
-
-```typescript
- basic() {
+### 日期范围
+设置 pickMode 为 'range'.
+```javascript
+openCalendar() {
     this.calendarCtrl.openCalendar({
-      title:'basic demo',
+      pickMode: 'range'
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
-### 选择范围日期
-![date range](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E5%A4%9A%E9%80%89%E6%97%A5%E6%9C%9F.gif?raw=true)
-
-```typescript
-dateRange() {
+### 多选日期
+设置 pickMode 为 'multi'.
+```javascript
+openCalendar() {
     this.calendarCtrl.openCalendar({
-      isRadio: false,
+      pickMode: 'multi'
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
-### 按星期禁用
-![disable weekdays](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E7%A6%81%E7%94%A8%E6%98%9F%E6%9C%9F.gif?raw=true)
-
-```typescript
-  disableWeekdays() {
+### 禁用周
+使用周索引 例子: `[0, 6]` 禁用周末.
+```javascript
+  openCalendar() {
     this.calendarCtrl.openCalendar({
-      disableWeekdays:[0,6]
+      disableWeeks: [0,6]
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 ```
 
-### 设置星期标题
-![weekdays title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%91%A8%E6%A0%87%E9%A2%98.gif?raw=true)
-### 设置月份标题
-![month title](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%9C%88%E4%BB%BD%E6%A0%87%E9%A2%98.gif?raw=true)
+### 本地化
 
-```typescript
- settingDisplay() {
+```javascript
+ openCalendar() {
     this.calendarCtrl.openCalendar({
-      monthTitle:' MMMM-yy ',
-      weekdaysTitle:["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      closeLabel:''
+      monthFormat: 'yyyy 年 MM 月 ',
+      weekdays: ['天', '一', '二', '三', '四', '五', '六'],
+      weekStart: 1,
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   }
 ```
-
-### 按天配置
-![days config](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%A4%A9.gif?raw=true)
-
-```typescript
+### Days config
+单独设置某一天或者多天
+```javascript
 daysConfig() {
 
     let _daysConfig = [
       {
-        date:new Date(2017,0,1),
-        subTitle:'New Year\'s',
-        marked:true
+        date: new Date(2017,0,1),
+        subTitle: 'New Year\'s',
+        marked: true
       },
       {
-        date:new Date(2017,1,14),
-        subTitle:'Valentine\'s',
-        disable:true
-      },
-      {
-        date:new Date(2017,3,1),
-        subTitle:'April Fools',
-        marked:true
-      },
-      {
-        date:new Date(2017,3,7),
-        subTitle:'World Health',
-        marked:true
-      },
-      {
-        date:new Date(2017,4,31),
-        subTitle:'No-Smoking',
-        marked:true
-      },
-      {
-        date:new Date(2017,5,1),
-        subTitle:'Children\'s',
-        marked:true
+        date: new Date(2017,1,14),
+        subTitle: 'Valentine\'s',
+        disable: true
       }
     ];
 
-    _daysConfig.push(...this.days);
-
     this.calendarCtrl.openCalendar({
       from: new Date(2017,0,1),
-      to  : new Date(2017,11.1),
-      daysConfig:_daysConfig
+      to: new Date(2017,11.1),
+      daysConfig: _daysConfig
     })
-      .then( (res:any) => { console.log(res) })
-      .catch( () => {} )
+    .then(res => console.log(res))
+    .catch(err => console.log(err))
   }
 ```
 
 # API
-## openCalendar(Options,ModalOptions)
-### Options
-| 参数名            | 类型          | 默认       | 描述 |
-| --------------- | ------------- | ------------- | ----------- |
-| from            | Date          | `new Date()`  | 开始时间     |
-| to              | Date          |  0 (Infinite) | 结束时间     |
-| title           | string        | `'Calendar'`  | 标题         |
-| defaultDate     | Date          | 无          | 让视图滚动到默认日期|
-| cssClass        | string        | `''`          | 自定义css类，多个用空格分开 |
-| isRadio         | boolean       | `true`        | 设置是否单选 ，如果为false则选择日期范围    |
-| canBackwardsSelected        | boolean        | `false`        | 能否向后选择 |
-| disableWeekdays | Array<number> | `[]`          | 需要禁用的星期数 (0-6，重0开始)                   |
-| closeLabel      | string        | `cancel`      | 取消按钮文字，可以为空 |
-| monthTitle      | string        | `'MMM yyyy'`  | 设置月份显示格式  |
-| weekdaysTitle   | Array<string> | `"Di_Lu_Ma_Me_Je_Ve_Sa".split("_")` | 星期显示格式 |
-| weekStartDay    | number        | `0` (0 or 1)           | 设置周的开始 |
-| daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
-#### DaysConfig
-| 参数名          | 类型          | 默认  | 描述     |
-| ------------- | ------------- | -------- | --------------- |
-| cssClass      | string        | `''`     | 用空格隔开|
-| date          | Date          | 必选 | 需要配置的天数时间对象 |
-| marked        | boolean       | false    | 是否高亮显示 |
-| disable       | boolean       | false    | 是否禁用         |
-| title         | string        | none     | 这天的标题 如"今天"      |
-| subTitle      | string        | none     | 这天的副标题 如 "春节" |
 
+## openCalendar(Options,ModalOptions)
+
+### Options
+| Name            | Type          | Default       | Description |
+| --------------- | ------------- | ------------- | ----------- |
+| from            | Date          | `new Date()`  | 开始日期  |
+| to              | Date          |  0 (Infinite) | 结束日期    |
+| title           | string        | `'CALENDAR'`  | 标题       |
+| color           | string        | `'primary'`   | 颜色 'primary', 'secondary', 'danger', 'light', 'dark' |
+| defaultScrollTo | Date          | none          | 使进入视图是默认滚动到指定日期位置 |
+| defaultDate     | Date          | none          | 默认选择的日期，适用于 'single' 模式 |
+| defaultDates    | Array<Date>   | none          | 默认选择的多个日期，适用于 'multi' 模式  |
+| defaultDateRange | { from: Date, to: Date }  | none  | 默认选择的日期范围，适用于 'range' 模式 |
+| cssClass        | string        | `''`          | 将自定义 class 插入 模态框顶级，多个用逗号分割|
+| canBackwardsSelected        | boolean        | `false`        | 能否向后滚动 |
+| pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
+| disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
+| closeLabel      | string        | `CANCEL`      | 关闭按钮标题 |
+| doneLabel      | string        | `DONE`      | 完成按钮标题 |
+| closeIcon      | boolean        | `false`      | 使用关闭图标按钮 |
+| doneIcon      | boolean        | `false`      | 使用完成图标按钮  |
+| monthFormat      | string        | `'MMM yyyy'`  | 月份显示格式  |
+| weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 星期标题 |
+| weekStart    | number        | `0` (0 or 1)           | 设置每周开始时间 |
+| daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
+
+#### DaysConfig
+| Name          | Type          | Default  | Description
+| ------------- | ------------- | -------- | --------------- |
+| cssClass      | string        | `''`     | 多个用逗号分开|
+| date          | Date          | required | 被设置的那天 |
+| marked        | boolean       | false    | 高亮 |
+| disable       | boolean       | false    | 禁用         |
+| title         | string        | none     | 显示为什么 eg: `'今天'`      |
+| subTitle      | string        | none     | 副标题 eg: `新年` |
 
 ### ModalOptions
 | Name            | Type          | Default       | Description |
 | --------------- | ------------- | ------------- | ----------- |
-| showBackdrop            | boolean          | true  | 是否显示背景遮罩|
-| enableBackdropDismiss   | boolean          | true | 允许通过背景遮罩关闭 |
+| showBackdrop            | boolean          | true  | Whether to show the backdrop |
+| enableBackdropDismiss   | boolean          | true | Whether the popover should be dismissed by tapping the backdrop   |
 
 
+### 返回字段
+| pickMode      | Type  |
+| ------------- | ----- |
+| single        | { date:  ***CalendarResult*** }  |
+| range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
+| multi         | Array<***CalendarResult***>   |
 
-### 输出 Promise
-| 参数名          | 类型  | 描述 |
-| ------------- | ----- | ----------- |
-| from          | ***Day***   | 如果 isRadio 为 false 的时候才会出现，这是用户选择的开始时间 |
-| to            | ***Day***   | 如果 isRadio 为 false 的时候才会出现，这是用户选择的结束时间    |
-| date          | ***Day***   | 如果 isRadio 为 true 的时候才会出现 ，这是用户选择的那天       |
 ### Day
 | Name          | Type    | Description |
 | ------------- | ------- | ----------- |
 | time          | number  | 时间戳   |
 | marked        | boolean | 是否高亮   |
-| disable       | boolean | 是否禁用           |
+| disable       | boolean | 禁用           |
 | title         | string  | 标题   |
 | subTitle      | string  | 副标题 |
 
-### 待办事宜
-1. ~~添加样式设置~~
-2. ~~设置默日期，让视图滚动到默认日期~~
-3. 返回今天
-4. ~~向后滚动~~
-5. 设置周的开始日
-# 开发时的环境
-```
-Cordova CLI: 6.4.0
-Ionic Framework Version: 2.0.0
-Ionic CLI Version: 2.1.18
-Ionic App Lib Version: 2.1.9
-Ionic App Scripts Version: 1.1.3
+### CalendarResult
+| Name          | Type    |
+| ------------- | ------- |
+| time          | number  |
+| unix          | number  |
+| dateObj       | Date    |
+| string        | string  |
+| years         | number  |
+| months        | number  |
+| date          | number  |
+
+# Contributing
+
+1. Fork it!
+2. Create your feature branch: git checkout -b my-new-feature
+3. Commit your changes: git commit -am 'Add some feature'
+4. Push to the branch: git push origin my-new-feature
+5. Submit a pull request :D
+
+### Development
+
+```bash
+cd ./dev
+npm install
+npm run ionic:serve
+# do something in ./dev/src/components/ion2-calendar
 ```
 
-[![NPM](https://nodei.co/npm-dl/ion2-calendar.png?months=3&height=1)](https://nodei.co/npm/ion2-calendar/)
+### Build
+
+```bash
+cd ./
+npm install
+npm run build
+```
+
+## Thanks for reading
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
