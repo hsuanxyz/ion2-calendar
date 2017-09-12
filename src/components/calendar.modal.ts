@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model'
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
 
@@ -48,18 +48,21 @@ import * as moment from 'moment';
                  [ngClass]="{'multi-selection': options.pickMode === 'multi'}">
 
       <div #months>
-        <div *ngFor="let month of calendarMonths;let i = index;" class="month-box" [attr.id]="'month-' + i">
-          <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
-          <ion-calendar-month [month]="month"
-                              [pickMode]="options.pickMode"
-                              [isSaveHistory]="isSaveHistory"
-                              [id]="_id"
-                              [color]="_color"
-                              (onChange)="onChange($event)"
-                              [(ngModel)]="datesTemp">
+        <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByTime" let-i="index">
+          <div class="month-box" [attr.id]="'month-' + i">
+            <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
+            <ion-calendar-month [month]="month"
+                                [pickMode]="options.pickMode"
+                                [isSaveHistory]="isSaveHistory"
+                                [id]="_id"
+                                [color]="_color"
+                                (onChange)="onChange($event)"
+                                [(ngModel)]="datesTemp">
 
-          </ion-calendar-month>
-        </div>
+            </ion-calendar-month>
+          </div>
+        </ng-template>
+      
       </div>
 
       <ion-infinite-scroll (ionInfinite)="nextMonth($event)">
@@ -99,7 +102,7 @@ export class CalendarModal {
   _s: boolean = true;
   _id: string;
   _color: string = 'primary';
-  _d: CalendarControllerOptions;
+  _d: CalendarModalOptions;
 
   constructor(private _renderer: Renderer,
               public _elementRef: ElementRef,
@@ -120,7 +123,7 @@ export class CalendarModal {
   init() {
     const params = this.params;
 
-    this._d = params.get('options');
+    this._d = this.calSvc.safeOpt(params.get('options'));
     let startTime = moment(this._d.from).valueOf();
     let endTime = moment(this._d.to).valueOf();
 
@@ -224,7 +227,9 @@ export class CalendarModal {
   }
 
   done() {
-    this.viewCtrl.dismiss(this.datesTemp);
+    this.viewCtrl.dismiss(
+      this.calSvc.wrapResult(this.datesTemp, this._d.pickMode)
+    );
   }
 
   canDone(): boolean {

@@ -95,7 +95,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     this._onTouched = fn;
   }
 
-  trackByTime(index, item) {
+  trackByTime(index: number, item: any) {
     return item ? item.time : index;
   }
 

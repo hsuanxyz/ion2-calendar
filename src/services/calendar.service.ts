@@ -3,7 +3,7 @@ import {
   CalendarOriginal,
   CalendarDay,
   CalendarMonth,
-  CalendarControllerOptions,
+  CalendarModalOptions,
   CalendarResult,
   DayConfig
 } from '../calendar.model'
@@ -16,7 +16,7 @@ export class CalendarService {
 
   }
 
-  safeOpt(calendarOptions: any): CalendarControllerOptions {
+  safeOpt(calendarOptions: any): CalendarModalOptions {
     const _disableWeeks: number[] = [];
     const _daysConfig: DayConfig[] = [];
     let {
@@ -91,13 +91,13 @@ export class CalendarService {
     }
   }
 
-  findDayConfig(day: any, opt: CalendarControllerOptions): any {
+  findDayConfig(day: any, opt: CalendarModalOptions): any {
 
     if (opt.daysConfig.length <= 0) return null;
     return opt.daysConfig.find((n) => day.isSame(n.date, 'day'))
   }
 
-  createCalendarDay(time: number, opt: CalendarControllerOptions): CalendarDay {
+  createCalendarDay(time: number, opt: CalendarModalOptions): CalendarDay {
     let _time = moment(time);
     let isToday = moment().isSame(_time, 'days');
     let dayConfig = this.findDayConfig(_time, opt);
@@ -136,7 +136,7 @@ export class CalendarService {
     }
   }
 
-  createCalendarMonth(original: CalendarOriginal, opt: CalendarControllerOptions): CalendarMonth {
+  createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth {
     let days: Array<CalendarDay> = new Array(6).fill(null);
     let len = original.howManyDays;
 
@@ -163,7 +163,7 @@ export class CalendarService {
 
   }
 
-  createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarControllerOptions): Array<CalendarMonth> {
+  createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth> {
     let _array: Array<CalendarMonth> = [];
 
     let _start = new Date(startTime);

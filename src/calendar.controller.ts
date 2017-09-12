@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
-import { ModalOptions, CalendarControllerOptions } from './calendar.model'
+import { ModalOptions, CalendarModalOptions } from './calendar.model'
 import { CalendarModal } from "./components/calendar.modal";
 import { CalendarService } from './services/calendar.service';
 
@@ -13,7 +13,13 @@ export class CalendarController {
               public calSvc: CalendarService,) {
   }
 
-  openCalendar(calendarOptions: CalendarControllerOptions, modalOptions: ModalOptions = {}): any {
+  /**
+   * @deprecated
+   * @param {CalendarModalOptions} calendarOptions
+   * @param {ModalOptions} modalOptions
+   * @returns {any}
+   */
+  openCalendar(calendarOptions: CalendarModalOptions, modalOptions: ModalOptions = {}): any {
 
 
     let options = this.calSvc.safeOpt(calendarOptions);
@@ -26,8 +32,8 @@ export class CalendarController {
     return new Promise((resolve, reject) => {
 
       calendarModal.onDidDismiss((data: any) => {
-        if (data && Array.isArray(data)) {
-          resolve(this.calSvc.wrapResult(data, options.pickMode));
+        if (data) {
+          resolve(data);
         } else {
           reject('cancelled')
         }

@@ -1,12 +1,12 @@
-import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarControllerOptions, CalendarResult } from '../calendar.model';
+import { CalendarOriginal, CalendarDay, CalendarMonth, CalendarModalOptions, CalendarResult } from '../calendar.model';
 export declare class CalendarService {
     constructor();
-    safeOpt(calendarOptions: any): CalendarControllerOptions;
+    safeOpt(calendarOptions: any): CalendarModalOptions;
     createOriginalCalendar(time: number): CalendarOriginal;
-    findDayConfig(day: any, opt: CalendarControllerOptions): any;
-    createCalendarDay(time: number, opt: CalendarControllerOptions): CalendarDay;
-    createCalendarMonth(original: CalendarOriginal, opt: CalendarControllerOptions): CalendarMonth;
-    createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarControllerOptions): Array<CalendarMonth>;
+    findDayConfig(day: any, opt: CalendarModalOptions): any;
+    createCalendarDay(time: number, opt: CalendarModalOptions): CalendarDay;
+    createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth;
+    createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth>;
     getHistory(id: string | number): Array<CalendarDay | null>;
     savedHistory(savedDates: Array<CalendarDay | null>, id: string | number): void;
     wrapResult(original: CalendarDay[], pickMode: string): any;

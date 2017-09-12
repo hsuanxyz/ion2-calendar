@@ -49,7 +49,7 @@ export interface ModalOptions {
     enterAnimation?: string;
     leaveAnimation?: string;
 }
-export interface CalendarControllerOptions {
+export interface CalendarModalOptions {
     autoDone?: boolean;
     from?: Date;
     format?: string;
@@ -77,6 +77,9 @@ export interface CalendarControllerOptions {
         to?: DefaultDate;
     } | null;
     countNextMonths?: number;
+    /**
+     * @deprecated this version notwork
+     */
     showYearPicker?: boolean;
     daysConfig?: Array<DayConfig>;
 }

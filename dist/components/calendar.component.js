@@ -34,7 +34,6 @@ var CalendarComponent = (function () {
                 this.monthOpt = this.createMonth(new Date().getTime());
             }
         }
-        console.log(this._calendarMonthValue[0]);
     };
     CalendarComponent.prototype.registerOnChange = function (fn) {
         this._onChanged = fn;

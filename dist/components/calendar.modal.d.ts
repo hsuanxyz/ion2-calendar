@@ -1,6 +1,6 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, CalendarOptions, CalendarControllerOptions } from '../calendar.model';
+import { CalendarDay, CalendarMonth, CalendarOptions, CalendarModalOptions } from '../calendar.model';
 import { CalendarService } from '../services/calendar.service';
 export declare class CalendarModal {
     private _renderer;
@@ -34,7 +34,7 @@ export declare class CalendarModal {
     _s: boolean;
     _id: string;
     _color: string;
-    _d: CalendarControllerOptions;
+    _d: CalendarModalOptions;
     constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
     init(): void;
