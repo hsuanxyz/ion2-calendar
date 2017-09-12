@@ -16,6 +16,7 @@ README-v1.md
 .npmignore
 gulpfile.js
 tsconfig.json
+package-lock.json
 demo/
 dev/
 src/
