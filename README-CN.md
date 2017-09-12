@@ -5,9 +5,7 @@
 [![Downloads][downloads-image]][downloads-url]
 [![MIT License][license-image]][license-url]
 
-
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
-
 
 - 支持日期范围
 - 支持多选
@@ -21,12 +19,12 @@
 live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 
 # 使用
-### 按照
-`$ npm install ion2-calendar@2.0.0-beta.7 moment --save`
+### 安装
+`$ npm install ion2-calendar moment --save`
 
 ### 引入模块
 
-```javascript
+```typescript
 import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -51,7 +49,7 @@ import { CalendarModule } from "ion2-calendar";
 export class AppModule {}
 ```
 
-# 组件模式
+# HTML 组件模式
 
 ### 基本
 
@@ -62,7 +60,7 @@ export class AppModule {}
 </ion-calendar>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 
 @Component({
@@ -89,7 +87,7 @@ export class HomePage {
 </ion-calendar>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 import { CalendarComponentOptions } from 'ion2-calendar'
 @Component({
@@ -115,7 +113,7 @@ export class HomePage {
 </ion-calendar>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 import { CalendarComponentOptions } from 'ion2-calendar'
 @Component({
@@ -154,10 +152,13 @@ export class HomePage {
 # 模态框模式
 
 ### 基本 
-Import ion2-calendar in component controller.
-```javascript
+
+引入 ion2-calendar 到你的组件控制器。
+
+```typescript
 import { Component } from '@angular/core';
-import { CalendarController } from "ion2-calendar";
+import { ModalController } from 'ionic-angular';
+import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
 
 @Component({
   selector: 'page-home',
@@ -166,101 +167,153 @@ import { CalendarController } from "ion2-calendar";
 export class HomePage {
 
   constructor(
-    public calendarCtrl: CalendarController
+    public modalCtrl: ModalController,
   ) { }
 
   openCalendar() {
-    this.calendarCtrl.openCalendar({
-      title: 'Basic'
-      from: new Date()
+    const options: CalendarModalOptions = {
+      title: 'BASIC',
+    };
+    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    myCalendar.onDidDismiss(date => {
+      console.log(date);
     })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
   }
 
 }
 ```
 
 ### 日期范围
+
 设置 pickMode 为 'range'.
-```javascript
-openCalendar() {
-    this.calendarCtrl.openCalendar({
-      pickMode: 'range'
-    })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+
+```typescript
+    openCalendar() {
+        const options: CalendarModalOptions = {
+          pickMode: 'range',
+          title: 'RANGE'
+        };
+    
+        let myCalendar = this.modalCtrl.create(CalendarModal, {
+          options: options
+        });
+    
+        myCalendar.present();
+    
+        myCalendar.onDidDismiss(date => {
+          console.log(date);
+        });
   }
 ```
 
 ### 多选日期
-设置 pickMode 为 'multi'.
-```javascript
-openCalendar() {
-    this.calendarCtrl.openCalendar({
-      pickMode: 'multi'
-    })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-  }
+
+设置 pickMode 为 'multi'。
+
+```typescript
+    openCalendar() {
+        const options = {
+          pickMode: 'multi',
+          title: 'MULTI'
+        };
+    
+        let myCalendar =  this.modalCtrl.create(CalendarModal, {
+          options: options
+        });
+    
+        myCalendar.present();
+    
+        myCalendar.onDidDismiss(date => {
+          console.log(date);
+        })
+      }
 ```
 
 ### 禁用周
+
 使用周索引 例子: `[0, 6]` 禁用周末.
-```javascript
+
+```typescript
   openCalendar() {
-    this.calendarCtrl.openCalendar({
-      disableWeeks: [0,6]
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+    const options: CalendarModalOptions = {
+      disableWeeks: [0, 6]
+    };
+
+    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    myCalendar.onDidDismiss(date => {
+      console.log(date);
+    });
   }
 ```
 
 ### 本地化
 
-```javascript
+```typescript
  openCalendar() {
-    this.calendarCtrl.openCalendar({
+    const options: CalendarModalOptions = {
       monthFormat: 'yyyy 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
-    })
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      defaultDate: new Date()
+    };
+
+    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    myCalendar.onDidDismiss(date => {
+      console.log(date);
+    });
   }
 ```
+
 ### Days config
+
 单独设置某一天或者多天
+
 ```javascript
-daysConfig() {
+openCalendar() {
+    let _daysConfig: DayConfig[] = [];
+    for (let i = 0; i < 31; i++) {
+      _daysConfig.push({
+        date: new Date(2017, 0, i + 1),
+        subTitle: `$${i + 1}`
+      })
+    }
 
-    let _daysConfig = [
-      {
-        date: new Date(2017,0,1),
-        subTitle: 'New Year\'s',
-        marked: true
-      },
-      {
-        date: new Date(2017,1,14),
-        subTitle: 'Valentine\'s',
-        disable: true
-      }
-    ];
-
-    this.calendarCtrl.openCalendar({
-      from: new Date(2017,0,1),
-      to: new Date(2017,11.1),
+    const options: CalendarModalOptions = {
+      from: new Date(2017, 0, 1),
+      to: new Date(2017, 11.1),
       daysConfig: _daysConfig
-    })
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+    };
+
+    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    myCalendar.onDidDismiss(date => {
+      console.log(date);
+    });
   }
 ```
 
 # API
 
-## openCalendar(Options,ModalOptions)
+## 模态框控制器选项
 
 ### Options
 | Name            | Type          | Default       | Description |
@@ -296,28 +349,12 @@ daysConfig() {
 | title         | string        | none     | 显示为什么 eg: `'今天'`      |
 | subTitle      | string        | none     | 副标题 eg: `新年` |
 
-### ModalOptions
-| Name            | Type          | Default       | Description |
-| --------------- | ------------- | ------------- | ----------- |
-| showBackdrop            | boolean          | true  | Whether to show the backdrop |
-| enableBackdropDismiss   | boolean          | true | Whether the popover should be dismissed by tapping the backdrop   |
-
-
 ### 返回字段
 | pickMode      | Type  |
 | ------------- | ----- |
 | single        | { date:  ***CalendarResult*** }  |
 | range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
 | multi         | Array<***CalendarResult***>   |
-
-### Day
-| Name          | Type    | Description |
-| ------------- | ------- | ----------- |
-| time          | number  | 时间戳   |
-| marked        | boolean | 是否高亮   |
-| disable       | boolean | 禁用           |
-| title         | string  | 标题   |
-| subTitle      | string  | 副标题 |
 
 ### CalendarResult
 | Name          | Type    |
@@ -355,7 +392,7 @@ npm install
 npm run build
 ```
 
-## Thanks for reading
+## 感谢阅读
 
 [npm-url]: https://www.npmjs.com/package/ion2-calendar
 [npm-image]: https://img.shields.io/npm/v/ion2-calendar.svg
