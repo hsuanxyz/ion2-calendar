@@ -11,9 +11,14 @@
 config.gypi
 CVS
 npm-debug.log
+README-v1.md
+.gitignore
+.npmignore
+gulpfile.js
 tsconfig.json
 demo/
 dev/
+src/
 node_modules/
 aot/
 tslint.json/
