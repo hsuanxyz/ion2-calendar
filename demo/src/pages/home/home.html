@@ -46,6 +46,7 @@
         basic
       </ion-card-title>
       <ion-calendar [(ngModel)]="date"
+                    (onChange)="onChange($event)"
                     [format]="format">
       </ion-calendar>
       <p>{{date}}</p>
