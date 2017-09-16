@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { isBoolean } from "ionic-angular/util/util";
 import * as moment from 'moment';
 var CalendarService = (function () {
     function CalendarService() {
@@ -80,14 +81,20 @@ var CalendarService = (function () {
                 isBetween = false;
             }
         }
-        var _disable = disableWee || isBetween;
+        var _disable = false;
+        if (dayConfig && isBoolean(dayConfig.disable)) {
+            _disable = dayConfig.disable;
+        }
+        else {
+            _disable = disableWee || isBetween;
+        }
         return {
             time: time,
             isToday: isToday,
             selected: false,
             marked: dayConfig ? dayConfig.marked || false : false,
             cssClass: dayConfig ? dayConfig.cssClass || '' : '',
-            disable: dayConfig ? dayConfig.disable && _disable : _disable,
+            disable: _disable,
             title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
             subTitle: dayConfig ? dayConfig.subTitle || '' : '',
         };
