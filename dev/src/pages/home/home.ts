@@ -191,6 +191,11 @@ export class HomePage {
       })
     }
 
+    _daysConfig.push({
+      date: new Date(2017, 1, 1),
+      disable: true,
+      subTitle: 'disable'
+    });
     const options: CalendarModalOptions = {
       from: new Date(2017, 0, 1),
       to: new Date(2017, 11.1),
