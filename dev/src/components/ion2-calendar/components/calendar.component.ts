@@ -57,6 +57,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   monthOpt: CalendarMonth;
   @Input() options: CalendarComponentOptions;
   @Input() format: string = 'YYYY-MM-DD';
+  @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'unix' | 'object' = 'string';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarModalOptions;
