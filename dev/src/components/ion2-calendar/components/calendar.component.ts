@@ -125,7 +125,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   onChanged($event: any[]) {
     switch (this._d.pickMode) {
       case 'single':
-        const date = moment($event[0].time).format(this.format);
+        const date = this._handleType($event[0].time);
         this._onChanged(date);
         this.onChange.emit(date);
         break;
@@ -133,8 +133,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       case 'range':
         if ($event[0] && $event[1]) {
           const rangeDate = {
-            from: moment($event[0].time).format(this.format),
-            to: moment($event[1].time).format(this.format)
+            from: this._handleType($event[0].time),
+            to: this._handleType($event[1].time)
           };
           this._onChanged(rangeDate);
           this.onChange.emit(rangeDate);
@@ -146,7 +146,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
         for (let i = 0; i < $event.length; i++) {
           if ($event[i] && $event[i].time) {
-            dates.push(moment($event[i].time).format(this.format))
+            dates.push(this._handleType($event[i].time));
           }
         }
 
@@ -163,25 +163,22 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     if (!value) return;
     switch (this._d.pickMode) {
       case 'single':
-        const date = moment(value, this.format);
-        this._calendarMonthValue[0] = this.calSvc.createCalendarDay(date.valueOf(), this._d);
+        this._calendarMonthValue[0] = this._toTimestamp(value);
         break;
 
       case 'range':
         if (value.from) {
-          const from = moment(value.from, this.format);
-          this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
+          this._calendarMonthValue[0] = this._toTimestamp(value.from);
         }
         if (value.to) {
-          const to = moment(value.to, this.format);
-          this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
+          this._calendarMonthValue[1] = this._toTimestamp(value.to);
         }
         break;
 
       case 'multi':
         if (Array.isArray(value)) {
           this._calendarMonthValue = value.map(e => {
-            return this.calSvc.createCalendarDay(moment(e, this.format).valueOf(), this._d);
+            return this.calSvc.createCalendarDay(this._toTimestamp(e), this._d);
           });
         } else {
           this._calendarMonthValue = [];
@@ -191,6 +188,35 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       default:
 
     }
+  }
+
+  _toTimestamp(value: any) {
+    let date;
+    if (this.type === 'string') {
+      date = moment(value, this.format);
+    } else {
+      date = moment(value);
+    }
+    return date.valueOf();
+  }
+
+  _handleType(value) {
+    let date = moment(value);
+    switch (this.type) {
+      case 'string':
+        return date.format(this.format);
+      case 'js-date':
+        return date.toDate();
+      case 'moment':
+        return date;
+      case 'time':
+        return date.valueOf();
+      case 'unix':
+        return date.unix();
+      case 'object':
+        return date.toObject();
+    }
+    return date;
   }
 
 }
