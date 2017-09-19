@@ -57,7 +57,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   monthOpt: CalendarMonth;
   @Input() options: CalendarComponentOptions;
   @Input() format: string = 'YYYY-MM-DD';
-  @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'unix' | 'object' = 'string';
+  @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarModalOptions;
@@ -82,7 +82,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   writeValue(obj: any): void {
     if (obj) {
       this._writeValue(obj);
-      if (this._calendarMonthValue[0] && this._calendarMonthValue[0].time) {
+      if (this._calendarMonthValue[0] && this._calendarMonthValue[1]) {
         this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
       } else {
         this.monthOpt = this.createMonth(new Date().getTime());
@@ -123,6 +123,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   onChanged($event: any[]) {
+    console.log($event)
     switch (this._d.pickMode) {
       case 'single':
         const date = this._handleType($event[0].time);
@@ -163,22 +164,22 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     if (!value) return;
     switch (this._d.pickMode) {
       case 'single':
-        this._calendarMonthValue[0] = this._toTimestamp(value);
+        this._calendarMonthValue[0] = this._createCalendarDay(value);
         break;
 
       case 'range':
         if (value.from) {
-          this._calendarMonthValue[0] = this._toTimestamp(value.from);
+          this._calendarMonthValue[0] = this._createCalendarDay(value.from);
         }
         if (value.to) {
-          this._calendarMonthValue[1] = this._toTimestamp(value.to);
+          this._calendarMonthValue[1] = this._createCalendarDay(value.to);
         }
         break;
 
       case 'multi':
         if (Array.isArray(value)) {
           this._calendarMonthValue = value.map(e => {
-            return this.calSvc.createCalendarDay(this._toTimestamp(e), this._d);
+            return this._createCalendarDay(e)
           });
         } else {
           this._calendarMonthValue = [];
@@ -190,14 +191,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  _toTimestamp(value: any) {
+  _createCalendarDay(value: any) {
     let date;
     if (this.type === 'string') {
       date = moment(value, this.format);
     } else {
       date = moment(value);
     }
-    return date.valueOf();
+    return this.calSvc.createCalendarDay(date.valueOf(), this._d);
   }
 
   _handleType(value) {
@@ -211,8 +212,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         return date;
       case 'time':
         return date.valueOf();
-      case 'unix':
-        return date.unix();
       case 'object':
         return date.toObject();
     }
