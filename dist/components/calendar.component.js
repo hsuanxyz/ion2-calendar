@@ -11,6 +11,7 @@ var CalendarComponent = (function () {
     function CalendarComponent(calSvc) {
         this.calSvc = calSvc;
         this.format = 'YYYY-MM-DD';
+        this.type = 'string';
         this.onChange = new EventEmitter();
         this._calendarMonthValue = [null, null];
         this._onChanged = function () {
@@ -27,7 +28,7 @@ var CalendarComponent = (function () {
     CalendarComponent.prototype.writeValue = function (obj) {
         if (obj) {
             this._writeValue(obj);
-            if (this._calendarMonthValue[0] && this._calendarMonthValue[0].time) {
+            if (this._calendarMonthValue[0] && this._calendarMonthValue[1]) {
                 this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
             }
             else {
@@ -63,17 +64,18 @@ var CalendarComponent = (function () {
         return this.monthOpt.original.time > moment(this._d.from).valueOf();
     };
     CalendarComponent.prototype.onChanged = function ($event) {
+        console.log($event);
         switch (this._d.pickMode) {
             case 'single':
-                var date = moment($event[0].time).format(this.format);
+                var date = this._handleType($event[0].time);
                 this._onChanged(date);
                 this.onChange.emit(date);
                 break;
             case 'range':
                 if ($event[0] && $event[1]) {
                     var rangeDate = {
-                        from: moment($event[0].time).format(this.format),
-                        to: moment($event[1].time).format(this.format)
+                        from: this._handleType($event[0].time),
+                        to: this._handleType($event[1].time)
                     };
                     this._onChanged(rangeDate);
                     this.onChange.emit(rangeDate);
@@ -83,7 +85,7 @@ var CalendarComponent = (function () {
                 var dates = [];
                 for (var i = 0; i < $event.length; i++) {
                     if ($event[i] && $event[i].time) {
-                        dates.push(moment($event[i].time).format(this.format));
+                        dates.push(this._handleType($event[i].time));
                     }
                 }
                 this._onChanged(dates);
@@ -98,23 +100,20 @@ var CalendarComponent = (function () {
             return;
         switch (this._d.pickMode) {
             case 'single':
-                var date = moment(value, this.format);
-                this._calendarMonthValue[0] = this.calSvc.createCalendarDay(date.valueOf(), this._d);
+                this._calendarMonthValue[0] = this._createCalendarDay(value);
                 break;
             case 'range':
                 if (value.from) {
-                    var from = moment(value.from, this.format);
-                    this._calendarMonthValue[0] = this.calSvc.createCalendarDay(from.valueOf(), this._d);
+                    this._calendarMonthValue[0] = this._createCalendarDay(value.from);
                 }
                 if (value.to) {
-                    var to = moment(value.to, this.format);
-                    this._calendarMonthValue[1] = this.calSvc.createCalendarDay(to.valueOf(), this._d);
+                    this._calendarMonthValue[1] = this._createCalendarDay(value.to);
                 }
                 break;
             case 'multi':
                 if (Array.isArray(value)) {
                     this._calendarMonthValue = value.map(function (e) {
-                        return _this.calSvc.createCalendarDay(moment(e, _this.format).valueOf(), _this._d);
+                        return _this._createCalendarDay(e);
                     });
                 }
                 else {
@@ -123,6 +122,32 @@ var CalendarComponent = (function () {
                 break;
             default:
         }
+    };
+    CalendarComponent.prototype._createCalendarDay = function (value) {
+        var date;
+        if (this.type === 'string') {
+            date = moment(value, this.format);
+        }
+        else {
+            date = moment(value);
+        }
+        return this.calSvc.createCalendarDay(date.valueOf(), this._d);
+    };
+    CalendarComponent.prototype._handleType = function (value) {
+        var date = moment(value);
+        switch (this.type) {
+            case 'string':
+                return date.format(this.format);
+            case 'js-date':
+                return date.toDate();
+            case 'moment':
+                return date;
+            case 'time':
+                return date.valueOf();
+            case 'object':
+                return date.toObject();
+        }
+        return date;
     };
     return CalendarComponent;
 }());
@@ -141,6 +166,7 @@ CalendarComponent.ctorParameters = function () { return [
 CalendarComponent.propDecorators = {
     'options': [{ type: Input },],
     'format': [{ type: Input },],
+    'type': [{ type: Input },],
     'onChange': [{ type: Output },],
 };
 //# sourceMappingURL=calendar.component.js.map

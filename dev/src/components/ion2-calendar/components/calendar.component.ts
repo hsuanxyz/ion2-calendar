@@ -7,7 +7,7 @@ import {
   forwardRef
 } from '@angular/core';
 
-import { CalendarMonth, CalendarModalOptions, CalendarComponentOptions } from '../calendar.model'
+import { CalendarMonth, CalendarModalOptions, CalendarComponentOptions, CalendarDay } from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -191,7 +191,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  _createCalendarDay(value: any) {
+  _createCalendarDay(value: any): CalendarDay {
     let date;
     if (this.type === 'string') {
       date = moment(value, this.format);
@@ -201,7 +201,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this.calSvc.createCalendarDay(date.valueOf(), this._d);
   }
 
-  _handleType(value) {
+  _handleType(value: number): any {
     let date = moment(value);
     switch (this.type) {
       case 'string':
