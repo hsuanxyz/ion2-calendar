@@ -21,7 +21,8 @@ export class HomePage {
   dateRangeObj: any;
   format = 'YYYY-MM-DD';
   optionsMulti: CalendarComponentOptions = {
-    pickMode: 'multi'
+    pickMode: 'multi',
+    defaultSubtitle: 'hehe'
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
