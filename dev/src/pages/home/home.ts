@@ -22,7 +22,7 @@ export class HomePage {
   format = 'YYYY-MM-DD';
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
-    defaultSubtitle: 'hehe'
+    defaultSubtitle: 'hello',
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
@@ -41,7 +41,8 @@ export class HomePage {
       canBackwardsSelected: true,
       color: 'cal-color',
       doneIcon: true,
-      closeIcon: true
+      closeIcon: true,
+      defaultSubtitle: 'hello'
     };
     let myCalendar =  this.modalCtrl.create(CalendarModal, {
       options: options
