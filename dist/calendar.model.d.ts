@@ -69,6 +69,8 @@ export interface CalendarModalOptions {
     color?: string;
     canBackwardsSelected?: boolean;
     title?: string;
+    defaultTitle?: string;
+    defaultSubtitle?: string;
     defaultScrollTo?: Date;
     defaultDate?: DefaultDate;
     defaultDates?: DefaultDate[];
@@ -92,6 +94,8 @@ export interface CalendarComponentOptions {
     weekdays?: Array<string>;
     monthFormat?: string;
     color?: string;
+    defaultTitle?: string;
+    defaultSubtitle?: string;
     daysConfig?: Array<DayConfig>;
 }
 export declare class CalendarResult {
