@@ -150,6 +150,8 @@ export class HomePage {
 | to              | Date          |  0 (Infinite) | 结束日期    |
 | color           | string        | `'primary'`   | 颜色 'primary', 'secondary', 'danger', 'light', 'dark' |
 | pickMode         | string       | `single`        | 模式 'multi', 'range', 'single'     |
+| defaultTitle | string | ''          | 每天的默认标题            |
+| defaultSubtitle | string | ''          | 每天的默认副标题            |
 | disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
 | monthFormat      | string        | `'MMM yyyy'`  | 标题格式  |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 每周显示文本 |
@@ -333,6 +335,8 @@ openCalendar() {
 | defaultDate     | Date          | none          | 默认选择的日期，适用于 'single' 模式 |
 | defaultDates    | Array<Date>   | none          | 默认选择的多个日期，适用于 'multi' 模式  |
 | defaultDateRange | { from: Date, to: Date }  | none  | 默认选择的日期范围，适用于 'range' 模式 |
+| defaultTitle | string | ''          | 每天的默认标题            |
+| defaultSubtitle | string | ''          | 每天的默认副标题            |
 | cssClass        | string        | `''`          | 将自定义 class 插入 模态框顶级，多个用逗号分割|
 | canBackwardsSelected        | boolean        | `false`        | 能否向后滚动 |
 | pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
