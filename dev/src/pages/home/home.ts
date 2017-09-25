@@ -18,11 +18,12 @@ export class HomePage {
   days: Array<any> = [];
   date: string;
   dateMulti = [];
-  dateRangeObj: any;
+  dateRangeObj = { from: moment().format('YYYY-MM-DD'), to: moment().add(3, 'd').format('YYYY-MM-DD') };
   format = 'YYYY-MM-DD';
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'hello',
+    showToggleButtons: false
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),

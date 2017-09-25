@@ -65,6 +65,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   @Input() pickMode: PickMode;
   @Input() isSaveHistory: boolean;
   @Input() id: any;
+  @Input() readonly = false;
   @Input() color: string = 'primary';
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
@@ -156,6 +157,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   onSelected(item: any) {
+    if (this.readonly) return;
     item.selected = true;
 
     if (this.pickMode === 'single') {

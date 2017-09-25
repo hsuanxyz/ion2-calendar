@@ -95,7 +95,6 @@ export interface CalendarOptions {
 
 export interface CalendarComponentOptions extends CalendarOptions {
   showToggleButtons?: boolean;
-  readonly?: boolean;
 }
 
 export class CalendarResult {

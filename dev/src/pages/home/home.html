@@ -73,6 +73,7 @@
       </ion-card-title>
       <ion-calendar [(ngModel)]="dateRangeObj"
                     [options]="optionsRange"
+                    [readonly]="true"
                     [format]="format">
       </ion-calendar>
       <p>{{dateRangeObj | json}}</p>
