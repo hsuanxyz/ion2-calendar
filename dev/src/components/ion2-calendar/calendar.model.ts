@@ -36,7 +36,7 @@ export interface DayConfig {
   cssClass?: string;
 }
 
-export class CalendarOptions {
+export class PrivateCalendarOptions {
   start: number;
   end: number;
   isRadio: boolean;
@@ -55,28 +55,18 @@ export interface ModalOptions {
   leaveAnimation?: string;
 }
 
-export interface CalendarModalOptions {
+export interface CalendarModalOptions extends CalendarOptions {
   autoDone?: boolean;
-  from?: Date;
   format?: string;
   cssClass?: string;
-  to?: Date | number;
-  pickMode?: string;
   id?: string;
   isSaveHistory?: boolean;
-  weekStart?: number;
-  disableWeeks?: Array<number>;
-  weekdays?: Array<string>;
   closeLabel?: string;
   doneLabel?: string;
   closeIcon?: boolean;
   doneIcon?: boolean;
-  monthFormat?: string;
-  color?: string;
   canBackwardsSelected?: boolean;
   title?: string;
-  defaultTitle?: string;
-  defaultSubtitle?: string;
   defaultScrollTo?: Date;
   defaultDate?: DefaultDate;
   defaultDates?: DefaultDate[];
@@ -86,10 +76,9 @@ export interface CalendarModalOptions {
    * @deprecated this version notwork
    */
   showYearPicker?: boolean;
-  daysConfig?: Array<DayConfig>
 }
 
-export interface CalendarComponentOptions {
+export interface CalendarOptions {
   from?: Date | number;
   to?: Date | number;
   pickMode?: string;
@@ -101,6 +90,12 @@ export interface CalendarComponentOptions {
   defaultTitle?: string;
   defaultSubtitle?: string;
   daysConfig?: Array<DayConfig>
+}
+
+
+export interface CalendarComponentOptions extends CalendarOptions {
+  showToggleButtons?: boolean;
+  readonly?: boolean;
 }
 
 export class CalendarResult {
