@@ -27,10 +27,10 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       <div class="text">
         {{monthOpt.original.time | date: _d.monthFormat}}
       </div>
-      <button ion-button clear class="back" [disabled]="!canBack()" (click)="backMonth()">
+      <button type='button' ion-button clear class="back" [disabled]="!canBack()" (click)="backMonth()">
         <ion-icon name="ios-arrow-back"></ion-icon>
       </button>
-      <button ion-button clear class="forward" [disabled]="!canNext()" (click)="nextMonth()">
+      <button type='button' ion-button clear class="forward" [disabled]="!canNext()" (click)="nextMonth()">
         <ion-icon name="ios-arrow-forward"></ion-icon>
       </button>
     </div>
