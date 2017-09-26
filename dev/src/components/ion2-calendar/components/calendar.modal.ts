@@ -223,12 +223,13 @@ export class CalendarModal {
   }
 
   onCancel() {
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(null, 'cancel');
   }
 
   done() {
     this.viewCtrl.dismiss(
-      this.calSvc.wrapResult(this.datesTemp, this._d.pickMode)
+      this.calSvc.wrapResult(this.datesTemp, this._d.pickMode),
+      'done'
     );
   }
 

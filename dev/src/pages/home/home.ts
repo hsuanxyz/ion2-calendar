@@ -51,8 +51,9 @@ export class HomePage {
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss(date => {
+    myCalendar.onDidDismiss((date, type) => {
       console.log(date);
+      console.log(type);
     })
   }
 
