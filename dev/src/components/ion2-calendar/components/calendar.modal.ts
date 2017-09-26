@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, CalendarOptions, CalendarModalOptions } from '../calendar.model'
+import { CalendarDay, CalendarMonth, PrivateCalendarOptions, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
 
@@ -62,7 +62,7 @@ import * as moment from 'moment';
             </ion-calendar-month>
           </div>
         </ng-template>
-      
+
       </div>
 
       <ion-infinite-scroll (ionInfinite)="nextMonth($event)">
@@ -95,7 +95,7 @@ export class CalendarModal {
   year: number;
   years: Array<number>;
   infiniteScroll: InfiniteScroll;
-  options: CalendarOptions;
+  options: PrivateCalendarOptions;
 
   debug = true;
 

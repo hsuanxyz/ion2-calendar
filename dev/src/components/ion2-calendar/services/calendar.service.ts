@@ -38,6 +38,8 @@ export class CalendarService {
       isSaveHistory = false,
       monthFormat = 'MMM yyyy',
       title = 'CALENDAR',
+      defaultTitle = '',
+      defaultSubtitle = '',
       weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
       daysConfig = _daysConfig,
       countNextMonths = 3,
@@ -46,6 +48,8 @@ export class CalendarService {
 
 
     return {
+      defaultTitle,
+      defaultSubtitle,
       autoDone: autoDone,
       from: from,
       to: to,
@@ -131,15 +135,28 @@ export class CalendarService {
       _disable = disableWee || isBetween;
     }
 
+    let title = new Date(time).getDate().toString();
+    if (dayConfig && dayConfig.title) {
+      title = dayConfig.title
+    } else if (opt.defaultTitle) {
+      title = opt.defaultTitle
+    }
+    let subTitle = '';
+    if (dayConfig && dayConfig.subTitle) {
+      subTitle = dayConfig.subTitle
+    } else if (opt.defaultSubtitle) {
+      subTitle = opt.defaultSubtitle
+    }
+
     return {
-      time: time,
-      isToday: isToday,
+      time,
+      isToday,
+      title,
+      subTitle,
       selected: false,
       marked: dayConfig ? dayConfig.marked || false : false,
       cssClass: dayConfig ? dayConfig.cssClass || '' : '',
       disable: _disable,
-      title: dayConfig ? dayConfig.title || new Date(time).getDate().toString() : new Date(time).getDate().toString(),
-      subTitle: dayConfig ? dayConfig.subTitle || '' : '',
     }
   }
 

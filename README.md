@@ -60,6 +60,7 @@ export class AppModule {}
 ```html
 <ion-calendar [(ngModel)]="date"
               (onChange)="onChange($event)"
+              [type]="type"
               [format]="'YYYY-MM-DD'">
 </ion-calendar>
 ```
@@ -73,6 +74,7 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
   date: string;
+  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
   constructor() { }
 
   onChange($event) {
@@ -87,6 +89,7 @@ export class HomePage {
 ```html
 <ion-calendar [(ngModel)]="dateRange"
               [options]="optionsRange"
+              [type]="type"
               [format]="'YYYY-MM-DD'">
 </ion-calendar>
 ```
@@ -100,6 +103,7 @@ import { CalendarComponentOptions } from 'ion2-calendar'
 })
 export class HomePage {
   dateRange: { from: string; to: string; };
+  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
   optionsRange: CalendarComponentOptions = {
     pickMode: 'range'
   };
@@ -113,6 +117,7 @@ export class HomePage {
 ```html
 <ion-calendar [(ngModel)]="dateMulti"
               [options]="optionsMulti"
+              [type]="type"
               [format]="'YYYY-MM-DD'">
 </ion-calendar>
 ```
@@ -126,6 +131,7 @@ import { CalendarComponentOptions } from 'ion2-calendar'
 })
 export class HomePage {
   dateMulti: string[];
+  type: 'string'; // 'string' | 'js-date' | 'moment' | 'time' | 'object'
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi'
   };
@@ -139,6 +145,7 @@ export class HomePage {
 | --------------- | ------------- | -------------- | ----------- |
 | options         | CalendarComponentOptions| null | options     |
 | format          | string        | 'YYYY-MM-DD'   | value format |
+| type            | string        | 'string'       | value type |
 
 ### CalendarComponentOptions
 | Name            | Type          | Default       | Description |
@@ -147,6 +154,8 @@ export class HomePage {
 | to              | Date          |  0 (Infinite) | end date    |
 | color           | string        | `'primary'`   | 'primary', 'secondary', 'danger', 'light', 'dark' |
 | pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
+| defaultTitle | string | ''          | default title in days            |
+| defaultSubtitle | string | ''          | default subtitle in days            |
 | disableWeeks | Array<number> | `[]`          | week to be disabled (0-6)                   |
 | monthFormat      | string        | `'MMM yyyy'`  | month title format  |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text |
@@ -328,6 +337,8 @@ openCalendar() {
 | defaultDate     | Date          | none          | default date data, apply to single|
 | defaultDates    | Array<Date>   | none          | default dates data, apply to multi |
 | defaultDateRange | { from: Date, to: Date }  | none  | default date-range data, apply to range |
+| defaultTitle | string | ''          | default title in days            |
+| defaultSubtitle | string | ''          | default subtitle in days            |
 | cssClass        | string        | `''`          | Additional classes for custom styles, separated by spaces. |
 | canBackwardsSelected        | boolean        | `false`        | can backwards selected |
 | pickMode         | string       | `single`        | 'multi', 'range', 'single'     |

@@ -27,12 +27,14 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       <div class="text">
         {{monthOpt.original.time | date: _d.monthFormat}}
       </div>
-      <button type='button' ion-button clear class="back" [disabled]="!canBack()" (click)="backMonth()">
-        <ion-icon name="ios-arrow-back"></ion-icon>
-      </button>
-      <button type='button' ion-button clear class="forward" [disabled]="!canNext()" (click)="nextMonth()">
-        <ion-icon name="ios-arrow-forward"></ion-icon>
-      </button>
+      <ng-template [ngIf]="_showToggleButtons">
+        <button type='button' ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="backMonth()">
+          <ion-icon name="ios-arrow-back"></ion-icon>
+        </button>
+        <button type='button' ion-button clear class="forward" [disabled]="!canNext() || readonly" (click)="nextMonth()">
+          <ion-icon name="ios-arrow-forward"></ion-icon>
+        </button>
+      </ng-template>
     </div>
 
     <ion-calendar-week color="transparent"
@@ -42,6 +44,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
     <ion-calendar-month
       [(ngModel)]="_calendarMonthValue"
       [month]="monthOpt"
+      [readonly]="readonly"
       (onChange)="onChanged($event)"
       [pickMode]="_d.pickMode"
       [color]="_d.color">
@@ -58,25 +61,34 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Input() options: CalendarComponentOptions;
   @Input() format: string = 'YYYY-MM-DD';
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
+  @Input() readonly = false;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarModalOptions;
   _calendarMonthValue: any[] = [null, null];
+  _showToggleButtons = true;
+
   _onChanged: Function = () => {
   };
   _onTouched: Function = () => {
   };
 
   constructor(public calSvc: CalendarService) {
+
   }
 
   ionViewDidLoad() {
-
   }
 
   ngOnInit() {
+    if (this.options && this.options.showToggleButtons === false) {
+      this._showToggleButtons = false;
+    }
     this._d = this.calSvc.safeOpt(this.options || {});
+    // this.showToggleButtons = this.options.showToggleButtons;
     this.monthOpt = this.createMonth(new Date().getTime());
+
+
   }
 
   writeValue(obj: any): void {
@@ -123,7 +135,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   onChanged($event: any[]) {
-    console.log($event)
     switch (this._d.pickMode) {
       case 'single':
         const date = this._handleType($event[0].time);

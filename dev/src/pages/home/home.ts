@@ -18,10 +18,12 @@ export class HomePage {
   days: Array<any> = [];
   date: string;
   dateMulti = [];
-  dateRangeObj: any;
+  dateRangeObj = { from: moment().format('YYYY-MM-DD'), to: moment().add(3, 'd').format('YYYY-MM-DD') };
   format = 'YYYY-MM-DD';
   optionsMulti: CalendarComponentOptions = {
-    pickMode: 'multi'
+    pickMode: 'multi',
+    defaultSubtitle: 'hello',
+    showToggleButtons: false
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
@@ -40,7 +42,8 @@ export class HomePage {
       canBackwardsSelected: true,
       color: 'cal-color',
       doneIcon: true,
-      closeIcon: true
+      closeIcon: true,
+      defaultSubtitle: 'hello'
     };
     let myCalendar =  this.modalCtrl.create(CalendarModal, {
       options: options
