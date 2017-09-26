@@ -167,23 +167,23 @@ var CalendarService = (function () {
         var result;
         switch (pickMode) {
             case 'single':
-                result = this._multiFormat(original[0]);
+                result = this.multiFormat(original[0]);
                 break;
             case 'range':
                 result = {
-                    from: this._multiFormat(original[0]),
-                    to: this._multiFormat(original[1]),
+                    from: this.multiFormat(original[0]),
+                    to: this.multiFormat(original[1]),
                 };
                 break;
             case 'multi':
-                result = original.map(function (e) { return _this._multiFormat(e); });
+                result = original.map(function (e) { return _this.multiFormat(e); });
                 break;
             default:
                 result = original;
         }
         return result;
     };
-    CalendarService.prototype._multiFormat = function (data) {
+    CalendarService.prototype.multiFormat = function (data) {
         var _moment = moment(data.time);
         return {
             time: _moment.valueOf(),

@@ -57,6 +57,10 @@ export class HomePage {
     })
   }
 
+  dateChange($event) {
+    console.log($event)
+  }
+
   multi() {
     const options = {
       pickMode: 'multi',

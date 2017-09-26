@@ -63,6 +63,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
   @Input() readonly = false;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
+  @Output() monthChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarModalOptions;
   _calendarMonthValue: any[] = [null, null];
@@ -116,6 +117,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   nextMonth() {
     const nextTime = moment(this.monthOpt.original.time).add(1, 'months').valueOf();
+    this.monthChange.emit({
+      oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
+      newMonth: this.calSvc.multiFormat(nextTime)
+    });
     this.monthOpt = this.createMonth(nextTime);
   }
 
@@ -126,6 +131,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   backMonth() {
     const backTime = moment(this.monthOpt.original.time).subtract(1, 'months').valueOf();
+    this.monthChange.emit({
+      oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
+      newMonth: this.calSvc.multiFormat(backTime)
+    });
     this.monthOpt = this.createMonth(backTime);
   }
 

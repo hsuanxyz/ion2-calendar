@@ -47,6 +47,7 @@
       </ion-card-title>
       <ion-calendar class="my-calendar"
                     [(ngModel)]="date"
+                    (monthChange)="dateChange($event)"
                     [format]="format">
       </ion-calendar>
       <p>{{date}}</p>
