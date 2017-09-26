@@ -18,7 +18,7 @@ import * as moment from 'moment';
         <!--</ion-buttons>-->
 
         <ion-buttons start>
-          <button ion-button icon-only clear (click)="onCancel()">
+          <button type='button' ion-button icon-only clear (click)="onCancel()">
             <span *ngIf="closeLabel !== '' && !closeIcon">{{closeLabel}}</span>
             <ion-icon *ngIf="closeIcon" name="close"></ion-icon>
           </button>
@@ -27,7 +27,7 @@ import * as moment from 'moment';
         <ion-title>{{title}}</ion-title>
 
         <ion-buttons end>
-          <button ion-button icon-only *ngIf="!_d.autoDone" clear [disabled]="!canDone()" (click)="done()">
+          <button type='button' ion-button icon-only *ngIf="!_d.autoDone" clear [disabled]="!canDone()" (click)="done()">
             <span *ngIf="doneLabel !== '' && !doneIcon">{{doneLabel}}</span>
             <ion-icon *ngIf="doneIcon" name="checkmark"></ion-icon>
           </button>

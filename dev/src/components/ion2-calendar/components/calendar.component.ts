@@ -28,10 +28,10 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
         {{monthOpt.original.time | date: _d.monthFormat}}
       </div>
       <ng-template [ngIf]="_showToggleButtons">
-        <button ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="backMonth()">
+        <button type='button' ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="backMonth()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
-        <button ion-button clear class="forward" [disabled]="!canNext() || readonly" (click)="nextMonth()">
+        <button type='button' ion-button clear class="forward" [disabled]="!canNext() || readonly" (click)="nextMonth()">
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
       </ng-template>
