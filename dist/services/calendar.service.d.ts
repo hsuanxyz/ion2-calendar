@@ -10,5 +10,5 @@ export declare class CalendarService {
     getHistory(id: string | number): Array<CalendarDay | null>;
     savedHistory(savedDates: Array<CalendarDay | null>, id: string | number): void;
     wrapResult(original: CalendarDay[], pickMode: string): any;
-    _multiFormat(data: CalendarDay): CalendarResult;
+    multiFormat(time: number): CalendarResult;
 }

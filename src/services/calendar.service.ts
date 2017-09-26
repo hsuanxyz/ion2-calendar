@@ -221,16 +221,16 @@ export class CalendarService {
     let result: any;
     switch (pickMode) {
       case 'single':
-        result = this._multiFormat(original[0]);
+        result = this.multiFormat(original[0].time);
         break;
       case 'range':
         result = {
-          from: this._multiFormat(original[0]),
-          to: this._multiFormat(original[1]),
+          from: this.multiFormat(original[0].time),
+          to: this.multiFormat(original[1].time),
         };
         break;
       case 'multi':
-        result = original.map(e => this._multiFormat(e));
+        result = original.map(e => this.multiFormat(e.time));
         break;
       default:
         result = original;
@@ -238,8 +238,8 @@ export class CalendarService {
     return result;
   }
 
-  _multiFormat(data: CalendarDay): CalendarResult {
-    const _moment = moment(data.time);
+  multiFormat(time: number): CalendarResult {
+    const _moment = moment(time);
     return {
       time: _moment.valueOf(),
       unix: _moment.unix(),

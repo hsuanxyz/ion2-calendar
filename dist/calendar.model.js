@@ -4,12 +4,12 @@ var CalendarMonth = (function () {
     return CalendarMonth;
 }());
 export { CalendarMonth };
-var CalendarOptions = (function () {
-    function CalendarOptions() {
+var PrivateCalendarOptions = (function () {
+    function PrivateCalendarOptions() {
     }
-    return CalendarOptions;
+    return PrivateCalendarOptions;
 }());
-export { CalendarOptions };
+export { PrivateCalendarOptions };
 var CalendarResult = (function () {
     function CalendarResult() {
     }

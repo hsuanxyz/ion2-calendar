@@ -9,9 +9,12 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     options: CalendarComponentOptions;
     format: string;
     type: 'string' | 'js-date' | 'moment' | 'time' | 'object';
+    readonly: boolean;
     onChange: EventEmitter<any>;
+    monthChange: EventEmitter<any>;
     _d: CalendarModalOptions;
     _calendarMonthValue: any[];
+    _showToggleButtons: boolean;
     _onChanged: Function;
     _onTouched: Function;
     constructor(calSvc: CalendarService);

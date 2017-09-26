@@ -8,6 +8,7 @@ export declare class MonthComponent implements ControlValueAccessor, AfterViewIn
     pickMode: PickMode;
     isSaveHistory: boolean;
     id: any;
+    readonly: boolean;
     color: string;
     onChange: EventEmitter<any>;
     _date: Array<CalendarDay | null>;
