@@ -147,6 +147,13 @@ export class HomePage {
 | format          | string        | 'YYYY-MM-DD'   | value format |
 | type            | string        | 'string'       | value type |
 
+### Output Properties
+| Name            | Type          |  Description |
+| --------------- | ------------- |  ----------- |
+| onChange         | EventEmitter|   event for model change     |
+| monthChange      | EventEmitter |  event for month change  |
+
+
 ### CalendarComponentOptions
 | Name            | Type          | Default       | Description |
 | --------------- | ------------- | ------------- | ----------- |
@@ -352,13 +359,20 @@ openCalendar() {
 | weekStart    | number        | `0` (0 or 1)           | set week start day |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
 
-### onDidDismiss Output
+### onDidDismiss Output [, param1]
 
 | pickMode      | Type  |
 | ------------- | ----- |
 | single        | { date:  ***CalendarResult*** }  |
 | range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
 | multi         | Array<***CalendarResult***>   |
+
+### onDidDismiss Output [, param2]
+| Value      | Description  |
+| --------- | ----- |
+| 'cancel'    | dismissed by click the cancel button |
+| 'done'    | dismissed by click the  done button |
+| 'backdrop'    | dismissed by click the backdrop |
 
 #### DaysConfig
 

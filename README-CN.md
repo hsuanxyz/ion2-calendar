@@ -136,12 +136,18 @@ export class HomePage {
 }
 ```
 
-### 组件属性
+### 输入属性
 | Name            | Type          | Default        | Description |
 | --------------- | ------------- | -------------- | ----------- |
 | options         | CalendarComponentOptions| null | 配置选项对象     |
 | format          | string        | 'YYYY-MM-DD'   | 格式 |
 | type            | string        | 'string'       | 类型 |
+
+### 输出属性
+| Name            | Type          |  Description |
+| --------------- | ------------- |  ----------- |
+| onChange         | EventEmitter|   模型被改变    |
+| monthChange      | EventEmitter |  月份被改变  |
 
 ### CalendarComponentOptions
 | Name            | Type          | Default       | Description |
@@ -360,12 +366,19 @@ openCalendar() {
 | title         | string        | none     | 显示为什么 eg: `'今天'`      |
 | subTitle      | string        | none     | 副标题 eg: `新年` |
 
-### 返回字段
+### onDidDismiss 返回字段 [, param1]
 | pickMode      | Type  |
 | ------------- | ----- |
 | single        | { date:  ***CalendarResult*** }  |
 | range         | { from: ***CalendarResult***, to: ***CalendarResult*** }  |
 | multi         | Array<***CalendarResult***>   |
+
+### onDidDismiss 返回字段 [, param2]
+| Value      | Description  |
+| --------- | ----- |
+| 'cancel'    | 通过取消按钮关闭 |
+| 'done'    | 通过完成按钮关闭 |
+| 'backdrop'    | 点击背景关闭 |
 
 ### CalendarResult
 | Name          | Type    |
