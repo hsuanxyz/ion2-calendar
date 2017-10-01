@@ -229,7 +229,7 @@ export class CalendarModal {
   done() {
     this.viewCtrl.dismiss(
       this.calSvc.wrapResult(this.datesTemp, this._d.pickMode),
-      'done',
+      'done'
     );
   }
 

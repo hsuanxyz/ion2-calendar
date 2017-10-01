@@ -1,6 +1,6 @@
 {
   "name": "ion2-calendar",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "A date picker for ionic2 ",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

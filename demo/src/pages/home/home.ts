@@ -16,7 +16,7 @@ import * as moment from 'moment'
 export class HomePage {
 
   days: Array<any> = [];
-  date: string;
+  date = moment(moment().format('YYYY-MM-DD')).add(1, 'month');
   dateMulti = [];
   dateRangeObj: { from: string; to: string; };
   format = 'YYYY-MM-DD';

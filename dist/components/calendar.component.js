@@ -35,7 +35,7 @@ var CalendarComponent = (function () {
     CalendarComponent.prototype.writeValue = function (obj) {
         if (obj) {
             this._writeValue(obj);
-            if (this._calendarMonthValue[0] && this._calendarMonthValue[1]) {
+            if (this._calendarMonthValue[0]) {
                 this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
             }
             else {

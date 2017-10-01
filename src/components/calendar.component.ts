@@ -95,7 +95,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   writeValue(obj: any): void {
     if (obj) {
       this._writeValue(obj);
-      if (this._calendarMonthValue[0] && this._calendarMonthValue[1]) {
+      if (this._calendarMonthValue[0]) {
         this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
       } else {
         this.monthOpt = this.createMonth(new Date().getTime());
