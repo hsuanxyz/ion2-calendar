@@ -48,7 +48,7 @@
       <ion-calendar class="my-calendar"
                     [(ngModel)]="date"
                     (monthChange)="dateChange($event)"
-                    [format]="format">
+                    [type]="'moment'">
       </ion-calendar>
       <p>{{date}}</p>
     </ion-card-content>

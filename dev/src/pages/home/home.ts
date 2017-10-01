@@ -16,7 +16,7 @@ import { CalendarModal } from "../../components/ion2-calendar";
 export class HomePage {
 
   days: Array<any> = [];
-  date: string;
+  date = moment(moment().format('YYYY-MM-DD')).add(1, 'month');
   dateMulti = [];
   dateRangeObj = { from: moment().format('YYYY-MM-DD'), to: moment().add(3, 'd').format('YYYY-MM-DD') };
   format = 'YYYY-MM-DD';
