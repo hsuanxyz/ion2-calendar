@@ -24,33 +24,33 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <div class="text">
-        {{monthOpt.original.time | date: _d.monthFormat}}
-      </div>
+      <button [disabled]="readonly" type="button" ion-button clear class="text"> {{monthOpt.original.time | date: _d.monthFormat}}
+        <ion-icon *ngIf="!readonly" class="arrow-dropdown" name="md-arrow-dropdown"></ion-icon>
+      </button>
       <ng-template [ngIf]="_showToggleButtons">
         <button type='button' ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="backMonth()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
-        <button type='button' ion-button clear class="forward" [disabled]="!canNext() || readonly" (click)="nextMonth()">
+        <button type='button' ion-button clear class="forward" [disabled]="!canNext() || readonly"
+                (click)="nextMonth()">
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
       </ng-template>
     </div>
+    
+    <ng-template [ngIf]="_view === 'days'">
+      <ion-calendar-week color="transparent"
+                         [weekStart]="_d.weekStart">
+      </ion-calendar-week>
 
-    <ion-calendar-week color="transparent"
-                       [weekStart]="_d.weekStart">
-    </ion-calendar-week>
-
-    <ion-calendar-month
-      [(ngModel)]="_calendarMonthValue"
-      [month]="monthOpt"
-      [readonly]="readonly"
-      (onChange)="onChanged($event)"
-      [pickMode]="_d.pickMode"
-      [color]="_d.color">
-
-    </ion-calendar-month>
-
+      <ion-calendar-month [(ngModel)]="_calendarMonthValue"
+                          [month]="monthOpt"
+                          [readonly]="readonly"
+                          (onChange)="onChanged($event)"
+                          [pickMode]="_d.pickMode"
+                          [color]="_d.color">
+      </ion-calendar-month>
+    </ng-template>
   `,
 
 })
@@ -66,6 +66,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Output() monthChange: EventEmitter<any> = new EventEmitter();
 
   _d: CalendarModalOptions;
+  _view = 'days';
   _calendarMonthValue: any[] = [null, null];
   _showToggleButtons = true;
 

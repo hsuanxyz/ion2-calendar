@@ -43,6 +43,11 @@ ion-calendar {
       width: 100%;
       text-align: center;
       line-height: 32px;
+      color: #757575;
+
+      .arrow-dropdown {
+        margin-left: 5px;
+      }
     }
   }
 
