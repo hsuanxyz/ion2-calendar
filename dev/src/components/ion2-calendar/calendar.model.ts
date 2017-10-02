@@ -95,6 +95,7 @@ export interface CalendarOptions {
 
 export interface CalendarComponentOptions extends CalendarOptions {
   showToggleButtons?: boolean;
+  monthPickerFormat?: string[];
 }
 
 export class CalendarResult {

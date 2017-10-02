@@ -1,6 +1,6 @@
 ion-calendar {
 
-  $btn-width: 30px;
+  $btn-width: 40px;
 
   padding: 10px 20px;
   box-sizing: border-box;
@@ -13,7 +13,7 @@ ion-calendar {
     padding: 0 $btn-width 0 $btn-width;
     overflow: hidden;
 
-    .back, .forward, .text {
+    .back, .forward, .switch-btn {
       display: block;
       position: relative;
       float: left;
@@ -39,7 +39,7 @@ ion-calendar {
       width: $btn-width;
     }
 
-    .text {
+    .switch-btn {
       width: 100%;
       text-align: center;
       line-height: 32px;
