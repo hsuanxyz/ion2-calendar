@@ -24,17 +24,24 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <button type="button"
-              ion-button
-              clear
-              class="switch-btn"
-              [disabled]="readonly"
-              (click)="switchView()">
-        {{monthOpt.original.time | date: _d.monthFormat}}
-        <ion-icon *ngIf="!readonly" 
-                  class="arrow-dropdown" 
-                  [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
-      </button>
+      <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
+        <button type="button"
+                ion-button
+                clear
+                class="switch-btn"
+                [disabled]="readonly"
+                (click)="switchView()">
+          {{monthOpt.original.time | date: _d.monthFormat}}
+          <ion-icon *ngIf="!readonly"
+                    class="arrow-dropdown"
+                    [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
+        </button>
+      </ng-template>
+      <ng-template #title>
+        <div class="switch-btn">
+          {{monthOpt.original.time | date: _d.monthFormat}}
+        </div>
+      </ng-template>
       <ng-template [ngIf]="_showToggleButtons">
         <button type='button' ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="prev()">
           <ion-icon name="ios-arrow-back"></ion-icon>
@@ -85,6 +92,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _view = 'days';
   _calendarMonthValue: any[] = [null, null];
   _showToggleButtons = true;
+  _showMonthPicker = true;
 
   _onChanged: Function = () => {
   };
@@ -101,6 +109,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   ngOnInit() {
     if (this.options && this.options.showToggleButtons === false) {
       this._showToggleButtons = false;
+    }
+    if (this.options && this.options.showMonthPicker === false) {
+      this._showMonthPicker = false;
     }
     this._d = this.calSvc.safeOpt(this.options || {});
     // this.showToggleButtons = this.options.showToggleButtons;

@@ -23,7 +23,7 @@ export class HomePage {
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'hello',
-    showToggleButtons: false
+    showMonthPicker: false
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
