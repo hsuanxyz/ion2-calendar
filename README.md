@@ -146,6 +146,7 @@ export class HomePage {
 | options         | CalendarComponentOptions| null | options     |
 | format          | string        | 'YYYY-MM-DD'   | value format |
 | type            | string        | 'string'       | value type |
+| readonly        | boolean        | false         | readonly |
 
 ### Output Properties
 | Name            | Type          |  Description |
@@ -161,6 +162,9 @@ export class HomePage {
 | to              | Date          |  0 (Infinite) | end date    |
 | color           | string        | `'primary'`   | 'primary', 'secondary', 'danger', 'light', 'dark' |
 | pickMode         | string       | `single`        | 'multi', 'range', 'single'     |
+| showToggleButtons  | boolean       | `true`        | show toggle buttons     |
+| showMonthPicker  | boolean       | `true`        | show month picker     |
+| monthPickerFormat  | Array<string>       | `['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']` | month picker format  |
 | defaultTitle | string | ''          | default title in days            |
 | defaultSubtitle | string | ''          | default subtitle in days            |
 | disableWeeks | Array<number> | `[]`          | week to be disabled (0-6)                   |

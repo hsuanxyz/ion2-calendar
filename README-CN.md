@@ -142,6 +142,7 @@ export class HomePage {
 | options         | CalendarComponentOptions| null | 配置选项对象     |
 | format          | string        | 'YYYY-MM-DD'   | 格式 |
 | type            | string        | 'string'       | 类型 |
+| readonly        | boolean        | false         | 只读 |
 
 ### 输出属性
 | Name            | Type          |  Description |
@@ -156,6 +157,9 @@ export class HomePage {
 | to              | Date          |  0 (Infinite) | 结束日期    |
 | color           | string        | `'primary'`   | 颜色 'primary', 'secondary', 'danger', 'light', 'dark' |
 | pickMode         | string       | `single`        | 模式 'multi', 'range', 'single'     |
+| showToggleButtons  | boolean       | `true`        | 显示月份切换按钮 |
+| showMonthPicker  | boolean       | `true`        | 显示月份选择器 |
+| monthPickerFormat  | Array<string>       | `['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']` | 月份选择器格式  |
 | defaultTitle | string | ''          | 每天的默认标题            |
 | defaultSubtitle | string | ''          | 每天的默认副标题            |
 | disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
