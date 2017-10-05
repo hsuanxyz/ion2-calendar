@@ -36,6 +36,10 @@ export class HomePage {
 
   }
 
+  addM() {
+    this.date = this.date.clone().add(5, 'days');
+  }
+
   onChange($event) {
     console.log($event);
   }

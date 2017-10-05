@@ -15,8 +15,10 @@ var CalendarComponent = (function () {
         this.readonly = false;
         this.onChange = new EventEmitter();
         this.monthChange = new EventEmitter();
+        this._view = 'days';
         this._calendarMonthValue = [null, null];
         this._showToggleButtons = true;
+        this._showMonthPicker = true;
         this._onChanged = function () {
         };
         this._onTouched = function () {
@@ -27,6 +29,9 @@ var CalendarComponent = (function () {
     CalendarComponent.prototype.ngOnInit = function () {
         if (this.options && this.options.showToggleButtons === false) {
             this._showToggleButtons = false;
+        }
+        if (this.options && this.options.showMonthPicker === false) {
+            this._showMonthPicker = false;
         }
         this._d = this.calSvc.safeOpt(this.options || {});
         // this.showToggleButtons = this.options.showToggleButtons;
@@ -52,6 +57,34 @@ var CalendarComponent = (function () {
     CalendarComponent.prototype.createMonth = function (date) {
         return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
     };
+    CalendarComponent.prototype.switchView = function () {
+        this._view = this._view === 'days' ? 'month' : 'days';
+        return this._view;
+    };
+    CalendarComponent.prototype.prev = function () {
+        if (this._view === 'days') {
+            this.backMonth();
+        }
+        else {
+            this.prevYear();
+        }
+    };
+    CalendarComponent.prototype.next = function () {
+        if (this._view === 'days') {
+            this.nextMonth();
+        }
+        else {
+            this.nextYear();
+        }
+    };
+    CalendarComponent.prototype.prevYear = function () {
+        var backTime = moment(this.monthOpt.original.time).subtract(1, 'year').valueOf();
+        this.monthOpt = this.createMonth(backTime);
+    };
+    CalendarComponent.prototype.nextYear = function () {
+        var nextTime = moment(this.monthOpt.original.time).add(1, 'year').valueOf();
+        this.monthOpt = this.createMonth(nextTime);
+    };
     CalendarComponent.prototype.nextMonth = function () {
         var nextTime = moment(this.monthOpt.original.time).add(1, 'months').valueOf();
         this.monthChange.emit({
@@ -61,7 +94,7 @@ var CalendarComponent = (function () {
         this.monthOpt = this.createMonth(nextTime);
     };
     CalendarComponent.prototype.canNext = function () {
-        if (!this._d.to)
+        if (!this._d.to || this._view !== 'days')
             return true;
         return this.monthOpt.original.time < moment(this._d.to).valueOf();
     };
@@ -74,9 +107,18 @@ var CalendarComponent = (function () {
         this.monthOpt = this.createMonth(backTime);
     };
     CalendarComponent.prototype.canBack = function () {
-        if (!this._d.from)
+        if (!this._d.from || this._view !== 'days')
             return true;
         return this.monthOpt.original.time > moment(this._d.from).valueOf();
+    };
+    CalendarComponent.prototype.monthOnSelect = function (month) {
+        this._view = 'days';
+        var newMonth = moment(this.monthOpt.original.time).month(month).valueOf();
+        this.monthChange.emit({
+            oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
+            newMonth: this.calSvc.multiFormat(newMonth)
+        });
+        this.monthOpt = this.createMonth(newMonth);
     };
     CalendarComponent.prototype.onChanged = function ($event) {
         switch (this._d.pickMode) {
@@ -170,7 +212,7 @@ CalendarComponent.decorators = [
     { type: Component, args: [{
                 selector: 'ion-calendar',
                 providers: [ION_CAL_VALUE_ACCESSOR],
-                template: "\n    <div class=\"title\">\n      <div class=\"text\">\n        {{monthOpt.original.time | date: _d.monthFormat}}\n      </div>\n      <ng-template [ngIf]=\"_showToggleButtons\">\n        <button type='button' ion-button clear class=\"back\" [disabled]=\"!canBack() || readonly\" (click)=\"backMonth()\">\n          <ion-icon name=\"ios-arrow-back\"></ion-icon>\n        </button>\n        <button type='button' ion-button clear class=\"forward\" [disabled]=\"!canNext() || readonly\" (click)=\"nextMonth()\">\n          <ion-icon name=\"ios-arrow-forward\"></ion-icon>\n        </button>\n      </ng-template>\n    </div>\n\n    <ion-calendar-week color=\"transparent\"\n                       [weekStart]=\"_d.weekStart\">\n    </ion-calendar-week>\n\n    <ion-calendar-month\n      [(ngModel)]=\"_calendarMonthValue\"\n      [month]=\"monthOpt\"\n      [readonly]=\"readonly\"\n      (onChange)=\"onChanged($event)\"\n      [pickMode]=\"_d.pickMode\"\n      [color]=\"_d.color\">\n\n    </ion-calendar-month>\n\n  ",
+                template: "\n    <div class=\"title\">\n      <ng-template [ngIf]=\"_showMonthPicker || !readonly\" [ngIfElse]=\"title\">\n        <button type=\"button\"\n                ion-button\n                clear\n                class=\"switch-btn\"\n                [disabled]=\"readonly\"\n                (click)=\"switchView()\">\n          {{monthOpt.original.time | date: _d.monthFormat}}\n          <ion-icon *ngIf=\"!readonly\"\n                    class=\"arrow-dropdown\"\n                    [name]=\"_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'\"></ion-icon>\n        </button>\n      </ng-template>\n      <ng-template #title>\n        <div class=\"switch-btn\">\n          {{monthOpt.original.time | date: _d.monthFormat}}\n        </div>\n      </ng-template>\n      <ng-template [ngIf]=\"_showToggleButtons\">\n        <button type='button' ion-button clear class=\"back\" [disabled]=\"!canBack() || readonly\" (click)=\"prev()\">\n          <ion-icon name=\"ios-arrow-back\"></ion-icon>\n        </button>\n        <button type='button' ion-button clear class=\"forward\" [disabled]=\"!canNext() || readonly\"\n                (click)=\"next()\">\n          <ion-icon name=\"ios-arrow-forward\"></ion-icon>\n        </button>\n      </ng-template>\n    </div>\n    \n    <ng-template [ngIf]=\"_view === 'days'\" [ngIfElse]=\"monthPicker\">\n      <ion-calendar-week color=\"transparent\"\n                         [weekStart]=\"_d.weekStart\">\n      </ion-calendar-week>\n\n      <ion-calendar-month [(ngModel)]=\"_calendarMonthValue\"\n                          [month]=\"monthOpt\"\n                          [readonly]=\"readonly\"\n                          (onChange)=\"onChanged($event)\"\n                          [pickMode]=\"_d.pickMode\"\n                          [color]=\"_d.color\">\n      </ion-calendar-month>\n    </ng-template>\n\n    <ng-template #monthPicker>\n      <ion-calendar-month-picker [color]=\"_d.color\" \n                                 [monthFormat]=\"options?.monthPickerFormat\"\n                                 (onSelect)=\"monthOnSelect($event)\"\n                                 [month]=\"monthOpt\">\n      </ion-calendar-month-picker>\n    </ng-template>\n  ",
             },] },
 ];
 /** @nocollapse */

@@ -13,8 +13,10 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     onChange: EventEmitter<any>;
     monthChange: EventEmitter<any>;
     _d: CalendarModalOptions;
+    _view: string;
     _calendarMonthValue: any[];
     _showToggleButtons: boolean;
+    _showMonthPicker: boolean;
     _onChanged: Function;
     _onTouched: Function;
     constructor(calSvc: CalendarService);
@@ -24,10 +26,16 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     createMonth(date: number): CalendarMonth;
+    switchView(): string;
+    prev(): void;
+    next(): void;
+    prevYear(): void;
+    nextYear(): void;
     nextMonth(): void;
     canNext(): boolean;
     backMonth(): void;
     canBack(): boolean;
+    monthOnSelect(month: number): void;
     onChanged($event: any[]): void;
     _writeValue(value: any): void;
     _createCalendarDay(value: any): CalendarDay;

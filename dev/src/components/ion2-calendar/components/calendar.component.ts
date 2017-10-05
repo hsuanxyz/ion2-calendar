@@ -24,7 +24,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
+      <ng-template [ngIf]="_showMonthPicker || !readonly" [ngIfElse]="title">
         <button type="button"
                 ion-button
                 clear
