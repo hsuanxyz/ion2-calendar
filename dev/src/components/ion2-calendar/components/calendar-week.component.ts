@@ -23,7 +23,7 @@ export class CalendarWeekComponent {
   @Input()
   set weekArray(value: string[]) {
     if (value && value.length === 7) {
-      this._weekArray = value;
+      this._weekArray = value.slice();
       this.adjustSort();
     }
   }

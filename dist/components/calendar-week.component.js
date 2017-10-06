@@ -8,7 +8,7 @@ var CalendarWeekComponent = (function () {
     Object.defineProperty(CalendarWeekComponent.prototype, "weekArray", {
         set: function (value) {
             if (value && value.length === 7) {
-                this._weekArray = value;
+                this._weekArray = value.slice();
                 this.adjustSort();
             }
         },
