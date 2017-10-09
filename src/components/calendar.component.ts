@@ -55,6 +55,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
     
     <ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
       <ion-calendar-week color="transparent"
+                         [weekArray]="_d.weekdays"
                          [weekStart]="_d.weekStart">
       </ion-calendar-week>
 
