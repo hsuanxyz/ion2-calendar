@@ -28,7 +28,8 @@ export class HomePage {
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
     to: new Date(2020, 11, 31),
-    pickMode: 'range'
+    pickMode: 'range',
+    weekdays: ['天', '一', '二', '三', '四', '五', '六'],
   };
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,

@@ -22,7 +22,9 @@ export class HomePage {
   format = 'YYYY-MM-DD';
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
-    defaultSubtitle: 'heh'
+    defaultSubtitle: 'heh',
+    weekdays: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+    weekStart: 1
 
   };
   optionsRange: CalendarComponentOptions = {
