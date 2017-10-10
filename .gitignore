@@ -1,9 +1,0 @@
-.idea/
-aot/
-node_modules/
-package-lock.json
-.DS_Store
-.idea/vcs/xml
-.editorconfig
-.gitignore
-www/
