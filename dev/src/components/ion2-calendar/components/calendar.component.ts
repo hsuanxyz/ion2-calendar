@@ -70,7 +70,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
 
     <ng-template #monthPicker>
       <ion-calendar-month-picker [color]="_d.color" 
-                                 [monthFormat]="options?.monthPickerFormat"
+                                 [monthFormat]="_options?.monthPickerFormat"
                                  (onSelect)="monthOnSelect($event)"
                                  [month]="monthOpt">
       </ion-calendar-month-picker>
@@ -80,45 +80,52 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
-
+  _d: CalendarModalOptions;
+  _options: CalendarComponentOptions;
+  _view = 'days';
+  _calendarMonthValue: any[] = [null, null];
+  _showToggleButtons = true;
+  _showMonthPicker = true;
   monthOpt: CalendarMonth;
-  @Input() options: CalendarComponentOptions;
+
   @Input() format: string = 'YYYY-MM-DD';
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
   @Input() readonly = false;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
   @Output() monthChange: EventEmitter<any> = new EventEmitter();
+  @Input()
+  set options(value: CalendarComponentOptions) {
+    this._options = value;
+    this.initOpt();
+  }
 
-  _d: CalendarModalOptions;
-  _view = 'days';
-  _calendarMonthValue: any[] = [null, null];
-  _showToggleButtons = true;
-  _showMonthPicker = true;
+  get options(): CalendarComponentOptions {
+    return this._options;
+  }
 
-  _onChanged: Function = () => {
-  };
-  _onTouched: Function = () => {
-  };
+  _onChanged: Function = () => { };
+
+  _onTouched: Function = () => { };
 
   constructor(public calSvc: CalendarService) {
-
   }
 
   ionViewDidLoad() {
   }
 
   ngOnInit() {
-    if (this.options && this.options.showToggleButtons === false) {
+    this.initOpt();
+    this.monthOpt = this.createMonth(new Date().getTime());
+  }
+
+  initOpt() {
+    if (this._options && this._options.showToggleButtons === false) {
       this._showToggleButtons = false;
     }
-    if (this.options && this.options.showMonthPicker === false) {
+    if (this._options && this._options.showMonthPicker === false) {
       this._showMonthPicker = false;
     }
-    this._d = this.calSvc.safeOpt(this.options || {});
-    // this.showToggleButtons = this.options.showToggleButtons;
-    this.monthOpt = this.createMonth(new Date().getTime());
-
-
+    this._d = this.calSvc.safeOpt(this._options || {});
   }
 
   writeValue(obj: any): void {
