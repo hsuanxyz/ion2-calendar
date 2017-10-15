@@ -39,7 +39,7 @@
 
   </ion-list>
 
-
+  <button ion-button (click)="changeOptions()">changeOptions</button>
   <ion-card>
     <ion-card-content>
       <ion-card-title>
@@ -47,6 +47,7 @@
       </ion-card-title>
       <ion-calendar class="my-calendar"
                     [(ngModel)]="date"
+                    [options]="optionsBasic"
                     (monthChange)="dateChange($event)"
                     [type]="'moment'">
       </ion-calendar>

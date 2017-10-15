@@ -16,14 +16,14 @@ import { CalendarModal } from "../../components/ion2-calendar";
 export class HomePage {
 
   days: Array<any> = [];
-  date = moment(moment().format('YYYY-MM-DD')).add(1, 'month');
+  date: any = moment(moment().format('YYYY-MM-DD')).add(1, 'month');
   dateMulti = [];
   dateRangeObj = { from: moment().format('YYYY-MM-DD'), to: moment().add(3, 'd').format('YYYY-MM-DD') };
   format = 'YYYY-MM-DD';
+  optionsBasic: CalendarComponentOptions = { };
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'hello',
-    showMonthPicker: false
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
@@ -59,6 +59,26 @@ export class HomePage {
   }
 
   dateChange($event) {
+
+    this.optionsBasic = {
+      pickMode: 'multi',
+      defaultSubtitle: 'hello',
+      showMonthPicker: false,
+      daysConfig: [
+        {
+          date: new Date(2017, 11, 1),
+          marked: true
+        },
+        {
+          date: new Date(2017, 11, 2),
+          marked: true
+        },
+        {
+          date: new Date(2017, 11, 3),
+          marked: true
+        }
+      ]
+    }
     console.log($event)
   }
 

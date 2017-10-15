@@ -24,7 +24,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <ng-template [ngIf]="_showMonthPicker || !readonly" [ngIfElse]="title">
+      <ng-template [ngIf]="_showMonthPicker ? _showMonthPicker || !readonly : false" [ngIfElse]="title">
         <button type="button"
                 ion-button
                 clear
@@ -97,6 +97,9 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   set options(value: CalendarComponentOptions) {
     this._options = value;
     this.initOpt();
+    if (this.monthOpt && this.monthOpt.original){
+      this.monthOpt = this.createMonth(this.monthOpt.original.time);
+    }
   }
 
   get options(): CalendarComponentOptions {
