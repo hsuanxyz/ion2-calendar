@@ -24,7 +24,7 @@
     "@ionic-native/splash-screen": "4.3.0",
     "@ionic-native/status-bar": "4.3.0",
     "@ionic/storage": "2.0.1",
-    "ion2-calendar": "^2.0.8",
+    "ion2-calendar": "^2.0.10",
     "ionic-angular": "3.7.1",
     "ionicons": "3.0.0",
     "moment": "^2.19.1",
