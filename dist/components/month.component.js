@@ -5,7 +5,7 @@ export var MONTH_VALUE_ACCESSOR = {
     useExisting: forwardRef(function () { return MonthComponent; }),
     multi: true,
 };
-var MonthComponent = (function () {
+var MonthComponent = /** @class */ (function () {
     function MonthComponent(ref) {
         this.ref = ref;
         this.readonly = false;
@@ -118,27 +118,27 @@ var MonthComponent = (function () {
             this.onChange.emit(this._date.filter(function (e) { return e !== null; }));
         }
     };
+    MonthComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'ion-calendar-month',
+                    providers: [MONTH_VALUE_ACCESSOR],
+                    template: "\n    <div [class]=\"color\">\n      <ng-template [ngIf]=\"pickMode !== 'range'\" [ngIfElse]=\"rangeBox\">\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n\n      <ng-template #rangeBox>\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\"\n                 [class.startSelection]=\"isStartSelection(day)\"\n                 [class.endSelection]=\"isEndSelection(day)\"\n                 [class.between]=\"isBetween(day)\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n    </div>\n  ",
+                },] },
+    ];
+    /** @nocollapse */
+    MonthComponent.ctorParameters = function () { return [
+        { type: ChangeDetectorRef, },
+    ]; };
+    MonthComponent.propDecorators = {
+        'month': [{ type: Input },],
+        'pickMode': [{ type: Input },],
+        'isSaveHistory': [{ type: Input },],
+        'id': [{ type: Input },],
+        'readonly': [{ type: Input },],
+        'color': [{ type: Input },],
+        'onChange': [{ type: Output },],
+    };
     return MonthComponent;
 }());
 export { MonthComponent };
-MonthComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ion-calendar-month',
-                providers: [MONTH_VALUE_ACCESSOR],
-                template: "\n    <div [class]=\"color\">\n      <ng-template [ngIf]=\"pickMode !== 'range'\" [ngIfElse]=\"rangeBox\">\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n\n      <ng-template #rangeBox>\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\"\n                 [class.startSelection]=\"isStartSelection(day)\"\n                 [class.endSelection]=\"isEndSelection(day)\"\n                 [class.between]=\"isBetween(day)\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n    </div>\n  ",
-            },] },
-];
-/** @nocollapse */
-MonthComponent.ctorParameters = function () { return [
-    { type: ChangeDetectorRef, },
-]; };
-MonthComponent.propDecorators = {
-    'month': [{ type: Input },],
-    'pickMode': [{ type: Input },],
-    'isSaveHistory': [{ type: Input },],
-    'id': [{ type: Input },],
-    'readonly': [{ type: Input },],
-    'color': [{ type: Input },],
-    'onChange': [{ type: Output },],
-};
 //# sourceMappingURL=month.component.js.map

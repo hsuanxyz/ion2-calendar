@@ -1,16 +1,16 @@
-var CalendarMonth = (function () {
+var CalendarMonth = /** @class */ (function () {
     function CalendarMonth() {
     }
     return CalendarMonth;
 }());
 export { CalendarMonth };
-var PrivateCalendarOptions = (function () {
+var PrivateCalendarOptions = /** @class */ (function () {
     function PrivateCalendarOptions() {
     }
     return PrivateCalendarOptions;
 }());
 export { PrivateCalendarOptions };
-var CalendarResult = (function () {
+var CalendarResult = /** @class */ (function () {
     function CalendarResult() {
     }
     return CalendarResult;

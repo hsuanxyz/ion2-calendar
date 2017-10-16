@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from 'ionic-angular';
 import { CalendarModal } from "./components/calendar.modal";
 import { CalendarService } from './services/calendar.service';
-var CalendarController = (function () {
+var CalendarController = /** @class */ (function () {
     function CalendarController(modalCtrl, calSvc) {
         this.modalCtrl = modalCtrl;
         this.calSvc = calSvc;
@@ -43,15 +43,15 @@ var CalendarController = (function () {
     CalendarController.prototype.removeHistory = function (id) {
         localStorage.removeItem("ion-calendar-" + id);
     };
+    CalendarController.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    CalendarController.ctorParameters = function () { return [
+        { type: ModalController, },
+        { type: CalendarService, },
+    ]; };
     return CalendarController;
 }());
 export { CalendarController };
-CalendarController.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-CalendarController.ctorParameters = function () { return [
-    { type: ModalController, },
-    { type: CalendarService, },
-]; };
 //# sourceMappingURL=calendar.controller.js.map

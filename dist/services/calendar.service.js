@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isBoolean } from "ionic-angular/util/util";
 import * as moment from 'moment';
-var CalendarService = (function () {
+var CalendarService = /** @class */ (function () {
     function CalendarService() {
     }
     CalendarService.prototype.safeOpt = function (calendarOptions) {
@@ -195,12 +195,12 @@ var CalendarService = (function () {
             date: _moment.date()
         };
     };
+    CalendarService.decorators = [
+        { type: Injectable },
+    ];
+    /** @nocollapse */
+    CalendarService.ctorParameters = function () { return []; };
     return CalendarService;
 }());
 export { CalendarService };
-CalendarService.decorators = [
-    { type: Injectable },
-];
-/** @nocollapse */
-CalendarService.ctorParameters = function () { return []; };
 //# sourceMappingURL=calendar.service.js.map

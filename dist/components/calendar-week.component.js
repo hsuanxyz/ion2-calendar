@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-var CalendarWeekComponent = (function () {
+var CalendarWeekComponent = /** @class */ (function () {
     function CalendarWeekComponent() {
         this._weekArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
         this._weekStart = 0;
@@ -30,20 +30,20 @@ var CalendarWeekComponent = (function () {
             this._weekArray.push(this._weekArray.shift());
         }
     };
+    CalendarWeekComponent.decorators = [
+        { type: Component, args: [{
+                    selector: 'ion-calendar-week',
+                    template: "\n    <ion-toolbar class=\"week-toolbar\" no-border-top>\n      <ul [class]=\"'week-title ' + color\">\n        <li *ngFor=\"let w of _weekArray\">{{w}}</li>\n      </ul>\n    </ion-toolbar>\n  ",
+                },] },
+    ];
+    /** @nocollapse */
+    CalendarWeekComponent.ctorParameters = function () { return []; };
+    CalendarWeekComponent.propDecorators = {
+        'color': [{ type: Input },],
+        'weekArray': [{ type: Input },],
+        'weekStart': [{ type: Input },],
+    };
     return CalendarWeekComponent;
 }());
 export { CalendarWeekComponent };
-CalendarWeekComponent.decorators = [
-    { type: Component, args: [{
-                selector: 'ion-calendar-week',
-                template: "\n    <ion-toolbar class=\"week-toolbar\" no-border-top>\n      <ul [class]=\"'week-title ' + color\">\n        <li *ngFor=\"let w of _weekArray\">{{w}}</li>\n      </ul>\n    </ion-toolbar>\n  ",
-            },] },
-];
-/** @nocollapse */
-CalendarWeekComponent.ctorParameters = function () { return []; };
-CalendarWeekComponent.propDecorators = {
-    'color': [{ type: Input },],
-    'weekArray': [{ type: Input },],
-    'weekStart': [{ type: Input },],
-};
 //# sourceMappingURL=calendar-week.component.js.map

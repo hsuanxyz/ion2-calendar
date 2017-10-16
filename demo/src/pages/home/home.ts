@@ -20,6 +20,7 @@ export class HomePage {
   dateMulti = [];
   dateRangeObj: { from: string; to: string; };
   format = 'YYYY-MM-DD';
+  optionsBasic: CalendarComponentOptions = { };
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'heh',
@@ -47,7 +48,32 @@ export class HomePage {
   }
 
   monthChange($event) {
-    console.log($event)
+    console.log($event);
+    let date = moment($event.newMonth.string, 'YYYY-MM-DD');
+    setTimeout(() => {
+      const newPot = {
+        daysConfig: [
+          {
+            date: date.toDate(),
+            marked: true,
+          },
+          {
+            date: date.clone().add(1, 'd').toDate(),
+            marked: true,
+          }
+          ,
+          {
+            date: date.clone().add(2, 'd').toDate(),
+            marked: true,
+          }
+        ]
+      };
+
+      this.optionsBasic = {
+        ...this.optionsBasic,
+        ...newPot
+      };
+    }, 300)
   }
 
   basic() {
