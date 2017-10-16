@@ -18,6 +18,7 @@ gulpfile.js
 tsconfig.json
 package-lock.json
 demo/
+lazyload-demo/
 dev/
 src/
 node_modules/
