@@ -182,7 +182,7 @@ Import ion2-calendar in component controller.
 ```typescript
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
-import { CalendarModal, CalendarModalOptions, DayConfig } from "ion2-calendar";
+import { CalendarModal, CalendarModalOptions, DayConfig, CalendarResult } from "ion2-calendar";
 
 @Component({
   selector: 'page-home',
@@ -204,7 +204,7 @@ export class HomePage {
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss(date => {
+    myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
       console.log(date);
     })
   }
@@ -229,7 +229,7 @@ Set pickMode to 'range'.
     
         myCalendar.present();
     
-        myCalendar.onDidDismiss(date => {
+        myCalendar.onDidDismiss((date: { from: CalendarResult; to: CalendarResult }, type: string) => {
           console.log(date);
         });
   }
@@ -252,7 +252,7 @@ Set pickMode to 'multi'.
     
         myCalendar.present();
     
-        myCalendar.onDidDismiss(date => {
+        myCalendar.onDidDismiss((date: CalendarResult[], type: string) => {
           console.log(date);
         })
       }
@@ -274,7 +274,7 @@ Use index eg: `[0, 6]` denote Sunday and Saturday.
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss(date => {
+    myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
       console.log(date);
     });
   }
@@ -297,7 +297,7 @@ Use index eg: `[0, 6]` denote Sunday and Saturday.
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss(date => {
+    myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
       console.log(date);
     });
   }
@@ -328,7 +328,7 @@ openCalendar() {
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss(date => {
+    myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
       console.log(date);
     });
   }
