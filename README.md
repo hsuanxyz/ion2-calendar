@@ -282,6 +282,20 @@ Use index eg: `[0, 6]` denote Sunday and Saturday.
 
 ### Localization
 
+your root module
+
+```
+import { NgModule, LOCALE_ID } from '@angular/core';
+...
+
+@NgModule({
+  ...
+  providers: [{ provide: LOCALE_ID, useValue: "zh-CN" }]
+})
+
+...
+```
+
 ```typescript
  openCalendar() {
     const options: CalendarModalOptions = {
