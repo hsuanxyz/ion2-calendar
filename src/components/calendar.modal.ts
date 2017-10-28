@@ -71,7 +71,6 @@ import * as moment from 'moment';
 
     </ion-content>
   `,
-
 })
 export class CalendarModal {
   @ViewChild(Content) content: Content;
@@ -110,13 +109,13 @@ export class CalendarModal {
               public viewCtrl: ViewController,
               public ref: ChangeDetectorRef,
               public calSvc: CalendarService,) {
-    this.findCssClass();
     this.init();
     this.getHistory();
     this.initDefaultDate();
   }
 
   ionViewDidLoad() {
+    this.findCssClass();
     this.scrollToDefaultDate();
   }
 
@@ -202,8 +201,7 @@ export class CalendarModal {
   }
 
   findCssClass() {
-    let cssClass = this.params.get('cssClass');
-
+    let { cssClass } = this._d;
     if (cssClass) {
       cssClass.split(' ').forEach((cssClass: string) => {
         if (cssClass.trim() !== '') this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, true);

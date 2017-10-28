@@ -24,12 +24,13 @@ export class HomePage {
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'hello',
+    monthPickerFormat: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
   };
   optionsRange: CalendarComponentOptions = {
     from: new Date(2000, 0),
     to: new Date(2020, 11, 31),
     pickMode: 'range',
-    weekdays: ['天', '一', '二', '三', '四', '五', '六'],
+    weekdays: ['天', '一', '二', '三', '四', '五', '五'],
   };
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,

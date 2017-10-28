@@ -17,12 +17,12 @@ var CalendarModal = /** @class */ (function () {
         this.debug = true;
         this._s = true;
         this._color = 'primary';
-        this.findCssClass();
         this.init();
         this.getHistory();
         this.initDefaultDate();
     }
     CalendarModal.prototype.ionViewDidLoad = function () {
+        this.findCssClass();
         this.scrollToDefaultDate();
     };
     CalendarModal.prototype.init = function () {
@@ -95,7 +95,7 @@ var CalendarModal = /** @class */ (function () {
     };
     CalendarModal.prototype.findCssClass = function () {
         var _this = this;
-        var cssClass = this.params.get('cssClass');
+        var cssClass = this._d.cssClass;
         if (cssClass) {
             cssClass.split(' ').forEach(function (cssClass) {
                 if (cssClass.trim() !== '')

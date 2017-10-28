@@ -76,7 +76,6 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       </ion-calendar-month-picker>
     </ng-template>
   `,
-
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
