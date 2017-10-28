@@ -155,7 +155,6 @@ export class HomePage {
   setCssClass() {
     const options: CalendarModalOptions = {
       cssClass: 'my-class',
-      color: 'secondary',
       pickMode: 'range',
       autoDone: true
     };
@@ -236,7 +235,12 @@ export class HomePage {
     _daysConfig.push({
       date: new Date(2017, 1, 1),
       disable: true,
-      subTitle: 'disable'
+      subTitle: 'disable',
+    });
+    _daysConfig.push({
+      date: new Date(2017, 1, 2),
+      subTitle: 'cssClass',
+      cssClass: 'my-day'
     });
     const options: CalendarModalOptions = {
       from: new Date(2017, 0, 1),

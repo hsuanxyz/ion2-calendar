@@ -19,6 +19,11 @@
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
+
+    <!--
+      Change these to configure how the splashscreen displays and fades in/out.
+      More info here: https://github.com/apache/cordova-plugin-splashscreen
+    -->
     <preference name="SplashShowOnlyFirstTime" value="false" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
@@ -77,13 +82,10 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
-    <engine name="android" spec="^6.2.3" />
-    <engine name="browser" spec="^4.1.0" />
-    <engine name="ios" spec="^4.4.0" />
-    <plugin name="cordova-plugin-console" spec="^1.0.5" />
-    <plugin name="cordova-plugin-device" spec="^1.1.4" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
-    <plugin name="cordova-plugin-statusbar" spec="^2.2.2" />
-    <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
-    <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
+    <plugin name="cordova-plugin-whitelist" spec="1.3.1" />
+    <plugin name="cordova-plugin-console" spec="1.0.5" />
+    <plugin name="cordova-plugin-statusbar" spec="2.2.2" />
+    <plugin name="cordova-plugin-device" spec="1.1.4" />
+    <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
 </widget>

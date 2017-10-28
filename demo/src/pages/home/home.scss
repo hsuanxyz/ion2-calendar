@@ -1,3 +1,27 @@
 page-home {
 
 }
+
+.my-class {
+  .toolbar-background-md, .toolbar-background-ios, ion-calendar-week .week-title {
+    background-color: #424242;
+  }
+  .month-box {
+    background: #343434;
+    border-bottom: none;
+    h4 {
+      color: #fff;
+    }
+    button.days-btn > p {
+      color: #fff;
+    }
+  }
+}
+
+.my-cal {
+  button.days-btn.my-day {
+    p, small {
+      color: red;
+    }
+  }
+}
