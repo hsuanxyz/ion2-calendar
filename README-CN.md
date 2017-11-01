@@ -15,6 +15,10 @@
 - 支持本地化
 - Material 风格
 
+# 支持
+
+- ionic-angular `^3.0.0`
+
 # Demo
 live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 

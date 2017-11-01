@@ -19,6 +19,10 @@
 - Setting localization.
 - Material design.
 
+# Support
+
+- ionic-angular `^3.0.0`
+
 # Demo
 live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 
