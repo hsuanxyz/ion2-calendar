@@ -7,10 +7,9 @@
   "scripts": {
     "ngc": "ngc -p tsconfig.json",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf aot dist src && gulp dev2src && npm run ngc && gulp copy-scss",
-    "build:demo": "npm run build && gulp dist2nm",
-    "start:s": "cd ./demo && npm run ionic:server",
-    "lint": "./node_modules/.bin/tslint -c tslint.json src/**/*.ts"
+    "clear": "rm -rf aot _temp",
+    "build": "npm run lint && rm -rf dist && npm run clear && gulp src2temp && npm run ngc && gulp copy-scss && npm run clear",
+    "lint": "tslint -c tslint.json src/src/components/**/*.ts"
   },
   "repository": {
     "type": "git",

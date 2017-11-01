@@ -1,15 +1,15 @@
 var gulp = require('gulp');
 
-var SRC_PATH = './src';
+var TEMP_PATH = './_temp';
 var DIST_PATH = './dist';
-var DEV_PATH = './dev/src/components/ion2-calendar';
+var SRC_PATH = './src/src/components/ion2-calendar';
 
-gulp.task('dev2src', function() {
-    gulp.src( DEV_PATH + '/**/**').pipe(gulp.dest(SRC_PATH));
+gulp.task('src2temp', function() {
+    gulp.src( SRC_PATH + '/**/**').pipe(gulp.dest(TEMP_PATH));
 });
 
 gulp.task('copy-scss', function() {
-    gulp.src( SRC_PATH + '/**/*.scss').pipe(gulp.dest(DIST_PATH));
+    gulp.src( TEMP_PATH + '/**/*.scss').pipe(gulp.dest(DIST_PATH));
 });
 
 gulp.task('dist2nm', function() {

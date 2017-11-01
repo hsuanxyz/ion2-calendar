@@ -15,8 +15,11 @@
     "lazyload-demo",
     "dist",
     "demo",
-    "dev",
+    "src",
     "aot"
+  ],
+  "include": [
+    "_temp/**/*"
   ],
   "angularCompilerOptions": {
     "genDir": "aot"

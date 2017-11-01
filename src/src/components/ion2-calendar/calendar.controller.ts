@@ -10,7 +10,7 @@ export class CalendarController {
   isRadio: boolean;
 
   constructor(public modalCtrl: ModalController,
-              public calSvc: CalendarService,) {
+              public calSvc: CalendarService) {
   }
 
   /**

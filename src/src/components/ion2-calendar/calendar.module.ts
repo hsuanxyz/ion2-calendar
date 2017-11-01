@@ -5,7 +5,7 @@ import { CalendarService } from "./services/calendar.service";
 import { CALENDAR_COMPONENTS } from "./components/index";
 
 export function calendarController(modalCtrl: ModalController,
-                                   calSvc: CalendarService,) {
+                                   calSvc: CalendarService) {
   return new CalendarController(modalCtrl, calSvc);
 }
 
