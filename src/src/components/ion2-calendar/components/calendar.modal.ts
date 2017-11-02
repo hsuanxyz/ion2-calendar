@@ -90,7 +90,7 @@ export class CalendarModal {
   scrollBackwards: boolean;
   weekStart: number = 0;
   isSaveHistory: boolean;
-  countNextMonths: number;
+  step: number;
   showYearPicker: boolean;
   year: number;
   years: Array<number>;
@@ -155,14 +155,14 @@ export class CalendarModal {
     this.isSaveHistory = this._d.isSaveHistory;
 
 
-    this.countNextMonths = this._d.countNextMonths;
-    if (this.countNextMonths < 1) {
-      this.countNextMonths = 1;
+    this.step = this._d.step;
+    if (this.step < 1) {
+      this.step = 1;
     }
 
     this.calendarMonths = this.calSvc.createMonthsByPeriod(
       startTime,
-      this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
+      this.findInitMonthNumber(this.defaultScrollTo) + this.step,
       this._d,
     );
 

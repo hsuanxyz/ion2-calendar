@@ -43,7 +43,7 @@ export class CalendarService {
       defaultSubtitle = '',
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
-      countNextMonths = 3,
+      step = 3,
       showYearPicker = false
     } = calendarOptions || {};
 
@@ -74,7 +74,7 @@ export class CalendarService {
       title: title,
       weekdays: weekdays,
       daysConfig: daysConfig,
-      countNextMonths: countNextMonths,
+      step: step,
       showYearPicker: showYearPicker,
     }
   }

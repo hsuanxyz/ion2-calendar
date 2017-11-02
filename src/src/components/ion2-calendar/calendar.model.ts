@@ -71,7 +71,7 @@ export interface CalendarModalOptions extends CalendarOptions {
   defaultDate?: DefaultDate;
   defaultDates?: DefaultDate[];
   defaultDateRange?: { from: DefaultDate, to?: DefaultDate } | null;
-  countNextMonths?: number;
+  step?: number;
   /**
    * @deprecated this version notwork
    */
