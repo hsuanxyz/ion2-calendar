@@ -202,21 +202,6 @@ export class CalendarService {
     return _array;
   }
 
-  getHistory(id: string | number): Array<CalendarDay | null> {
-    const _savedDatesCache = localStorage.getItem(`ion-calendar-${id}`);
-    let _savedDates: Array<CalendarDay | null>;
-    if (_savedDatesCache === 'undefined' || _savedDatesCache === 'null' || !_savedDatesCache) {
-      _savedDates = [null, null];
-    } else {
-      _savedDates = <any>JSON.parse(_savedDatesCache);
-    }
-    return _savedDates
-  }
-
-  savedHistory(savedDates: Array<CalendarDay | null>, id: string | number) {
-    localStorage.setItem(`ion-calendar-${id}`, JSON.stringify(savedDates));
-  }
-
   wrapResult(original: CalendarDay[], pickMode: string) {
     let result: any;
     switch (pickMode) {

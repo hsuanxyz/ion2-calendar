@@ -110,7 +110,6 @@ export class CalendarModal {
               public ref: ChangeDetectorRef,
               public calSvc: CalendarService,) {
     this.init();
-    this.getHistory();
     this.initDefaultDate();
   }
 
@@ -160,17 +159,12 @@ export class CalendarModal {
       this.countNextMonths = 1;
     }
 
-    this.showYearPicker = this._d.showYearPicker;
+    this.calendarMonths = this.calSvc.createMonthsByPeriod(
+      startTime,
+      this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
+      this._d,
+    );
 
-    if (this.showYearPicker) {
-      this.createYearPicker(startTime, endTime)
-    } else {
-      this.calendarMonths = this.calSvc.createMonthsByPeriod(
-        startTime,
-        this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
-        this._d,
-      );
-    }
   }
 
   initDefaultDate() {
@@ -212,7 +206,6 @@ export class CalendarModal {
 
   onChange(data: any) {
     this.datesTemp = data;
-    this.calSvc.savedHistory(data, this._id);
     this.ref.detectChanges();
 
     if (this._d.pickMode !== 'multi' && this._d.autoDone && this.canDone()) {
@@ -248,62 +241,6 @@ export class CalendarModal {
     }
 
   }
-
-  getHistory() {
-    if (this.isSaveHistory) {
-      this.datesTemp = this.calSvc.getHistory(this._id);
-    }
-  }
-
-  createYearPicker(startTime: number, endTime: number) {
-    // init year array
-    this.years = [];
-    // getting max and be sure, it is in future (maybe parameter?)
-    let maxYear = (new Date(endTime)).getFullYear();
-
-    if (maxYear <= 1970) {
-      maxYear = (new Date(this.defaultScrollTo)).getFullYear() + 10;
-      this.options.end = new Date(maxYear, 12, 0).getTime();
-    }
-
-    // min year should be okay, either it will be set or something like 1970 at min
-    let minYear = (new Date(startTime)).getFullYear();
-
-    // calculating the needed years to be added to array
-    let neededYears = (maxYear - minYear);
-
-    // pushing years to selection array
-    for (let y = 0; y <= neededYears; y++) {
-      this.years.push(maxYear - y);
-    }
-
-    this.years.reverse();
-    // selection-start-year of defaultScrollTo
-    this.year = this.defaultScrollTo.getFullYear();
-    let firstDayOfYear = new Date(this.year, 0, 1);
-    let lastDayOfYear = new Date(this.year, 12, 0);
-
-    // don't calc over the start / end
-    if (firstDayOfYear.getTime() < this.options.start) {
-      firstDayOfYear = new Date(this.options.start);
-    }
-
-    if (lastDayOfYear.getTime() > this.options.end) {
-      lastDayOfYear = new Date(this.options.end);
-    }
-    // calcing the month
-    this.calendarMonths = this.calSvc.createMonthsByPeriod(
-      firstDayOfYear.getTime(),
-      this.findInitMonthNumber(this.defaultScrollTo) + this.countNextMonths,
-      this._d);
-    // sets the range new
-
-    // checking whether the start is after firstDayOfYear
-    this.options.range_beg = firstDayOfYear.getTime() < startTime ? startTime : firstDayOfYear.getTime();
-    // checking whether the end is before lastDayOfYear
-    this.options.range_end = lastDayOfYear.getTime() > endTime ? endTime : lastDayOfYear.getTime();
-  }
-
 
   nextMonth(infiniteScroll: InfiniteScroll) {
     this.infiniteScroll = infiniteScroll;
@@ -367,35 +304,6 @@ export class CalendarModal {
 
 
     return defaultScrollTo.diff(startDate, 'month');
-  }
-
-  changedYearSelection() {
-    // re-enabling infinite scroll
-    if (this.infiniteScroll !== undefined) {
-      this.infiniteScroll.enable(true);
-    }
-    // getting first day and last day of the year
-    let firstDayOfYear = new Date(this.year, 0, 1);
-    let lastDayOfYear = new Date(this.year, 12, 0);
-    // don't calc over the start / end
-    if (firstDayOfYear.getTime() < this.options.start) {
-      firstDayOfYear = new Date(this.options.start);
-    }
-    if (lastDayOfYear.getTime() > this.options.end) {
-      lastDayOfYear = new Date(this.options.end);
-    }
-    // sets the range new
-    // checking whether the start is after firstDayOfYear
-    this.options.range_beg = firstDayOfYear.getTime() < this.options.start ? this.options.start : firstDayOfYear.getTime();
-    // checking whether the end is before lastDayOfYear
-    this.options.range_end = lastDayOfYear.getTime() > this.options.end ? this.options.end : lastDayOfYear.getTime();
-    // calcing the months
-    let monthCount = (this.findInitMonthNumber(firstDayOfYear) + this.countNextMonths);
-    this.calendarMonths = this.calSvc.createMonthsByPeriod(firstDayOfYear.getTime(), monthCount <= 1 ? 3 : monthCount, this._d);
-    // scrolling to the top
-    setTimeout(() => {
-      this.content.scrollTo(0, 0, 128);
-    }, 300)
   }
 
   _getDayTime(date: any): number {
