@@ -3,6 +3,7 @@ import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angula
 import { CalendarDay, CalendarMonth, PrivateCalendarOptions, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
+import { defaults, pickModes } from "../config";
 
 @Component({
   selector: 'ion-calendar-modal',
@@ -100,7 +101,7 @@ export class CalendarModal {
 
   _s: boolean = true;
   _id: string;
-  _color: string = 'primary';
+  _color: string = defaults.COLOR;
   _d: CalendarModalOptions;
 
   constructor(private _renderer: Renderer,
@@ -169,12 +170,12 @@ export class CalendarModal {
 
   initDefaultDate() {
     switch (this._d.pickMode) {
-      case 'single':
+      case pickModes.SINGLE:
         if (this._d.defaultDate) {
           this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDate), this._d);
         }
         break;
-      case 'range':
+      case pickModes.RANGE:
         if (this._d.defaultDateRange) {
           if (this._d.defaultDateRange.from) {
             this.datesTemp[0] = this.calSvc.createCalendarDay(this._getDayTime(this._d.defaultDateRange.from), this._d);
@@ -184,7 +185,7 @@ export class CalendarModal {
           }
         }
         break;
-      case 'multi':
+      case pickModes.MULTI:
         if (this._d.defaultDates && this._d.defaultDates.length) {
           this.datesTemp = this._d.defaultDates.map(e => this.calSvc.createCalendarDay(this._getDayTime(e), this._d));
         }
@@ -208,7 +209,7 @@ export class CalendarModal {
     this.datesTemp = data;
     this.ref.detectChanges();
 
-    if (this._d.pickMode !== 'multi' && this._d.autoDone && this.canDone()) {
+    if (this._d.pickMode !== pickModes.MULTI && this._d.autoDone && this.canDone()) {
       this.done();
     }
   }
@@ -230,11 +231,11 @@ export class CalendarModal {
     }
 
     switch (this._d.pickMode) {
-      case 'single':
+      case pickModes.SINGLE:
         return !!(this.datesTemp[0] && this.datesTemp[0].time);
-      case 'range':
+      case pickModes.RANGE:
         return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
-      case 'multi':
+      case pickModes.MULTI:
         return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e && !!e.time);
       default:
         return false;

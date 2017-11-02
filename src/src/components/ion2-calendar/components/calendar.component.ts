@@ -12,6 +12,7 @@ import { CalendarService } from "../services/calendar.service";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import * as moment from 'moment';
+import { defaults, pickModes } from "../config";
 
 export const ION_CAL_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -87,7 +88,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _showMonthPicker = true;
   monthOpt: CalendarMonth;
 
-  @Input() format: string = 'YYYY-MM-DD';
+  @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
   @Input() readonly = false;
   @Output() onChange: EventEmitter<any> = new EventEmitter();
@@ -224,13 +225,13 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   onChanged($event: any[]) {
     switch (this._d.pickMode) {
-      case 'single':
+      case pickModes.SINGLE:
         const date = this._handleType($event[0].time);
         this._onChanged(date);
         this.onChange.emit(date);
         break;
 
-      case 'range':
+      case pickModes.RANGE:
         if ($event[0] && $event[1]) {
           const rangeDate = {
             from: this._handleType($event[0].time),
@@ -241,7 +242,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         }
         break;
 
-      case 'multi':
+      case pickModes.MULTI:
         let dates = [];
 
         for (let i = 0; i < $event.length; i++) {

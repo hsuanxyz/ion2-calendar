@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarMonth } from "../calendar.model";
+import { defaults, pickModes } from "../config";
 
 @Component({
   selector: 'ion-calendar-month-picker',
@@ -19,10 +20,10 @@ import { CalendarMonth } from "../calendar.model";
 export class MonthPickerComponent {
 
   @Input() month: CalendarMonth;
-  @Input() color = 'primary';
+  @Input() color = defaults.COLOR;
   @Output() onSelect: EventEmitter<number> = new EventEmitter();
   _thisMonth = new Date();
-  _monthFormat =  ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  _monthFormat =  defaults.MONTH_FORMAT;
 
   @Input()
   set monthFormat(value: string[]) {

@@ -9,6 +9,7 @@ import {
   DayConfig
 } from '../calendar.model'
 import * as moment from 'moment';
+import { defaults, pickModes } from "../config";
 
 @Injectable()
 export class CalendarService {
@@ -33,17 +34,17 @@ export class CalendarService {
       doneLabel = 'DONE',
       doneIcon = false,
       id = '',
-      pickMode = 'single',
-      color = 'primary',
+      pickMode = pickModes.SINGLE,
+      color = defaults.COLOR,
       isSaveHistory = false,
       monthFormat = 'MMM yyyy',
       title = 'CALENDAR',
       defaultTitle = '',
       defaultSubtitle = '',
-      weekdays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+      weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
       countNextMonths = 3,
-      showYearPicker = false,
+      showYearPicker = false
     } = calendarOptions || {};
 
 
@@ -205,16 +206,16 @@ export class CalendarService {
   wrapResult(original: CalendarDay[], pickMode: string) {
     let result: any;
     switch (pickMode) {
-      case 'single':
+      case pickModes.SINGLE:
         result = this.multiFormat(original[0].time);
         break;
-      case 'range':
+      case pickModes.RANGE:
         result = {
           from: this.multiFormat(original[0].time),
           to: this.multiFormat(original[1].time),
         };
         break;
-      case 'multi':
+      case pickModes.MULTI:
         result = original.map(e => this.multiFormat(e.time));
         break;
       default:
@@ -229,7 +230,7 @@ export class CalendarService {
       time: _moment.valueOf(),
       unix: _moment.unix(),
       dateObj: _moment.toDate(),
-      string: _moment.format('YYYY-MM-DD'),
+      string: _moment.format(defaults.DATE_FORMAT),
       years: _moment.year(),
       months: _moment.month() + 1,
       date: _moment.date()
