@@ -32,7 +32,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
                 class="switch-btn"
                 [disabled]="readonly"
                 (click)="switchView()">
-          {{monthOpt.original.time | date: _d.monthFormat}}
+          {{_monthFormat(monthOpt.original.time)}}
           <ion-icon *ngIf="!readonly"
                     class="arrow-dropdown"
                     [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
@@ -316,6 +316,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
         return date.toObject();
     }
     return date;
+  }
+
+  _monthFormat(date: any): string {
+    return moment(date).format('MMM YYYY')
   }
 
 }

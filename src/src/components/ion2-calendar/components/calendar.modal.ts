@@ -51,7 +51,7 @@ import { defaults, pickModes } from "../config";
       <div #months>
         <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByTime" let-i="index">
           <div class="month-box" [attr.id]="'month-' + i">
-            <h4 class="text-center month-title">{{month.original.date | date:monthFormatFilterStr}}</h4>
+            <h4 class="text-center month-title">{{_monthFormat(month.original.date)}}</h4>
             <ion-calendar-month [month]="month"
                                 [pickMode]="options.pickMode"
                                 [isSaveHistory]="isSaveHistory"
@@ -84,7 +84,6 @@ export class CalendarModal {
   doneIcon: boolean;
   datesTemp: Array<CalendarDay | null> = [null, null];
   calendarMonths: Array<CalendarMonth>;
-  monthFormatFilterStr = '';
   weekdays: Array<string> = [];
   defaultScrollTo: Date;
   scrollBackwards: boolean;
@@ -143,8 +142,6 @@ export class CalendarModal {
     this.weekStart = this._d.weekStart;
     this._id = this._d.id;
     this._color = this._d.color;
-
-    this.monthFormatFilterStr = this._d.monthFormat;
     this.weekdays = this._d.weekdays;
     this.title = this._d.title;
     this.closeLabel = this._d.closeLabel;
@@ -309,5 +306,9 @@ export class CalendarModal {
 
   _getDayTime(date: any): number {
     return moment(moment(date).format('YYYY-MM-DD')).valueOf();
+  }
+
+  _monthFormat(date: any): string {
+    return moment(date).format('MMM YYYY')
   }
 }

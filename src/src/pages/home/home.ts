@@ -30,7 +30,8 @@ export class HomePage {
     from: new Date(2000, 0),
     to: new Date(2020, 11, 31),
     pickMode: 'range',
-    weekdays: ['天', '一', '二', '三', '四', '五', '五'],
+    weekStart: 1,
+    weekdays: ['0', '1', '2', '3', '4', '5', '6'],
   };
   constructor(public navCtrl: NavController,
               public modalCtrl: ModalController,
