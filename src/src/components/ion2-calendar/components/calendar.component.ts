@@ -40,7 +40,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
       </ng-template>
       <ng-template #title>
         <div class="switch-btn">
-          {{monthOpt.original.time | date: _d.monthFormat}}
+          {{_monthFormat(monthOpt.original.time)}}
         </div>
       </ng-template>
       <ng-template [ngIf]="_showToggleButtons">
@@ -64,13 +64,14 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
                           [month]="monthOpt"
                           [readonly]="readonly"
                           (onChange)="onChanged($event)"
+                          (swipe)="swipeEvent($event)"
                           [pickMode]="_d.pickMode"
                           [color]="_d.color">
       </ion-calendar-month>
     </ng-template>
 
     <ng-template #monthPicker>
-      <ion-calendar-month-picker [color]="_d.color" 
+      <ion-calendar-month-picker [color]="_d.color"
                                  [monthFormat]="_options?.monthPickerFormat"
                                  (onSelect)="monthOnSelect($event)"
                                  [month]="monthOpt">
@@ -257,6 +258,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
       default:
 
+    }
+  }
+
+  swipeEvent($event) {
+    if (this.readonly) return;
+    const isNext = $event.deltaX < 0;
+    if (isNext && this.canNext()) {
+      this.nextMonth();
+    } else if (!isNext && this.canBack()) {
+      this.backMonth()
     }
   }
 
