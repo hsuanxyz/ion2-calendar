@@ -39,7 +39,6 @@ export interface DayConfig {
 export class PrivateCalendarOptions {
   start: number;
   end: number;
-  isRadio: boolean;
   pickMode: string;
   monthFormat: string;
   range_beg: number;

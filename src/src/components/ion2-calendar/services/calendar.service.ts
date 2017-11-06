@@ -22,60 +22,59 @@ export class CalendarService {
     const _disableWeeks: number[] = [];
     const _daysConfig: DayConfig[] = [];
     let {
-      autoDone = false,
       from = new Date(),
       to = 0,
-      cssClass = '',
       weekStart = 0,
-      canBackwardsSelected = false,
-      disableWeeks = _disableWeeks,
-      closeLabel = 'CANCEL',
-      closeIcon = false,
-      doneLabel = 'DONE',
-      doneIcon = false,
+      step = 3,
       id = '',
-      pickMode = pickModes.SINGLE,
-      color = defaults.COLOR,
-      isSaveHistory = false,
+      cssClass = '',
+      closeLabel = 'CANCEL',
+      doneLabel = 'DONE',
       monthFormat = 'MMM yyyy',
       title = 'CALENDAR',
       defaultTitle = '',
       defaultSubtitle = '',
+      autoDone = false,
+      canBackwardsSelected = false,
+      closeIcon = false,
+      doneIcon = false,
+      showYearPicker = false,
+      isSaveHistory = false,
+      pickMode = pickModes.SINGLE,
+      color = defaults.COLOR,
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
-      step = 3,
-      showYearPicker = false
+      disableWeeks = _disableWeeks,
     } = calendarOptions || {};
 
-
     return {
+      id,
+      from,
+      to,
+      pickMode,
+      autoDone,
+      color,
+      cssClass,
+      weekStart,
+      closeLabel,
+      closeIcon,
+      doneLabel,
+      doneIcon,
+      canBackwardsSelected,
+      isSaveHistory,
+      disableWeeks,
+      monthFormat,
+      title,
+      weekdays,
+      daysConfig,
+      step,
+      showYearPicker,
       defaultTitle,
       defaultSubtitle,
-      autoDone: autoDone,
-      from: from,
-      to: to,
-      cssClass: cssClass,
-      weekStart: weekStart,
-      canBackwardsSelected: canBackwardsSelected,
-      closeLabel: closeLabel,
-      closeIcon: closeIcon,
-      doneLabel: doneLabel,
-      doneIcon: doneIcon,
-      id: id,
-      pickMode: pickMode,
-      color: color,
-      isSaveHistory: isSaveHistory,
       defaultScrollTo: calendarOptions.defaultScrollTo || from,
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
       defaultDateRange: calendarOptions.defaultDateRange || null,
-      disableWeeks: disableWeeks,
-      monthFormat: monthFormat,
-      title: title,
-      weekdays: weekdays,
-      daysConfig: daysConfig,
-      step: step,
-      showYearPicker: showYearPicker,
     }
   }
 
@@ -88,12 +87,12 @@ export class CalendarService {
     const howManyDays = moment(time).daysInMonth();
 
     return {
+      year,
+      month,
+      firstWeek,
+      howManyDays,
       time: time,
       date: new Date(time),
-      year: year,
-      month: month,
-      firstWeek: firstWeek,
-      howManyDays: howManyDays,
     }
   }
 
@@ -182,8 +181,8 @@ export class CalendarService {
     }
 
     return {
+      days,
       original: original,
-      days: days,
     }
 
   }
