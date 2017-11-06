@@ -261,7 +261,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  swipeEvent($event) {
+  swipeEvent($event: any) {
     if (this.readonly) return;
     const isNext = $event.deltaX < 0;
     if (isNext && this.canNext()) {

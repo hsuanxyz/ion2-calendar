@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { defaults } from "../config";
 var MonthPickerComponent = /** @class */ (function () {
     function MonthPickerComponent() {
-        this.color = 'primary';
+        this.color = defaults.COLOR;
         this.onSelect = new EventEmitter();
         this._thisMonth = new Date();
-        this._monthFormat = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+        this._monthFormat = defaults.MONTH_FORMAT;
     }
     Object.defineProperty(MonthPickerComponent.prototype, "monthFormat", {
         get: function () {

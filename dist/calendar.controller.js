@@ -31,14 +31,18 @@ var CalendarController = /** @class */ (function () {
             });
         });
     };
+    /**
+     * @deprecated
+     */
     CalendarController.prototype.setHistory = function (param) {
-        localStorage.setItem("ion-calendar-" + param.id, JSON.stringify(param.date));
+        console.warn('setHistory deprecated');
     };
+    /**
+     * @deprecated
+     */
     CalendarController.prototype.getHistory = function (id) {
-        var _history = localStorage.getItem("ion-calendar-" + id);
-        if (_history) {
-            return JSON.parse(_history);
-        }
+        console.warn('getHistory deprecated');
+        return null;
     };
     CalendarController.prototype.removeHistory = function (id) {
         localStorage.removeItem("ion-calendar-" + id);

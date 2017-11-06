@@ -1,6 +1,6 @@
 import { ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
-import { CalendarDay, CalendarMonth, PrivateCalendarOptions, CalendarModalOptions } from '../calendar.model';
+import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.model';
 import { CalendarService } from '../services/calendar.service';
 export declare class CalendarModal {
     private _renderer;
@@ -11,29 +11,14 @@ export declare class CalendarModal {
     calSvc: CalendarService;
     content: Content;
     monthsEle: ElementRef;
-    title: string;
-    closeLabel: string;
-    closeIcon: boolean;
-    doneLabel: string;
-    doneIcon: boolean;
     datesTemp: Array<CalendarDay | null>;
     calendarMonths: Array<CalendarMonth>;
-    monthFormatFilterStr: string;
-    weekdays: Array<string>;
-    defaultScrollTo: Date;
-    scrollBackwards: boolean;
-    weekStart: number;
-    isSaveHistory: boolean;
-    countNextMonths: number;
+    step: number;
     showYearPicker: boolean;
     year: number;
     years: Array<number>;
     infiniteScroll: InfiniteScroll;
-    options: PrivateCalendarOptions;
-    debug: boolean;
     _s: boolean;
-    _id: string;
-    _color: string;
     _d: CalendarModalOptions;
     constructor(_renderer: Renderer, _elementRef: ElementRef, params: NavParams, viewCtrl: ViewController, ref: ChangeDetectorRef, calSvc: CalendarService);
     ionViewDidLoad(): void;
@@ -44,13 +29,11 @@ export declare class CalendarModal {
     onCancel(): void;
     done(): void;
     canDone(): boolean;
-    getHistory(): void;
-    createYearPicker(startTime: number, endTime: number): void;
     nextMonth(infiniteScroll: InfiniteScroll): void;
     backwardsMonth(): void;
     scrollToDefaultDate(): void;
     onScroll($event: any): void;
     findInitMonthNumber(date: Date): number;
-    changedYearSelection(): void;
     _getDayTime(date: any): number;
+    _monthFormat(date: any): string;
 }

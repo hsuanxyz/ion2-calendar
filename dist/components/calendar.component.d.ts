@@ -39,7 +39,9 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     canBack(): boolean;
     monthOnSelect(month: number): void;
     onChanged($event: any[]): void;
+    swipeEvent($event: any): void;
     _writeValue(value: any): void;
     _createCalendarDay(value: any): CalendarDay;
     _handleType(value: number): any;
+    _monthFormat(date: any): string;
 }

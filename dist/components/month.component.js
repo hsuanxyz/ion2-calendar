@@ -1,5 +1,6 @@
 import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { defaults, pickModes } from "../config";
 export var MONTH_VALUE_ACCESSOR = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(function () { return MonthComponent; }),
@@ -9,11 +10,18 @@ var MonthComponent = /** @class */ (function () {
     function MonthComponent(ref) {
         this.ref = ref;
         this.readonly = false;
-        this.color = 'primary';
+        this.color = defaults.COLOR;
         this.onChange = new EventEmitter();
         this._date = [null, null];
         this._isInit = false;
     }
+    Object.defineProperty(MonthComponent.prototype, "_isRange", {
+        get: function () {
+            return this.pickMode === pickModes.RANGE;
+        },
+        enumerable: true,
+        configurable: true
+    });
     MonthComponent.prototype.ngAfterViewInit = function () {
         this._isInit = true;
     };
@@ -34,7 +42,7 @@ var MonthComponent = /** @class */ (function () {
     MonthComponent.prototype.isEndSelection = function (day) {
         if (!day)
             return false;
-        if (this.pickMode !== 'range' || !this._isInit || this._date[1] === null) {
+        if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[1] === null) {
             return false;
         }
         return this._date[1].time === day.time;
@@ -42,7 +50,7 @@ var MonthComponent = /** @class */ (function () {
     MonthComponent.prototype.isBetween = function (day) {
         if (!day)
             return false;
-        if (this.pickMode !== 'range' || !this._isInit) {
+        if (this.pickMode !== pickModes.RANGE || !this._isInit) {
             return false;
         }
         if (this._date[0] === null || this._date[1] === null) {
@@ -55,14 +63,14 @@ var MonthComponent = /** @class */ (function () {
     MonthComponent.prototype.isStartSelection = function (day) {
         if (!day)
             return false;
-        if (this.pickMode !== 'range' || !this._isInit || this._date[0] === null) {
+        if (this.pickMode !== pickModes.RANGE || !this._isInit || this._date[0] === null) {
             return false;
         }
         return this._date[0].time === day.time && this._date[1] !== null;
     };
     MonthComponent.prototype.isSelected = function (time) {
         if (Array.isArray(this._date)) {
-            if (this.pickMode !== 'multi') {
+            if (this.pickMode !== pickModes.MULTI) {
                 if (this._date[0] !== null) {
                     return time === this._date[0].time;
                 }
@@ -82,12 +90,12 @@ var MonthComponent = /** @class */ (function () {
         if (this.readonly)
             return;
         item.selected = true;
-        if (this.pickMode === 'single') {
+        if (this.pickMode === pickModes.SINGLE) {
             this._date[0] = item;
             this.onChange.emit(this._date);
             return;
         }
-        if (this.pickMode === 'range') {
+        if (this.pickMode === pickModes.RANGE) {
             if (this._date[0] === null) {
                 this._date[0] = item;
             }
@@ -107,7 +115,7 @@ var MonthComponent = /** @class */ (function () {
             this.onChange.emit(this._date);
             return;
         }
-        if (this.pickMode === 'multi') {
+        if (this.pickMode === pickModes.MULTI) {
             var index = this._date.findIndex(function (e) { return e !== null && e.time === item.time; });
             if (index === -1) {
                 this._date.push(item);
@@ -122,7 +130,7 @@ var MonthComponent = /** @class */ (function () {
         { type: Component, args: [{
                     selector: 'ion-calendar-month',
                     providers: [MONTH_VALUE_ACCESSOR],
-                    template: "\n    <div [class]=\"color\">\n      <ng-template [ngIf]=\"pickMode !== 'range'\" [ngIfElse]=\"rangeBox\">\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n\n      <ng-template #rangeBox>\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\"\n                 [class.startSelection]=\"isStartSelection(day)\"\n                 [class.endSelection]=\"isEndSelection(day)\"\n                 [class.between]=\"isBetween(day)\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n    </div>\n  ",
+                    template: "\n    <div [class]=\"color\">\n      <ng-template [ngIf]=\"!_isRange\" [ngIfElse]=\"rangeBox\">\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n\n      <ng-template #rangeBox>\n        <div class=\"days-box\">\n          <ng-template ngFor let-day [ngForOf]=\"month.days\" [ngForTrackBy]=\"trackByTime\">\n            <div class=\"days\"\n                 [class.startSelection]=\"isStartSelection(day)\"\n                 [class.endSelection]=\"isEndSelection(day)\"\n                 [class.between]=\"isBetween(day)\">\n              <ng-container *ngIf=\"day\">\n                <button type='button'\n                        [class]=\"'days-btn ' + day.cssClass\"\n                        [class.today]=\"day.isToday\"\n                        (click)=\"onSelected(day)\"\n                        [class.marked]=\"day.marked\"\n                        [class.on-selected]=\"isSelected(day.time)\"\n                        [disabled]=\"day.disable\">\n                  <p>{{day.title}}</p>\n                  <small *ngIf=\"day.subTitle\">{{day?.subTitle}}</small>\n                </button>\n              </ng-container>\n\n            </div>\n          </ng-template>\n        </div>\n      </ng-template>\n    </div>\n  ",
                 },] },
     ];
     /** @nocollapse */

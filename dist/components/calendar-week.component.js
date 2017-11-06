@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { defaults } from "../config";
 var CalendarWeekComponent = /** @class */ (function () {
     function CalendarWeekComponent() {
-        this._weekArray = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        this._weekArray = defaults.WEEKS_FORMAT;
         this._weekStart = 0;
-        this.color = 'primary';
+        this.color = defaults.COLOR;
     }
     Object.defineProperty(CalendarWeekComponent.prototype, "weekArray", {
         set: function (value) {

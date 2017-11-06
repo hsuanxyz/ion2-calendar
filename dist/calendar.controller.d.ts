@@ -13,7 +13,13 @@ export declare class CalendarController {
      * @returns {any}
      */
     openCalendar(calendarOptions: CalendarModalOptions, modalOptions?: ModalOptions): any;
+    /**
+     * @deprecated
+     */
     setHistory(param: any): void;
+    /**
+     * @deprecated
+     */
     getHistory(id: any): Object;
     removeHistory(id: any): void;
 }

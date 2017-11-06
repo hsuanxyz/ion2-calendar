@@ -35,7 +35,6 @@ export interface DayConfig {
 export declare class PrivateCalendarOptions {
     start: number;
     end: number;
-    isRadio: boolean;
     pickMode: string;
     monthFormat: string;
     range_beg: number;
@@ -68,7 +67,7 @@ export interface CalendarModalOptions extends CalendarOptions {
         from: DefaultDate;
         to?: DefaultDate;
     } | null;
-    countNextMonths?: number;
+    step?: number;
     /**
      * @deprecated this version notwork
      */

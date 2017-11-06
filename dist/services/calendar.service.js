@@ -1,41 +1,42 @@
 import { Injectable } from '@angular/core';
 import { isBoolean } from "ionic-angular/util/util";
 import * as moment from 'moment';
+import { defaults, pickModes } from "../config";
 var CalendarService = /** @class */ (function () {
     function CalendarService() {
     }
     CalendarService.prototype.safeOpt = function (calendarOptions) {
         var _disableWeeks = [];
         var _daysConfig = [];
-        var _a = calendarOptions || {}, _b = _a.autoDone, autoDone = _b === void 0 ? false : _b, _c = _a.from, from = _c === void 0 ? new Date() : _c, _d = _a.to, to = _d === void 0 ? 0 : _d, _e = _a.cssClass, cssClass = _e === void 0 ? '' : _e, _f = _a.weekStart, weekStart = _f === void 0 ? 0 : _f, _g = _a.canBackwardsSelected, canBackwardsSelected = _g === void 0 ? false : _g, _h = _a.disableWeeks, disableWeeks = _h === void 0 ? _disableWeeks : _h, _j = _a.closeLabel, closeLabel = _j === void 0 ? 'CANCEL' : _j, _k = _a.closeIcon, closeIcon = _k === void 0 ? false : _k, _l = _a.doneLabel, doneLabel = _l === void 0 ? 'DONE' : _l, _m = _a.doneIcon, doneIcon = _m === void 0 ? false : _m, _o = _a.id, id = _o === void 0 ? '' : _o, _p = _a.pickMode, pickMode = _p === void 0 ? 'single' : _p, _q = _a.color, color = _q === void 0 ? 'primary' : _q, _r = _a.isSaveHistory, isSaveHistory = _r === void 0 ? false : _r, _s = _a.monthFormat, monthFormat = _s === void 0 ? 'MMM yyyy' : _s, _t = _a.title, title = _t === void 0 ? 'CALENDAR' : _t, _u = _a.defaultTitle, defaultTitle = _u === void 0 ? '' : _u, _v = _a.defaultSubtitle, defaultSubtitle = _v === void 0 ? '' : _v, _w = _a.weekdays, weekdays = _w === void 0 ? ['S', 'M', 'T', 'W', 'T', 'F', 'S'] : _w, _x = _a.daysConfig, daysConfig = _x === void 0 ? _daysConfig : _x, _y = _a.countNextMonths, countNextMonths = _y === void 0 ? 3 : _y, _z = _a.showYearPicker, showYearPicker = _z === void 0 ? false : _z;
+        var _a = calendarOptions || {}, _b = _a.from, from = _b === void 0 ? new Date() : _b, _c = _a.to, to = _c === void 0 ? 0 : _c, _d = _a.weekStart, weekStart = _d === void 0 ? 0 : _d, _e = _a.step, step = _e === void 0 ? 3 : _e, _f = _a.id, id = _f === void 0 ? '' : _f, _g = _a.cssClass, cssClass = _g === void 0 ? '' : _g, _h = _a.closeLabel, closeLabel = _h === void 0 ? 'CANCEL' : _h, _j = _a.doneLabel, doneLabel = _j === void 0 ? 'DONE' : _j, _k = _a.monthFormat, monthFormat = _k === void 0 ? 'MMM yyyy' : _k, _l = _a.title, title = _l === void 0 ? 'CALENDAR' : _l, _m = _a.defaultTitle, defaultTitle = _m === void 0 ? '' : _m, _o = _a.defaultSubtitle, defaultSubtitle = _o === void 0 ? '' : _o, _p = _a.autoDone, autoDone = _p === void 0 ? false : _p, _q = _a.canBackwardsSelected, canBackwardsSelected = _q === void 0 ? false : _q, _r = _a.closeIcon, closeIcon = _r === void 0 ? false : _r, _s = _a.doneIcon, doneIcon = _s === void 0 ? false : _s, _t = _a.showYearPicker, showYearPicker = _t === void 0 ? false : _t, _u = _a.isSaveHistory, isSaveHistory = _u === void 0 ? false : _u, _v = _a.pickMode, pickMode = _v === void 0 ? pickModes.SINGLE : _v, _w = _a.color, color = _w === void 0 ? defaults.COLOR : _w, _x = _a.weekdays, weekdays = _x === void 0 ? defaults.WEEKS_FORMAT : _x, _y = _a.daysConfig, daysConfig = _y === void 0 ? _daysConfig : _y, _z = _a.disableWeeks, disableWeeks = _z === void 0 ? _disableWeeks : _z;
         return {
-            defaultTitle: defaultTitle,
-            defaultSubtitle: defaultSubtitle,
-            autoDone: autoDone,
+            id: id,
             from: from,
             to: to,
+            pickMode: pickMode,
+            autoDone: autoDone,
+            color: color,
             cssClass: cssClass,
             weekStart: weekStart,
-            canBackwardsSelected: canBackwardsSelected,
             closeLabel: closeLabel,
             closeIcon: closeIcon,
             doneLabel: doneLabel,
             doneIcon: doneIcon,
-            id: id,
-            pickMode: pickMode,
-            color: color,
+            canBackwardsSelected: canBackwardsSelected,
             isSaveHistory: isSaveHistory,
-            defaultScrollTo: calendarOptions.defaultScrollTo || from,
-            defaultDate: calendarOptions.defaultDate || null,
-            defaultDates: calendarOptions.defaultDates || null,
-            defaultDateRange: calendarOptions.defaultDateRange || null,
             disableWeeks: disableWeeks,
             monthFormat: monthFormat,
             title: title,
             weekdays: weekdays,
             daysConfig: daysConfig,
-            countNextMonths: countNextMonths,
+            step: step,
             showYearPicker: showYearPicker,
+            defaultTitle: defaultTitle,
+            defaultSubtitle: defaultSubtitle,
+            defaultScrollTo: calendarOptions.defaultScrollTo || from,
+            defaultDate: calendarOptions.defaultDate || null,
+            defaultDates: calendarOptions.defaultDates || null,
+            defaultDateRange: calendarOptions.defaultDateRange || null,
         };
     };
     CalendarService.prototype.createOriginalCalendar = function (time) {
@@ -45,12 +46,12 @@ var CalendarService = /** @class */ (function () {
         var firstWeek = new Date(year, month, 1).getDay();
         var howManyDays = moment(time).daysInMonth();
         return {
-            time: time,
-            date: new Date(time),
             year: year,
             month: month,
             firstWeek: firstWeek,
             howManyDays: howManyDays,
+            time: time,
+            date: new Date(time),
         };
     };
     CalendarService.prototype.findDayConfig = function (day, opt) {
@@ -133,8 +134,8 @@ var CalendarService = /** @class */ (function () {
             }
         }
         return {
-            original: original,
             days: days,
+            original: original,
         };
     };
     CalendarService.prototype.createMonthsByPeriod = function (startTime, monthsNum, opt) {
@@ -148,34 +149,20 @@ var CalendarService = /** @class */ (function () {
         }
         return _array;
     };
-    CalendarService.prototype.getHistory = function (id) {
-        var _savedDatesCache = localStorage.getItem("ion-calendar-" + id);
-        var _savedDates;
-        if (_savedDatesCache === 'undefined' || _savedDatesCache === 'null' || !_savedDatesCache) {
-            _savedDates = [null, null];
-        }
-        else {
-            _savedDates = JSON.parse(_savedDatesCache);
-        }
-        return _savedDates;
-    };
-    CalendarService.prototype.savedHistory = function (savedDates, id) {
-        localStorage.setItem("ion-calendar-" + id, JSON.stringify(savedDates));
-    };
     CalendarService.prototype.wrapResult = function (original, pickMode) {
         var _this = this;
         var result;
         switch (pickMode) {
-            case 'single':
+            case pickModes.SINGLE:
                 result = this.multiFormat(original[0].time);
                 break;
-            case 'range':
+            case pickModes.RANGE:
                 result = {
                     from: this.multiFormat(original[0].time),
                     to: this.multiFormat(original[1].time),
                 };
                 break;
-            case 'multi':
+            case pickModes.MULTI:
                 result = original.map(function (e) { return _this.multiFormat(e.time); });
                 break;
             default:
@@ -189,7 +176,7 @@ var CalendarService = /** @class */ (function () {
             time: _moment.valueOf(),
             unix: _moment.unix(),
             dateObj: _moment.toDate(),
-            string: _moment.format('YYYY-MM-DD'),
+            string: _moment.format(defaults.DATE_FORMAT),
             years: _moment.year(),
             months: _moment.month() + 1,
             date: _moment.date()
