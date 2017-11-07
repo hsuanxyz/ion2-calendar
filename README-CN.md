@@ -6,6 +6,7 @@
 [![MIT License][license-image]][license-url]
 
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
+![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-1.png?raw=true)
 
 - 支持日期范围
 - 支持多选
