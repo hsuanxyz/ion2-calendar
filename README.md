@@ -7,7 +7,9 @@
 
 
 ![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar.png?raw=true)
-![date](https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-1.png?raw=true)
+<p align="center">
+    <img width="800" src="https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-1.png?raw=true">
+</p>
 
 > English is not my native language; please excuse typing errors.
 [中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
