@@ -232,7 +232,7 @@ var CalendarComponent = /** @class */ (function () {
         return date;
     };
     CalendarComponent.prototype._monthFormat = function (date) {
-        return moment(date).format('MMM YYYY');
+        return moment(date).format(this._d.monthFormat);
     };
     CalendarComponent.decorators = [
         { type: Component, args: [{
