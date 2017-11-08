@@ -171,7 +171,7 @@ export class HomePage {
 | defaultTitle | string | ''          | 每天的默认标题            |
 | defaultSubtitle | string | ''          | 每天的默认副标题            |
 | disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
-| monthFormat      | string        | `'MMM yyyy'`  | 标题格式  |
+| monthFormat      | string        | `'MMM YYYY'`  | 标题格式  |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 每周显示文本 |
 | weekStart    | number        | `0` (0 or 1)           | 每周从星期几开始 |
 | daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
@@ -285,10 +285,24 @@ export class HomePage {
 
 ### 本地化
 
+你的根模块
+
+```typescript
+import { NgModule, LOCALE_ID } from '@angular/core';
+...
+
+@NgModule({
+  ...
+  providers: [{ provide: LOCALE_ID, useValue: "zh-CN" }]
+})
+
+...
+```
+
 ```typescript
  openCalendar() {
     const options: CalendarModalOptions = {
-      monthFormat: 'yyyy 年 MM 月 ',
+      monthFormat: 'YYYY 年 MM 月 ',
       weekdays: ['天', '一', '二', '三', '四', '五', '六'],
       weekStart: 1,
       defaultDate: new Date()
@@ -363,7 +377,7 @@ openCalendar() {
 | doneLabel      | string        | `DONE`      | 完成按钮标题 |
 | closeIcon      | boolean        | `false`      | 使用关闭图标按钮 |
 | doneIcon      | boolean        | `false`      | 使用完成图标按钮  |
-| monthFormat      | string        | `'MMM yyyy'`  | 月份显示格式  |
+| monthFormat      | string        | `'MMM YYYY'`  | 月份显示格式  |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 星期标题 |
 | weekStart    | number        | `0` (0 or 1)           | 设置每周开始时间 |
 | daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |

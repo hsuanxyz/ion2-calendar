@@ -30,7 +30,7 @@ export class CalendarService {
       cssClass = '',
       closeLabel = 'CANCEL',
       doneLabel = 'DONE',
-      monthFormat = 'MMM yyyy',
+      monthFormat = 'MMM YYYY',
       title = 'CALENDAR',
       defaultTitle = '',
       defaultSubtitle = '',
