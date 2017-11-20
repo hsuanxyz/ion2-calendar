@@ -20,8 +20,9 @@ page-home {
 
 .my-cal {
   button.days-btn.my-day {
-    p, small {
-      color: red;
+    small {
+      color: #fff;
+      background-color: red;
     }
   }
 }

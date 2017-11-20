@@ -226,7 +226,7 @@ export class HomePage {
 
   daysConfig() {
     let _daysConfig: DayConfig[] = [];
-    for (let i = 0; i < 31; i++) {
+    for (let i = 1; i < 30; i++) {
       _daysConfig.push({
         date: new Date(2017, 0, i + 1),
         subTitle: `$${i + 1}`
@@ -238,8 +238,8 @@ export class HomePage {
       subTitle: 'disable',
     });
     _daysConfig.push({
-      date: new Date(2017, 1, 2),
-      subTitle: 'cssClass',
+      date: new Date(2017, 0, 1),
+      subTitle: 'New Year\'s',
       cssClass: 'my-day'
     });
     const options: CalendarModalOptions = {
