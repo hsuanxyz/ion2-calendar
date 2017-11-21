@@ -62,6 +62,7 @@
       </ion-card-title>
       <ion-calendar [(ngModel)]="dateMulti"
                     [options]="optionsMulti"
+                    (onChange)="onChange($event)"
                     [format]="format">
       </ion-calendar>
       <p>{{dateMulti | json}}</p>

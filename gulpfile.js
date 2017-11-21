@@ -2,7 +2,7 @@ var gulp = require('gulp');
 
 var TEMP_PATH = './_temp';
 var DIST_PATH = './dist';
-var SRC_PATH = './src/src/components/ion2-calendar';
+var SRC_PATH = './lib/src/components/ion2-calendar';
 
 gulp.task('src2temp', function() {
     gulp.src( SRC_PATH + '/**/**').pipe(gulp.dest(TEMP_PATH));

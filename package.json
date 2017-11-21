@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clear": "rm -rf aot _temp",
     "build": "npm run lint && rm -rf dist && npm run clear && gulp src2temp && npm run ngc && gulp copy-scss && npm run clear",
-    "lint": "tslint -c tslint.json src/src/components/**/*.ts"
+    "lint": "tslint -c tslint.json lib/src/components/**/*.ts"
   },
   "repository": {
     "type": "git",

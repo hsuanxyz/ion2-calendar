@@ -20,9 +20,12 @@ export class HomePage {
   dateMulti = [];
   dateRangeObj = { from: moment().format('YYYY-MM-DD'), to: moment().add(3, 'd').format('YYYY-MM-DD') };
   format = 'YYYY-MM-DD';
-  optionsBasic: CalendarComponentOptions = { };
+  optionsBasic: CalendarComponentOptions = {
+    color: 'secondary'
+  };
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
+    color: 'light',
     defaultSubtitle: 'hello',
     monthPickerFormat: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
   };
@@ -37,6 +40,10 @@ export class HomePage {
               public modalCtrl: ModalController,
               public calendarCtrl: CalendarController,) {
 
+    const localDate = localStorage.getItem('my_date');
+    if (localDate) {
+      this.dateMulti = JSON.parse(localDate);
+    }
   }
 
   basic() {
@@ -81,6 +88,11 @@ export class HomePage {
         }
       ]
     }
+    console.log($event)
+  }
+
+  onChange($event) {
+    localStorage.setItem('my_date', JSON.stringify($event));
     console.log($event)
   }
 

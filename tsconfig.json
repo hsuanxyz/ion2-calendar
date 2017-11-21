@@ -15,7 +15,7 @@
     "lazyload-demo",
     "dist",
     "demo",
-    "src",
+    "lib",
     "aot"
   ],
   "include": [
