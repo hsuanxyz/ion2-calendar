@@ -25,16 +25,14 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <ng-template [ngIf]="_showMonthPicker ? _showMonthPicker || !readonly : false" [ngIfElse]="title">
+      <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
         <button type="button"
                 ion-button
                 clear
                 class="switch-btn"
-                [disabled]="readonly"
                 (click)="switchView()">
           {{_monthFormat(monthOpt.original.time)}}
-          <ion-icon *ngIf="!readonly"
-                    class="arrow-dropdown"
+          <ion-icon class="arrow-dropdown"
                     [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
         </button>
       </ng-template>
@@ -44,11 +42,10 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
         </div>
       </ng-template>
       <ng-template [ngIf]="_showToggleButtons">
-        <button type='button' ion-button clear class="back" [disabled]="!canBack() || readonly" (click)="prev()">
+        <button type='button' ion-button clear class="back" [disabled]="!canBack()" (click)="prev()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
-        <button type='button' ion-button clear class="forward" [disabled]="!canNext() || readonly"
-                (click)="next()">
+        <button type='button' ion-button clear class="forward" [disabled]="!canNext()" (click)="next()">
           <ion-icon name="ios-arrow-forward"></ion-icon>
         </button>
       </ng-template>
@@ -262,7 +259,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   swipeEvent($event: any) {
-    if (this.readonly) return;
     const isNext = $event.deltaX < 0;
     if (isNext && this.canNext()) {
       this.nextMonth();
