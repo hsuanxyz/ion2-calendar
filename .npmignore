@@ -20,6 +20,7 @@ package-lock.json
 demo/
 lazyload-demo/
 src/
+lib/
 node_modules/
 aot/
 tslint.json/
