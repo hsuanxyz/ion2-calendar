@@ -258,6 +258,6 @@ export class CalendarModal {
   }
 
   _monthFormat(date: any): string {
-    return moment(date).format(this._d.monthFormat)
+    return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
   }
 }
