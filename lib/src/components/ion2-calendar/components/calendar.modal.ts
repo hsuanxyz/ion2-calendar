@@ -42,7 +42,7 @@ import { pickModes } from "../config";
                  [ngClass]="{'multi-selection': _d.pickMode === 'multi'}">
 
       <div #months>
-        <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByTime" let-i="index">
+        <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByIndex" let-i="index">
           <div class="month-box" [attr.id]="'month-' + i">
             <h4 class="text-center month-title">{{_monthFormat(month.original.date)}}</h4>
             <ion-calendar-month [month]="month"
@@ -259,5 +259,9 @@ export class CalendarModal {
 
   _monthFormat(date: any): string {
     return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
+  }
+
+  trackByIndex(moment: CalendarMonth, index: number) {
+    return index;
   }
 }
