@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
 import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
@@ -81,7 +81,7 @@ export class CalendarModal {
   _s: boolean = true;
   _d: CalendarModalOptions;
 
-  constructor(private _renderer: Renderer,
+  constructor(private _renderer: Renderer2,
               public _elementRef: ElementRef,
               public params: NavParams,
               public viewCtrl: ViewController,
@@ -144,7 +144,7 @@ export class CalendarModal {
     let { cssClass } = this._d;
     if (cssClass) {
       cssClass.split(' ').forEach((cssClass: string) => {
-        if (cssClass.trim() !== '') this._renderer.setElementClass(this._elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') this._renderer.addClass(this._elementRef.nativeElement, cssClass);
       });
     }
   }
