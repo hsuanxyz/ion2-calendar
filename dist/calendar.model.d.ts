@@ -85,6 +85,7 @@ export interface CalendarOptions {
     defaultTitle?: string;
     defaultSubtitle?: string;
     daysConfig?: Array<DayConfig>;
+    pins?: Array<string>;
 }
 export interface CalendarComponentOptions extends CalendarOptions {
     showToggleButtons?: boolean;

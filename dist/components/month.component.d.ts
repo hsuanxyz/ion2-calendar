@@ -4,12 +4,14 @@ import { CalendarDay, CalendarMonth, PickMode } from '../calendar.model';
 export declare const MONTH_VALUE_ACCESSOR: any;
 export declare class MonthComponent implements ControlValueAccessor, AfterViewInit {
     ref: ChangeDetectorRef;
+    private _pins;
     month: CalendarMonth;
     pickMode: PickMode;
     isSaveHistory: boolean;
     id: any;
     readonly: boolean;
     color: string;
+    pins: number[];
     onChange: EventEmitter<any>;
     _date: Array<CalendarDay | null>;
     _isInit: boolean;
@@ -22,6 +24,9 @@ export declare class MonthComponent implements ControlValueAccessor, AfterViewIn
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     trackByTime(index: number, item: any): any;
+    isEndPin(day: CalendarDay): boolean;
+    isBetweenPin(day: CalendarDay): boolean;
+    isStartPin(day: CalendarDay): boolean;
     isEndSelection(day: CalendarDay): boolean;
     isBetween(day: CalendarDay): boolean;
     isStartSelection(day: CalendarDay): boolean;

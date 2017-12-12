@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { NavParams, ViewController, Content } from 'ionic-angular';
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
@@ -62,7 +62,7 @@ var CalendarModal = /** @class */ (function () {
         if (cssClass) {
             cssClass.split(' ').forEach(function (cssClass) {
                 if (cssClass.trim() !== '')
-                    _this._renderer.setElementClass(_this._elementRef.nativeElement, cssClass, true);
+                    _this._renderer.addClass(_this._elementRef.nativeElement, cssClass);
             });
         }
     };
@@ -162,15 +162,18 @@ var CalendarModal = /** @class */ (function () {
     CalendarModal.prototype._monthFormat = function (date) {
         return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'));
     };
+    CalendarModal.prototype.trackByIndex = function (moment, index) {
+        return index;
+    };
     CalendarModal.decorators = [
         { type: Component, args: [{
                     selector: 'ion-calendar-modal',
-                    template: "\n    <ion-header>\n      <ion-navbar [color]=\"_d.color\">\n\n        <ion-buttons start>\n          <button type='button' ion-button icon-only clear (click)=\"onCancel()\">\n            <span *ngIf=\"_d.closeLabel !== '' && !_d.closeIcon\">{{_d.closeLabel}}</span>\n            <ion-icon *ngIf=\"_d.closeIcon\" name=\"close\"></ion-icon>\n          </button>\n        </ion-buttons>\n\n        <ion-title>{{_d.title}}</ion-title>\n\n        <ion-buttons end>\n          <button type='button' ion-button icon-only *ngIf=\"!_d.autoDone\" clear [disabled]=\"!canDone()\" (click)=\"done()\">\n            <span *ngIf=\"_d.doneLabel !== '' && !_d.doneIcon\">{{_d.doneLabel}}</span>\n            <ion-icon *ngIf=\"_d.doneIcon\" name=\"checkmark\"></ion-icon>\n          </button>\n\n        </ion-buttons>\n\n      </ion-navbar>\n\n      <ion-calendar-week\n        [color]=\"_d.color\"\n        [weekArray]=\"_d.weekdays\"\n        [weekStart]=\"_d.weekStart\">\n      </ion-calendar-week>\n\n    </ion-header>\n\n    <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\"\n                 [ngClass]=\"{'multi-selection': _d.pickMode === 'multi'}\">\n\n      <div #months>\n        <ng-template ngFor let-month [ngForOf]=\"calendarMonths\" [ngForTrackBy]=\"trackByTime\" let-i=\"index\">\n          <div class=\"month-box\" [attr.id]=\"'month-' + i\">\n            <h4 class=\"text-center month-title\">{{_monthFormat(month.original.date)}}</h4>\n            <ion-calendar-month [month]=\"month\"\n                                [pickMode]=\"_d.pickMode\"\n                                [isSaveHistory]=\"_d.isSaveHistory\"\n                                [id]=\"_d.id\"\n                                [color]=\"_d.color\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"datesTemp\">\n\n            </ion-calendar-month>\n          </div>\n        </ng-template>\n\n      </div>\n\n      <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n        <ion-infinite-scroll-content></ion-infinite-scroll-content>\n      </ion-infinite-scroll>\n\n    </ion-content>\n  ",
+                    template: "\n    <ion-header>\n      <ion-navbar [color]=\"_d.color\">\n\n        <ion-buttons start>\n          <button type='button' ion-button icon-only clear (click)=\"onCancel()\">\n            <span *ngIf=\"_d.closeLabel !== '' && !_d.closeIcon\">{{_d.closeLabel}}</span>\n            <ion-icon *ngIf=\"_d.closeIcon\" name=\"close\"></ion-icon>\n          </button>\n        </ion-buttons>\n\n        <ion-title>{{_d.title}}</ion-title>\n\n        <ion-buttons end>\n          <button type='button' ion-button icon-only *ngIf=\"!_d.autoDone\" clear [disabled]=\"!canDone()\" (click)=\"done()\">\n            <span *ngIf=\"_d.doneLabel !== '' && !_d.doneIcon\">{{_d.doneLabel}}</span>\n            <ion-icon *ngIf=\"_d.doneIcon\" name=\"checkmark\"></ion-icon>\n          </button>\n\n        </ion-buttons>\n\n      </ion-navbar>\n\n      <ion-calendar-week\n        [color]=\"_d.color\"\n        [weekArray]=\"_d.weekdays\"\n        [weekStart]=\"_d.weekStart\">\n      </ion-calendar-week>\n\n    </ion-header>\n\n    <ion-content (ionScroll)=\"onScroll($event)\" class=\"calendar-page\"\n                 [ngClass]=\"{'multi-selection': _d.pickMode === 'multi'}\">\n\n      <div #months>\n        <ng-template ngFor let-month [ngForOf]=\"calendarMonths\" [ngForTrackBy]=\"trackByIndex\" let-i=\"index\">\n          <div class=\"month-box\" [attr.id]=\"'month-' + i\">\n            <h4 class=\"text-center month-title\">{{_monthFormat(month.original.date)}}</h4>\n            <ion-calendar-month [month]=\"month\"\n                                [pickMode]=\"_d.pickMode\"\n                                [isSaveHistory]=\"_d.isSaveHistory\"\n                                [id]=\"_d.id\"\n                                [color]=\"_d.color\"\n                                (onChange)=\"onChange($event)\"\n                                [(ngModel)]=\"datesTemp\">\n\n            </ion-calendar-month>\n          </div>\n        </ng-template>\n\n      </div>\n\n      <ion-infinite-scroll (ionInfinite)=\"nextMonth($event)\">\n        <ion-infinite-scroll-content></ion-infinite-scroll-content>\n      </ion-infinite-scroll>\n\n    </ion-content>\n  ",
                 },] },
     ];
     /** @nocollapse */
     CalendarModal.ctorParameters = function () { return [
-        { type: Renderer, },
+        { type: Renderer2, },
         { type: ElementRef, },
         { type: NavParams, },
         { type: ViewController, },

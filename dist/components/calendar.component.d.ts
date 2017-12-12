@@ -12,6 +12,7 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     _showToggleButtons: boolean;
     _showMonthPicker: boolean;
     monthOpt: CalendarMonth;
+    pins: number[];
     format: string;
     type: 'string' | 'js-date' | 'moment' | 'time' | 'object';
     readonly: boolean;
@@ -28,6 +29,7 @@ export declare class CalendarComponent implements ControlValueAccessor, OnInit {
     registerOnChange(fn: any): void;
     registerOnTouched(fn: any): void;
     createMonth(date: number): CalendarMonth;
+    createPins(ps: string[]): number[];
     switchView(): string;
     prev(): void;
     next(): void;

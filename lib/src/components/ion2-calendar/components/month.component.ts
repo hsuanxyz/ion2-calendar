@@ -17,7 +17,10 @@ export const MONTH_VALUE_ACCESSOR: any = {
       <ng-template [ngIf]="!_isRange" [ngIfElse]="rangeBox">
         <div class="days-box">
           <ng-template ngFor let-day [ngForOf]="month.days" [ngForTrackBy]="trackByTime">
-            <div class="days">
+            <div class="days"
+                 [class.startPins]="isStartPin(day)"
+                 [class.endPins]="isEndPin(day)"
+                 [class.betweenPins]="isBetweenPin(day)">
               <ng-container *ngIf="day">
                 <button type='button'
                         [class]="'days-btn ' + day.cssClass"
@@ -64,12 +67,23 @@ export const MONTH_VALUE_ACCESSOR: any = {
 })
 export class MonthComponent implements ControlValueAccessor, AfterViewInit {
 
+  private _pins: number[] = [];
+
   @Input() month: CalendarMonth;
   @Input() pickMode: PickMode;
   @Input() isSaveHistory: boolean;
   @Input() id: any;
   @Input() readonly = false;
   @Input() color: string = defaults.COLOR;
+  @Input()
+  set pins(ps: number[]) {
+    if (Array.isArray(ps) && ps.length > 1) {
+      this._pins = ps;
+    }
+  }
+  get pins(): number[] {
+    return this._pins;
+  }
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
 
@@ -82,7 +96,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     return this.pickMode === pickModes.RANGE
   }
 
-  constructor(public ref: ChangeDetectorRef,) {
+  constructor(public ref: ChangeDetectorRef, ) {
   }
 
   ngAfterViewInit() {
@@ -105,6 +119,36 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
 
   trackByTime(index: number, item: any) {
     return item ? item.time : index;
+  }
+
+  isEndPin(day: CalendarDay): boolean {
+    if (!day) return false;
+    if (this.pickMode === pickModes.RANGE || !this._isInit || !this.pins.length) {
+      return false;
+    }
+
+    return this.pins[1] === day.time && this.pins[1] !== null;
+  }
+
+  isBetweenPin(day: CalendarDay): boolean {
+    if (!day) return false;
+    if (this.pickMode === pickModes.RANGE || !this._isInit || !this.pins.length) {
+      return false;
+    }
+
+    const start = this.pins[0];
+    const end = this.pins[1];
+
+    return day.time < end && day.time > start;
+  }
+
+  isStartPin(day: CalendarDay): boolean {
+    if (!day) return false;
+    if (this.pickMode === pickModes.RANGE || !this._isInit || !this.pins.length) {
+      return false;
+    }
+
+    return this.pins[0] === day.time && this.pins[0] !== null;
   }
 
   isEndSelection(day: CalendarDay): boolean {
@@ -146,18 +190,23 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
 
     if (Array.isArray(this._date)) {
 
-      if (this.pickMode !== pickModes.MULTI) {
+      if (this.pickMode === pickModes.MULTI) {
+        return this._date.findIndex(e => e !== null && e.time === time) !== -1;
+      } else if (this.pickMode !== pickModes.SINGLE) {
         if (this._date[0] !== null) {
           return time === this._date[0].time
         }
-
-        if (this._date[1] !== null) {
-          return time === this._date[1].time
-        }
       } else {
-        return this._date.findIndex(e => e !== null && e.time === time) !== -1;
+        if (this._date[0] !== null) {
+          if (this._date[1] !== null) {
+            return time === this._date[0].time || time === this._date[1].time
+          } else {
+            return time === this._date[0].time
+          }
+        } else {
+          return false
+        }
       }
-
     } else {
       return false
     }
@@ -176,16 +225,18 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     if (this.pickMode === pickModes.RANGE) {
       if (this._date[0] === null) {
         this._date[0] = item;
-      } else if (this._date[1] === null) {
-        if (this._date[0].time < item.time) {
-          this._date[1] = item;
-        } else {
-          this._date[1] = this._date[0];
-          this._date[0] = item;
-        }
       } else {
-        this._date[0] = item;
-        this._date[1] = null;
+        if (this._date[1] === null) {
+          if (this._date[0].time < item.time) {
+            this._date[1] = item;
+          } else {
+            this._date[1] = this._date[0];
+            this._date[0] = item;
+          }
+        } else {
+          this._date[0] = item;
+          this._date[1] = null;
+        }
       }
       this.onChange.emit(this._date);
       return;

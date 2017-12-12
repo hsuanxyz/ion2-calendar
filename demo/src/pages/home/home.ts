@@ -20,22 +20,30 @@ export class HomePage {
   dateMulti = [];
   dateRangeObj: { from: string; to: string; };
   format = 'YYYY-MM-DD';
-  optionsBasic: CalendarComponentOptions = { };
+  optionsBasic: CalendarComponentOptions = {
+    color: 'light-blue-grey',
+    pins: ['2018-01-11', '2018-1-17']
+  };
+  // pins: string[] = ['2017-12-5', '2017-12-10'];
   optionsMulti: CalendarComponentOptions = {
     pickMode: 'multi',
     defaultSubtitle: 'heh',
     weekdays: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
-    weekStart: 1
+    weekStart: 1,
+    color: 'light-blue-grey',
+    pins: ['2018-01-11', '2018-1-17']
 
   };
   optionsRange: CalendarComponentOptions = {
-    from: new Date(2000, 0),
-    to: new Date(2020, 11, 31),
-    pickMode: 'range'
+    from: new Date(2017, 10, 1),
+    to: new Date(2018, 11, 31),
+    pickMode: 'range',
+    color: 'light-blue-grey',
+    pins: ['2018-01-11', '2018-1-17']
   };
 
   constructor(public navCtrl: NavController,
-              public modalCtrl: ModalController) {
+    public modalCtrl: ModalController) {
 
   }
 
@@ -84,7 +92,7 @@ export class HomePage {
       doneIcon: true,
       closeIcon: true
     };
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -100,10 +108,12 @@ export class HomePage {
     const options = {
       pickMode: 'multi',
       title: 'MULTI',
+      color: 'purple',
+      pins: ['2018-01-11', '2018-1-17'],
       defaultDates: [moment(), moment().add(1, 'd'), moment().add(2, 'd')]
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -119,10 +129,12 @@ export class HomePage {
       pickMode: 'range',
       title: 'RANGE',
       canBackwardsSelected: true,
-      color: 'danger'
+      color: 'danger',
+      pins: ['2018-01-11', '2018-1-17']
+
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -137,10 +149,10 @@ export class HomePage {
     const options: CalendarModalOptions = {
       from: new Date(2017, 1, 1),
       defaultScrollTo: new Date(2017, 4, 1),
-      defaultDate:  new Date(2017, 4, 1)
+      defaultDate: new Date(2017, 4, 1)
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -159,7 +171,7 @@ export class HomePage {
       autoDone: true
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -176,7 +188,7 @@ export class HomePage {
       to: new Date(2017, 2, 5),
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -193,7 +205,7 @@ export class HomePage {
       canBackwardsSelected: true,
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -213,7 +225,7 @@ export class HomePage {
       defaultDate: new Date()
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
@@ -249,7 +261,7 @@ export class HomePage {
       cssClass: 'my-cal',
     };
 
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
