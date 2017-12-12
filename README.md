@@ -229,13 +229,13 @@ Set pickMode to 'range'.
           pickMode: 'range',
           title: 'RANGE'
         };
-    
+
         let myCalendar = this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: { from: CalendarResult; to: CalendarResult }, type: string) => {
           console.log(date);
         });
@@ -252,13 +252,13 @@ Set pickMode to 'multi'.
           pickMode: 'multi',
           title: 'MULTI'
         };
-    
+
         let myCalendar =  this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: CalendarResult[], type: string) => {
           console.log(date);
         })
@@ -421,6 +421,13 @@ openCalendar() {
 | years         | number  |
 | months        | number  |
 | date          | number  |
+
+
+# Supported Pins range in calendar;
+ ![single-mode-0](./resources/sig1.jpeg)
+ ![single-mode-1](./resources/sig2.jpg)
+ ![single-mode-2](./resources/sig3.jpg)
+ ![mutli-mode-1](./resources/mtl1.jpg)
 
 # Contributing
 
