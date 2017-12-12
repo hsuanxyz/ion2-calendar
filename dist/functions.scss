@@ -1,11 +1,15 @@
 @function bindColors($color-value) {
-  @if ($color-value != cal-color) {
+  @if ($color-value !=cal-color) {
     @return color($colors, $color-value)
-  } @else {
-    @if (type-of(map-get($colors, $color-value)) != color) {
+  }
+  @else {
+    @if (type-of(map-get($colors, $color-value)) !=color) {
       @return #488aff
-    } @else {
+    }
+    @else {
       @return color($colors, $color-value)
     }
   }
 }
+
+@function onSelectedColor($background-color, $selectColor) {}

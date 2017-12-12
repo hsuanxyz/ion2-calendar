@@ -1,9 +1,9 @@
-page-home {
-
-}
+page-home {}
 
 .my-class {
-  .toolbar-background-md, .toolbar-background-ios, ion-calendar-week .week-title {
+  .toolbar-background-md,
+  .toolbar-background-ios,
+  ion-calendar-week .week-title {
     background-color: #424242;
   }
   .month-box {
@@ -12,7 +12,7 @@ page-home {
     h4 {
       color: #fff;
     }
-    button.days-btn > p {
+    button.days-btn>p {
       color: #fff;
     }
   }
@@ -23,6 +23,19 @@ page-home {
     small {
       color: #fff;
       background-color: red;
+    }
+  }
+  button.days-btn.HIGH {
+    background-color: rgba(232, 51, 46, 0.9) !important;
+    border-radius: 36px;
+    margin: 0 auto;
+    width: 36px;
+    &.marked p,
+    &.marked em {
+      color: #fff;
+    }
+    p {
+      color: #fff;
     }
   }
 }

@@ -88,7 +88,8 @@ export interface CalendarOptions {
   color?: string;
   defaultTitle?: string;
   defaultSubtitle?: string;
-  daysConfig?: Array<DayConfig>
+  daysConfig?: Array<DayConfig>;
+  pins?: Array<string>;
 }
 
 

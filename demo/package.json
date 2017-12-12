@@ -9,7 +9,7 @@
     "build": "ionic-app-scripts build",
     "lint": "ionic-app-scripts lint",
     "ionic:build": "ionic-app-scripts build",
-    "ionic:serve": "ionic-app-scripts serve"
+    "serve": "ionic-app-scripts serve"
   },
   "dependencies": {
     "@angular/common": "5.0.0",

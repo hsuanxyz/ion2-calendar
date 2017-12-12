@@ -43,11 +43,7 @@
       <ion-card-title>
         basic
       </ion-card-title>
-      <ion-calendar class="my-calendar"
-                    [(ngModel)]="date"
-                    [options]="optionsBasic"
-                    (monthChange)="monthChange($event)"
-                    [type]="'moment'">
+      <ion-calendar class="my-calendar" [(ngModel)]="date" [options]="optionsBasic" (monthChange)="monthChange($event)" [type]="'moment'">
       </ion-calendar>
       <p>{{date}}</p>
     </ion-card-content>
@@ -58,9 +54,7 @@
       <ion-card-title>
         multi
       </ion-card-title>
-      <ion-calendar [(ngModel)]="dateMulti"
-                    [options]="optionsMulti"
-                    type="time">
+      <ion-calendar [(ngModel)]="dateMulti" [options]="optionsMulti" type="time">
       </ion-calendar>
       <p>{{dateMulti | json}}</p>
     </ion-card-content>
@@ -71,9 +65,7 @@
       <ion-card-title>
         range
       </ion-card-title>
-      <ion-calendar [(ngModel)]="dateRangeObj"
-                    [options]="optionsRange"
-                    [format]="format">
+      <ion-calendar [(ngModel)]="dateRangeObj" [options]="optionsRange" [format]="format">
       </ion-calendar>
       <p>{{dateRangeObj | json}}</p>
     </ion-card-content>

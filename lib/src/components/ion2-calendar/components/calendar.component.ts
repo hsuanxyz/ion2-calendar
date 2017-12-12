@@ -50,7 +50,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
         </button>
       </ng-template>
     </div>
-    
+
     <ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
       <ion-calendar-week color="transparent"
                          [weekArray]="_d.weekdays"
@@ -63,6 +63,7 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
                           (onChange)="onChanged($event)"
                           (swipe)="swipeEvent($event)"
                           [pickMode]="_d.pickMode"
+                          [pins]= "pins"
                           [color]="_d.color">
       </ion-calendar-month>
     </ng-template>
@@ -85,6 +86,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _showToggleButtons = true;
   _showMonthPicker = true;
   monthOpt: CalendarMonth;
+  pins: number[];
 
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
@@ -95,9 +97,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   set options(value: CalendarComponentOptions) {
     this._options = value;
     this.initOpt();
-    if (this.monthOpt && this.monthOpt.original){
+    if (this.monthOpt && this.monthOpt.original) {
       this.monthOpt = this.createMonth(this.monthOpt.original.time);
     }
+    this.pins = this.createPins(value.pins);
   }
 
   get options(): CalendarComponentOptions {
@@ -150,6 +153,18 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   createMonth(date: number) {
     return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
+  }
+
+  createPins(ps: string[]): number[] {
+    if (!Array.isArray(ps) || ps.length < 2) {
+      return [];
+    }
+
+    let sortedPins = ps.sort().map((item) => {
+      return moment(item, 'YYYY-MM-DD').toDate().getTime();
+    });
+
+    return [sortedPins[0], sortedPins[sortedPins.length - 1]];
   }
 
   switchView() {
