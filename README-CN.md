@@ -11,6 +11,21 @@
     <img width="800" src="https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-1.png?raw=true">
 </p>
 
+
+### 新增支持显示range时间段 (在SINGLE、MUTLI模式下)
+ ![pins-demo](./resources/pins-demo.png)
+
+这种需求存在于需要标记出来一段时间，例如孕妇的当前孕周，月经周期中的安全期等...
+用法是在 options 添加pins属性，支持‘YYYY-MM-DD'字符串格式的时间段
+
+```typescript
+  options: CalendarComponentOptions = {
+    pickMode: 'single',  // single or mutli
+    pins: ['2018-01-10', '2018-01-17'] // not worked in range mode.
+  };
+```
+
+
 - 支持日期范围
 - 支持多选
 - 支持HTML组件
@@ -178,7 +193,7 @@ export class HomePage {
 
 # 模态框模式
 
-### 基本 
+### 基本
 
 引入 ion2-calendar 到你的组件控制器。
 
@@ -225,13 +240,13 @@ export class HomePage {
           pickMode: 'range',
           title: 'RANGE'
         };
-    
+
         let myCalendar = this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss(date => {
           console.log(date);
         });
@@ -248,13 +263,13 @@ export class HomePage {
           pickMode: 'multi',
           title: 'MULTI'
         };
-    
+
         let myCalendar =  this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss(date => {
           console.log(date);
         })

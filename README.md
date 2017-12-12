@@ -11,6 +11,19 @@
     <img width="800" src="https://github.com/HsuanXyz/hsuanxyz.github.io/blob/master/assets/ion2-calendar/calendar-1.png?raw=true">
 </p>
 
+
+### Support Pins a period of time in calendar
+ ![pins-demo](./resources/pins-demo.png)
+ marked a period of time, such as the current gestational week of a pregnant woman, the safety period in the menstrual cycle, etc.
+ usage, add 'pins' attributes to options, the yyyy-mm-dd string formatted times as the input.
+
+```typescript
+  options: CalendarComponentOptions = {
+    pickMode: 'single',  // single or mutli
+    pins: ['2018-01-10', '2018-01-17'] // not worked in range mode.
+  };
+```
+
 > English is not my native language; please excuse typing errors.
 [中文文档](https://github.com/HsuanXyz/ion2-calendar/blob/master/README-CN.md)
 
@@ -422,12 +435,6 @@ openCalendar() {
 | months        | number  |
 | date          | number  |
 
-
-# Supported Pins range in calendar;
- ![single-mode-0](./resources/sig1.jpeg)
- ![single-mode-1](./resources/sig2.jpg)
- ![single-mode-2](./resources/sig3.jpg)
- ![mutli-mode-1](./resources/mtl1.jpg)
 
 # Contributing
 
