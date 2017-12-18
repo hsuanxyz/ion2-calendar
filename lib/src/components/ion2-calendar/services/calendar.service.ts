@@ -79,19 +79,17 @@ export class CalendarService {
   }
 
   createOriginalCalendar(time: number): CalendarOriginal {
-
     const date = new Date(time);
     const year = date.getFullYear();
     const month = date.getMonth();
     const firstWeek = new Date(year, month, 1).getDay();
     const howManyDays = moment(time).daysInMonth();
-
     return {
       year,
       month,
       firstWeek,
       howManyDays,
-      time: time,
+      time: new Date(year, month, 1).getTime(),
       date: new Date(time),
     }
   }

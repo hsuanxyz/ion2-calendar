@@ -209,6 +209,10 @@ export class CalendarModal {
 
   backwardsMonth() {
     let first = this.calendarMonths[0];
+    if (first.original.time <= 0) {
+      this._d.canBackwardsSelected = false;
+      return;
+    }
     let firstTime = moment(first.original.time).subtract(1, 'M').valueOf();
     this.calendarMonths.unshift(...this.calSvc.createMonthsByPeriod(firstTime, 1, this._d));
     this.ref.detectChanges();

@@ -174,6 +174,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   prevYear() {
+    if (moment(this.monthOpt.original.time).year() === 1970) return;
     const backTime = moment(this.monthOpt.original.time).subtract(1, 'year').valueOf();
     this.monthOpt = this.createMonth(backTime);
   }
