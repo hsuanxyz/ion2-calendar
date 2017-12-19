@@ -4,7 +4,8 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  forwardRef
+  forwardRef,
+  Provider
 } from '@angular/core';
 
 import { CalendarMonth, CalendarModalOptions, CalendarComponentOptions, CalendarDay } from '../calendar.model'
@@ -14,7 +15,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as moment from 'moment';
 import { defaults, pickModes } from "../config";
 
-export const ION_CAL_VALUE_ACCESSOR: any = {
+export const ION_CAL_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => CalendarComponent),
   multi: true
@@ -50,7 +51,6 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
         </button>
       </ng-template>
     </div>
-    
     <ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
       <ion-calendar-week color="transparent"
                          [weekArray]="_d.weekdays"
@@ -74,23 +74,22 @@ export const ION_CAL_VALUE_ACCESSOR: any = {
                                  [month]="monthOpt">
       </ion-calendar-month-picker>
     </ng-template>
-  `,
+  `
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   _d: CalendarModalOptions;
   _options: CalendarComponentOptions;
   _view = 'days';
-  _calendarMonthValue: any[] = [null, null];
+  _calendarMonthValue: CalendarDay[] = [null, null];
   _showToggleButtons = true;
   _showMonthPicker = true;
   monthOpt: CalendarMonth;
-
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
   @Input() readonly = false;
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
-  @Output() monthChange: EventEmitter<any> = new EventEmitter();
+  @Output() onChange: EventEmitter<{}> = new EventEmitter();
+  @Output() monthChange: EventEmitter<{}> = new EventEmitter();
   @Input()
   set options(value: CalendarComponentOptions) {
     this._options = value;
@@ -129,7 +128,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._d = this.calSvc.safeOpt(this._options || {});
   }
 
-  writeValue(obj: any): void {
+  writeValue(obj: {}): void {
     if (obj) {
       this._writeValue(obj);
       if (this._calendarMonthValue[0]) {
@@ -140,11 +139,11 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: () => {}): void {
     this._onChanged = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => {}): void {
     this._onTouched = fn;
   }
 
@@ -222,7 +221,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(newMonth);
   }
 
-  onChanged($event: any[]) {
+  onChanged($event: CalendarDay[]) {
     switch (this._d.pickMode) {
       case pickModes.SINGLE:
         const date = this._handleType($event[0].time);

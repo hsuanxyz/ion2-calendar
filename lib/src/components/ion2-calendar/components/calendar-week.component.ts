@@ -9,7 +9,7 @@ import { defaults } from "../config";
         <li *ngFor="let w of _weekArray">{{w}}</li>
       </ul>
     </ion-toolbar>
-  `,
+  `
 })
 
 export class CalendarWeekComponent {

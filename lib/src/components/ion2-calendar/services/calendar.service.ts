@@ -44,7 +44,7 @@ export class CalendarService {
       color = defaults.COLOR,
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
-      disableWeeks = _disableWeeks,
+      disableWeeks = _disableWeeks
     } = calendarOptions || {};
 
     return {
@@ -74,7 +74,7 @@ export class CalendarService {
       defaultScrollTo: calendarOptions.defaultScrollTo || from,
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
-      defaultDateRange: calendarOptions.defaultDateRange || null,
+      defaultDateRange: calendarOptions.defaultDateRange || null
     }
   }
 
@@ -90,7 +90,7 @@ export class CalendarService {
       firstWeek,
       howManyDays,
       time: new Date(year, month, 1).getTime(),
-      date: new Date(time),
+      date: new Date(time)
     }
   }
 
@@ -115,7 +115,6 @@ export class CalendarService {
         isBetween = moment(_time).isBefore(_rangeBeg) ? false : isBetween;
       }
     } else if (_rangeBeg > 0 && _rangeEnd === 0) {
-
 
       if (!opt.canBackwardsSelected) {
         let _addTime = _time.add(1, 'day');
@@ -154,7 +153,7 @@ export class CalendarService {
       selected: false,
       marked: dayConfig ? dayConfig.marked || false : false,
       cssClass: dayConfig ? dayConfig.cssClass || '' : '',
-      disable: _disable,
+      disable: _disable
     }
   }
 
@@ -180,7 +179,7 @@ export class CalendarService {
 
     return {
       days,
-      original: original,
+      original: original
     }
 
   }
@@ -209,7 +208,7 @@ export class CalendarService {
       case pickModes.RANGE:
         result = {
           from: this.multiFormat(original[0].time),
-          to: this.multiFormat(original[1].time),
+          to: this.multiFormat(original[1].time)
         };
         break;
       case pickModes.MULTI:

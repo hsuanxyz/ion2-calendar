@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, AfterViewInit, } from '@angular/core';
+import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { CalendarDay, CalendarMonth, PickMode } from '../calendar.model'
 import { defaults, pickModes } from "../config";
@@ -6,7 +6,7 @@ import { defaults, pickModes } from "../config";
 export const MONTH_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => MonthComponent),
-  multi: true,
+  multi: true
 };
 
 @Component({
@@ -60,7 +60,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
         </div>
       </ng-template>
     </div>
-  `,
+  `
 })
 export class MonthComponent implements ControlValueAccessor, AfterViewInit {
 
@@ -82,7 +82,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     return this.pickMode === pickModes.RANGE
   }
 
-  constructor(public ref: ChangeDetectorRef,) {
+  constructor(public ref: ChangeDetectorRef) {
   }
 
   ngAfterViewInit() {

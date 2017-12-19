@@ -14,13 +14,14 @@ export function calendarController(modalCtrl: ModalController,
   declarations: CALENDAR_COMPONENTS,
   exports: CALENDAR_COMPONENTS,
   entryComponents: CALENDAR_COMPONENTS,
-  providers: [{
-    provide: CalendarController,
-    useFactory: calendarController,
-    deps: [ModalController, CalendarService],
-  }, CalendarService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [
+    CalendarService,
+    {
+      provide: CalendarController,
+      useFactory: calendarController,
+      deps: [ModalController, CalendarService]
+    }],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CalendarModule {
 }
-

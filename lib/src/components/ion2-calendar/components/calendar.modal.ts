@@ -64,7 +64,7 @@ import { pickModes } from "../config";
       </ion-infinite-scroll>
 
     </ion-content>
-  `,
+  `
 })
 export class CalendarModal {
 
@@ -107,7 +107,7 @@ export class CalendarModal {
     this.calendarMonths = this.calSvc.createMonthsByPeriod(
       moment(this._d.from).valueOf(),
       this.findInitMonthNumber(this._d.defaultScrollTo) + this.step,
-      this._d,
+      this._d
     );
 
   }
@@ -143,8 +143,8 @@ export class CalendarModal {
   findCssClass() {
     let { cssClass } = this._d;
     if (cssClass) {
-      cssClass.split(' ').forEach((cssClass: string) => {
-        if (cssClass.trim() !== '') this._renderer.addClass(this._elementRef.nativeElement, cssClass);
+      cssClass.split(' ').forEach((_class: string) => {
+        if (_class.trim() !== '') this._renderer.addClass(this._elementRef.nativeElement, _class);
       });
     }
   }

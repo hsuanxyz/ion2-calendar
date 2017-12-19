@@ -19,12 +19,12 @@ export interface CalendarDay {
   style?: {
     title?: string;
     subTitle?: string;
-  }
+  };
 }
 
 export class CalendarMonth {
   original: CalendarOriginal;
-  days: Array<CalendarDay | void>
+  days: Array<CalendarDay | void>;
 }
 
 export interface DayConfig {
@@ -88,9 +88,8 @@ export interface CalendarOptions {
   color?: string;
   defaultTitle?: string;
   defaultSubtitle?: string;
-  daysConfig?: Array<DayConfig>
+  daysConfig?: Array<DayConfig>;
 }
-
 
 export interface CalendarComponentOptions extends CalendarOptions {
   showToggleButtons?: boolean;

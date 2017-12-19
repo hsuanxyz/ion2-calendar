@@ -7,8 +7,6 @@ import { CalendarService } from './services/calendar.service';
 @Injectable()
 export class CalendarController {
 
-  isRadio: boolean;
-
   constructor(public modalCtrl: ModalController,
               public calSvc: CalendarService) {
   }
@@ -19,19 +17,18 @@ export class CalendarController {
    * @param {ModalOptions} modalOptions
    * @returns {any}
    */
-  openCalendar(calendarOptions: CalendarModalOptions, modalOptions: ModalOptions = {}): any {
-
+  openCalendar(calendarOptions: CalendarModalOptions, modalOptions: ModalOptions = {}): Promise<{}> {
 
     let options = this.calSvc.safeOpt(calendarOptions);
     let calendarModal = this.modalCtrl.create(CalendarModal, Object.assign({
-      options: options,
+      options: options
     }, options), modalOptions);
 
     calendarModal.present();
 
     return new Promise((resolve, reject) => {
 
-      calendarModal.onDidDismiss((data: any) => {
+      calendarModal.onDidDismiss((data: {}) => {
         if (data) {
           resolve(data);
         } else {
@@ -45,19 +42,19 @@ export class CalendarController {
   /**
    * @deprecated
    */
-  setHistory(param: any) {
+  setHistory(param: {}) {
     console.warn('setHistory deprecated');
   }
 
   /**
    * @deprecated
    */
-  getHistory(id: any): Object {
+  getHistory(id: {}): Object {
     console.warn('getHistory deprecated');
     return null;
   }
 
-  removeHistory(id: any) {
+  removeHistory(id: {}) {
     localStorage.removeItem(`ion-calendar-${id}`)
   }
 }
