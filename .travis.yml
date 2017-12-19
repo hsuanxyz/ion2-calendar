@@ -8,8 +8,8 @@ branches:
   - master
 
 env:
-  - TASK=build
   - TASK=lint
+  - TASK=build
 
 before_script:
   - npm install -g @angular/cli
