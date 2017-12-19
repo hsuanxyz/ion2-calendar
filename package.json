@@ -6,9 +6,9 @@
   "typings": "./dist/index.d.ts",
   "scripts": {
     "ngc": "ngc -p tsconfig.json",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "clear": "rm -rf aot _temp",
-    "build": "npm run lint && rm -rf dist && npm run clear && gulp src2temp && npm run ngc && gulp copy-scss && npm run clear",
+    "build": "rm -rf dist && npm run clear && gulp src2temp && npm run ngc && gulp copy-scss && npm run clear",
     "lint": "tslint -c tslint.json 'lib/src/components/**/*.ts'"
   },
   "repository": {
