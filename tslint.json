@@ -3,23 +3,85 @@
     "tslint-eslint-rules"
   ],
   "rules": {
+    "align": [
+      true,
+      "parameters",
+      "statements",
+      "members",
+      "elements"
+    ],
     "no-constant-condition": true,
-    "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
-    "no-conditional-assignment": true,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "never",
+        "singleline": "never"
+      }
+    ],
     "no-extra-boolean-cast": true,
-    "ter-no-irregular-whitespace": [true],
-    "ter-no-sparse-arrays": [true],
+    "ter-no-irregular-whitespace": [
+      true
+    ],
+    "ter-no-sparse-arrays": [
+      true
+    ],
     "valid-typeof": true,
     "triple-equals": true,
     "forin": true,
-    "no-multi-spaces": [
+    "no-angle-bracket-type-assertion": true,
+    "no-arg": true,
+    "no-bitwise": false,
+    "no-consecutive-blank-lines": true,
+    "no-console": [
       true,
-      {
-        "exceptions": { "PropertyAssignment": false, "OtherException": "true|false" }
-      }
+      "debug",
+      "info",
+      "time",
+      "timeEnd",
+      "trace"
     ],
-    "no-duplicate-variable": true,
-    "no-unused-variable": true,
+    "no-conditional-assignment": true,
+    "no-construct": true,
+    "no-debugger": true,
+    "no-duplicate-imports": true,
+    "no-duplicate-super": true,
+    "no-empty": [
+      false,
+      "allow-empty-catch"
+    ],
+    "no-empty-interface": true,
+    "no-eval": true,
+    "no-floating-promises": true,
+    "no-for-in-array": true,
+    "no-import-side-effect": true,
+    "no-inferrable-types": [
+      true,
+      "ignore-params",
+      "ignore-properties"
+    ],
+    "no-implicit-dependencies": true,
+    "no-invalid-template-strings": true,
+    "no-invalid-this": true,
+    "no-irregular-whitespace": true,
+    "no-magic-numbers": false,
+    "no-misused-new": true,
+    "no-namespace": [
+      true,
+      "allow-declarations"
+    ],
+    "no-non-null-assertion": true,
+    "no-shadowed-variable": true,
+    "no-sparse-arrays": true,
+    "no-string-literal": true,
+    "no-string-throw": true,
+    "no-switch-case-fall-through": true,
+    "no-this-assignment": true,
+    "no-trailing-whitespace": true,
+    "no-parameter-reassignment": true,
+    "no-unnecessary-initializer": true,
+    "no-unused-expression": true,
+    "no-use-before-declare": true,
+    "no-var-keyword": true,
     "block-spacing": [
       true,
       "always"
@@ -32,8 +94,12 @@
         "allowSingleLine": true
       }
     ],
-    "indent": [true, "spaces"],
-    "ter-arrow-spacing": [true],
-    "no-var-keyword": true
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "ter-arrow-spacing": [
+      true
+    ]
   }
 }
