@@ -1,6 +1,5 @@
 .*.swp
 ._*
-.DS_Store
 .git
 .idea
 .hg
@@ -16,12 +15,10 @@ README-v1.md
 .npmignore
 gulpfile.js
 tsconfig.json
-package-lock.json
 demo/
 lazyload-demo/
 src/
-lib/
 node_modules/
-aot/
 tslint.json/
 tsconfig.json/
+yarn.lock
