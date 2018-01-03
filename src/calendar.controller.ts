@@ -39,22 +39,4 @@ export class CalendarController {
 
   }
 
-  /**
-   * @deprecated
-   */
-  setHistory(param: {}) {
-    console.warn('setHistory deprecated');
-  }
-
-  /**
-   * @deprecated
-   */
-  getHistory(id: {}): Object {
-    console.warn('getHistory deprecated');
-    return null;
-  }
-
-  removeHistory(id: {}) {
-    localStorage.removeItem(`ion-calendar-${id}`)
-  }
 }

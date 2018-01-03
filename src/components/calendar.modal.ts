@@ -266,6 +266,6 @@ export class CalendarModal {
   }
 
   trackByIndex(moment: CalendarMonth, index: number) {
-    return index;
+    return moment.original ? moment.original.time : index;
   }
 }

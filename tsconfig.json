@@ -1,27 +1,33 @@
 {
   "compilerOptions": {
-    "module": "es2015",
-    "target": "es5",
-    "moduleResolution": "node",
-    "sourceMap": true,
+    "allowUnreachableCode": false,
     "declaration": true,
-    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "lib": ["dom", "es2015"],
-    "outDir": "./dist"
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "outDir": "dist",
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2015"
   },
-  "exclude": [
-    "node_modules",
-    "lazyload-demo",
-    "dist",
-    "demo",
-    "lib",
-    "aot"
-  ],
   "include": [
-    "_temp/**/*"
+    "src/**/*.ts"
   ],
-  "angularCompilerOptions": {
-    "genDir": "aot"
+  "exclude": [
+    "demo/",
+    "dist/",
+    "lazyload-demo/",
+    "node_modules",
+    "lib/"
+  ],
+  "compileOnSave": false,
+  "buildOnSave": false,
+  "atom": {
+    "rewriteTsconfig": false
   }
 }

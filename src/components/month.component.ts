@@ -82,8 +82,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     return this.pickMode === pickModes.RANGE
   }
 
-  constructor(public ref: ChangeDetectorRef) {
-  }
+  constructor(public ref: ChangeDetectorRef) { }
 
   ngAfterViewInit() {
     this._isInit = true;
