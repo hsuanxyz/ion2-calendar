@@ -6,77 +6,20 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
-
-  <ion-list>
-    <button ion-item (click)="basic()">
-      basic
-    </button>
-    <button ion-item (click)="multi()">
-      multi
-    </button>
-    <button ion-item (click)="dateRange()">
-      date range
-    </button>
-    <button ion-item (click)="local()">
-      local
-    </button>
-    <button ion-item (click)="disableWeekdays()">
-      disable weekdays
-    </button>
-    <button ion-item (click)="setDefaultDate()">
-      set default date
-    </button>
-    <button ion-item (click)="setCssClass()">
-      set css class
-    </button>
-    <button ion-item (click)="optional()">
-      set the optional range
-    </button>
-    <button ion-item (click)="daysConfig()">
-      days config
-    </button>
-
-  </ion-list>
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>
-        basic
-      </ion-card-title>
-      <ion-calendar class="my-calendar"
-                    [(ngModel)]="date"
-                    [options]="optionsBasic"
-                    (monthChange)="monthChange($event)"
-                    [type]="'moment'">
-      </ion-calendar>
-      <p>{{date}}</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>
-        multi
-      </ion-card-title>
-      <ion-calendar [(ngModel)]="dateMulti"
-                    [options]="optionsMulti"
-                    type="time">
-      </ion-calendar>
-      <p>{{dateMulti | json}}</p>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card>
-    <ion-card-content>
-      <ion-card-title>
-        range
-      </ion-card-title>
-      <ion-calendar [(ngModel)]="dateRangeObj"
-                    [options]="optionsRange"
-                    [format]="format">
-      </ion-calendar>
-      <p>{{dateRangeObj | json}}</p>
-    </ion-card-content>
-  </ion-card>
-
+<ion-content padding>
+  <h2>modal mode</h2>
+  <demo-modal-basic></demo-modal-basic>
+  <demo-modal-multi></demo-modal-multi>
+  <demo-modal-range></demo-modal-range>
+  <demo-modal-disable-week></demo-modal-disable-week>
+  <demo-modal-locale></demo-modal-locale>
+  <demo-modal-custom-style></demo-modal-custom-style>
+  <demo-modal-default-scroll></demo-modal-default-scroll>
+  <demo-modal-config-days></demo-modal-config-days>
+  <h2>component mode</h2>
+  <demo-basic></demo-basic>
+  <demo-multi></demo-multi>
+  <demo-range></demo-range>
+  <demo-options></demo-options>
 </ion-content>
+
