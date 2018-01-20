@@ -3,34 +3,40 @@ import { ModalController } from 'ionic-angular';
 
 import {
   CalendarModal,
+  CalendarModalOptions,
 } from '../ion2-calendar'
 
 @Component({
-  selector: 'demo-basic',
+  selector: 'demo-modal-basic',
   template: `
     <button ion-button (click)="openCalendar()">
       basic
     </button>
   `
 })
-export class ModalBasicComponent {
+export class DemoModalBasicComponent {
 
-  constructor(public modalCtrl: ModalController) { }
+  date: Date = new Date();
+
+  constructor(public modalCtrl: ModalController) {
+  }
 
   openCalendar() {
-    const options = {
+    const options: CalendarModalOptions = {
       title: 'BASIC',
-      canBackwardsSelected: true,
-      doneIcon: true,
-      closeIcon: true
+      defaultDate: this.date
     };
-    let myCalendar =  this.modalCtrl.create(CalendarModal, {
+
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
       options: options
     });
 
     myCalendar.present();
 
     myCalendar.onDidDismiss((date, type) => {
+      if (type === 'done') {
+        this.date = date.dateObj;
+      }
       console.log(date);
       console.log('type', type);
     })
