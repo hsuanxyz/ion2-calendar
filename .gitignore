@@ -1,4 +1,12 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea/
 node_modules/
+.sourcemaps/
+platforms/
+plugins/
+resources/
+dist/
+*/www/
+package-lock.json
 yarn.lock
+

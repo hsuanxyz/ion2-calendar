@@ -5,12 +5,13 @@
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",
   "scripts": {
-    "cp-scss": "gulp copy-scss",
-    "demo:build": "run-s build && cd ./demo && ionic build",
+    "start": "cd ./dev && ionic serve",
+    "clean:dist": "rm -rf dist",
     "demo:link": "npm link && cd ./demo && npm link ion2-calendar",
-    "demo:serve": "run-s build && cd ./demo && ionic serve",
+    "demo:serve": "cd ./demo && ionic serve",
+    "build": "run-s clean:dist build:ts && gulp copy-scss ",
     "build:ts": "tsc",
-    "build": "rm -rf dist && run-s build:ts cp-scss ",
+    "build:copy-sources": "gulp copy-sources",
     "test": "echo \"Error: no test specified\"",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
   },
