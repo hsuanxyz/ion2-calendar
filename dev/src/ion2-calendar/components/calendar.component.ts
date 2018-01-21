@@ -119,11 +119,14 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   initOpt() {
-    if (this._options && this._options.showToggleButtons === false) {
-      this._showToggleButtons = false;
+    if (this._options && typeof this._options.showToggleButtons === 'boolean') {
+      this._showToggleButtons = this._options.showToggleButtons;
     }
-    if (this._options && this._options.showMonthPicker === false) {
-      this._showMonthPicker = false;
+    if (this._options && typeof this._options.showMonthPicker === 'boolean') {
+      this._showMonthPicker = this._options.showMonthPicker;
+      if (this._view !== 'days' && !this._showMonthPicker) {
+        this._view = 'days';
+      }
     }
     this._d = this.calSvc.safeOpt(this._options || {});
   }
