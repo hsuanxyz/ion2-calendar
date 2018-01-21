@@ -72,6 +72,9 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   @Input() color: string = defaults.COLOR;
 
   @Output() onChange: EventEmitter<any> = new EventEmitter();
+  @Output() onSelect: EventEmitter<{}> = new EventEmitter();
+  @Output() onSelectStart: EventEmitter<{}> = new EventEmitter();
+  @Output() onSelectEnd: EventEmitter<{}> = new EventEmitter();
 
   _date: Array<CalendarDay | null> = [null, null];
   _isInit = false;
@@ -165,7 +168,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   onSelected(item: any) {
     if (this.readonly) return;
     item.selected = true;
-
+    this.onSelect.emit(item);
     if (this.pickMode === pickModes.SINGLE) {
       this._date[0] = item;
       this.onChange.emit(this._date);
@@ -175,15 +178,20 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     if (this.pickMode === pickModes.RANGE) {
       if (this._date[0] === null) {
         this._date[0] = item;
+        this.onSelectStart.emit(item);
       } else if (this._date[1] === null) {
         if (this._date[0].time < item.time) {
           this._date[1] = item;
+          this.onSelectEnd.emit(item);
         } else {
           this._date[1] = this._date[0];
+          this.onSelectEnd.emit(this._date[0]);
           this._date[0] = item;
+          this.onSelectStart.emit(item);
         }
       } else {
         this._date[0] = item;
+        this.onSelectStart.emit(item);
         this._date[1] = null;
       }
       this.onChange.emit(this._date);

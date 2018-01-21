@@ -62,6 +62,9 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                           [readonly]="readonly"
                           (onChange)="onChanged($event)"
                           (swipe)="swipeEvent($event)"
+                          (onSelect)="onSelect.emit($event)"
+                          (onSelectStart)="onSelectStart.emit($event)"
+                          (onSelectEnd)="onSelectEnd.emit($event)"
                           [pickMode]="_d.pickMode"
                           [color]="_d.color">
       </ion-calendar-month>
@@ -90,6 +93,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   @Input() readonly = false;
   @Output() onChange: EventEmitter<{}> = new EventEmitter();
   @Output() monthChange: EventEmitter<{}> = new EventEmitter();
+  @Output() onSelect: EventEmitter<{}> = new EventEmitter();
+  @Output() onSelectStart: EventEmitter<{}> = new EventEmitter();
+  @Output() onSelectEnd: EventEmitter<{}> = new EventEmitter();
+
   @Input()
   set options(value: CalendarComponentOptions) {
     this._options = value;
