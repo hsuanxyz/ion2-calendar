@@ -109,7 +109,7 @@ export class DemoOptionsComponent {
     }
   }
 
-  _changeWeekStart(weekStart: number) {
+  _changeWeekStart(weekStart: string) {
     this.options = {
       ...this.options,
       weekStart: parseInt(weekStart)
