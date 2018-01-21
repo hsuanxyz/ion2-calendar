@@ -6,7 +6,7 @@ import { defaults } from "../config";
   template: `
     <ion-toolbar class="week-toolbar" no-border-top>
       <ul [class]="'week-title ' + color">
-        <li *ngFor="let w of _weekArray">{{w}}</li>
+        <li *ngFor="let w of _displayWeekArray">{{w}}</li>
       </ul>
     </ion-toolbar>
   `
@@ -15,6 +15,7 @@ import { defaults } from "../config";
 export class CalendarWeekComponent {
 
   _weekArray: string[] = defaults.WEEKS_FORMAT;
+  _displayWeekArray: string[] = this._weekArray;
   _weekStart: number = 0;
   @Input() color: string = defaults.COLOR;
 
@@ -24,7 +25,7 @@ export class CalendarWeekComponent {
   @Input()
   set weekArray(value: string[]) {
     if (value && value.length === 7) {
-      this._weekArray = value.slice();
+      this._weekArray = [...value];
       this.adjustSort();
     }
   }
@@ -39,7 +40,11 @@ export class CalendarWeekComponent {
 
   adjustSort() {
     if (this._weekStart === 1) {
-      this._weekArray.push(this._weekArray.shift())
+      let cacheWeekArray = [...this._weekArray];
+      cacheWeekArray.push(cacheWeekArray.shift());
+      this._displayWeekArray = [...cacheWeekArray];
+    } else if (this._weekStart === 0) {
+      this._displayWeekArray = [...this._weekArray];
     }
   }
 
