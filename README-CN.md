@@ -158,6 +158,9 @@ export class HomePage {
 | --------------- | ------------- |  ----------- |
 | onChange         | EventEmitter|   模型被改变    |
 | monthChange      | EventEmitter |  月份被改变  |
+| onSelect         | EventEmitter |  点击天按钮  |
+| onSelectStart    | EventEmitter |  点击天按钮  |
+| onSelectEnd      | EventEmitter |  点击天按钮  |
 
 ### CalendarComponentOptions
 | Name            | Type          | Default       | Description |

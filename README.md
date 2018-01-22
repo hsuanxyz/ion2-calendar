@@ -160,7 +160,10 @@ export class HomePage {
 | Name            | Type          |  Description |
 | --------------- | ------------- |  ----------- |
 | onChange         | EventEmitter|   event for model change     |
-| monthChange      | EventEmitter |  event for month change  |
+| monthChange      | EventEmitter |  event for month change     |
+| onSelect         | EventEmitter |  event for click day-button  |
+| onSelectStart    | EventEmitter |  event for click day-button  |
+| onSelectEnd      | EventEmitter |  event for click day-button  |
 
 
 ### CalendarComponentOptions
