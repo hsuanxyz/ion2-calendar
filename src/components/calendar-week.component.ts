@@ -38,7 +38,7 @@ export class CalendarWeekComponent {
     }
   }
 
-  adjustSort() {
+  adjustSort(): void {
     if (this._weekStart === 1) {
       let cacheWeekArray = [...this._weekArray];
       cacheWeekArray.push(cacheWeekArray.shift());

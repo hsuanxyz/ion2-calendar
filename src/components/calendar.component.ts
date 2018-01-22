@@ -8,7 +8,10 @@ import {
   Provider
 } from '@angular/core';
 
-import { CalendarMonth, CalendarModalOptions, CalendarComponentOptions, CalendarDay } from '../calendar.model'
+import {
+  CalendarMonth, CalendarModalOptions, CalendarComponentOptions, CalendarDay,
+  CalendarComponentPayloadTypes, CalendarComponentMonthChange, CalendarComponentTypeProperty
+} from '../calendar.model'
 import { CalendarService } from "../services/calendar.service";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -83,25 +86,25 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   _d: CalendarModalOptions;
   _options: CalendarComponentOptions;
-  _view = 'days';
+  _view: 'month' | 'days' = 'days';
   _calendarMonthValue: CalendarDay[] = [null, null];
   _showToggleButtons = true;
   _showMonthPicker = true;
   monthOpt: CalendarMonth;
   @Input() format: string = defaults.DATE_FORMAT;
-  @Input() type: 'string' | 'js-date' | 'moment' | 'time' | 'object' = 'string';
+  @Input() type: CalendarComponentTypeProperty = 'string';
   @Input() readonly = false;
-  @Output() onChange: EventEmitter<{}> = new EventEmitter();
-  @Output() monthChange: EventEmitter<{}> = new EventEmitter();
-  @Output() onSelect: EventEmitter<{}> = new EventEmitter();
-  @Output() onSelectStart: EventEmitter<{}> = new EventEmitter();
-  @Output() onSelectEnd: EventEmitter<{}> = new EventEmitter();
+  @Output() onChange: EventEmitter<CalendarComponentPayloadTypes> = new EventEmitter();
+  @Output() monthChange: EventEmitter<CalendarComponentMonthChange> = new EventEmitter();
+  @Output() onSelect: EventEmitter<CalendarDay> = new EventEmitter();
+  @Output() onSelectStart: EventEmitter<CalendarDay> = new EventEmitter();
+  @Output() onSelectEnd: EventEmitter<CalendarDay> = new EventEmitter();
 
   @Input()
   set options(value: CalendarComponentOptions) {
     this._options = value;
     this.initOpt();
-    if (this.monthOpt && this.monthOpt.original){
+    if (this.monthOpt && this.monthOpt.original) {
       this.monthOpt = this.createMonth(this.monthOpt.original.time);
     }
   }
@@ -110,22 +113,21 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this._options;
   }
 
-  _onChanged: Function = () => { };
+  _onChanged: Function = () => {
+  };
 
-  _onTouched: Function = () => { };
+  _onTouched: Function = () => {
+  };
 
   constructor(public calSvc: CalendarService) {
   }
 
-  ionViewDidLoad() {
-  }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.initOpt();
     this.monthOpt = this.createMonth(new Date().getTime());
   }
 
-  initOpt() {
+  initOpt(): void {
     if (this._options && typeof this._options.showToggleButtons === 'boolean') {
       this._showToggleButtons = this._options.showToggleButtons;
     }
@@ -138,7 +140,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._d = this.calSvc.safeOpt(this._options || {});
   }
 
-  writeValue(obj: {}): void {
+  writeValue(obj: any): void {
     if (obj) {
       this._writeValue(obj);
       if (this._calendarMonthValue[0]) {
@@ -157,16 +159,15 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
-  createMonth(date: number) {
+  createMonth(date: number): CalendarMonth {
     return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
   }
 
-  switchView() {
+  switchView(): void {
     this._view = this._view === 'days' ? 'month' : 'days';
-    return this._view;
   }
 
-  prev() {
+  prev(): void {
     if (this._view === 'days') {
       this.backMonth();
     } else {
@@ -174,7 +175,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  next() {
+  next(): void {
     if (this._view === 'days') {
       this.nextMonth();
     } else {
@@ -182,18 +183,18 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  prevYear() {
+  prevYear(): void {
     if (moment(this.monthOpt.original.time).year() === 1970) return;
     const backTime = moment(this.monthOpt.original.time).subtract(1, 'year').valueOf();
     this.monthOpt = this.createMonth(backTime);
   }
 
-  nextYear() {
+  nextYear(): void {
     const nextTime = moment(this.monthOpt.original.time).add(1, 'year').valueOf();
     this.monthOpt = this.createMonth(nextTime);
   }
 
-  nextMonth() {
+  nextMonth(): void {
     const nextTime = moment(this.monthOpt.original.time).add(1, 'months').valueOf();
     this.monthChange.emit({
       oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
@@ -202,12 +203,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(nextTime);
   }
 
-  canNext() {
+  canNext(): boolean {
     if (!this._d.to || this._view !== 'days') return true;
     return this.monthOpt.original.time < moment(this._d.to).valueOf();
   }
 
-  backMonth() {
+  backMonth(): void {
     const backTime = moment(this.monthOpt.original.time).subtract(1, 'months').valueOf();
     this.monthChange.emit({
       oldMonth: this.calSvc.multiFormat(this.monthOpt.original.time),
@@ -216,12 +217,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(backTime);
   }
 
-  canBack() {
+  canBack(): boolean {
     if (!this._d.from || this._view !== 'days') return true;
     return this.monthOpt.original.time > moment(this._d.from).valueOf();
   }
 
-  monthOnSelect(month: number) {
+  monthOnSelect(month: number): void {
     this._view = 'days';
     const newMonth = moment(this.monthOpt.original.time).month(month).valueOf();
     this.monthChange.emit({
@@ -231,7 +232,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(newMonth);
   }
 
-  onChanged($event: CalendarDay[]) {
+  onChanged($event: CalendarDay[]): void {
     switch (this._d.pickMode) {
       case pickModes.SINGLE:
         const date = this._handleType($event[0].time);
@@ -268,7 +269,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  swipeEvent($event: any) {
+  swipeEvent($event: any): void {
     const isNext = $event.deltaX < 0;
     if (isNext && this.canNext()) {
       this.nextMonth();
@@ -277,7 +278,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  _writeValue(value: any) {
+  _writeValue(value: any): void {
     if (!value) return;
     switch (this._d.pickMode) {
       case 'single':
@@ -308,7 +309,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  _createCalendarDay(value: any): CalendarDay {
+  _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
     let date;
     if (this.type === 'string') {
       date = moment(value, this.format);
@@ -318,7 +319,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this.calSvc.createCalendarDay(date.valueOf(), this._d);
   }
 
-  _handleType(value: number): any {
+  _handleType(value: number): CalendarComponentPayloadTypes {
     let date = moment(value);
     switch (this.type) {
       case 'string':
@@ -335,7 +336,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return date;
   }
 
-  _monthFormat(date: any): string {
+  _monthFormat(date: number): string {
     return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
   }
 

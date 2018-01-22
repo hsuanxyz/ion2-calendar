@@ -36,17 +36,6 @@ export interface DayConfig {
   cssClass?: string;
 }
 
-export class PrivateCalendarOptions {
-  start: number;
-  end: number;
-  pickMode: string;
-  monthFormat: string;
-  range_beg: number;
-  range_end: number;
-  daysConfig: Array<DayConfig>;
-  disableWeeks: Array<number>
-}
-
 export interface ModalOptions {
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
@@ -107,6 +96,13 @@ export class CalendarResult {
   date: number;
 }
 
+export class CalendarComponentMonthChange {
+  oldMonth: CalendarResult;
+  newMonth: CalendarResult;
+}
+
 export type DefaultDate = Date | string | number | null;
 export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | string
 export type PickMode = 'multi' | 'single' | 'range'
+export type CalendarComponentTypeProperty = ('string' | 'js-date' | 'moment' | 'time' | 'object');
+export type CalendarComponentPayloadTypes = string | Date | number | {};

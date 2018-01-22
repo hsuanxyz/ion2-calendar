@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2 } from '@angular/core';
+import { Component, ViewChild, ElementRef, ChangeDetectorRef, Renderer2, OnInit } from '@angular/core';
 import { NavParams, ViewController, Content, InfiniteScroll } from 'ionic-angular';
 import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.model'
 import { CalendarService } from '../services/calendar.service';
@@ -66,12 +66,12 @@ import { pickModes } from "../config";
     </ion-content>
   `
 })
-export class CalendarModal {
+export class CalendarModal implements OnInit {
 
   @ViewChild(Content) content: Content;
   @ViewChild('months') monthsEle: ElementRef;
 
-  datesTemp: Array<CalendarDay | null> = [null, null];
+  datesTemp: Array<CalendarDay> = [null, null];
   calendarMonths: Array<CalendarMonth>;
   step: number;
   showYearPicker: boolean;
@@ -87,16 +87,19 @@ export class CalendarModal {
               public viewCtrl: ViewController,
               public ref: ChangeDetectorRef,
               public calSvc: CalendarService) {
+  }
+
+  ngOnInit(): void {
     this.init();
     this.initDefaultDate();
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad(): void {
     this.findCssClass();
     this.scrollToDefaultDate();
   }
 
-  init() {
+  init(): void {
     this._d = this.calSvc.safeOpt(this.params.get('options'));
 
     this.step = this._d.step;
@@ -112,7 +115,7 @@ export class CalendarModal {
 
   }
 
-  initDefaultDate() {
+  initDefaultDate(): void {
     const { pickMode, defaultDate, defaultDateRange, defaultDates } = this._d;
     switch (pickMode) {
       case pickModes.SINGLE:
@@ -140,7 +143,7 @@ export class CalendarModal {
     }
   }
 
-  findCssClass() {
+  findCssClass(): void {
     let { cssClass } = this._d;
     if (cssClass) {
       cssClass.split(' ').forEach((_class: string) => {
@@ -149,7 +152,7 @@ export class CalendarModal {
     }
   }
 
-  onChange(data: any) {
+  onChange(data: any): void {
     const { pickMode, autoDone } = this._d;
 
     this.datesTemp = data;
@@ -160,11 +163,11 @@ export class CalendarModal {
     }
   }
 
-  onCancel() {
+  onCancel(): void {
     this.viewCtrl.dismiss(null, 'cancel');
   }
 
-  done() {
+  done(): void {
     const { pickMode } = this._d;
 
     this.viewCtrl.dismiss(
@@ -191,7 +194,7 @@ export class CalendarModal {
     }
   }
 
-  nextMonth(infiniteScroll: InfiniteScroll) {
+  nextMonth(infiniteScroll: InfiniteScroll): void {
     this.infiniteScroll = infiniteScroll;
     let len = this.calendarMonths.length;
     let final = this.calendarMonths[len - 1];
@@ -207,7 +210,7 @@ export class CalendarModal {
     infiniteScroll.complete();
   }
 
-  backwardsMonth() {
+  backwardsMonth(): void {
     let first = this.calendarMonths[0];
     if (first.original.time <= 0) {
       this._d.canBackwardsSelected = false;
@@ -218,7 +221,7 @@ export class CalendarModal {
     this.ref.detectChanges();
   }
 
-  scrollToDefaultDate() {
+  scrollToDefaultDate(): void {
     let defaultDateIndex = this.findInitMonthNumber(this._d.defaultScrollTo);
     let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
 
@@ -228,7 +231,7 @@ export class CalendarModal {
     }, 300)
   }
 
-  onScroll($event: any) {
+  onScroll($event: any): void {
     if (!this._d.canBackwardsSelected) return;
     if ($event.scrollTop <= 200 && this._s) {
       this._s = !1;
@@ -265,7 +268,7 @@ export class CalendarModal {
     return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
   }
 
-  trackByIndex(moment: CalendarMonth, index: number) {
+  trackByIndex(index: number, moment: CalendarMonth): number {
     return moment.original ? moment.original.time : index;
   }
 }

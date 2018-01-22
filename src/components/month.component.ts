@@ -1,6 +1,6 @@
 import { Component, ChangeDetectorRef, Input, Output, EventEmitter, forwardRef, AfterViewInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CalendarDay, CalendarMonth, PickMode } from '../calendar.model'
+import { CalendarDay, CalendarMonth, CalendarOriginal, PickMode } from '../calendar.model'
 import { defaults, pickModes } from "../config";
 
 export const MONTH_VALUE_ACCESSOR: any = {
@@ -71,23 +71,23 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   @Input() readonly = false;
   @Input() color: string = defaults.COLOR;
 
-  @Output() onChange: EventEmitter<any> = new EventEmitter();
-  @Output() onSelect: EventEmitter<{}> = new EventEmitter();
-  @Output() onSelectStart: EventEmitter<{}> = new EventEmitter();
-  @Output() onSelectEnd: EventEmitter<{}> = new EventEmitter();
+  @Output() onChange: EventEmitter<CalendarDay[]> = new EventEmitter();
+  @Output() onSelect: EventEmitter<CalendarDay> = new EventEmitter();
+  @Output() onSelectStart: EventEmitter<CalendarDay> = new EventEmitter();
+  @Output() onSelectEnd: EventEmitter<CalendarDay> = new EventEmitter();
 
   _date: Array<CalendarDay | null> = [null, null];
   _isInit = false;
   _onChanged: Function;
   _onTouched: Function;
 
-  get _isRange() {
+  get _isRange(): boolean {
     return this.pickMode === pickModes.RANGE
   }
 
   constructor(public ref: ChangeDetectorRef) { }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this._isInit = true;
   }
 
@@ -105,7 +105,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     this._onTouched = fn;
   }
 
-  trackByTime(index: number, item: any) {
+  trackByTime(index: number, item: CalendarOriginal): number {
     return item ? item.time : index;
   }
 
@@ -165,7 +165,7 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  onSelected(item: any) {
+  onSelected(item: CalendarDay): void {
     if (this.readonly) return;
     item.selected = true;
     this.onSelect.emit(item);
