@@ -1,4 +1,5 @@
-var gulp = require('gulp');
+const gulp = require('gulp');
+const bump = require('gulp-bump');
 
 const paths = {
   dist: './dist',
@@ -9,6 +10,13 @@ const paths = {
 
 gulp.task('copy-sources', copySources);
 gulp.task('copy-scss', copyScss);
+gulp.task('bump', bumpVersions);
+
+function bumpVersions(options) {
+  return gulp.src([ './package.json'], {base: './'})
+  .pipe(bump(options))
+  .pipe(gulp.dest('./'));
+}
 
 function copySources() {
     gulp.src(`${paths.dve}/**/*`)

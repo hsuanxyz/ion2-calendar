@@ -9,8 +9,8 @@
     "clean:dist": "rm -rf dist",
     "demo:link": "npm link && cd ./demo && npm link ion2-calendar",
     "demo:serve": "cd ./demo && ionic serve",
-    "build": "run-s clean:dist build:ts && gulp copy-scss ",
-    "build:ts": "tsc",
+    "build": "run-s clean:dist build:copy-sources build:ts && gulp copy-scss ",
+    "build:ts": "tsc && ngc",
     "build:copy-sources": "gulp copy-sources",
     "test": "echo \"Error: no test specified\"",
     "lint": "tslint -c tslint.json 'src/**/*.ts'"
@@ -29,6 +29,7 @@
     "@angular/platform-browser": "4.4.6",
     "@angular/platform-browser-dynamic": "4.4.6",
     "gulp": "^3.9.1",
+    "gulp-bump": "^3.0.0",
     "ionic-angular": "3.7.1",
     "ionicons": "~3.0.0",
     "moment": "^2.19.1",
