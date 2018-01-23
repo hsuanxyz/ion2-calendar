@@ -13,6 +13,8 @@ export interface CalendarDay {
   selected: boolean;
   disable: boolean;
   cssClass: string;
+  isLastMonth?: boolean;
+  isNextMonth?: boolean;
   title?: string;
   subTitle?: string;
   marked?: boolean;
@@ -78,6 +80,10 @@ export interface CalendarOptions {
   defaultTitle?: string;
   defaultSubtitle?: string;
   daysConfig?: Array<DayConfig>;
+   /**
+  * show last month & next month days fill six weeks
+  */
+  showOtherMonthDay?: boolean;
 }
 
 export interface CalendarComponentOptions extends CalendarOptions {

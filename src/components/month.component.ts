@@ -24,6 +24,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.today]="day.isToday"
                         (click)="onSelected(day)"
                         [class.marked]="day.marked"
+                        [class.last-month-day]="day.isLastMonth"
+                        [class.next-month-day]="day.isNextMonth"
                         [class.on-selected]="isSelected(day.time)"
                         [disabled]="day.disable">
                   <p>{{day.title}}</p>
@@ -48,6 +50,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.today]="day.isToday"
                         (click)="onSelected(day)"
                         [class.marked]="day.marked"
+                        [class.last-month-day]="day.isLastMonth"
+                        [class.next-month-day]="day.isNextMonth"
                         [class.on-selected]="isSelected(day.time)"
                         [disabled]="day.disable">
                   <p>{{day.title}}</p>
