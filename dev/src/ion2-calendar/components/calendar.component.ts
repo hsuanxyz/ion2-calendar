@@ -341,7 +341,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   private _writeValue(value: any): void {
-    if (!value) return;
+    if (!value) {
+      this._calendarMonthValue = [null, null];
+      return;
+    }
 
     switch (this._d.pickMode) {
       case 'single':
@@ -350,10 +353,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
       case 'range':
         if (value.from) {
-          this._calendarMonthValue[0] = this._createCalendarDay(value.from);
+          this._calendarMonthValue[0] = value.from ? this._createCalendarDay(value.from) : null;
         }
         if (value.to) {
-          this._calendarMonthValue[1] =this._createCalendarDay(value.to);
+          this._calendarMonthValue[1] = value.to ? this._createCalendarDay(value.to) : null;
         }
         break;
 
