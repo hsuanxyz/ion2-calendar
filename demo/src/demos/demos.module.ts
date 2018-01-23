@@ -16,6 +16,7 @@ import { DemoMultiComponent } from "./demo-multi";
 import { DemoRangeComponent } from "./demo-range";
 import { DemoOptionsComponent } from "./demo-options";
 import { DemoEventsComponent } from "./demo-events";
+import { DemoMethodsComponent } from "./demo-methods";
 
 const COMPONENTS = [
   DemoModalBasicComponent,
@@ -30,7 +31,8 @@ const COMPONENTS = [
   DemoMultiComponent,
   DemoRangeComponent,
   DemoOptionsComponent,
-  DemoEventsComponent
+  DemoEventsComponent,
+  DemoMethodsComponent
 ];
 
 @NgModule({
