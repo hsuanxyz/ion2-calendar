@@ -84,13 +84,31 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
-  _d: CalendarModalOptions;
-  _options: CalendarComponentOptions;
-  _view: 'month' | 'days' = 'days';
-  _calendarMonthValue: CalendarDay[] = [null, null];
-  _showToggleButtons = true;
-  _showMonthPicker = true;
-  monthOpt: CalendarMonth;
+  private _d: CalendarModalOptions;
+  private _options: CalendarComponentOptions;
+  private _view: 'month' | 'days' = 'days';
+  private _calendarMonthValue: CalendarDay[] = [null, null];
+
+  private _showToggleButtons = true;
+  get showToggleButtons(): boolean {
+    return this._showToggleButtons;
+  }
+
+  set showToggleButtons(value: boolean) {
+    this._showToggleButtons = value;
+  }
+
+  private _showMonthPicker = true;
+  get showMonthPicker(): boolean {
+    return this._showMonthPicker;
+  }
+
+  set showMonthPicker(value: boolean) {
+    this._showMonthPicker = value;
+  }
+
+  private monthOpt: CalendarMonth;
+
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: CalendarComponentTypeProperty = 'string';
   @Input() readonly = false;
@@ -113,11 +131,6 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this._options;
   }
 
-  _onChanged: Function = () => {
-  };
-
-  _onTouched: Function = () => {
-  };
 
   constructor(public calSvc: CalendarService) {
   }
@@ -127,40 +140,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.monthOpt = this.createMonth(new Date().getTime());
   }
 
-  initOpt(): void {
-    if (this._options && typeof this._options.showToggleButtons === 'boolean') {
-      this._showToggleButtons = this._options.showToggleButtons;
-    }
-    if (this._options && typeof this._options.showMonthPicker === 'boolean') {
-      this._showMonthPicker = this._options.showMonthPicker;
-      if (this._view !== 'days' && !this._showMonthPicker) {
-        this._view = 'days';
-      }
-    }
-    this._d = this.calSvc.safeOpt(this._options || {});
+  getViewDate() {
+    return this._handleType(this.monthOpt.original.time);
   }
 
-  writeValue(obj: any): void {
-    if (obj) {
-      this._writeValue(obj);
-      if (this._calendarMonthValue[0]) {
-        this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
-      } else {
-        this.monthOpt = this.createMonth(new Date().getTime());
-      }
-    }
-  }
-
-  registerOnChange(fn: () => {}): void {
-    this._onChanged = fn;
-  }
-
-  registerOnTouched(fn: () => {}): void {
-    this._onTouched = fn;
-  }
-
-  createMonth(date: number): CalendarMonth {
-    return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
+  setViewDate(value: CalendarComponentPayloadTypes) {
+    this.monthOpt = this.createMonth(this._payloadToTimeNumber(value));
   }
 
   switchView(): void {
@@ -278,48 +263,48 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     }
   }
 
-  _writeValue(value: any): void {
-    if (!value) return;
-    switch (this._d.pickMode) {
-      case 'single':
-        this._calendarMonthValue[0] = this._createCalendarDay(value);
-        break;
+  _onChanged: Function = () => {
+  };
 
-      case 'range':
-        if (value.from) {
-          this._calendarMonthValue[0] = this._createCalendarDay(value.from);
-        }
-        if (value.to) {
-          this._calendarMonthValue[1] = this._createCalendarDay(value.to);
-        }
-        break;
+  _onTouched: Function = () => {
+  };
 
-      case 'multi':
-        if (Array.isArray(value)) {
-          this._calendarMonthValue = value.map(e => {
-            return this._createCalendarDay(e)
-          });
-        } else {
-          this._calendarMonthValue = [];
-        }
-        break;
-
-      default:
-
-    }
-  }
-
-  _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
+  _payloadToTimeNumber(value: CalendarComponentPayloadTypes): number {
     let date;
     if (this.type === 'string') {
       date = moment(value, this.format);
     } else {
       date = moment(value);
     }
-    return this.calSvc.createCalendarDay(date.valueOf(), this._d);
+    return date.valueOf();
   }
 
-  _handleType(value: number): CalendarComponentPayloadTypes {
+  _monthFormat(date: number): string {
+    return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
+  }
+
+  private initOpt(): void {
+    if (this._options && typeof this._options.showToggleButtons === 'boolean') {
+      this.showToggleButtons = this._options.showToggleButtons;
+    }
+    if (this._options && typeof this._options.showMonthPicker === 'boolean') {
+      this.showMonthPicker = this._options.showMonthPicker;
+      if (this._view !== 'days' && !this.showMonthPicker) {
+        this._view = 'days';
+      }
+    }
+    this._d = this.calSvc.safeOpt(this._options || {});
+  }
+
+  private createMonth(date: number): CalendarMonth {
+    return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
+  }
+
+  private _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
+    return this.calSvc.createCalendarDay(this._payloadToTimeNumber(value), this._d);
+  }
+
+  private _handleType(value: number): CalendarComponentPayloadTypes {
     let date = moment(value);
     switch (this.type) {
       case 'string':
@@ -336,8 +321,55 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return date;
   }
 
-  _monthFormat(date: number): string {
-    return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
+  writeValue(obj: any): void {
+    this._writeValue(obj);
+    if (obj) {
+      if (this._calendarMonthValue[0]) {
+        this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
+      } else {
+        this.monthOpt = this.createMonth(new Date().getTime());
+      }
+    }
+  }
+
+  registerOnChange(fn: () => {}): void {
+    this._onChanged = fn;
+  }
+
+  registerOnTouched(fn: () => {}): void {
+    this._onTouched = fn;
+  }
+
+  private _writeValue(value: any): void {
+    if (!value) return;
+
+    switch (this._d.pickMode) {
+      case 'single':
+        this._calendarMonthValue[0] = this._createCalendarDay(value);
+        break;
+
+      case 'range':
+        if (value.from) {
+          this._calendarMonthValue[0] = this._createCalendarDay(value.from);
+        }
+        if (value.to) {
+          this._calendarMonthValue[1] =this._createCalendarDay(value.to);
+        }
+        break;
+
+      case 'multi':
+        if (Array.isArray(value)) {
+          this._calendarMonthValue = value.map(e => {
+            return this._createCalendarDay(e)
+          });
+        } else {
+          this._calendarMonthValue = [null, null];
+        }
+        break;
+
+      default:
+
+    }
   }
 
 }

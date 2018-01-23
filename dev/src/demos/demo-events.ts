@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController, ToastController } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 import {
   CalendarComponentOptions
