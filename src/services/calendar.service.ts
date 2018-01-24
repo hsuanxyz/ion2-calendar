@@ -45,7 +45,7 @@ export class CalendarService {
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
-      showOtherMonthDay = false
+      showOtherMonthDay = true
     } = calendarOptions || {};
 
     return {
@@ -163,44 +163,36 @@ export class CalendarService {
   }
 
   createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth {
-    let days: Array<CalendarDay> = [];
+    let days: Array<CalendarDay> = new Array(6).fill(null);
+    let len = original.howManyDays;
+    for (let i = original.firstWeek; i < len + original.firstWeek; i++) {
+      let itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
+      days[i] = this.createCalendarDay(itemTime, opt);
+    }
 
-    if (!opt.showOtherMonthDay) {
-      days = new Array(6).fill(null);
-      let len = original.howManyDays;
+    let weekStart = opt.weekStart;
 
-      for (let i = original.firstWeek; i < len + original.firstWeek; i++) {
-        let itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
-        days[i] = this.createCalendarDay(itemTime, opt);
+    if (weekStart === 1) {
+      if (days[0] === null) {
+        days.shift();
+      } else {
+        days.unshift(...new Array(6).fill(null));
       }
+    }
 
-      let weekStart = opt.weekStart;
+    const _booleanMap = days.map(e => !!e);
+    const thisMonth = moment(original.time).month();
+    let startOffsetIndex = _booleanMap.indexOf(true) - 1;
+    let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
+    for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
+      const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
+      days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
+    }
 
-      if (weekStart === 1) {
-        if (days[0] === null) {
-          days.shift();
-          days.push(null);
-        } else {
-          days.unshift(...new Array(6).fill(null));
-        }
-      }
-    } else {
-      // show last month & next month days fill six weeks
-      let _rawDate = moment(original.time);
-      let month = _rawDate.month();
-      const start = _rawDate.clone().date(1).day(0);
-      let done = false;
-      let count = 0;
-      let date = start.clone();
-      let monthIndex = date.month();
-      while (!done) {
-        for (let i = 0; i < 7; i++) {
-          let day = this.createCalendarDay(date.toDate().getTime(), opt, month);
-          days.push(day);
-          date = date.clone();
-          date.add(1, 'd');
-        }
-        done = count++ > 4;
+    if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
+      for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
+        const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
+        days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
       }
     }
 

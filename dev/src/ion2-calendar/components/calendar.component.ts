@@ -374,5 +374,4 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
     }
   }
-
 }
