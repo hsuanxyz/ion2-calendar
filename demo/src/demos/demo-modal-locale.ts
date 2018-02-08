@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
+import * as moment from 'moment';
 
 import {
   CalendarModal,
@@ -19,6 +20,7 @@ export class DemoModalLocaleComponent {
   date: Date = new Date();
 
   constructor(public modalCtrl: ModalController) {
+    moment.locale('zh-cn');
   }
 
   openCalendar() {
@@ -26,7 +28,7 @@ export class DemoModalLocaleComponent {
       title: 'LOCALE',
       defaultDate: this.date,
       monthFormat: 'yyyy 年 MM 月',
-      weekdays: ['天', '一', '二', '三', '四', '五', '六'],
+      weekdays: moment.weekdaysShort(),
       weekStart: 1,
     };
 

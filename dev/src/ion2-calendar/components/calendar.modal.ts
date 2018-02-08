@@ -96,6 +96,7 @@ export class CalendarModal implements OnInit {
 
   ionViewDidLoad(): void {
     this.findCssClass();
+
     this.scrollToDefaultDate();
   }
 

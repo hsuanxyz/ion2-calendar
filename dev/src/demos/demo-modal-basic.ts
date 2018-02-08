@@ -24,7 +24,8 @@ export class DemoModalBasicComponent {
   openCalendar() {
     const options: CalendarModalOptions = {
       title: 'BASIC',
-      defaultDate: this.date
+      defaultDate: this.date,
+      canBackwardsSelected: true
     };
 
     let myCalendar = this.modalCtrl.create(CalendarModal, {

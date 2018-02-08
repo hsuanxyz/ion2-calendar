@@ -38,7 +38,7 @@ const COMPONENTS = [
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [IonicModule.forRoot(MyApp), CalendarModule],
-  exports: [...COMPONENTS]
+  exports: [...COMPONENTS],
 })
 export class DemosModule {
 }
