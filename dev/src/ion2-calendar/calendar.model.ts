@@ -80,10 +80,10 @@ export interface CalendarOptions {
   defaultTitle?: string;
   defaultSubtitle?: string;
   daysConfig?: Array<DayConfig>;
-   /**
+  /**
   * show last month & next month days fill six weeks
   */
-  showOtherMonthDay?: boolean;
+  showAdjacentMonthDay?: boolean;
 }
 
 export interface CalendarComponentOptions extends CalendarOptions {

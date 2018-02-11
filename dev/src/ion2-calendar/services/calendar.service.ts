@@ -45,7 +45,7 @@ export class CalendarService {
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
-      showOtherMonthDay = true
+      showAdjacentMonthDay = true
     } = calendarOptions || {};
 
     return {
@@ -76,7 +76,7 @@ export class CalendarService {
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
       defaultDateRange: calendarOptions.defaultDateRange || null,
-      showOtherMonthDay
+      showAdjacentMonthDay
     }
   }
 
@@ -180,19 +180,21 @@ export class CalendarService {
       }
     }
 
-    const _booleanMap = days.map(e => !!e);
-    const thisMonth = moment(original.time).month();
-    let startOffsetIndex = _booleanMap.indexOf(true) - 1;
-    let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
-    for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
-      const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
-      days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
-    }
+    if (opt.showAdjacentMonthDay) {
+      const _booleanMap = days.map(e => !!e);
+      const thisMonth = moment(original.time).month();
+      let startOffsetIndex = _booleanMap.indexOf(true) - 1;
+      let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
+      for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
+        const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
+        days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
+      }
 
-    if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
-      for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
-        const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
-        days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
+      if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
+        for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
+          const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
+          days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
+        }
       }
     }
 
