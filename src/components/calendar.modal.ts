@@ -96,12 +96,13 @@ export class CalendarModal implements OnInit {
 
   ionViewDidLoad(): void {
     this.findCssClass();
+
     this.scrollToDefaultDate();
   }
 
   init(): void {
     this._d = this.calSvc.safeOpt(this.params.get('options'));
-
+    this._d.showAdjacentMonthDay = false;
     this.step = this._d.step;
     if (this.step < 1) {
       this.step = 1;
