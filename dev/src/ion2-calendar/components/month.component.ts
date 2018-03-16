@@ -98,7 +98,6 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   writeValue(obj: any): void {
-    console.log(obj);
     if (Array.isArray(obj)) {
       this._date = obj;
     }
