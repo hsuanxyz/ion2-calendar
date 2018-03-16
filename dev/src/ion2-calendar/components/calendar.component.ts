@@ -60,7 +60,8 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                          [weekStart]="_d.weekStart">
       </ion-calendar-week>
 
-      <ion-calendar-month [(ngModel)]="_calendarMonthValue"
+      <ion-calendar-month class="component-mode"
+                          [(ngModel)]="_calendarMonthValue"
                           [month]="monthOpt"
                           [readonly]="readonly"
                           (onChange)="onChanged($event)"

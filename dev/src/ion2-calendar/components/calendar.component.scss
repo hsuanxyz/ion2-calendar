@@ -51,6 +51,12 @@ ion-calendar {
     }
   }
 
+  .days.between {
+    .days-btn.is-last, .days-btn.is-first {
+      border-radius: 0;
+    }
+  }
+
 }
 
 

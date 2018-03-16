@@ -52,6 +52,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.marked]="day.marked"
                         [class.last-month-day]="day.isLastMonth"
                         [class.next-month-day]="day.isNextMonth"
+                        [class.is-first]="day.isFirst"
+                        [class.is-last]="day.isLast"
                         [class.on-selected]="isSelected(day.time)"
                         [disabled]="day.disable">
                   <p>{{day.title}}</p>
