@@ -57,6 +57,20 @@ ion-calendar {
     }
   }
 
+  .component-mode {
+    .days.startSelection.is-last-wrap {
+      &::after {
+        border-radius: 0;
+      }
+    }
+
+    .days.endSelection.is-first-wrap {
+      &::after {
+        border-radius: 0;
+      }
+    }
+  }
+
 }
 
 

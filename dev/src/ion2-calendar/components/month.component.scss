@@ -119,7 +119,19 @@
     border-radius: 50%
   }
 
-    .days .on-selected p {
+  .startSelection.is-last-wrap {
+    &::after {
+      border-radius: 0 36px 36px 0;
+    }
+  }
+
+  .endSelection.is-first-wrap {
+    &::after {
+      border-radius: 36px 0 0 36px;
+    }
+  }
+
+  .days .on-selected p {
         color: $color;
     }
     .startSelection,
