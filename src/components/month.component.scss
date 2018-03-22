@@ -94,10 +94,44 @@
             color: $color;
         }
     }
-    .days.between {
-        background-color: lighten(bindColors($background-color), 12%);
+
+  .days.startSelection:nth-child(7n):after,
+  .days.between:nth-child(7n) button.days-btn,
+  button.days-btn.is-last {
+    border-radius: 0 36px 36px 0;
+    &.on-selected {
+      border-radius: 50%
     }
-    .days .on-selected p {
+  }
+
+  .days.endSelection:nth-child(7n+1):after,
+  .days.between:nth-child(7n+1) button.days-btn,
+  button.days-btn.is-first {
+    border-radius: 36px 0 0 36px;
+  }
+
+  .startSelection button.days-btn.is-first,
+  .endSelection button.days-btn.is-first,
+  button.days-btn.is-first.on-selected,
+  button.days-btn.is-last.on-selected,
+  .startSelection button.days-btn.is-last,
+  .endSelection button.days-btn.is-last {
+    border-radius: 50%
+  }
+
+  .startSelection.is-last-wrap {
+    &::after {
+      border-radius: 0 36px 36px 0;
+    }
+  }
+
+  .endSelection.is-first-wrap {
+    &::after {
+      border-radius: 36px 0 0 36px;
+    }
+  }
+
+  .days .on-selected p {
         color: $color;
     }
     .startSelection,

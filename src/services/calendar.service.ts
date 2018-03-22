@@ -158,7 +158,9 @@ export class CalendarService {
       isNextMonth: date.month() > month,
       marked: dayConfig ? dayConfig.marked || false : false,
       cssClass: dayConfig ? dayConfig.cssClass || '' : '',
-      disable: _disable
+      disable: _disable,
+      isFirst: date.date() === 1,
+      isLast: date.date() === date.daysInMonth()
     }
   }
 

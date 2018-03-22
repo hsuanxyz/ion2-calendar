@@ -43,6 +43,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
             <div class="days"
                  [class.startSelection]="isStartSelection(day)"
                  [class.endSelection]="isEndSelection(day)"
+                 [class.is-first-wrap]="day?.isFirst"
+                 [class.is-last-wrap]="day?.isLast"
                  [class.between]="isBetween(day)">
               <ng-container *ngIf="day">
                 <button type='button'
@@ -52,6 +54,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.marked]="day.marked"
                         [class.last-month-day]="day.isLastMonth"
                         [class.next-month-day]="day.isNextMonth"
+                        [class.is-first]="day.isFirst"
+                        [class.is-last]="day.isLast"
                         [class.on-selected]="isSelected(day.time)"
                         [disabled]="day.disable">
                   <p>{{day.title}}</p>
@@ -96,7 +100,6 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   writeValue(obj: any): void {
-    console.log(obj);
     if (Array.isArray(obj)) {
       this._date = obj;
     }
