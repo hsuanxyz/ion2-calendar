@@ -16,6 +16,14 @@ import {
                   type="string"
                   format="YYYY-MM-DD">
     </ion-calendar>
+    <hr>
+    <h3 style="text-align: center;">basic with year picker</h3>
+    <ion-calendar [(ngModel)]="date"
+                  (onChange)="onChange($event)"
+                  [options]="optionsYearPicker"
+                  type="string"
+                  format="YYYY-MM-DD">
+    </ion-calendar>    
   `
 })
 export class DemoBasicComponent {
@@ -24,6 +32,10 @@ export class DemoBasicComponent {
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
   };
+  optionsYearPicker: CalendarComponentOptions = {
+    from: new Date(2000, 0, 1),
+    showYearPicker: true
+  };  
 
   constructor(public modalCtrl: ModalController) {
   }
