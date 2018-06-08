@@ -76,7 +76,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
 
     <ng-template #monthPicker>
       <ion-calendar-month-picker [color]="_d.color"
-                                 [monthFormat]="_options?.monthPickerFormat"
+                                 [monthFormat]="_monthFormatForMonthPicker"
                                  (onSelect)="monthOnSelect($event)"
                                  [month]="monthOpt">
       </ion-calendar-month-picker>
@@ -89,6 +89,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   private _options: CalendarComponentOptions;
   private _view: 'month' | 'days' = 'days';
   private _calendarMonthValue: CalendarDay[] = [null, null];
+  private _monthFormatForMonthPicker: any;
 
   private _showToggleButtons = true;
   get showToggleButtons(): boolean {
@@ -125,6 +126,12 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this.initOpt();
     if (this.monthOpt && this.monthOpt.original) {
       this.monthOpt = this.createMonth(this.monthOpt.original.time);
+    }
+
+    if (this._options.monthPickerFormat) {
+      this._monthFormatForMonthPicker = this._options.monthPickerFormat;
+    } else if (this._options.monthTexts) {
+      this._monthFormatForMonthPicker = this._options.monthTexts;
     }
   }
 
@@ -281,7 +288,17 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   _monthFormat(date: number): string {
-    return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
+    let monthFormat = this._d.monthFormat.replace(/y/g, 'Y');
+
+    // Try to use custom month text if available.
+    const monthTexts = this._d.monthTexts;
+    if (monthTexts && monthTexts.length === 12) {
+      const month = new Date(date).getMonth();
+      const monthText = monthTexts[month];
+      monthFormat = monthFormat.replace(/M+/g, `[${monthText}]`);
+    }
+
+    return moment(date).format(monthFormat);
   }
 
   private initOpt(): void {

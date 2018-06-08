@@ -176,13 +176,14 @@ export class HomePage {
 | defaultSubtitle | string | ''          | 每天的默认副标题            |
 | disableWeeks | Array<number> | `[]`          | 按周数禁用 (0-6)                   |
 | monthFormat      | string        | `'MMM YYYY'`  | 标题格式  |
+| monthTexts | Array&lt;string&gt; | `undefined` | 标题中月份文本 |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 每周显示文本 |
 | weekStart    | number        | `0` (0 or 1)           | 每周从星期几开始 |
 | daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |
 
 # 模态框模式
 
-### 基本 
+### 基本
 
 引入 ion2-calendar 到你的组件控制器。
 
@@ -229,13 +230,13 @@ export class HomePage {
           pickMode: 'range',
           title: 'RANGE'
         };
-    
+
         let myCalendar = this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss(date => {
           console.log(date);
         });
@@ -252,13 +253,13 @@ export class HomePage {
           pickMode: 'multi',
           title: 'MULTI'
         };
-    
+
         let myCalendar =  this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss(date => {
           console.log(date);
         })
@@ -382,6 +383,7 @@ openCalendar() {
 | closeIcon      | boolean        | `false`      | 使用关闭图标按钮 |
 | doneIcon      | boolean        | `false`      | 使用完成图标按钮  |
 | monthFormat      | string        | `'MMM YYYY'`  | 月份显示格式  |
+| monthTexts | Array&lt;string&gt; | `undefined` | 标题中月份文本 |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 星期标题 |
 | weekStart    | number        | `0` (0 or 1)           | 设置每周开始时间 |
 | daysConfig      | Array<***DaysConfig***> | `[]` | 按天配置 |

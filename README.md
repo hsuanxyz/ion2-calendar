@@ -180,6 +180,7 @@ export class HomePage {
 | defaultSubtitle | string | ''          | default subtitle in days            |
 | disableWeeks | Array<number> | `[]`          | week to be disabled (0-6)                   |
 | monthFormat      | string        | `'MMM YYYY'`  | month title format  |
+| monthTexts | Array&lt;string&gt; | `undefined` | custom month text in title |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text |
 | weekStart    | number        | `0` (0 or 1)           | set week start day |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
@@ -233,13 +234,13 @@ Set pickMode to 'range'.
           pickMode: 'range',
           title: 'RANGE'
         };
-    
+
         let myCalendar = this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: { from: CalendarResult; to: CalendarResult }, type: string) => {
           console.log(date);
         });
@@ -256,13 +257,13 @@ Set pickMode to 'multi'.
           pickMode: 'multi',
           title: 'MULTI'
         };
-    
+
         let myCalendar =  this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: CalendarResult[], type: string) => {
           console.log(date);
         })
@@ -384,6 +385,7 @@ openCalendar() {
 | closeIcon      | boolean        | `false`      | show cancel button icon |
 | doneIcon      | boolean        | `false`      | show done button icon  |
 | monthFormat      | string        | `'MMM YYYY'`  | month title format  |
+| monthTexts | Array&lt;string&gt; | `undefined` | custom month text in title |
 | weekdays   | Array<string> | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text |
 | weekStart    | number        | `0` (0 or 1)           | set week start day |
 | daysConfig      | Array<***DaysConfig***> | `[]` | days configuration |
