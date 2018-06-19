@@ -29,8 +29,6 @@ import { pickModes } from "../config";
         </ion-buttons>
 
       </ion-navbar>
-      
-      <ng-content select="[sub-header]"></ng-content>
 
       <ion-calendar-week
         [color]="_d.color"
