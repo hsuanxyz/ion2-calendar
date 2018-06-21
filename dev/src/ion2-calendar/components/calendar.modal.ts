@@ -82,13 +82,14 @@ export class CalendarModal implements OnInit {
   infiniteScroll: InfiniteScroll;
   _s: boolean = true;
   _d: CalendarModalOptions;
+  actualFirstTime: number;
 
   constructor(private _renderer: Renderer2,
-              public _elementRef: ElementRef,
-              public params: NavParams,
-              public viewCtrl: ViewController,
-              public ref: ChangeDetectorRef,
-              public calSvc: CalendarService) {
+    public _elementRef: ElementRef,
+    public params: NavParams,
+    public viewCtrl: ViewController,
+    public ref: ChangeDetectorRef,
+    public calSvc: CalendarService) {
   }
 
   ngOnInit(): void {
@@ -96,8 +97,10 @@ export class CalendarModal implements OnInit {
     this.initDefaultDate();
   }
 
-  ionViewDidLoad(): void {
+  ngAfterViewInit(): void {
     this.findCssClass();
+    if (this._d.canBackwardsSelected)
+      this.backwardsMonth();
 
     this.scrollToDefaultDate();
   }
@@ -204,7 +207,7 @@ export class CalendarModal implements OnInit {
     let nextTime = moment(final.original.time).add(1, 'M').valueOf();
     let rangeEnd = this._d.to ? moment(this._d.to).subtract(1, 'M') : 0;
 
-    if (len <= 0 || ( rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd) )) {
+    if (len <= 0 || (rangeEnd !== 0 && moment(final.original.time).isAfter(rangeEnd))) {
       infiniteScroll.enable(false);
       return;
     }
@@ -219,42 +222,47 @@ export class CalendarModal implements OnInit {
       this._d.canBackwardsSelected = false;
       return;
     }
-    let firstTime = moment(first.original.time).subtract(1, 'M').valueOf();
+    let firstTime = this.actualFirstTime = moment(first.original.time).subtract(1, 'M').valueOf();
     this.calendarMonths.unshift(...this.calSvc.createMonthsByPeriod(firstTime, 1, this._d));
     this.ref.detectChanges();
   }
 
-  scrollToDefaultDate(): void {
-    let defaultDateIndex = this.findInitMonthNumber(this._d.defaultScrollTo);
-    let defaultDateMonth = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`].offsetTop;
+  scrollToDate(date: Date): void {
+    let defaultDateIndex = this.findInitMonthNumber(date);
+    let monthElement = this.monthsEle.nativeElement.children[`month-${defaultDateIndex}`];
+    let defaultDateMonth = monthElement ? monthElement.offsetTop : 0;
 
-    if (defaultDateIndex === 0 || defaultDateMonth === 0) return;
+    if (defaultDateIndex === -1 || defaultDateMonth === 0) return;
     setTimeout(() => {
       this.content.scrollTo(0, defaultDateMonth, 128);
-    }, 300)
+    }, 300);
+  }
+
+  scrollToDefaultDate(): void {
+    this.scrollToDate(this._d.defaultScrollTo);
   }
 
   onScroll($event: any): void {
     if (!this._d.canBackwardsSelected) return;
-    if ($event.scrollTop <= 200 && this._s) {
+    if ($event.scrollTop <= 200 && $event.directionY === "up" && this._s) {
       this._s = !1;
       let lastHeight = this.content.getContentDimensions().scrollHeight;
       setTimeout(() => {
         this.backwardsMonth();
         let nowHeight = this.content.getContentDimensions().scrollHeight;
         this.content.scrollTo(0, nowHeight - lastHeight, 0)
-        .then(() => {
-          this._s = !0;
-        })
+          .then(() => {
+            this._s = !0;
+          })
       }, 180)
     }
   }
 
   findInitMonthNumber(date: Date): number {
-    let startDate = moment(this._d.from);
+    let startDate = this.actualFirstTime ? moment(this.actualFirstTime) : moment(this._d.from);
     let defaultScrollTo = moment(date);
     const isAfter: boolean = defaultScrollTo.isAfter(startDate);
-    if (!isAfter) return 0;
+    if (!isAfter) return -1;
 
     if (this.showYearPicker) {
       startDate = moment(new Date(this.year, 0, 1));
