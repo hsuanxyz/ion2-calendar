@@ -19,11 +19,16 @@ import { DemoEventsComponent } from "./demo-events";
 import { DemoMethodsComponent } from "./demo-methods";
 import { DemoModalRangeBackwardsComponent } from './demo-modal-range-backwards';
 import { DemoModalScrollToDateComponent } from './demo-modal-scroll-to-date';
+import { DemoModalCustomSubHeaderComponent } from './demo-modal-custom-sub-header';
+import { SubHeaderCalendarModal } from './sub-header-calendar-modal';
+
 
 const COMPONENTS = [
   DemoModalBasicComponent,
   DemoModalMultiComponent,
   DemoModalRangeComponent,
+  DemoModalCustomSubHeaderComponent,
+  SubHeaderCalendarModal,
   DemoModalDisableWeekComponent,
   DemoModalLocaleComponent,
   DemoModalCustomStyleComponent,
@@ -42,7 +47,8 @@ const COMPONENTS = [
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [IonicModule.forRoot(MyApp), CalendarModule],
-  exports: [...COMPONENTS]
+  exports: [...COMPONENTS],
+  entryComponents: [...COMPONENTS],
 })
 export class DemosModule {
 }
