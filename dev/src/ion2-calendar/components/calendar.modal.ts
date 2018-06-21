@@ -276,7 +276,17 @@ export class CalendarModal implements OnInit {
   }
 
   _monthFormat(date: any): string {
-    return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'))
+    let monthFormat = this._d.monthFormat.replace(/y/g, 'Y');
+
+    // Try to use custom month text if available.
+    const monthTexts = this._d.monthTexts;
+    if (monthTexts && monthTexts.length === 12 && date instanceof Date) {
+      const month = date.getMonth();
+      const monthText = monthTexts[month];
+      monthFormat = monthFormat.replace(/M+/g, `[${monthText}]`);
+    }
+
+    return moment(date).format(monthFormat);
   }
 
   trackByIndex(index: number, moment: CalendarMonth): number {

@@ -77,6 +77,7 @@ export interface CalendarOptions {
   weekStart?: number;
   disableWeeks?: Array<number>;
   weekdays?: Array<string>;
+  monthTexts?: Array<string>;
   monthFormat?: string;
   color?: string;
   defaultTitle?: string;
