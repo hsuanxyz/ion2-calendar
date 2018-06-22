@@ -1,5 +1,4 @@
 @import "../functions";
-
 @mixin month-picker($background-color: primary, $color: #fff) {
   .month-packer-item {
     &.this-month button {
@@ -15,13 +14,11 @@
 }
 
 ion-calendar-month-picker {
-
   .month-picker {
     margin: 20px 0;
     display: inline-block;
     width: 100%;
   }
-
   .month-packer-item {
     width: 25%;
     box-sizing: border-box;
@@ -36,7 +33,6 @@ ion-calendar-month-picker {
       background-color: transparent;
     }
   }
-
   @each $color-name,
   $color-base,
   $color-contrast in get-colors($colors) {
@@ -44,7 +40,11 @@ ion-calendar-month-picker {
       @include month-picker($color-name, $color-contrast);
     }
   }
-
+  .month-picker.transparent {
+    @include month-picker(light, #9e9e9e);
+    background-color: transparent;
+  }
+  .month-picker.cal-color {
+    @include month-picker(cal-color);
+  }
 }
-
-

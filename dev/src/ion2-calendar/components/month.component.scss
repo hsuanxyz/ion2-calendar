@@ -203,4 +203,7 @@ ion-calendar-month {
       @include month-color($color-name, $color-contrast);
     }
   }
+  .cal-color {
+    @include month-color(cal-color);
+  }
 }
