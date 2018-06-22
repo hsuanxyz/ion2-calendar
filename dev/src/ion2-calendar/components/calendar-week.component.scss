@@ -23,35 +23,14 @@ ion-calendar-week {
     min-height: 44px;
   }
 
-  .week-title.primary {
-    @include week-title(primary);
+  
+  @each $color-name,
+  $color-base,
+  $color-contrast in get-colors($colors) {
+    .week-title.#{$color-name} {
+      @include week-title($color-name, $color-contrast);
+    }
   }
-
-  .week-title.secondary {
-    @include week-title(secondary);
-  }
-
-  .week-title.danger {
-    @include week-title(danger);
-  }
-
-  .week-title.dark {
-    @include week-title(dark);
-  }
-
-  .week-title.light {
-    @include week-title(light, #9e9e9e);
-  }
-
-  .week-title.transparent {
-    @include week-title(light, #9e9e9e);
-    background-color: transparent;
-  }
-
-  .week-title.cal-color {
-    @include week-title(cal-color);
-  }
-
   .week-title li {
     list-style-type: none;
     display: block;

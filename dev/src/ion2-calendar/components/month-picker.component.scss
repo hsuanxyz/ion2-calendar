@@ -37,33 +37,12 @@ ion-calendar-month-picker {
     }
   }
 
-  .month-picker.primary {
-    @include month-picker(primary);
-  }
-
-  .month-picker.secondary {
-    @include month-picker(secondary);
-  }
-
-  .month-picker.danger {
-    @include month-picker(danger);
-  }
-
-  .month-picker.dark {
-    @include month-picker(dark);
-  }
-
-  .month-picker.light {
-    @include month-picker(light, #9e9e9e);
-  }
-
-  .month-picker.transparent {
-    @include month-picker(light, #9e9e9e);
-    background-color: transparent;
-  }
-
-  .month-picker.cal-color {
-    @include month-picker(cal-color);
+  @each $color-name,
+  $color-base,
+  $color-contrast in get-colors($colors) {
+    .month-picker.#{$color-name} {
+      @include month-picker($color-name, $color-contrast);
+    }
   }
 
 }
