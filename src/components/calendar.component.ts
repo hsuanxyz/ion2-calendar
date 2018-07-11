@@ -29,7 +29,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
+      <ng-template [ngIf]="showMonthPicker" [ngIfElse]="title">
         <button type="button"
                 ion-button
                 clear
@@ -45,7 +45,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
           {{_monthFormat(monthOpt.original.time)}}
         </div>
       </ng-template>
-      <ng-template [ngIf]="_showToggleButtons">
+      <ng-template [ngIf]="showToggleButtons">
         <button type='button' ion-button clear class="back" [disabled]="!canBack()" (click)="prev()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
@@ -84,10 +84,12 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
   `
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
+  
+  private _view: 'month' | 'days' = 'days';
+  
 
   private _d: CalendarModalOptions;
   private _options: CalendarComponentOptions;
-  private _view: 'month' | 'days' = 'days';
   private _calendarMonthValue: CalendarDay[] = [null, null];
 
   private _showToggleButtons = true;
