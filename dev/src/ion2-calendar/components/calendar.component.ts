@@ -33,11 +33,18 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
         <button type="button"
                 ion-button
                 clear
-                class="switch-btn"
-                (click)="switchView()">
-          {{_monthFormat(monthOpt.original.time)}}
-          <ion-icon class="arrow-dropdown"
-                    [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
+                class="switch-btn">
+                <span [hidden]="!_showYearPicker">
+                  <span (click)="switchView()" [hidden]="_view !== 'days'">{{_monthFormat(monthOpt.original.time)}}</span>
+                  <span (click)="switchYear()" [hidden]="_view !== 'month'">{{_monthFormat(monthOpt.original.time).substr(-4)}}</span>
+                  <span [hidden]="_view !== 'year'">{{ yearDisplayText }}</span>                
+                </span> 
+                <span (click)="switchView()" [hidden]="_showYearPicker">
+                  {{_monthFormat(monthOpt.original.time)}}
+                  <ion-icon class="arrow-dropdown"
+                  [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'">
+                  </ion-icon>
+                </span>  
         </button>
       </ng-template>
       <ng-template #title>
@@ -54,7 +61,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
         </button>
       </ng-template>
     </div>
-    <ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
+    <ng-template [ngIf]="_view === 'days'">
       <ion-calendar-week color="transparent"
                          [weekArray]="_d.weekdays"
                          [weekStart]="_d.weekStart">
@@ -74,20 +81,28 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
       </ion-calendar-month>
     </ng-template>
 
-    <ng-template #monthPicker>
+    <ng-template [ngIf]="_view === 'month'">
       <ion-calendar-month-picker [color]="_d.color"
                                  [monthFormat]="_options?.monthPickerFormat"
                                  (onSelect)="monthOnSelect($event)"
                                  [month]="monthOpt">
       </ion-calendar-month-picker>
     </ng-template>
+    <ng-template [ngIf]="_view === 'year'">
+      <ion-calendar-year-picker [color]="_d.color"
+                                 (onSelect)="yearOnSelect($event)"
+                                 (onYearRangeUppdated)="onYearRangeUppdatedAction($event)"
+                                 [year]="_monthFormat(monthOpt.original.time).substr(-4)"
+                                 [yearStep]="yearStep">
+      </ion-calendar-year-picker>
+    </ng-template>    
   `
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   private _d: CalendarModalOptions;
   private _options: CalendarComponentOptions;
-  private _view: 'month' | 'days' = 'days';
+  private _view: 'month' | 'days' | 'year' = 'days';
   private _calendarMonthValue: CalendarDay[] = [null, null];
 
   private _showToggleButtons = true;
@@ -108,7 +123,18 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._showMonthPicker = value;
   }
 
+  private _showYearPicker = undefined;
+  get showYearPicker(): boolean {
+    return this._showYearPicker;
+  }
+
+  set showYearPicker(value: boolean) {
+    this._showYearPicker = value;
+  }
+
   private monthOpt: CalendarMonth;
+  private yearStep: number = 0;
+  private yearDisplayText: string;
 
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: CalendarComponentTypeProperty = 'string';
@@ -153,19 +179,27 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._view = this._view === 'days' ? 'month' : 'days';
   }
 
+  switchYear(): void {
+    this._view = this._view === 'month' ? 'year' : 'year';
+  }  
+
   prev(): void {
     if (this._view === 'days') {
       this.backMonth();
-    } else {
+    } else if (this._view === 'month') {
       this.prevYear();
+    } else {
+      this.yearStep-=1;
     }
   }
 
   next(): void {
     if (this._view === 'days') {
       this.nextMonth();
-    } else {
+    } else if (this._view === 'month') {
       this.nextYear();
+    } else {
+      this.yearStep+=1;
     }
   }
 
@@ -216,6 +250,16 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       newMonth: this.calSvc.multiFormat(newMonth)
     });
     this.monthOpt = this.createMonth(newMonth);
+  }
+
+  yearOnSelect(year: number): void {
+    if (year === 1970) return;
+    const backTime = moment(this.monthOpt.original.time).year(year).valueOf();
+    this.monthOpt = this.createMonth(backTime);    
+    this._view = 'month';
+  }
+  onYearRangeUppdatedAction(yearDisplayText: string): void {
+    this.yearDisplayText = yearDisplayText;
   }
 
   onChanged($event: CalendarDay[]): void {
@@ -293,6 +337,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       if (this._view !== 'days' && !this.showMonthPicker) {
         this._view = 'days';
       }
+    }
+    if (this._options && typeof this._options.showYearPicker === 'boolean') {
+      this.showYearPicker = this._options.showYearPicker;
+      console.log(this.showYearPicker);
     }
     this._d = this.calSvc.safeOpt(this._options || {});
   }
