@@ -85,12 +85,12 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
 
-  private _d: CalendarModalOptions;
-  private _options: CalendarComponentOptions;
-  private _view: 'month' | 'days' = 'days';
-  private _calendarMonthValue: CalendarDay[] = [null, null];
+  _d: CalendarModalOptions;
+  _options: CalendarComponentOptions;
+  _view: 'month' | 'days' = 'days';
+  _calendarMonthValue: CalendarDay[] = [null, null];
 
-  private _showToggleButtons = true;
+  _showToggleButtons = true;
   get showToggleButtons(): boolean {
     return this._showToggleButtons;
   }
@@ -99,7 +99,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._showToggleButtons = value;
   }
 
-  private _showMonthPicker = true;
+  _showMonthPicker = true;
   get showMonthPicker(): boolean {
     return this._showMonthPicker;
   }
@@ -108,7 +108,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._showMonthPicker = value;
   }
 
-  private monthOpt: CalendarMonth;
+  monthOpt: CalendarMonth;
 
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: CalendarComponentTypeProperty = 'string';
@@ -297,15 +297,15 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._d = this.calSvc.safeOpt(this._options || {});
   }
 
-  private createMonth(date: number): CalendarMonth {
+  createMonth(date: number): CalendarMonth {
     return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
   }
 
-  private _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
+  _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
     return this.calSvc.createCalendarDay(this._payloadToTimeNumber(value), this._d);
   }
 
-  private _handleType(value: number): CalendarComponentPayloadTypes {
+  _handleType(value: number): CalendarComponentPayloadTypes {
     let date = moment(value);
     switch (this.type) {
       case 'string':
@@ -341,7 +341,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
-  private _writeValue(value: any): void {
+  _writeValue(value: any): void {
     if (!value) {
       this._calendarMonthValue = [null, null];
       return;

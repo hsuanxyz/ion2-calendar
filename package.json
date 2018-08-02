@@ -58,7 +58,9 @@
   "ngPackage": {
     "lib": {
       "entryFile": "src/index.ts",
-      "styleIncludePaths": [""],
+      "styleIncludePaths": [
+        ""
+      ],
       "umdModuleIds": {
         "moment": "moment"
       }

@@ -29,7 +29,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
   providers: [ION_CAL_VALUE_ACCESSOR],
   template: `
     <div class="title">
-      <ng-template [ngIf]="showMonthPicker" [ngIfElse]="title">
+      <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
         <button type="button"
                 ion-button
                 clear
@@ -37,7 +37,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                 (click)="switchView()">
           {{_monthFormat(monthOpt.original.time)}}
           <ion-icon class="arrow-dropdown"
-                    [name]="view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
+                    [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
         </button>
       </ng-template>
       <ng-template #title>
@@ -45,7 +45,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
           {{_monthFormat(monthOpt.original.time)}}
         </div>
       </ng-template>
-      <ng-template [ngIf]="showToggleButtons">
+      <ng-template [ngIf]="_showToggleButtons">
         <button type='button' ion-button clear class="back" [disabled]="!canBack()" (click)="prev()">
           <ion-icon name="ios-arrow-back"></ion-icon>
         </button>
@@ -54,7 +54,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
         </button>
       </ng-template>
     </div>
-    <ng-template [ngIf]="view === 'days'" [ngIfElse]="monthPicker">
+    <ng-template [ngIf]="_view === 'days'" [ngIfElse]="monthPicker">
       <ion-calendar-week color="transparent"
                          [weekArray]="_d.weekdays"
                          [weekStart]="_d.weekStart">
@@ -84,14 +84,13 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
   `
 })
 export class CalendarComponent implements ControlValueAccessor, OnInit {
-  
-  view: 'month' | 'days' = 'days';
- 
-  private _d: CalendarModalOptions;
-  private _options: CalendarComponentOptions;
-  private _calendarMonthValue: CalendarDay[] = [null, null];
 
-  private _showToggleButtons = true;
+  _d: CalendarModalOptions;
+  _options: CalendarComponentOptions;
+  _view: 'month' | 'days' = 'days';
+  _calendarMonthValue: CalendarDay[] = [null, null];
+
+  _showToggleButtons = true;
   get showToggleButtons(): boolean {
     return this._showToggleButtons;
   }
@@ -100,7 +99,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._showToggleButtons = value;
   }
 
-  private _showMonthPicker = true;
+  _showMonthPicker = true;
   get showMonthPicker(): boolean {
     return this._showMonthPicker;
   }
@@ -109,7 +108,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._showMonthPicker = value;
   }
 
-  private monthOpt: CalendarMonth;
+  monthOpt: CalendarMonth;
 
   @Input() format: string = defaults.DATE_FORMAT;
   @Input() type: CalendarComponentTypeProperty = 'string';
@@ -298,15 +297,15 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._d = this.calSvc.safeOpt(this._options || {});
   }
 
-  private createMonth(date: number): CalendarMonth {
+  createMonth(date: number): CalendarMonth {
     return this.calSvc.createMonthsByPeriod(date, 1, this._d)[0];
   }
 
-  private _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
+  _createCalendarDay(value: CalendarComponentPayloadTypes): CalendarDay {
     return this.calSvc.createCalendarDay(this._payloadToTimeNumber(value), this._d);
   }
 
-  private _handleType(value: number): CalendarComponentPayloadTypes {
+  _handleType(value: number): CalendarComponentPayloadTypes {
     let date = moment(value);
     switch (this.type) {
       case 'string':
@@ -342,7 +341,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     this._onTouched = fn;
   }
 
-  private _writeValue(value: any): void {
+  _writeValue(value: any): void {
     if (!value) {
       this._calendarMonthValue = [null, null];
       return;
