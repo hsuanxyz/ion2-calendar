@@ -1,100 +1,99 @@
 @import "../functions";
 @mixin transition-property($args...) {
-    -webkit-transition-property: $args;
-    -moz-transition-property: $args;
-    -ms-transition-property: $args;
-    -o-transition-property: $args;
-    transition-property: $args;
+  -webkit-transition-property: $args;
+  -moz-transition-property: $args;
+  -ms-transition-property: $args;
+  -o-transition-property: $args;
+  transition-property: $args;
 }
 
 @mixin transition-duration($args...) {
-    -webkit-transition-duration: $args;
-    -moz-transition-duration: $args;
-    -ms-transition-duration: $args;
-    -o-transition-duration: $args;
-    transition-duration: $args;
+  -webkit-transition-duration: $args;
+  -moz-transition-duration: $args;
+  -ms-transition-duration: $args;
+  -o-transition-duration: $args;
+  transition-duration: $args;
 }
 
 @mixin transition-timing-function($args...) {
-    -webkit-transition-timing-function: $args;
-    -moz-transition-timing-function: $args;
-    -ms-transition-timing-function: $args;
-    -o-transition-timing-function: $args;
-    transition-timing-function: $args;
+  -webkit-transition-timing-function: $args;
+  -moz-transition-timing-function: $args;
+  -ms-transition-timing-function: $args;
+  -o-transition-timing-function: $args;
+  transition-timing-function: $args;
 }
 
 @mixin month-color($background-color: primary, $color: #fff) {
-    button.days-btn small,
-    .days .marked p,
-    .days .today p {
-        color: bindColors($background-color);
+  button.days-btn small,
+  .days .marked p,
+  .days .today p {
+    color: bindColors($background-color);
+  }
+  .days .today p {
+    font-weight: 700;
+  }
+  .days .last-month-day p,
+  .days .next-month-day p {
+    color: rgba(0, 0, 0, .25);
+  }
+  .days .today.on-selected p,
+  .days .marked.on-selected p {
+    color: $color;
+  }
+  .days .on-selected,
+  .startSelection button.days-btn,
+  .endSelection button.days-btn {
+    background-color: bindColors($background-color);
+    color: $color;
+  }
+  .startSelection {
+    position: relative;
+    &:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block;
+      background-color: lighten(bindColors($background-color), 12%);
     }
-    .days .today p {
-        font-weight: 700;
+  }
+  .endSelection {
+    position: relative;
+    &:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      background-color: lighten(bindColors($background-color), 12%);
     }
-    .days .last-month-day p,
-    .days .next-month-day p {
-        color: rgba(0, 0, 0, .25);
+  }
+  .startSelection.endSelection {
+    &:after {
+      background-color: transparent;
     }
-    .days .today.on-selected p,
-    .days .marked.on-selected p {
-        color: $color;
+  }
+  .startSelection button.days-btn {
+    border-radius: 50%
+  }
+  .between button.days-btn {
+    background-color: lighten(bindColors($background-color), 12%);
+    width: 100%;
+    border-radius: 0;
+    p {
+      color: $color;
     }
-    .days .on-selected,
-    .startSelection button.days-btn,
-    .endSelection button.days-btn {
-        background-color: bindColors($background-color);
-        color: $color;
+  }
+  .endSelection button.days-btn {
+    border-radius: 50%;
+    p {
+      color: $color;
     }
-    .startSelection {
-        position: relative;
-        &:after {
-            height: 36px;
-            width: 50%;
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: block;
-            background-color: lighten(bindColors($background-color), 12%);
-        }
-    }
-    .endSelection {
-        position: relative;
-        &:after {
-            height: 36px;
-            width: 50%;
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-            background-color: lighten(bindColors($background-color), 12%);
-        }
-    }
-    .startSelection.endSelection {
-        &:after {
-            background-color: transparent;
-        }
-    }
-    .startSelection button.days-btn {
-        border-radius: 50%
-    }
-    .between button.days-btn {
-        background-color: lighten(bindColors($background-color), 12%);
-        width: 100%;
-        border-radius: 0;
-        p {
-            color: $color;
-        }
-    }
-    .endSelection button.days-btn {
-        border-radius: 50%;
-        p {
-            color: $color;
-        }
-    }
-
+  }
   .days.startSelection:nth-child(7n):after,
   .days.between:nth-child(7n) button.days-btn,
   button.days-btn.is-last {
@@ -103,13 +102,11 @@
       border-radius: 50%
     }
   }
-
   .days.endSelection:nth-child(7n+1):after,
   .days.between:nth-child(7n+1) button.days-btn,
   button.days-btn.is-first {
     border-radius: 36px 0 0 36px;
   }
-
   .startSelection button.days-btn.is-first,
   .endSelection button.days-btn.is-first,
   button.days-btn.is-first.on-selected,
@@ -118,109 +115,95 @@
   .endSelection button.days-btn.is-last {
     border-radius: 50%
   }
-
   .startSelection.is-last-wrap {
     &::after {
       border-radius: 0 36px 36px 0;
     }
   }
-
   .endSelection.is-first-wrap {
     &::after {
       border-radius: 36px 0 0 36px;
     }
   }
-
   .days .on-selected p {
-        color: $color;
+    color: $color;
+  }
+  .startSelection,
+  .endSelection,
+  .between {
+    button.days-btn {
+      @include transition-property(background-color);
+      @include transition-duration(180ms);
+      @include transition-timing-function(ease-out);
     }
-    .startSelection,
-    .endSelection,
-    .between {
-        button.days-btn {
-            @include transition-property(background-color);
-            @include transition-duration(180ms);
-            @include transition-timing-function(ease-out);
-        }
-    }
+  }
 }
 
 ion-calendar-month {
-    display: inline-block;
-    width: 100%;
-    .days-box {
-        padding: 0.5rem;
+  display: inline-block;
+  width: 100%;
+  .days-box {
+    padding: 0.5rem;
+  }
+  .days:nth-of-type(7n),
+  .days:nth-of-type(7n+1) {
+    width: 15%;
+  }
+  .days {
+    width: 14%;
+    float: left;
+    text-align: center;
+    height: 36px;
+    margin-bottom: 5px;
+  }
+  .days .marked p {
+    font-weight: 500;
+  }
+  .days .on-selected {
+    border: none;
+    p {
+      font-size: 1.3em;
     }
-    .days:nth-of-type(7n),
-    .days:nth-of-type(7n+1) {
-        width: 15%;
+  }
+  button.days-btn {
+    border-radius: 36px;
+    width: 36px;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    height: 36px;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+  }
+  button.days-btn p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+  }
+  button.days-btn.on-selected small {
+    transition: bottom .3s;
+    bottom: -14px;
+  }
+  button.days-btn small {
+    overflow: hidden;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    font-weight: 200;
+  }
+  @each $color-name,
+  $color-base,
+  $color-contrast in get-colors($colors) {
+    .#{$color-name} {
+      @include month-color($color-name, $color-contrast);
     }
-    .days {
-        width: 14%;
-        float: left;
-        text-align: center;
-        height: 36px;
-        margin-bottom: 5px;
-    }
-    .days .marked p {
-        font-weight: 500;
-    }
-    .days .on-selected {
-        border: none;
-        p {
-            font-size: 1.3em;
-        }
-    }
-    button.days-btn {
-        border-radius: 36px;
-        width: 36px;
-        display: block;
-        margin: 0 auto;
-        padding: 0;
-        height: 36px;
-        background-color: transparent;
-        position: relative;
-        z-index: 2;
-    }
-    button.days-btn p {
-        margin: 0;
-        font-size: 1.2em;
-        color: #333;
-    }
-    button.days-btn.on-selected small {
-        transition: bottom .3s;
-        bottom: -14px;
-    }
-    button.days-btn small {
-        overflow: hidden;
-        display: block;
-        left: 0;
-        right: 0;
-        bottom: -5px;
-        position: absolute;
-        z-index: 1;
-        text-align: center;
-        font-weight: 200;
-    }
-    .primary {
-        @include month-color();
-    }
-    .secondary {
-        @include month-color(secondary);
-    }
-    .danger {
-        @include month-color(danger);
-    }
-    .dark {
-        @include month-color(dark);
-    }
-    .light {
-        @include month-color(light, #a0a0a0);
-        .days .today p {
-            color: #565656;
-        }
-    }
-    .cal-color {
-        @include month-color(cal-color);
-    }
+  }
+  .cal-color {
+    @include month-color(cal-color);
+  }
 }

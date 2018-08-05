@@ -23,6 +23,7 @@ export class DemoBasicComponent {
   date: string = '2018-01-01';
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
+    color: 'color-custom'
   };
 
   constructor(public modalCtrl: ModalController) {

@@ -6,6 +6,7 @@
   "typings": "./dist/index.d.ts",
   "scripts": {
     "start": "cd ./dev && ionic serve",
+    "start-code": "cd ./dev && ionic serve --port 8101 --livereload-port 53704 --dev-logger-port 53704",
     "clean:dist": "rm -rf dist",
     "demo:link": "npm link && cd ./demo && npm link ion2-calendar",
     "demo:serve": "cd ./demo && ionic serve",

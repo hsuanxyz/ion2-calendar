@@ -31,7 +31,8 @@ export class DemoModalRangeComponent {
     const options: CalendarModalOptions = {
       pickMode: 'range',
       title: 'RANGE',
-      defaultDateRange: this.dateRange
+      defaultDateRange: this.dateRange,
+      color: 'color-custom'
     };
 
     let myCalendar = this.modalCtrl.create(CalendarModal, {
