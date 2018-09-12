@@ -1,3 +1,5 @@
+import { AnimationBuilder } from '@ionic/core';
+
 export interface CalendarOriginal {
   time: number;
   date: Date;
@@ -42,9 +44,9 @@ export interface DayConfig {
 
 export interface ModalOptions {
   showBackdrop?: boolean;
-  enableBackdropDismiss?: boolean;
-  enterAnimation?: string;
-  leaveAnimation?: string;
+  backdropDismiss?: boolean;
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface CalendarModalOptions extends CalendarOptions {
@@ -62,7 +64,7 @@ export interface CalendarModalOptions extends CalendarOptions {
   defaultScrollTo?: Date;
   defaultDate?: DefaultDate;
   defaultDates?: DefaultDate[];
-  defaultDateRange?: { from: DefaultDate, to?: DefaultDate } | null;
+  defaultDateRange?: { from: DefaultDate; to?: DefaultDate } | null;
   step?: number;
   /**
    * @deprecated this version notwork
@@ -83,8 +85,8 @@ export interface CalendarOptions {
   defaultSubtitle?: string;
   daysConfig?: Array<DayConfig>;
   /**
-  * show last month & next month days fill six weeks
-  */
+   * show last month & next month days fill six weeks
+   */
   showAdjacentMonthDay?: boolean;
 }
 
@@ -110,7 +112,7 @@ export class CalendarComponentMonthChange {
 }
 
 export type DefaultDate = Date | string | number | null;
-export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | string
-export type PickMode = 'multi' | 'single' | 'range'
-export type CalendarComponentTypeProperty = ('string' | 'js-date' | 'moment' | 'time' | 'object');
+export type Colors = 'primary' | 'secondary' | 'danger' | 'light' | 'dark' | string;
+export type PickMode = 'multi' | 'single' | 'range';
+export type CalendarComponentTypeProperty = 'string' | 'js-date' | 'moment' | 'time' | 'object';
 export type CalendarComponentPayloadTypes = string | Date | number | {};

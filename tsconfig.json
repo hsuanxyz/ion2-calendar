@@ -15,16 +15,8 @@
     "sourceMap": true,
     "target": "es5"
   },
-  "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "demo/",
-    "dist/",
-    "lazyload-demo/",
-    "node_modules",
-    "lib/"
-  ],
+  "include": ["src/**/*.ts"],
+  "exclude": ["demo/", "dist/", "lazyload-demo/", "node_modules", "lib/"],
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
@@ -33,6 +25,7 @@
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
+    "enableResourceInlining": true,
     "genDir": "./dist"
   }
 }

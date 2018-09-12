@@ -1,4 +1,14 @@
-@import "../functions";
+$colors: (
+  primary: var(--ion-color-primary),
+  secondary: var(--ion-color-secondary),
+  danger: var(--ion-color-danger),
+  light: var(--ion-color-light),
+  dark: var(--ion-color-dark),
+);
+
+@function bindColors($color-value) {
+  @return map-get($colors, $color-value);
+}
 
 @mixin month-picker($background-color: primary, $color: #fff) {
   .month-packer-item {
@@ -15,7 +25,6 @@
 }
 
 ion-calendar-month-picker {
-
   .month-picker {
     margin: 20px 0;
     display: inline-block;
@@ -65,7 +74,4 @@ ion-calendar-month-picker {
   .month-picker.cal-color {
     @include month-picker(cal-color);
   }
-
 }
-
-

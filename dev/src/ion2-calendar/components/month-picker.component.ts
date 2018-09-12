@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CalendarMonth } from "../calendar.model";
-import { defaults } from "../config";
+import { CalendarMonth } from '../calendar.model';
+import { defaults } from '../config';
 
 @Component({
   selector: 'ion-calendar-month-picker',
@@ -9,17 +9,18 @@ import { defaults } from "../config";
       <div class="month-packer-item"
            [class.this-month]=" i === _thisMonth.getMonth() && month.original.year === _thisMonth.getFullYear()"
            *ngFor="let item of _monthFormat; let i = index">
-        <button type="button" (click)="_onSelect(i)">{{item}}</button>
+        <button type="button" (click)="_onSelect(i)">{{ item }}</button>
       </div>
     </div>
-  `
+  `,
 })
-
 export class MonthPickerComponent {
-
-  @Input() month: CalendarMonth;
-  @Input() color = defaults.COLOR;
-  @Output() onSelect: EventEmitter<number> = new EventEmitter();
+  @Input()
+  month: CalendarMonth;
+  @Input()
+  color = defaults.COLOR;
+  @Output()
+  select: EventEmitter<number> = new EventEmitter();
   _thisMonth = new Date();
   _monthFormat = defaults.MONTH_FORMAT;
 
@@ -34,10 +35,9 @@ export class MonthPickerComponent {
     return this._monthFormat;
   }
 
-  constructor() {
-  }
+  constructor() {}
 
   _onSelect(month: number): void {
-    this.onSelect.emit(month);
+    this.select.emit(month);
   }
 }

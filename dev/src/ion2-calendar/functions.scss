@@ -1,11 +1,11 @@
+$colors: (
+  primary: var(--ion-color-primary),
+  secondary: var(--ion-color-secondary),
+  danger: var(--ion-color-danger),
+  light: var(--ion-color-light),
+  dark: var(--ion-color-dark),
+);
+
 @function bindColors($color-value) {
-  @if ($color-value != cal-color) {
-    @return color($colors, $color-value)
-  } @else {
-    @if (type-of(map-get($colors, $color-value)) != color) {
-      @return #488aff
-    } @else {
-      @return color($colors, $color-value)
-    }
-  }
+  @return map-get($colors, $color-value);
 }
