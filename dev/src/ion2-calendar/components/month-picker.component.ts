@@ -4,6 +4,7 @@ import { defaults } from '../config';
 
 @Component({
   selector: 'ion-calendar-month-picker',
+  styleUrls: ['./month-picker.component.scss'],
   template: `
     <div [class]="'month-picker ' + color">
       <div class="month-packer-item"

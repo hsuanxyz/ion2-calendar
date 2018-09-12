@@ -1,29 +1,25 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
 
-import {
-  CalendarModal,
-  CalendarModalOptions,
-} from '../ion2-calendar'
+import { CalendarModal, CalendarModalOptions } from '../ion2-calendar';
 
 @Component({
   selector: 'demo-modal-locale',
   template: `
-    <button ion-button (click)="openCalendar()">
+    <ion-button (click)="openCalendar()">
       locale
-    </button>
-  `
+    </ion-button>
+  `,
 })
 export class DemoModalLocaleComponent {
-
   date: Date = new Date();
 
   constructor(public modalCtrl: ModalController) {
     moment.locale('zh-cn');
   }
 
-  openCalendar() {
+  async openCalendar() {
     const options: CalendarModalOptions = {
       title: 'LOCALE',
       defaultDate: this.date,
@@ -32,20 +28,20 @@ export class DemoModalLocaleComponent {
       weekStart: 1,
     };
 
-    let myCalendar = this.modalCtrl.create(CalendarModal, {
-      options: options
+    const myCalendar = await this.modalCtrl.create({
+      component: CalendarModal,
+      componentProps: { options },
     });
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss((date, type) => {
-      if (type === 'done') {
-        this.date = date.dateObj;
-      }
-      console.log(date);
-      console.log('type', type);
-    })
+    const event: any = await myCalendar.onDidDismiss();
+    const { date, type } = event;
 
+    if (type === 'done') {
+      this.date = date.dateObj;
+    }
+    console.log(date);
+    console.log('type', type);
   }
-
 }

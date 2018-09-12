@@ -7,6 +7,7 @@ import {
   OnInit,
   Input,
   AfterViewInit,
+  HostBinding,
 } from '@angular/core';
 import { NavParams, ModalController, Content } from '@ionic/angular';
 import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.model';
@@ -81,6 +82,9 @@ export class CalendarModal implements OnInit, AfterViewInit {
   content: Content;
   @ViewChild('months')
   monthsEle: ElementRef;
+
+  @HostBinding('class.ion-page')
+  ionPage = true;
 
   @Input()
   options: CalendarModalOptions;

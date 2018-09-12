@@ -1,56 +1,55 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 
-import {
-  CalendarModal,
-  CalendarModalOptions
-} from '../ion2-calendar'
+import { CalendarModal, CalendarModalOptions } from '../ion2-calendar';
 
 @Component({
   selector: 'demo-modal-range-backwards',
   template: `
-    <button ion-button (click)="openCalendar()">
+    <ion-button (click)="openCalendar()">
       range can Backwards
-    </button>
-  `
+    </ion-button>
+  `,
 })
 export class DemoModalRangeBackwardsComponent {
-
   dateRange: {
     from: Date;
-    to: Date
+    to: Date;
   } = {
     from: new Date(),
-    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5)
+    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
   };
 
-  constructor(public modalCtrl: ModalController) {
-  }
+  constructor(public modalCtrl: ModalController) {}
 
-  openCalendar() {
+  async openCalendar() {
     const options: CalendarModalOptions = {
       pickMode: 'range',
       title: 'RANGE',
       defaultDateRange: this.dateRange,
-      canBackwardsSelected: true
+      canBackwardsSelected: true,
     };
 
-    let myCalendar = this.modalCtrl.create(CalendarModal, {
-      options: options
+    const myCalendar = await this.modalCtrl.create({
+      component: CalendarModal,
+      componentProps: { options },
     });
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss((date, type) => {
-      if (type === 'done') {
-        this.dateRange = Object.assign({}, {
+    const event: any = await myCalendar.onDidDismiss();
+    const { date, type } = event;
+
+    if (type === 'done') {
+      this.dateRange = Object.assign(
+        {},
+        {
           from: date.from.dateObj,
           to: date.to.dateObj,
-        })
-      }
-      console.log(date);
-      console.log('type', type);
-    });
+        }
+      );
+    }
+    console.log(date);
+    console.log('type', type);
   }
-
 }

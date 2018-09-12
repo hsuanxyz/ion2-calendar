@@ -41,6 +41,11 @@
     }
 
     .switch-btn {
+      --margin-top: 0;
+      --margin-bottom: 0;
+      --margin-start: auto;
+      --margin-end: auto;
+
       width: 100%;
       text-align: center;
       line-height: 32px;

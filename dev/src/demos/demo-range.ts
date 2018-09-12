@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
+import { ModalController } from '@ionic/angular';
 
-import {
-  CalendarComponentOptions
-} from '../ion2-calendar'
+import { CalendarComponentOptions } from '../ion2-calendar';
 
 @Component({
   selector: 'demo-range',
@@ -16,28 +14,24 @@ import {
                   type="string"
                   format="YYYY-MM-DD">
     </ion-calendar>
-  `
+  `,
 })
 export class DemoRangeComponent {
-
   date: {
-    from: string
-    to: string
+    from: string;
+    to: string;
   } = {
     from: '2018-01-01',
-    to: '2018-01-05'
+    to: '2018-01-05',
   };
   options: CalendarComponentOptions = {
     from: new Date(2000, 0, 1),
-    pickMode: 'range'
+    pickMode: 'range',
   };
 
-  constructor(public modalCtrl: ModalController) {
-
-  }
+  constructor(public modalCtrl: ModalController) {}
 
   onChange($event) {
-    console.log($event)
+    console.log($event);
   }
-
 }

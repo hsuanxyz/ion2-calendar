@@ -24,7 +24,7 @@ $colors: (
   }
 }
 
-ion-calendar-month-picker {
+:host {
   .month-picker {
     margin: 20px 0;
     display: inline-block;
