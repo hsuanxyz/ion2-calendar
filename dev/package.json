@@ -26,7 +26,8 @@
     "@ionic/angular": "4.0.0-beta.7",
     "core-js": "^2.5.3",
     "rxjs": "6.2.2",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "moment": "^2.19.3"
   },
   "devDependencies": {
     "@angular/cli": "~6.1.1",
