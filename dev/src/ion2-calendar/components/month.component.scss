@@ -6,6 +6,8 @@ $colors: (
   dark: var(--ion-color-dark),
 );
 
+$disabled-color: rgba(0, 0, 0, 0.25);
+
 @function bindColors($color-value) {
   @return map-get($colors, $color-value);
 }
@@ -45,7 +47,7 @@ $colors: (
   }
   .days .last-month-day p,
   .days .next-month-day p {
-    color: rgba(0, 0, 0, 0.25);
+    color: $disabled-color;
   }
   .days .today.on-selected p,
   .days .marked.on-selected p {
@@ -235,6 +237,9 @@ $colors: (
     font-size: 1.2em;
     color: #333;
     text-align: center;
+  }
+  button.days-btn[disabled] p {
+    color: $disabled-color;
   }
   button.days-btn.on-selected small {
     transition: bottom 0.3s;
