@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 @Component({
   template: `
   <ion-calendar-modal #calendar>
-    <div sub-header>
+    <div sub-header [style.backgroundColor]="'white'">
       <label>Date seleted: </label>
       <span *ngFor="let d of calendar.datesTemp; let i = index">
         <ion-button *ngIf="d" [color]="calendar._d.color" (click)="toDate(d.time)">{{d.time | date: 'dd/MM/yyyy'}}</ion-button>

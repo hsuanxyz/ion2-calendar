@@ -19,7 +19,6 @@ import { DemoOptionsComponent } from './demo-options';
 import { DemoEventsComponent } from './demo-events';
 import { DemoMethodsComponent } from './demo-methods';
 import { DemoModalRangeBackwardsComponent } from './demo-modal-range-backwards';
-import { DemoModalScrollToDateComponent } from './demo-modal-scroll-to-date';
 import { DemoModalCustomSubHeaderComponent } from './demo-modal-custom-sub-header';
 import { SubHeaderCalendarModal } from './sub-header-calendar-modal';
 
@@ -41,7 +40,6 @@ const COMPONENTS = [
   DemoEventsComponent,
   DemoMethodsComponent,
   DemoModalRangeBackwardsComponent,
-  DemoModalScrollToDateComponent,
 ];
 
 @NgModule({

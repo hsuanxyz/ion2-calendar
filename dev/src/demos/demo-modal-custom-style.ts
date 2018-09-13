@@ -20,7 +20,7 @@ export class DemoModalCustomStyleComponent {
     const options: CalendarModalOptions = {
       title: 'CUSTOM-STYLE',
       defaultDate: this.date,
-      color: 'dark',
+      cssClass: 'my-class',
     };
 
     const myCalendar = await this.modalCtrl.create({
