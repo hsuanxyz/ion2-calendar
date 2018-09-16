@@ -24,7 +24,7 @@ const NUM_MONTHS_CREATE = 3;
     <ion-header>
       <ion-toolbar [color]="_d.color">
           <ion-buttons slot="start">
-              <ion-button type='button' icon-only fill="clear" (click)="onCancel()">
+              <ion-button type='button' slot="icon-only" fill="clear" (click)="onCancel()">
               <span *ngIf="_d.closeLabel !== '' && !_d.closeIcon">{{ _d.closeLabel }}</span>
               <ion-icon *ngIf="_d.closeIcon" name="close"></ion-icon>
             </ion-button>
@@ -33,7 +33,7 @@ const NUM_MONTHS_CREATE = 3;
           <ion-title>{{ _d.title }}</ion-title>
 
           <ion-buttons slot="end">
-            <ion-button type='button' icon-only *ngIf="!_d.autoDone" fill="clear" [disabled]="!canDone()" (click)="done()">
+            <ion-button type='button' slot="icon-only" *ngIf="!_d.autoDone" fill="clear" [disabled]="!canDone()" (click)="done()">
               <span *ngIf="_d.doneLabel !== '' && !_d.doneIcon">{{ _d.doneLabel }}</span>
               <ion-icon *ngIf="_d.doneIcon" name="checkmark"></ion-icon>
             </ion-button>
