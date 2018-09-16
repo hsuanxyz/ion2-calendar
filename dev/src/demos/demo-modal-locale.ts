@@ -36,12 +36,12 @@ export class DemoModalLocaleComponent {
     myCalendar.present();
 
     const event: any = await myCalendar.onDidDismiss();
-    const { date, type } = event;
+    const { data: date, role } = event;
 
-    if (type === 'done') {
+    if (role === 'done') {
       this.date = date.dateObj;
     }
     console.log(date);
-    console.log('type', type);
+    console.log('role', role);
   }
 }

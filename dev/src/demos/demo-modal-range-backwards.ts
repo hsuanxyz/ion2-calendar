@@ -38,9 +38,9 @@ export class DemoModalRangeBackwardsComponent {
     myCalendar.present();
 
     const event: any = await myCalendar.onDidDismiss();
-    const { date, type } = event;
+    const { data: date, role } = event;
 
-    if (type === 'done') {
+    if (role === 'done') {
       this.dateRange = Object.assign(
         {},
         {
@@ -50,6 +50,6 @@ export class DemoModalRangeBackwardsComponent {
       );
     }
     console.log(date);
-    console.log('type', type);
+    console.log('role', role);
   }
 }

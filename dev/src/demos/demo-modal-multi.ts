@@ -35,12 +35,12 @@ export class DemoModalMultiComponent {
     myCalendar.present();
 
     const event: any = await myCalendar.onDidDismiss();
-    const { dates, type } = event;
+    const { data: dates, role } = event;
 
-    if (type === 'done') {
+    if (role === 'done') {
       this.dates = [...dates.map(e => e.dateObj)];
     }
     console.log(dates);
-    console.log(type);
+    console.log(role);
   }
 }
