@@ -123,8 +123,8 @@ export class CalendarModal implements OnInit, AfterViewInit {
     this._d = this.calSvc.safeOpt(this.options);
     this._d.showAdjacentMonthDay = false;
     this.step = this._d.step;
-    if (this.step < 1) {
-      this.step = 1;
+    if (this.step < this.calSvc.DEFAULT_STEP) {
+      this.step = this.calSvc.DEFAULT_STEP;
     }
 
     this.calendarMonths = this.calSvc.createMonthsByPeriod(
@@ -267,11 +267,11 @@ export class CalendarModal implements OnInit, AfterViewInit {
       this.content.getScrollElement().then((scrollElem) => {
         this._scrollLock = !1;
         const heightBeforeMonthPrepend = scrollElem.scrollHeight;
-        
+
         setTimeout(() => {
           this.backwardsMonth();
           const heightAfterMonthPrepend = scrollElem.scrollHeight;
-          
+
           this.content.scrollByPoint(0, heightAfterMonthPrepend - heightBeforeMonthPrepend, 0)
           .then(() => {
             this._scrollLock = !0;

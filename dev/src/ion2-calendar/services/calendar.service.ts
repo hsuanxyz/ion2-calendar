@@ -17,6 +17,10 @@ const isBoolean = (input: any) => input === true || input === false;
 export class CalendarService {
   constructor() {}
 
+  get DEFAULT_STEP() {
+    return 5;
+  }
+
   safeOpt(calendarOptions: any = {}): CalendarModalOptions {
     const _disableWeeks: number[] = [];
     const _daysConfig: DayConfig[] = [];
@@ -24,7 +28,7 @@ export class CalendarService {
       from = new Date(),
       to = 0,
       weekStart = 0,
-      step = 3,
+      step = this.DEFAULT_STEP,
       id = '',
       cssClass = '',
       closeLabel = 'CANCEL',
