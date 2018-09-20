@@ -1,31 +1,34 @@
 import { Injectable } from '@angular/core';
-import { isBoolean } from "ionic-angular/util/util";
+import * as moment from 'moment';
+
 import {
   CalendarOriginal,
   CalendarDay,
   CalendarMonth,
   CalendarModalOptions,
   CalendarResult,
-  DayConfig
-} from '../calendar.model'
-import * as moment from 'moment';
-import { defaults, pickModes } from "../config";
+  DayConfig,
+} from '../calendar.model';
+import { defaults, pickModes } from '../config';
+
+const isBoolean = (input: any) => input === true || input === false;
 
 @Injectable()
 export class CalendarService {
+  constructor() {}
 
-  constructor() {
-
+  get DEFAULT_STEP() {
+    return 12;
   }
 
-  safeOpt(calendarOptions: any): CalendarModalOptions {
+  safeOpt(calendarOptions: any = {}): CalendarModalOptions {
     const _disableWeeks: number[] = [];
     const _daysConfig: DayConfig[] = [];
     let {
       from = new Date(),
       to = 0,
       weekStart = 0,
-      step = 3,
+      step = this.DEFAULT_STEP,
       id = '',
       cssClass = '',
       closeLabel = 'CANCEL',
@@ -45,7 +48,7 @@ export class CalendarService {
       weekdays = defaults.WEEKS_FORMAT,
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
-      showAdjacentMonthDay = true
+      showAdjacentMonthDay = true,
     } = calendarOptions || {};
 
     return {
@@ -76,8 +79,8 @@ export class CalendarService {
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
       defaultDateRange: calendarOptions.defaultDateRange || null,
-      showAdjacentMonthDay
-    }
+      showAdjacentMonthDay,
+    };
   }
 
   createOriginalCalendar(time: number): CalendarOriginal {
@@ -92,14 +95,13 @@ export class CalendarService {
       firstWeek,
       howManyDays,
       time: new Date(year, month, 1).getTime(),
-      date: new Date(time)
-    }
+      date: new Date(time),
+    };
   }
 
   findDayConfig(day: any, opt: CalendarModalOptions): any {
-
     if (opt.daysConfig.length <= 0) return null;
-    return opt.daysConfig.find((n) => day.isSame(n.date, 'day'))
+    return opt.daysConfig.find(n => day.isSame(n.date, 'day'));
   }
 
   createCalendarDay(time: number, opt: CalendarModalOptions, month?: number): CalendarDay {
@@ -118,7 +120,6 @@ export class CalendarService {
         isBetween = moment(_time).isBefore(_rangeBeg) ? false : isBetween;
       }
     } else if (_rangeBeg > 0 && _rangeEnd === 0) {
-
       if (!opt.canBackwardsSelected) {
         let _addTime = _time.add(1, 'day');
         isBetween = !_addTime.isAfter(_rangeBeg);
@@ -137,15 +138,15 @@ export class CalendarService {
 
     let title = new Date(time).getDate().toString();
     if (dayConfig && dayConfig.title) {
-      title = dayConfig.title
+      title = dayConfig.title;
     } else if (opt.defaultTitle) {
-      title = opt.defaultTitle
+      title = opt.defaultTitle;
     }
     let subTitle = '';
     if (dayConfig && dayConfig.subTitle) {
-      subTitle = dayConfig.subTitle
+      subTitle = dayConfig.subTitle;
     } else if (opt.defaultSubtitle) {
-      subTitle = opt.defaultSubtitle
+      subTitle = opt.defaultSubtitle;
     }
 
     return {
@@ -160,8 +161,8 @@ export class CalendarService {
       cssClass: dayConfig ? dayConfig.cssClass || '' : '',
       disable: _disable,
       isFirst: date.date() === 1,
-      isLast: date.date() === date.daysInMonth()
-    }
+      isLast: date.date() === date.daysInMonth(),
+    };
   }
 
   createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth {
@@ -188,13 +189,17 @@ export class CalendarService {
       let startOffsetIndex = _booleanMap.indexOf(true) - 1;
       let endOffsetIndex = _booleanMap.lastIndexOf(true) + 1;
       for (startOffsetIndex; startOffsetIndex >= 0; startOffsetIndex--) {
-        const dayBefore = moment(days[startOffsetIndex + 1].time).clone().subtract(1, 'd');
+        const dayBefore = moment(days[startOffsetIndex + 1].time)
+          .clone()
+          .subtract(1, 'd');
         days[startOffsetIndex] = this.createCalendarDay(dayBefore.valueOf(), opt, thisMonth);
       }
 
       if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
         for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
-          const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
+          const dayAfter = moment(days[endOffsetIndex - 1].time)
+            .clone()
+            .add(1, 'd');
           days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
         }
       }
@@ -202,9 +207,8 @@ export class CalendarService {
 
     return {
       days,
-      original: original
-    }
-
+      original: original,
+    };
   }
 
   createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth> {
@@ -214,9 +218,11 @@ export class CalendarService {
     let _startMonth = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
 
     for (let i = 0; i < monthsNum; i++) {
-      let time = moment(_startMonth).add(i, 'M').valueOf();
+      let time = moment(_startMonth)
+        .add(i, 'M')
+        .valueOf();
       let originalCalendar = this.createOriginalCalendar(time);
-      _array.push(this.createCalendarMonth(originalCalendar, opt))
+      _array.push(this.createCalendarMonth(originalCalendar, opt));
     }
 
     return _array;
@@ -231,7 +237,7 @@ export class CalendarService {
       case pickModes.RANGE:
         result = {
           from: this.multiFormat(original[0].time),
-          to: this.multiFormat(original[1].time)
+          to: this.multiFormat(original[1].time),
         };
         break;
       case pickModes.MULTI:
@@ -252,8 +258,7 @@ export class CalendarService {
       string: _moment.format(defaults.DATE_FORMAT),
       years: _moment.year(),
       months: _moment.month() + 1,
-      date: _moment.date()
-    }
+      date: _moment.date(),
+    };
   }
-
 }

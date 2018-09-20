@@ -1,76 +1,48 @@
-ion-calendar {
-
-  $btn-width: 40px;
-
+:host {
   padding: 10px 20px;
   box-sizing: border-box;
   display: inline-block;
   background-color: #fff;
-  width: 100%;
-
-  .title {
-
-    padding: 0 $btn-width 0 $btn-width;
-    overflow: hidden;
-
-    .back, .forward, .switch-btn {
+  width: 100%; }
+  :host .title {
+    padding: 0 40px 0 40px;
+    overflow: hidden; }
+    :host .title .back,
+    :host .title .forward,
+    :host .title .switch-btn {
       display: block;
       position: relative;
       float: left;
       min-height: 32px;
       margin: 0;
       padding: 0;
-      font-size: 15px;
-    }
-
-    .back, .forward {
-      color: #757575;
-    }
-
-    .back {
+      font-size: 15px; }
+    :host .title .back,
+    :host .title .forward {
+      color: #757575; }
+    :host .title .back {
       margin-left: -100%;
-      left: -$btn-width;
-      width: $btn-width;
-    }
-
-    .forward {
-      margin-left: -$btn-width;
-      right: -$btn-width;
-      width: $btn-width;
-    }
-
-    .switch-btn {
+      left: -40px;
+      width: 40px; }
+    :host .title .forward {
+      margin-left: -40px;
+      right: -40px;
+      width: 40px; }
+    :host .title .switch-btn {
+      --margin-top: 0;
+      --margin-bottom: 0;
+      --margin-start: auto;
+      --margin-end: auto;
       width: 100%;
       text-align: center;
       line-height: 32px;
-      color: #757575;
-
-      .arrow-dropdown {
-        margin-left: 5px;
-      }
-    }
-  }
-
-  .days.between {
-    .days-btn.is-last, .days-btn.is-first {
-      border-radius: 0;
-    }
-  }
-
-  .component-mode {
-    .days.startSelection.is-last-wrap {
-      &::after {
-        border-radius: 0;
-      }
-    }
-
-    .days.endSelection.is-first-wrap {
-      &::after {
-        border-radius: 0;
-      }
-    }
-  }
-
-}
-
-
+      color: #757575; }
+      :host .title .switch-btn .arrow-dropdown {
+        margin-left: 5px; }
+  :host .days.between .days-btn.is-last,
+  :host .days.between .days-btn.is-first {
+    border-radius: 0; }
+  :host .component-mode .days.startSelection.is-last-wrap::after {
+    border-radius: 0; }
+  :host .component-mode .days.endSelection.is-first-wrap::after {
+    border-radius: 0; }
