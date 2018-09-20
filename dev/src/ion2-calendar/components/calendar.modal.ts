@@ -15,7 +15,7 @@ import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
 import { pickModes } from '../config';
 
-const NUM_MONTHS_CREATE = 3;
+const NUM_OF_MONTHS_TO_CREATE = 3;
 
 @Component({
   selector: 'ion-calendar-modal',
@@ -180,6 +180,8 @@ export class CalendarModal implements OnInit, AfterViewInit {
     if (pickMode !== pickModes.MULTI && autoDone && this.canDone()) {
       this.done();
     }
+
+    this.repaintDOM();
   }
 
   onCancel(): void {
@@ -214,7 +216,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
     const len = this.calendarMonths.length;
     const final = this.calendarMonths[len - 1];
     const nextTime = moment(final.original.time)
-      .add(NUM_MONTHS_CREATE, 'M')
+      .add(NUM_OF_MONTHS_TO_CREATE, 'M')
       .valueOf();
     const rangeEnd = this._d.to ? moment(this._d.to).subtract(1, 'M') : 0;
 
@@ -223,21 +225,26 @@ export class CalendarModal implements OnInit, AfterViewInit {
       return;
     }
 
-    this.calendarMonths.push(...this.calSvc.createMonthsByPeriod(nextTime, NUM_MONTHS_CREATE, this._d));
+    this.calendarMonths.push(...this.calSvc.createMonthsByPeriod(nextTime, NUM_OF_MONTHS_TO_CREATE, this._d));
     event.target.complete();
+    this.repaintDOM();
   }
 
   backwardsMonth(): void {
     const first = this.calendarMonths[0];
+
     if (first.original.time <= 0) {
       this._d.canBackwardsSelected = false;
       return;
     }
+
     const firstTime = (this.actualFirstTime = moment(first.original.time)
-      .subtract(NUM_MONTHS_CREATE, 'M')
+      .subtract(NUM_OF_MONTHS_TO_CREATE, 'M')
       .valueOf());
-    this.calendarMonths.unshift(...this.calSvc.createMonthsByPeriod(firstTime, NUM_MONTHS_CREATE, this._d));
+
+    this.calendarMonths.unshift(...this.calSvc.createMonthsByPeriod(firstTime, NUM_OF_MONTHS_TO_CREATE, this._d));
     this.ref.detectChanges();
+    this.repaintDOM();
   }
 
   scrollToDate(date: Date): void {
@@ -263,22 +270,37 @@ export class CalendarModal implements OnInit, AfterViewInit {
 
     const { detail } = $event;
 
-    if (detail.scrollTop <= 500 && detail.velocityY < 0 && this._scrollLock) {
-      this.content.getScrollElement().then((scrollElem) => {
+    if (detail.scrollTop <= 200 && detail.velocityY < 0 && this._scrollLock) {
+      this.content.getScrollElement().then(scrollElem => {
         this._scrollLock = !1;
-        const heightBeforeMonthPrepend = scrollElem.scrollHeight;
 
+        const heightBeforeMonthPrepend = scrollElem.scrollHeight;
+        this.backwardsMonth();
         setTimeout(() => {
-          this.backwardsMonth();
           const heightAfterMonthPrepend = scrollElem.scrollHeight;
 
-          this.content.scrollByPoint(0, heightAfterMonthPrepend - heightBeforeMonthPrepend, 0)
-          .then(() => {
+          this.content.scrollByPoint(0, heightAfterMonthPrepend - heightBeforeMonthPrepend, 0).then(() => {
             this._scrollLock = !0;
           });
         }, 180);
       });
     }
+  }
+
+  /**
+   * In some older Safari versions (observed at Mac's Safari 10.0), there is an issue where style updates to
+   * shadowRoot descendants don't cause a browser repaint.
+   * See for more details: https://github.com/Polymer/polymer/issues/4701
+   */
+  repaintDOM() {
+    return this.content.getScrollElement().then(scrollElem => {
+      // Update scrollElem to ensure that height of the container changes as Months are appended/prepended
+      scrollElem.style.zIndex = '2';
+      scrollElem.style.zIndex = 'initial';
+      // Update monthsEle to ensure selected state is reflected when tapping on a day
+      this.monthsEle.nativeElement.style.zIndex = '2';
+      this.monthsEle.nativeElement.style.zIndex = 'initial';
+    });
   }
 
   findInitMonthNumber(date: Date): number {
