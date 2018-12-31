@@ -9,7 +9,7 @@ import {
   AfterViewInit,
   HostBinding,
 } from '@angular/core';
-import { NavParams, ModalController, Content } from '@ionic/angular';
+import { NavParams, ModalController, IonContent } from '@ionic/angular';
 import { CalendarDay, CalendarMonth, CalendarModalOptions } from '../calendar.model';
 import { CalendarService } from '../services/calendar.service';
 import * as moment from 'moment';
@@ -78,8 +78,8 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
   `,
 })
 export class CalendarModal implements OnInit, AfterViewInit {
-  @ViewChild(Content)
-  content: Content;
+  @ViewChild(IonContent)
+  content: IonContent;
   @ViewChild('months')
   monthsEle: ElementRef;
 
