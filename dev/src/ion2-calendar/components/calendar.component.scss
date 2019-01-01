@@ -20,6 +20,8 @@
       min-height: 32px;
       margin: 0;
       padding: 0;
+      --padding-start: 0;
+      --padding-end: 0;
       font-size: 15px;
     }
 
@@ -62,7 +64,7 @@
     .days-btn.is-first {
       border-radius: 0;
     }
-  }
+  } 
 
   .component-mode {
     .days.startSelection.is-last-wrap {
