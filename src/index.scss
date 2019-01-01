@@ -759,7 +759,7 @@
     border-radius: 32px;
     width: 100%;
     height: 100%;
-    font-size: 1em;
+    font-size: 0.9em;
     background-color: transparent; }
 
 :host .month-picker.primary .month-packer-item.this-month button {
@@ -840,7 +840,8 @@
   height: 44px;
   width: 100%;
   padding: 15px 0;
-  color: #fff; }
+  color: #fff;
+  font-size: 0.9em; }
   :host .week-title.light, :host .week-title.transparent {
     color: #9e9e9e; }
   :host .week-title li {
@@ -872,7 +873,7 @@
 
 :host h4 {
   font-weight: 400;
-  font-size: 1.8rem;
+  font-size: 1.1rem;
   display: block;
   text-align: center;
   margin: 1rem 0 0;
@@ -896,6 +897,8 @@
       min-height: 32px;
       margin: 0;
       padding: 0;
+      --padding-start: 0;
+      --padding-end: 0;
       font-size: 15px; }
     :host .title .back,
     :host .title .forward {
