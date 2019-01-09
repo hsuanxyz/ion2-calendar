@@ -25,14 +25,15 @@
 
 # Support
 
-- ionic-angular `^3.0.0`
+- ionic-angular `^3.0.0` [2.x](https://github.com/HsuanXyz/ion2-calendar/tree/v2)
+- ionic-angular `4.0.0`
 
 # Demo
 live demo [click me](https://hsuanxyz.github.io/demo/ion2-calendar/).
 
 # Usage
 ### Installation
-`$ npm install ion2-calendar moment --save`
+`$ npm install ion2-calendar@next moment --save`
 
 ### Import module
 
@@ -233,13 +234,13 @@ Set pickMode to 'range'.
           pickMode: 'range',
           title: 'RANGE'
         };
-    
+
         let myCalendar = this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: { from: CalendarResult; to: CalendarResult }, type: string) => {
           console.log(date);
         });
@@ -256,13 +257,13 @@ Set pickMode to 'multi'.
           pickMode: 'multi',
           title: 'MULTI'
         };
-    
+
         let myCalendar =  this.modalCtrl.create(CalendarModal, {
           options: options
         });
-    
+
         myCalendar.present();
-    
+
         myCalendar.onDidDismiss((date: CalendarResult[], type: string) => {
           console.log(date);
         })
