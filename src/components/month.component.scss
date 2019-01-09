@@ -1,226 +1,745 @@
-@import "../functions";
-@mixin transition-property($args...) {
-    -webkit-transition-property: $args;
-    -moz-transition-property: $args;
-    -ms-transition-property: $args;
-    -o-transition-property: $args;
-    transition-property: $args;
-}
-
-@mixin transition-duration($args...) {
-    -webkit-transition-duration: $args;
-    -moz-transition-duration: $args;
-    -ms-transition-duration: $args;
-    -o-transition-duration: $args;
-    transition-duration: $args;
-}
-
-@mixin transition-timing-function($args...) {
-    -webkit-transition-timing-function: $args;
-    -moz-transition-timing-function: $args;
-    -ms-transition-timing-function: $args;
-    -o-transition-timing-function: $args;
-    transition-timing-function: $args;
-}
-
-@mixin month-color($background-color: primary, $color: #fff) {
-    button.days-btn small,
-    .days .marked p,
-    .days .today p {
-        color: bindColors($background-color);
-    }
-    .days .today p {
-        font-weight: 700;
-    }
-    .days .last-month-day p,
-    .days .next-month-day p {
-        color: rgba(0, 0, 0, .25);
-    }
-    .days .today.on-selected p,
-    .days .marked.on-selected p {
-        color: $color;
-    }
-    .days .on-selected,
-    .startSelection button.days-btn,
-    .endSelection button.days-btn {
-        background-color: bindColors($background-color);
-        color: $color;
-    }
-    .startSelection {
-        position: relative;
-        &:after {
-            height: 36px;
-            width: 50%;
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: block;
-            background-color: lighten(bindColors($background-color), 12%);
-        }
-    }
-    .endSelection {
-        position: relative;
-        &:after {
-            height: 36px;
-            width: 50%;
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-            background-color: lighten(bindColors($background-color), 12%);
-        }
-    }
-    .startSelection.endSelection {
-        &:after {
-            background-color: transparent;
-        }
-    }
-    .startSelection button.days-btn {
-        border-radius: 50%
-    }
-    .between button.days-btn {
-        background-color: lighten(bindColors($background-color), 12%);
-        width: 100%;
-        border-radius: 0;
-        p {
-            color: $color;
-        }
-    }
-    .endSelection button.days-btn {
-        border-radius: 50%;
-        p {
-            color: $color;
-        }
-    }
-
-  .days.startSelection:nth-child(7n):after,
-  .days.between:nth-child(7n) button.days-btn,
-  button.days-btn.is-last {
-    border-radius: 0 36px 36px 0;
-    &.on-selected {
-      border-radius: 50%
-    }
-  }
-
-  .days.endSelection:nth-child(7n+1):after,
-  .days.between:nth-child(7n+1) button.days-btn,
-  button.days-btn.is-first {
-    border-radius: 36px 0 0 36px;
-  }
-
-  .startSelection button.days-btn.is-first,
-  .endSelection button.days-btn.is-first,
-  button.days-btn.is-first.on-selected,
-  button.days-btn.is-last.on-selected,
-  .startSelection button.days-btn.is-last,
-  .endSelection button.days-btn.is-last {
-    border-radius: 50%
-  }
-
-  .startSelection.is-last-wrap {
-    &::after {
-      border-radius: 0 36px 36px 0;
-    }
-  }
-
-  .endSelection.is-first-wrap {
-    &::after {
-      border-radius: 36px 0 0 36px;
-    }
-  }
-
-  .days .on-selected p {
-        color: $color;
-    }
-    .startSelection,
-    .endSelection,
-    .between {
-        button.days-btn {
-            @include transition-property(background-color);
-            @include transition-duration(180ms);
-            @include transition-timing-function(ease-out);
-        }
-    }
-}
-
-ion-calendar-month {
-    display: inline-block;
+:host {
+  display: inline-block;
+  width: 100%; }
+  :host .days-box {
+    padding: 0.5rem; }
+  :host .days:nth-of-type(7n),
+  :host .days:nth-of-type(7n + 1) {
+    width: 15%; }
+  :host .days {
+    width: 14%;
+    float: left;
+    text-align: center;
+    height: 36px;
+    margin-bottom: 5px; }
+  :host .days .marked p {
+    font-weight: 500; }
+  :host .days .on-selected {
+    border: none; }
+    :host .days .on-selected p {
+      font-size: 1.3em; }
+  :host button.days-btn {
+    border-radius: 36px;
+    width: 36px;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    height: 36px;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+    outline: 0; }
+  :host button.days-btn p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+    text-align: center; }
+  :host button.days-btn[disabled] p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host button.days-btn.on-selected small {
+    transition: bottom 0.3s;
+    bottom: -14px; }
+  :host button.days-btn small {
+    overflow: hidden;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    font-weight: 200; }
+  :host .primary button.days-btn small,
+  :host .primary .days .marked p,
+  :host .primary .days .today p {
+    color: var(--ion-color-primary); }
+  :host .primary .days .today p {
+    font-weight: 700; }
+  :host .primary .days .last-month-day p,
+  :host .primary .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .primary .days .today.on-selected p,
+  :host .primary .days .marked.on-selected p {
+    color: #fff; }
+  :host .primary .days .on-selected,
+  :host .primary .startSelection button.days-btn,
+  :host .primary .endSelection button.days-btn {
+    background-color: var(--ion-color-primary);
+    color: #fff; }
+  :host .primary .startSelection {
+    position: relative; }
+    :host .primary .startSelection:before, :host .primary .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .primary .startSelection:before {
+      background-color: var(--ion-color-primary); }
+    :host .primary .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .primary .endSelection {
+    position: relative; }
+    :host .primary .endSelection:before, :host .primary .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .primary .endSelection:before {
+      background-color: var(--ion-color-primary); }
+    :host .primary .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .primary .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .primary .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .primary .between button.days-btn {
+    background-color: var(--ion-color-primary);
     width: 100%;
-    .days-box {
-        padding: 0.5rem;
-    }
-    .days:nth-of-type(7n),
-    .days:nth-of-type(7n+1) {
-        width: 15%;
-    }
-    .days {
-        width: 14%;
-        float: left;
-        text-align: center;
-        height: 36px;
-        margin-bottom: 5px;
-    }
-    .days .marked p {
-        font-weight: 500;
-    }
-    .days .on-selected {
-        border: none;
-        p {
-            font-size: 1.3em;
-        }
-    }
-    button.days-btn {
-        border-radius: 36px;
-        width: 36px;
-        display: block;
-        margin: 0 auto;
-        padding: 0;
-        height: 36px;
-        background-color: transparent;
-        position: relative;
-        z-index: 2;
-    }
-    button.days-btn p {
-        margin: 0;
-        font-size: 1.2em;
-        color: #333;
-    }
-    button.days-btn.on-selected small {
-        transition: bottom .3s;
-        bottom: -14px;
-    }
-    button.days-btn small {
-        overflow: hidden;
-        display: block;
-        left: 0;
-        right: 0;
-        bottom: -5px;
-        position: absolute;
-        z-index: 1;
-        text-align: center;
-        font-weight: 200;
-    }
-    .primary {
-        @include month-color();
-    }
-    .secondary {
-        @include month-color(secondary);
-    }
-    .danger {
-        @include month-color(danger);
-    }
-    .dark {
-        @include month-color(dark);
-    }
-    .light {
-        @include month-color(light, #a0a0a0);
-        .days .today p {
-            color: #565656;
-        }
-    }
-    .cal-color {
-        @include month-color(cal-color);
-    }
-}
+    border-radius: 0;
+    position: relative; }
+    :host .primary .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .primary .between button.days-btn p {
+      color: #fff; }
+  :host .primary .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .primary .endSelection button.days-btn p {
+      color: #fff; }
+  :host .primary .days.startSelection:nth-child(7n):before,
+  :host .primary .days.between:nth-child(7n) button.days-btn,
+  :host .primary button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .primary .days.startSelection:nth-child(7n):before.on-selected,
+    :host .primary .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .primary button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .primary .days.endSelection:nth-child(7n + 1):before,
+  :host .primary .days.between:nth-child(7n + 1) button.days-btn,
+  :host .primary .days.between.is-first-wrap button.days-btn.is-first,
+  :host .primary button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .primary .startSelection button.days-btn.is-first,
+  :host .primary .endSelection button.days-btn.is-first,
+  :host .primary button.days-btn.is-first.on-selected,
+  :host .primary button.days-btn.is-last.on-selected,
+  :host .primary .startSelection button.days-btn.is-last,
+  :host .primary .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .primary .startSelection.is-last-wrap::before, :host .primary .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .primary .endSelection.is-first-wrap::before, :host .primary .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .primary .days .on-selected p {
+    color: #fff; }
+  :host .primary .startSelection button.days-btn,
+  :host .primary .endSelection button.days-btn,
+  :host .primary .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  :host .secondary button.days-btn small,
+  :host .secondary .days .marked p,
+  :host .secondary .days .today p {
+    color: var(--ion-color-secondary); }
+  :host .secondary .days .today p {
+    font-weight: 700; }
+  :host .secondary .days .last-month-day p,
+  :host .secondary .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .secondary .days .today.on-selected p,
+  :host .secondary .days .marked.on-selected p {
+    color: #fff; }
+  :host .secondary .days .on-selected,
+  :host .secondary .startSelection button.days-btn,
+  :host .secondary .endSelection button.days-btn {
+    background-color: var(--ion-color-secondary);
+    color: #fff; }
+  :host .secondary .startSelection {
+    position: relative; }
+    :host .secondary .startSelection:before, :host .secondary .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .secondary .startSelection:before {
+      background-color: var(--ion-color-secondary); }
+    :host .secondary .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .secondary .endSelection {
+    position: relative; }
+    :host .secondary .endSelection:before, :host .secondary .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .secondary .endSelection:before {
+      background-color: var(--ion-color-secondary); }
+    :host .secondary .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .secondary .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .secondary .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .secondary .between button.days-btn {
+    background-color: var(--ion-color-secondary);
+    width: 100%;
+    border-radius: 0;
+    position: relative; }
+    :host .secondary .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .secondary .between button.days-btn p {
+      color: #fff; }
+  :host .secondary .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .secondary .endSelection button.days-btn p {
+      color: #fff; }
+  :host .secondary .days.startSelection:nth-child(7n):before,
+  :host .secondary .days.between:nth-child(7n) button.days-btn,
+  :host .secondary button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .secondary .days.startSelection:nth-child(7n):before.on-selected,
+    :host .secondary .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .secondary button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .secondary .days.endSelection:nth-child(7n + 1):before,
+  :host .secondary .days.between:nth-child(7n + 1) button.days-btn,
+  :host .secondary .days.between.is-first-wrap button.days-btn.is-first,
+  :host .secondary button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .secondary .startSelection button.days-btn.is-first,
+  :host .secondary .endSelection button.days-btn.is-first,
+  :host .secondary button.days-btn.is-first.on-selected,
+  :host .secondary button.days-btn.is-last.on-selected,
+  :host .secondary .startSelection button.days-btn.is-last,
+  :host .secondary .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .secondary .startSelection.is-last-wrap::before, :host .secondary .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .secondary .endSelection.is-first-wrap::before, :host .secondary .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .secondary .days .on-selected p {
+    color: #fff; }
+  :host .secondary .startSelection button.days-btn,
+  :host .secondary .endSelection button.days-btn,
+  :host .secondary .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  :host .danger button.days-btn small,
+  :host .danger .days .marked p,
+  :host .danger .days .today p {
+    color: var(--ion-color-danger); }
+  :host .danger .days .today p {
+    font-weight: 700; }
+  :host .danger .days .last-month-day p,
+  :host .danger .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .danger .days .today.on-selected p,
+  :host .danger .days .marked.on-selected p {
+    color: #fff; }
+  :host .danger .days .on-selected,
+  :host .danger .startSelection button.days-btn,
+  :host .danger .endSelection button.days-btn {
+    background-color: var(--ion-color-danger);
+    color: #fff; }
+  :host .danger .startSelection {
+    position: relative; }
+    :host .danger .startSelection:before, :host .danger .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .danger .startSelection:before {
+      background-color: var(--ion-color-danger); }
+    :host .danger .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .danger .endSelection {
+    position: relative; }
+    :host .danger .endSelection:before, :host .danger .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .danger .endSelection:before {
+      background-color: var(--ion-color-danger); }
+    :host .danger .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .danger .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .danger .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .danger .between button.days-btn {
+    background-color: var(--ion-color-danger);
+    width: 100%;
+    border-radius: 0;
+    position: relative; }
+    :host .danger .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .danger .between button.days-btn p {
+      color: #fff; }
+  :host .danger .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .danger .endSelection button.days-btn p {
+      color: #fff; }
+  :host .danger .days.startSelection:nth-child(7n):before,
+  :host .danger .days.between:nth-child(7n) button.days-btn,
+  :host .danger button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .danger .days.startSelection:nth-child(7n):before.on-selected,
+    :host .danger .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .danger button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .danger .days.endSelection:nth-child(7n + 1):before,
+  :host .danger .days.between:nth-child(7n + 1) button.days-btn,
+  :host .danger .days.between.is-first-wrap button.days-btn.is-first,
+  :host .danger button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .danger .startSelection button.days-btn.is-first,
+  :host .danger .endSelection button.days-btn.is-first,
+  :host .danger button.days-btn.is-first.on-selected,
+  :host .danger button.days-btn.is-last.on-selected,
+  :host .danger .startSelection button.days-btn.is-last,
+  :host .danger .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .danger .startSelection.is-last-wrap::before, :host .danger .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .danger .endSelection.is-first-wrap::before, :host .danger .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .danger .days .on-selected p {
+    color: #fff; }
+  :host .danger .startSelection button.days-btn,
+  :host .danger .endSelection button.days-btn,
+  :host .danger .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  :host .dark button.days-btn small,
+  :host .dark .days .marked p,
+  :host .dark .days .today p {
+    color: var(--ion-color-dark); }
+  :host .dark .days .today p {
+    font-weight: 700; }
+  :host .dark .days .last-month-day p,
+  :host .dark .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .dark .days .today.on-selected p,
+  :host .dark .days .marked.on-selected p {
+    color: #fff; }
+  :host .dark .days .on-selected,
+  :host .dark .startSelection button.days-btn,
+  :host .dark .endSelection button.days-btn {
+    background-color: var(--ion-color-dark);
+    color: #fff; }
+  :host .dark .startSelection {
+    position: relative; }
+    :host .dark .startSelection:before, :host .dark .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .dark .startSelection:before {
+      background-color: var(--ion-color-dark); }
+    :host .dark .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .dark .endSelection {
+    position: relative; }
+    :host .dark .endSelection:before, :host .dark .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .dark .endSelection:before {
+      background-color: var(--ion-color-dark); }
+    :host .dark .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .dark .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .dark .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .dark .between button.days-btn {
+    background-color: var(--ion-color-dark);
+    width: 100%;
+    border-radius: 0;
+    position: relative; }
+    :host .dark .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .dark .between button.days-btn p {
+      color: #fff; }
+  :host .dark .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .dark .endSelection button.days-btn p {
+      color: #fff; }
+  :host .dark .days.startSelection:nth-child(7n):before,
+  :host .dark .days.between:nth-child(7n) button.days-btn,
+  :host .dark button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .dark .days.startSelection:nth-child(7n):before.on-selected,
+    :host .dark .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .dark button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .dark .days.endSelection:nth-child(7n + 1):before,
+  :host .dark .days.between:nth-child(7n + 1) button.days-btn,
+  :host .dark .days.between.is-first-wrap button.days-btn.is-first,
+  :host .dark button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .dark .startSelection button.days-btn.is-first,
+  :host .dark .endSelection button.days-btn.is-first,
+  :host .dark button.days-btn.is-first.on-selected,
+  :host .dark button.days-btn.is-last.on-selected,
+  :host .dark .startSelection button.days-btn.is-last,
+  :host .dark .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .dark .startSelection.is-last-wrap::before, :host .dark .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .dark .endSelection.is-first-wrap::before, :host .dark .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .dark .days .on-selected p {
+    color: #fff; }
+  :host .dark .startSelection button.days-btn,
+  :host .dark .endSelection button.days-btn,
+  :host .dark .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  :host .light button.days-btn small,
+  :host .light .days .marked p,
+  :host .light .days .today p {
+    color: var(--ion-color-light); }
+  :host .light .days .today p {
+    font-weight: 700; }
+  :host .light .days .last-month-day p,
+  :host .light .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .light .days .today.on-selected p,
+  :host .light .days .marked.on-selected p {
+    color: #a0a0a0; }
+  :host .light .days .on-selected,
+  :host .light .startSelection button.days-btn,
+  :host .light .endSelection button.days-btn {
+    background-color: var(--ion-color-light);
+    color: #a0a0a0; }
+  :host .light .startSelection {
+    position: relative; }
+    :host .light .startSelection:before, :host .light .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .light .startSelection:before {
+      background-color: var(--ion-color-light); }
+    :host .light .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .light .endSelection {
+    position: relative; }
+    :host .light .endSelection:before, :host .light .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .light .endSelection:before {
+      background-color: var(--ion-color-light); }
+    :host .light .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .light .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .light .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .light .between button.days-btn {
+    background-color: var(--ion-color-light);
+    width: 100%;
+    border-radius: 0;
+    position: relative; }
+    :host .light .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .light .between button.days-btn p {
+      color: #a0a0a0; }
+  :host .light .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .light .endSelection button.days-btn p {
+      color: #a0a0a0; }
+  :host .light .days.startSelection:nth-child(7n):before,
+  :host .light .days.between:nth-child(7n) button.days-btn,
+  :host .light button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .light .days.startSelection:nth-child(7n):before.on-selected,
+    :host .light .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .light button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .light .days.endSelection:nth-child(7n + 1):before,
+  :host .light .days.between:nth-child(7n + 1) button.days-btn,
+  :host .light .days.between.is-first-wrap button.days-btn.is-first,
+  :host .light button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .light .startSelection button.days-btn.is-first,
+  :host .light .endSelection button.days-btn.is-first,
+  :host .light button.days-btn.is-first.on-selected,
+  :host .light button.days-btn.is-last.on-selected,
+  :host .light .startSelection button.days-btn.is-last,
+  :host .light .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .light .startSelection.is-last-wrap::before, :host .light .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .light .endSelection.is-first-wrap::before, :host .light .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .light .days .on-selected p {
+    color: #a0a0a0; }
+  :host .light .startSelection button.days-btn,
+  :host .light .endSelection button.days-btn,
+  :host .light .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  :host .light .days .today p {
+    color: #565656; }
+  :host .cal-color .days .today p {
+    font-weight: 700; }
+  :host .cal-color .days .last-month-day p,
+  :host .cal-color .days .next-month-day p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host .cal-color .days .today.on-selected p,
+  :host .cal-color .days .marked.on-selected p {
+    color: #fff; }
+  :host .cal-color .days .on-selected,
+  :host .cal-color .startSelection button.days-btn,
+  :host .cal-color .endSelection button.days-btn {
+    color: #fff; }
+  :host .cal-color .startSelection {
+    position: relative; }
+    :host .cal-color .startSelection:before, :host .cal-color .startSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: block; }
+    :host .cal-color .startSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .cal-color .endSelection {
+    position: relative; }
+    :host .cal-color .endSelection:before, :host .cal-color .endSelection:after {
+      height: 36px;
+      width: 50%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block; }
+    :host .cal-color .endSelection:after {
+      background-color: white;
+      opacity: 0.25; }
+  :host .cal-color .startSelection.endSelection:after {
+    background-color: transparent; }
+  :host .cal-color .startSelection button.days-btn {
+    border-radius: 50%; }
+  :host .cal-color .between button.days-btn {
+    width: 100%;
+    border-radius: 0;
+    position: relative; }
+    :host .cal-color .between button.days-btn:after {
+      height: 36px;
+      width: 100%;
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: block;
+      background-color: white;
+      opacity: 0.25; }
+    :host .cal-color .between button.days-btn p {
+      color: #fff; }
+  :host .cal-color .endSelection button.days-btn {
+    border-radius: 50%; }
+    :host .cal-color .endSelection button.days-btn p {
+      color: #fff; }
+  :host .cal-color .days.startSelection:nth-child(7n):before,
+  :host .cal-color .days.between:nth-child(7n) button.days-btn,
+  :host .cal-color button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .cal-color .days.startSelection:nth-child(7n):before.on-selected,
+    :host .cal-color .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .cal-color button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .cal-color .days.endSelection:nth-child(7n + 1):before,
+  :host .cal-color .days.between:nth-child(7n + 1) button.days-btn,
+  :host .cal-color .days.between.is-first-wrap button.days-btn.is-first,
+  :host .cal-color button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .cal-color .startSelection button.days-btn.is-first,
+  :host .cal-color .endSelection button.days-btn.is-first,
+  :host .cal-color button.days-btn.is-first.on-selected,
+  :host .cal-color button.days-btn.is-last.on-selected,
+  :host .cal-color .startSelection button.days-btn.is-last,
+  :host .cal-color .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .cal-color .startSelection.is-last-wrap::before, :host .cal-color .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .cal-color .endSelection.is-first-wrap::before, :host .cal-color .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host .cal-color .days .on-selected p {
+    color: #fff; }
+  :host .cal-color .startSelection button.days-btn,
+  :host .cal-color .endSelection button.days-btn,
+  :host .cal-color .between button.days-btn {
+    -webkit-transition-property: background-color;
+    -moz-transition-property: background-color;
+    -ms-transition-property: background-color;
+    -o-transition-property: background-color;
+    transition-property: background-color;
+    -webkit-transition-duration: 180ms;
+    -moz-transition-duration: 180ms;
+    -ms-transition-duration: 180ms;
+    -o-transition-duration: 180ms;
+    transition-duration: 180ms;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    -ms-transition-timing-function: ease-out;
+    -o-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }

@@ -1,46 +1,42 @@
 import { Component } from '@angular/core';
-import { ModalController } from 'ionic-angular';
-import {
-  CalendarModalOptions,
-} from '../ion2-calendar'
+import { ModalController } from '@ionic/angular';
+import { CalendarModalOptions } from '../ion2-calendar';
 import { SubHeaderCalendarModal } from './sub-header-calendar-modal';
 
 @Component({
   selector: 'demo-modal-custom-sub-header',
   template: `
-    <button ion-button (click)="openCalendar()">
+    <ion-button (click)="openCalendar()">
       Custom Sub Header
-    </button>
-  `
+    </ion-button>
+  `,
 })
 export class DemoModalCustomSubHeaderComponent {
-
   date: Date = new Date();
 
-  constructor(public modalCtrl: ModalController) {
-  }
+  constructor(public modalCtrl: ModalController) {}
 
-  openCalendar() {
+  async openCalendar() {
     const options: CalendarModalOptions = {
       title: 'Custom Sub Header',
       defaultDate: this.date,
-      canBackwardsSelected: true
+      canBackwardsSelected: true,
     };
 
-    let myCalendar = this.modalCtrl.create(SubHeaderCalendarModal, {
-      options: options
+    const myCalendar = await this.modalCtrl.create({
+      component: SubHeaderCalendarModal,
+      componentProps: { options },
     });
 
     myCalendar.present();
 
-    myCalendar.onDidDismiss((date, type) => {
-      if (type === 'done') {
-        this.date = date.dateObj;
-      }
-      console.log(date);
-      console.log('type', type);
-    })
+    const event: any = await myCalendar.onDidDismiss();
+    const { data: date, role } = event;
 
+    if (role === 'done') {
+      this.date = date.dateObj;
+    }
+    console.log(date);
+    console.log('role', role);
   }
-
 }

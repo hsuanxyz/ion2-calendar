@@ -1,69 +1,42 @@
-@import "../functions";
+:host .toolbar-background-md,
+:host .toolbar-background-ios {
+  background: transparent; }
 
-@mixin week-title($background-color: primary, $color: #fff) {
+:host .week-toolbar {
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-top: 0; }
+  :host .week-toolbar.primary {
+    --background: var(--ion-color-primary); }
+  :host .week-toolbar.secondary {
+    --background: var(--ion-color-secondary); }
+  :host .week-toolbar.danger {
+    --background: var(--ion-color-danger); }
+  :host .week-toolbar.dark {
+    --background: var(--ion-color-dark); }
+  :host .week-toolbar.light {
+    --background: var(--ion-color-light); }
+  :host .week-toolbar.transparent {
+    --background: transparent; }
+  :host .week-toolbar.toolbar-md {
+    min-height: 44px; }
+
+:host .week-title {
   margin: 0;
-  color: $color;
   height: 44px;
   width: 100%;
-  background-color: bindColors($background-color);
   padding: 15px 0;
-}
-
-ion-calendar-week {
-
-  .toolbar-background-md, .toolbar-background-ios {
-    background: transparent;
-  }
-
-  .week-toolbar {
-    padding: 0;
-  }
-
-  .week-toolbar.toolbar-md {
-    min-height: 44px;
-  }
-
-  .week-title.primary {
-    @include week-title(primary);
-  }
-
-  .week-title.secondary {
-    @include week-title(secondary);
-  }
-
-  .week-title.danger {
-    @include week-title(danger);
-  }
-
-  .week-title.dark {
-    @include week-title(dark);
-  }
-
-  .week-title.light {
-    @include week-title(light, #9e9e9e);
-  }
-
-  .week-title.transparent {
-    @include week-title(light, #9e9e9e);
-    background-color: transparent;
-  }
-
-  .week-title.cal-color {
-    @include week-title(cal-color);
-  }
-
-  .week-title li {
+  color: #fff;
+  font-size: 0.9em; }
+  :host .week-title.light, :host .week-title.transparent {
+    color: #9e9e9e; }
+  :host .week-title li {
     list-style-type: none;
     display: block;
     float: left;
     width: 14%;
-    text-align: center;
-  }
-
-  .week-title li:nth-of-type(7n), .week-title li:nth-of-type(7n+1) {
-    width: 15%;
-  }
-
-}
-
-
+    text-align: center; }
+  :host .week-title li:nth-of-type(7n),
+  :host .week-title li:nth-of-type(7n + 1) {
+    width: 15%; }

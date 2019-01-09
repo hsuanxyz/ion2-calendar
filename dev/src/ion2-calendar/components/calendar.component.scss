@@ -1,5 +1,4 @@
-ion-calendar {
-
+:host {
   $btn-width: 40px;
 
   padding: 10px 20px;
@@ -9,21 +8,25 @@ ion-calendar {
   width: 100%;
 
   .title {
-
     padding: 0 $btn-width 0 $btn-width;
     overflow: hidden;
 
-    .back, .forward, .switch-btn {
+    .back,
+    .forward,
+    .switch-btn {
       display: block;
       position: relative;
       float: left;
       min-height: 32px;
       margin: 0;
       padding: 0;
+      --padding-start: 0;
+      --padding-end: 0;
       font-size: 15px;
     }
 
-    .back, .forward {
+    .back,
+    .forward {
       color: #757575;
     }
 
@@ -40,6 +43,11 @@ ion-calendar {
     }
 
     .switch-btn {
+      --margin-top: 0;
+      --margin-bottom: 0;
+      --margin-start: auto;
+      --margin-end: auto;
+
       width: 100%;
       text-align: center;
       line-height: 32px;
@@ -52,10 +60,11 @@ ion-calendar {
   }
 
   .days.between {
-    .days-btn.is-last, .days-btn.is-first {
+    .days-btn.is-last,
+    .days-btn.is-first {
       border-radius: 0;
     }
-  }
+  } 
 
   .component-mode {
     .days.startSelection.is-last-wrap {
@@ -70,7 +79,4 @@ ion-calendar {
       }
     }
   }
-
 }
-
-
