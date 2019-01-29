@@ -406,6 +406,7 @@ openCalendar() {
 | weekdays             | Array<string>            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text                                                 |
 | weekStart            | number                   | `0` (0 or 1)                          | set week start day                                         |
 | daysConfig           | Array<**_DaysConfig_**>  | `[]`                                  | days configuration                                         |
+| step                 | number                   | `12`                                  | month load stepping interval to when scroll                |
 
 ### onDidDismiss Output `{ data } = event`
 
