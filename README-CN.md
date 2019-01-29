@@ -405,6 +405,8 @@ openCalendar() {
 | weekdays             | Array<string>            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | 星期标题                                               |
 | weekStart            | number                   | `0` (0 or 1)                          | 设置每周开始时间                                       |
 | daysConfig           | Array<**_DaysConfig_**>  | `[]`                                  | 按天配置                                               |
+| step                 | number                   | `12`                                  | 滚动时每次加载的月数                                     |
+
 
 #### DaysConfig
 
