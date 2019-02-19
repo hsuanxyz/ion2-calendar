@@ -138,7 +138,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   ngOnInit(): void {
     this.initOpt();
-    this.monthOpt = this.createMonth(new Date().getTime());
+    this.monthOpt = this.createMonth(moment().valueOf());
   }
 
   getViewDate() {
@@ -328,7 +328,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       if (this._calendarMonthValue[0]) {
         this.monthOpt = this.createMonth(this._calendarMonthValue[0].time);
       } else {
-        this.monthOpt = this.createMonth(new Date().getTime());
+          this.monthOpt = this.createMonth(moment().valueOf());
       }
     }
   }
