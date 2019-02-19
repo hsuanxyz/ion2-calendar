@@ -8,10 +8,12 @@ import { DemoModalMultiComponent } from "./demo-modal-multi";
 import { DemoModalRangeComponent } from "./demo-modal-range";
 import { DemoModalDisableWeekComponent } from "./demo-modal-disable-week";
 import { DemoModalLocaleComponent } from "./demo-modal-locale";
+import { DemoModalDstComponent } from './demo-modal-dst';
 import { DemoModalCustomStyleComponent } from "./demo-modal-custom-style";
 import { DemoModalDefaultScrollComponent } from "./demo-modal-default-scroll";
 import { DemoModalConfigDaysComponent } from "./demo-modal-config-days";
 import { DemoBasicComponent } from "./demo-basic";
+import { DemoDstComponent } from './demo-dst';
 import { DemoMultiComponent } from "./demo-multi";
 import { DemoRangeComponent } from "./demo-range";
 import { DemoOptionsComponent } from "./demo-options";
@@ -31,10 +33,12 @@ const COMPONENTS = [
   SubHeaderCalendarModal,
   DemoModalDisableWeekComponent,
   DemoModalLocaleComponent,
+  DemoModalDstComponent,
   DemoModalCustomStyleComponent,
   DemoModalDefaultScrollComponent,
   DemoModalConfigDaysComponent,
   DemoBasicComponent,
+  DemoDstComponent,
   DemoMultiComponent,
   DemoRangeComponent,
   DemoOptionsComponent,

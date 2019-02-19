@@ -10,6 +10,7 @@ import {
 } from '../calendar.model'
 import * as moment from 'moment';
 import { defaults, pickModes } from "../config";
+import { Moment } from "moment";
 
 @Injectable()
 export class CalendarService {
@@ -81,17 +82,17 @@ export class CalendarService {
   }
 
   createOriginalCalendar(time: number): CalendarOriginal {
-    const date = new Date(time);
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstWeek = new Date(year, month, 1).getDay();
+    const date = moment(time);
+    const year = date.year();
+    const month = date.month();
+    const firstWeek = moment([year, month, 1]).day();
     const howManyDays = moment(time).daysInMonth();
     return {
       year,
       month,
       firstWeek,
       howManyDays,
-      time: new Date(year, month, 1).getTime(),
+      time: moment([year, month, 1]).valueOf(),
       date: new Date(time)
     }
   }
@@ -120,7 +121,7 @@ export class CalendarService {
     } else if (_rangeBeg > 0 && _rangeEnd === 0) {
 
       if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add(1, 'day');
+        let _addTime = this._momentDayModify(_time, 1);
         isBetween = !_addTime.isAfter(_rangeBeg);
       } else {
         isBetween = false;
@@ -135,7 +136,7 @@ export class CalendarService {
       _disable = disableWee || isBetween;
     }
 
-    let title = new Date(time).getDate().toString();
+    let title = date.date().toString();
     if (dayConfig && dayConfig.title) {
       title = dayConfig.title
     } else if (opt.defaultTitle) {
@@ -168,7 +169,7 @@ export class CalendarService {
     let days: Array<CalendarDay> = new Array(6).fill(null);
     let len = original.howManyDays;
     for (let i = original.firstWeek; i < len + original.firstWeek; i++) {
-      let itemTime = new Date(original.year, original.month, i - original.firstWeek + 1).getTime();
+      let itemTime = moment([original.year, original.month, i - original.firstWeek + 1]).valueOf();
       days[i] = this.createCalendarDay(itemTime, opt);
     }
 
@@ -194,7 +195,7 @@ export class CalendarService {
 
       if (!(_booleanMap.length % 7 === 0 && _booleanMap[_booleanMap.length - 1])) {
         for (endOffsetIndex; endOffsetIndex < days.length + (endOffsetIndex % 7); endOffsetIndex++) {
-          const dayAfter = moment(days[endOffsetIndex - 1].time).clone().add(1, 'd');
+            const dayAfter = this._momentDayModify(moment(days[endOffsetIndex - 1].time).clone(), 1);
           days[endOffsetIndex] = this.createCalendarDay(dayAfter.valueOf(), opt, thisMonth);
         }
       }
@@ -210,8 +211,8 @@ export class CalendarService {
   createMonthsByPeriod(startTime: number, monthsNum: number, opt: CalendarModalOptions): Array<CalendarMonth> {
     let _array: Array<CalendarMonth> = [];
 
-    let _start = new Date(startTime);
-    let _startMonth = new Date(_start.getFullYear(), _start.getMonth(), 1).getTime();
+    let _start = moment(startTime);
+    let _startMonth = moment([_start.year(), _start.month(), 1]).valueOf();
 
     for (let i = 0; i < monthsNum; i++) {
       let time = moment(_startMonth).add(i, 'M').valueOf();
@@ -256,4 +257,8 @@ export class CalendarService {
     }
   }
 
+  // BUG fix: https://stackoverflow.com/a/24919934
+  private _momentDayModify(date: Moment, days: number): Moment {
+      return moment.unix(date.unix() + (86400 * days));
+  }
 }
