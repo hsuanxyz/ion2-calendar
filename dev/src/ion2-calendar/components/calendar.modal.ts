@@ -310,7 +310,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
     if (!isAfter) return -1;
 
     if (this.showYearPicker) {
-      startDate = moment(new Date(this.year, 0, 1));
+      startDate = moment([this.year, 0, 1]);
     }
 
     return defaultScrollTo.diff(startDate, 'month');
