@@ -62,6 +62,37 @@ import { CalendarModule } from 'ion2-calendar';
 export class AppModule {}
 ```
 
+### Change Defaults
+
+```typescript
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
+import { MyApp } from './app.component';
+...
+import { CalendarModule } from "ion2-calendar";
+
+@NgModule({
+  declarations: [
+    MyApp,
+    ...
+  ],
+  imports: [
+    IonicModule.forRoot(MyApp),
+    // See CalendarComponentOptions for options
+    CalendarModule.forRoot({
+      doneLabel: 'Save',
+      closeIcon: true
+    })
+  ],
+  bootstrap: [IonicApp],
+  entryComponents: [
+    MyApp,
+    ...
+  ]
+})
+export class AppModule {}
+```
+
 # Components Mode
 
 ### Basic
