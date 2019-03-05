@@ -166,6 +166,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .primary .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
   :host .secondary button.days-btn small,
   :host .secondary .days .marked p,
   :host .secondary .days .today p {
@@ -283,6 +285,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .secondary .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
   :host .danger button.days-btn small,
   :host .danger .days .marked p,
   :host .danger .days .today p {
@@ -400,6 +404,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .danger .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
   :host .dark button.days-btn small,
   :host .dark .days .marked p,
   :host .dark .days .today p {
@@ -517,6 +523,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .dark .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
   :host .light button.days-btn small,
   :host .light .days .marked p,
   :host .light .days .today p {
@@ -634,6 +642,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .light .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
   :host .light .days .today p {
     color: #565656; }
   :host .cal-color .days .today p {
@@ -743,6 +753,8 @@
     -ms-transition-timing-function: ease-out;
     -o-transition-timing-function: ease-out;
     transition-timing-function: ease-out; }
+  :host .cal-color .startSelection.endSelection::before {
+    --ion-color-primary: transparent; }
 
 :host .month-picker {
   margin: 20px 0;
