@@ -192,6 +192,10 @@ $disabled-color: rgba(0, 0, 0, 0.25);
       @include transition-timing-function(ease-out);
     }
   }
+
+  .startSelection.endSelection::before {
+    --ion-color-primary: transparent;
+  }
 }
 
 :host {
