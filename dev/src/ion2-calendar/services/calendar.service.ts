@@ -54,6 +54,7 @@ export class CalendarService {
       daysConfig = _daysConfig,
       disableWeeks = _disableWeeks,
       showAdjacentMonthDay = true,
+      defaultEndDateToStartDate = false,
     } = { ...this.defaultOpts, ...calendarOptions };
 
     return {
@@ -84,7 +85,8 @@ export class CalendarService {
       defaultDate: calendarOptions.defaultDate || null,
       defaultDates: calendarOptions.defaultDates || null,
       defaultDateRange: calendarOptions.defaultDateRange || null,
-      showAdjacentMonthDay
+      showAdjacentMonthDay,
+      defaultEndDateToStartDate
     };
   }
 
@@ -242,7 +244,7 @@ export class CalendarService {
       case pickModes.RANGE:
         result = {
           from: this.multiFormat(original[0].time),
-          to: this.multiFormat(original[1].time),
+          to: this.multiFormat((original[1] || original[0]).time),
         };
         break;
       case pickModes.MULTI:
