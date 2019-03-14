@@ -198,12 +198,15 @@ export class CalendarModal implements OnInit, AfterViewInit {
     if (!Array.isArray(this.datesTemp)) {
       return false;
     }
-    const { pickMode } = this._d;
+    const { pickMode, defaultEndDateToStartDate } = this._d;
 
     switch (pickMode) {
       case pickModes.SINGLE:
         return !!(this.datesTemp[0] && this.datesTemp[0].time);
       case pickModes.RANGE:
+        if (defaultEndDateToStartDate) {
+          return !!(this.datesTemp[0] && this.datesTemp[0].time);
+        }
         return !!(this.datesTemp[0] && this.datesTemp[1]) && !!(this.datesTemp[0].time && this.datesTemp[1].time);
       case pickModes.MULTI:
         return this.datesTemp.length > 0 && this.datesTemp.every(e => !!e && !!e.time);

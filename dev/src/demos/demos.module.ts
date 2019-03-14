@@ -21,6 +21,7 @@ import { DemoMethodsComponent } from './demo-methods';
 import { DemoModalRangeBackwardsComponent } from './demo-modal-range-backwards';
 import { DemoModalCustomSubHeaderComponent } from './demo-modal-custom-sub-header';
 import { SubHeaderCalendarModal } from './sub-header-calendar-modal';
+import { DemoModalRangeWithDefaultEndDate } from './demo-modal-range-with-default-end-date';
 
 const COMPONENTS = [
   DemoModalBasicComponent,
@@ -40,6 +41,7 @@ const COMPONENTS = [
   DemoEventsComponent,
   DemoMethodsComponent,
   DemoModalRangeBackwardsComponent,
+  DemoModalRangeWithDefaultEndDate,
 ];
 
 @NgModule({

@@ -70,6 +70,7 @@ export interface CalendarModalOptions extends CalendarOptions {
    * @deprecated this version notwork
    */
   showYearPicker?: boolean;
+  defaultEndDateToStartDate?: boolean;
 }
 
 export interface CalendarOptions {
