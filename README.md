@@ -431,6 +431,7 @@ openCalendar() {
 | disableWeeks              | Array<number>            | `[]`                                  | week to be disabled (0-6)                                  |
 | closeLabel                | string                   | `CANCEL`                              | cancel button label                                        |
 | doneLabel                 | string                   | `DONE`                                | done button label                                          |
+| clearLabel                | string                   |  null                                 | clear button label                                         |
 | closeIcon                 | boolean                  | `false`                               | show cancel button icon                                    |
 | doneIcon                  | boolean                  | `false`                               | show done button icon                                      |
 | monthFormat               | string                   | `'MMM YYYY'`                          | month title format                                         |
