@@ -27,6 +27,7 @@ export class DemoModalRangeComponent {
       pickMode: 'range',
       title: 'RANGE',
       defaultDateRange: this.dateRange,
+      clearLabel: 'CLEAR'
     };
 
     const myCalendar = await this.modalCtrl.create({
