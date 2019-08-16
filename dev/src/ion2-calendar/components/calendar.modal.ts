@@ -230,7 +230,7 @@ export class CalendarModal implements OnInit, AfterViewInit {
     const len = this.calendarMonths.length;
     const final = this.calendarMonths[len - 1];
     const nextTime = moment(final.original.time)
-      .add(NUM_OF_MONTHS_TO_CREATE, 'M')
+      .add(1, 'M')
       .valueOf();
     const rangeEnd = this._d.to ? moment(this._d.to).subtract(1, 'M') : 0;
 
