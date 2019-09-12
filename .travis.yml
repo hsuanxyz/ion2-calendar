@@ -2,10 +2,10 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-  - '6.10'
+  - '12.4.0'
 branches:
   only:
-  - master
+    - master
 
 env:
   - TASK=lint
