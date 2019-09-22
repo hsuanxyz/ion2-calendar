@@ -413,31 +413,33 @@ openCalendar() {
 
 ### Modal Options
 
-| Name                 | Type                     | Default                               | Description                                                |
-| -------------------- | ------------------------ | ------------------------------------- | ---------------------------------------------------------- |
-| from                 | Date                     | `new Date()`                          | start date                                                 |
-| to                   | Date                     | 0 (Infinite)                          | end date                                                   |
-| title                | string                   | `'CALENDAR'`                          | title                                                      |
-| color                | string                   | `'primary'`                           | 'primary', 'secondary', 'danger', 'light', 'dark'          |
-| defaultScrollTo      | Date                     | none                                  | let the view scroll to the default date                    |
-| defaultDate          | Date                     | none                                  | default date data, apply to single                         |
-| defaultDates         | Array<Date>              | none                                  | default dates data, apply to multi                         |
-| defaultDateRange     | { from: Date, to: Date } | none                                  | default date-range data, apply to range                    |
-| defaultTitle         | string                   | ''                                    | default title in days                                      |
-| defaultSubtitle      | string                   | ''                                    | default subtitle in days                                   |
-| cssClass             | string                   | `''`                                  | Additional classes for custom styles, separated by spaces. |
-| canBackwardsSelected | boolean                  | `false`                               | can backwards selected                                     |
-| pickMode             | string                   | `single`                              | 'multi', 'range', 'single'                                 |
-| disableWeeks         | Array<number>            | `[]`                                  | week to be disabled (0-6)                                  |
-| closeLabel           | string                   | `CANCEL`                              | cancel button label                                        |
-| doneLabel            | string                   | `DONE`                                | done button label                                          |
-| closeIcon            | boolean                  | `false`                               | show cancel button icon                                    |
-| doneIcon             | boolean                  | `false`                               | show done button icon                                      |
-| monthFormat          | string                   | `'MMM YYYY'`                          | month title format                                         |
-| weekdays             | Array<string>            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text                                                 |
-| weekStart            | number                   | `0` (0 or 1)                          | set week start day                                         |
-| daysConfig           | Array<**_DaysConfig_**>  | `[]`                                  | days configuration                                         |
-| step                 | number                   | `12`                                  | month load stepping interval to when scroll                |
+| Name                      | Type                     | Default                               | Description                                                |
+| ------------------------- | ------------------------ | ------------------------------------- | ---------------------------------------------------------- |
+| from                      | Date                     | `new Date()`                          | start date                                                 |
+| to                        | Date                     | 0 (Infinite)                          | end date                                                   |
+| title                     | string                   | `'CALENDAR'`                          | title                                                      |
+| color                     | string                   | `'primary'`                           | 'primary', 'secondary', 'danger', 'light', 'dark'          |
+| defaultScrollTo           | Date                     | none                                  | let the view scroll to the default date                    |
+| defaultDate               | Date                     | none                                  | default date data, apply to single                         |
+| defaultDates              | Array<Date>              | none                                  | default dates data, apply to multi                         |
+| defaultDateRange          | { from: Date, to: Date } | none                                  | default date-range data, apply to range                    |
+| defaultTitle              | string                   | ''                                    | default title in days                                      |
+| defaultSubtitle           | string                   | ''                                    | default subtitle in days                                   |
+| cssClass                  | string                   | `''`                                  | Additional classes for custom styles, separated by spaces. |
+| canBackwardsSelected      | boolean                  | `false`                               | can backwards selected                                     |
+| pickMode                  | string                   | `single`                              | 'multi', 'range', 'single'                                 |
+| disableWeeks              | Array<number>            | `[]`                                  | week to be disabled (0-6)                                  |
+| closeLabel                | string                   | `CANCEL`                              | cancel button label                                        |
+| doneLabel                 | string                   | `DONE`                                | done button label                                          |
+| clearLabel                | string                   |  null                                 | clear button label                                         |
+| closeIcon                 | boolean                  | `false`                               | show cancel button icon                                    |
+| doneIcon                  | boolean                  | `false`                               | show done button icon                                      |
+| monthFormat               | string                   | `'MMM YYYY'`                          | month title format                                         |
+| weekdays                  | Array<string>            | `['S', 'M', 'T', 'W', 'T', 'F', 'S']` | weeks text                                                 |
+| weekStart                 | number                   | `0` (0 or 1)                          | set week start day                                         |
+| daysConfig                | Array<**_DaysConfig_**>  | `[]`                                  | days configuration                                         |
+| step                      | number                   | `12`                                  | month load stepping interval to when scroll                |
+| defaultEndDateToStartDate | boolean                  | `false`                               | makes the end date optional, will default it to the start  |
 
 ### onDidDismiss Output `{ data } = event`
 

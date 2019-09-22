@@ -4,20 +4,18 @@ import { ModalController } from '@ionic/angular';
 import { CalendarModal, CalendarModalOptions } from '../ion2-calendar';
 
 @Component({
-  selector: 'demo-modal-range',
+  selector: 'demo-range-with-default-end-date',
   template: `
     <ion-button (click)="openCalendar()">
-      range
+      end date defaulted to start date
     </ion-button>
   `,
 })
-export class DemoModalRangeComponent {
+export class DemoModalRangeWithDefaultEndDate {
   dateRange: {
     from: Date;
-    to: Date;
   } = {
     from: new Date(),
-    to: new Date(Date.now() + 24 * 60 * 60 * 1000 * 5),
   };
 
   constructor(public modalCtrl: ModalController) {}
@@ -27,7 +25,7 @@ export class DemoModalRangeComponent {
       pickMode: 'range',
       title: 'RANGE',
       defaultDateRange: this.dateRange,
-      clearLabel: 'CLEAR'
+      defaultEndDateToStartDate: true,
     };
 
     const myCalendar = await this.modalCtrl.create({

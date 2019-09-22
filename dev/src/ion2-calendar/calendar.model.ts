@@ -57,6 +57,7 @@ export interface CalendarModalOptions extends CalendarOptions {
   isSaveHistory?: boolean;
   closeLabel?: string;
   doneLabel?: string;
+  clearLabel?: string;
   closeIcon?: boolean;
   doneIcon?: boolean;
   canBackwardsSelected?: boolean;
@@ -70,6 +71,7 @@ export interface CalendarModalOptions extends CalendarOptions {
    * @deprecated this version notwork
    */
   showYearPicker?: boolean;
+  defaultEndDateToStartDate?: boolean;
 }
 
 export interface CalendarOptions {

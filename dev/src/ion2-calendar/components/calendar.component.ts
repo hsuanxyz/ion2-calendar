@@ -29,16 +29,18 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
     <div class="title">
       <ng-template [ngIf]="_showMonthPicker" [ngIfElse]="title">
         <ion-button type="button"
-                fill="clear"
-                class="switch-btn"
-                (click)="switchView()">
+                    fill="clear"
+                    class="switch-btn"
+                    [attr.aria-label]="getDate(monthOpt.original.time) | date:MONTH_DATE_FORMAT"
+                    (click)="switchView()">
           {{ _monthFormat(monthOpt.original.time) }}
           <ion-icon class="arrow-dropdown"
                     [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
         </ion-button>
       </ng-template>
       <ng-template #title>
-        <div class="switch-btn">
+        <div class="switch-btn"
+             [attr.aria-label]="getDate(monthOpt.original.time) | date:MONTH_DATE_FORMAT">
           {{ _monthFormat(monthOpt.original.time) }}
         </div>
       </ng-template>
@@ -136,6 +138,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
     return this._options;
   }
 
+  readonly MONTH_DATE_FORMAT = 'MMMM yyyy';
+
   constructor(public calSvc: CalendarService) {}
 
   ngOnInit(): void {
@@ -145,6 +149,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   getViewDate() {
     return this._handleType(this.monthOpt.original.time);
+  }
+
+  getDate(date: number) {
+    return new Date(date);
   }
 
   setViewDate(value: CalendarComponentPayloadTypes) {

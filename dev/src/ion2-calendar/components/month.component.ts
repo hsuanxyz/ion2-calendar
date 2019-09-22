@@ -28,7 +28,8 @@ export const MONTH_VALUE_ACCESSOR: any = {
                         [class.last-month-day]="day.isLastMonth"
                         [class.next-month-day]="day.isNextMonth"
                         [class.on-selected]="isSelected(day.time)"
-                        [disabled]="day.disable">
+                        [disabled]="day.disable"
+                        [attr.aria-label]="getDayLabel(day) | date:DAY_DATE_FORMAT">
                   <p>{{ day.title }}</p>
                   <small *ngIf="day.subTitle">{{ day?.subTitle }}</small>
                 </button>
@@ -99,6 +100,8 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   _onChanged: Function;
   _onTouched: Function;
 
+  readonly DAY_DATE_FORMAT = 'MMMM dd, yyyy';
+
   get _isRange(): boolean {
     return this.pickMode === pickModes.RANGE;
   }
@@ -138,6 +141,10 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
     }
 
     return this._date[1].time === day.time;
+  }
+
+  getDayLabel(day: CalendarDay) {
+    return new Date(day.time);
   }
 
   isBetween(day: CalendarDay): boolean {
@@ -208,11 +215,18 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
           this._date[0] = item;
           this.selectStart.emit(item);
         }
+      } else if (this._date[0].time > item.time) {
+        this._date[0] = item;
+        this.selectStart.emit(item);
+      } else if (this._date[1].time < item.time) {
+        this._date[1] = item;
+        this.selectEnd.emit(item);
       } else {
         this._date[0] = item;
         this.selectStart.emit(item);
         this._date[1] = null;
       }
+
       this.change.emit(this._date);
       return;
     }

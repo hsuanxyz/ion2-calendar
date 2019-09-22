@@ -25,6 +25,7 @@ export class DemoModalMultiComponent {
       pickMode: 'multi',
       title: 'MULTI',
       defaultDates: this.dates,
+      clearLabel: 'CLEAR'
     };
 
     const myCalendar = await this.modalCtrl.create({
