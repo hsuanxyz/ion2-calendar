@@ -103,6 +103,15 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   set showMonthPicker(value: boolean) {
     this._showMonthPicker = value;
   }
+  
+  _isSwipeable = true;
+  get isSwipeable(): boolean {
+    return this._isSwipeable;
+  }
+
+  set isSwipeable(value: boolean) {
+    this._isSwipeable = value;
+  }
 
   monthOpt: CalendarMonth;
 
@@ -267,11 +276,13 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   swipeEvent($event: any): void {
-    const isNext = $event.deltaX < 0;
-    if (isNext && this.canNext()) {
-      this.nextMonth();
-    } else if (!isNext && this.canBack()) {
-      this.backMonth();
+    if(this._isSwipeable){
+      const isNext = $event.deltaX < 0;
+      if (isNext && this.canNext()) {
+        this.nextMonth();
+      } else if (!isNext && this.canBack()) {
+        this.backMonth();
+      }
     }
   }
 
@@ -302,6 +313,10 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       if (this._view !== 'days' && !this.showMonthPicker) {
         this._view = 'days';
       }
+    }
+    
+    if (this._options && typeof this._options.isSwipeable === 'boolean') {
+      this.isSwipeable = this._options.isSwipeable;
     }
     this._d = this.calSvc.safeOpt(this._options || {});
   }
