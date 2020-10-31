@@ -36,7 +36,7 @@ live demo [click me](https://www-yefjsqmtmv.now.sh/).
 
 ### Installation
 
-`$ npm install ion2-calendar@next moment --save`
+`$ npm install ion2-calendar moment --save`
 
 ### Import module
 
