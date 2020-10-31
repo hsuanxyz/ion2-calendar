@@ -34,7 +34,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                 (click)="switchView()">
           {{ _monthFormat(monthOpt.original.time) }}
           <ion-icon class="arrow-dropdown"
-                    [name]="_view === 'days' ? 'md-arrow-dropdown' : 'md-arrow-dropup'"></ion-icon>
+                    [name]="_view === 'days' ? 'caret-down-outline' : 'caret-up-outline'"></ion-icon>
         </ion-button>
       </ng-template>
       <ng-template #title>
@@ -44,10 +44,10 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
       </ng-template>
       <ng-template [ngIf]="_showToggleButtons">
         <ion-button type="button" fill="clear" class="back" [disabled]="!canBack()" (click)="prev()">
-          <ion-icon slot="icon-only" size="small" name="ios-arrow-back"></ion-icon>
+          <ion-icon slot="icon-only" size="small" name="chevron-back-outline"></ion-icon>
         </ion-button>
         <ion-button type="button" fill="clear" class="forward" [disabled]="!canNext()" (click)="next()">
-          <ion-icon slot="icon-only" size="small" name="ios-arrow-forward"></ion-icon>
+          <ion-icon slot="icon-only" size="small" name="chevron-forward-outline"></ion-icon>
         </ion-button>
       </ng-template>
     </div>
