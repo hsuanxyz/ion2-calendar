@@ -57,6 +57,7 @@ export interface CalendarModalOptions extends CalendarOptions {
   isSaveHistory?: boolean;
   closeLabel?: string;
   doneLabel?: string;
+  clearLabel?: string;
   closeIcon?: boolean;
   doneIcon?: boolean;
   canBackwardsSelected?: boolean;
@@ -95,7 +96,6 @@ export interface CalendarComponentOptions extends CalendarOptions {
   showToggleButtons?: boolean;
   showMonthPicker?: boolean;
   monthPickerFormat?: string[];
-  isSwipeable?:boolean;
 }
 
 export class CalendarResult {

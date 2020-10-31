@@ -24,7 +24,7 @@ function bumpVersions(options) {
 }
 
 function copySources() {
-  gulp.src(`${paths.dve}/**/*`).pipe(gulp.dest(paths.src));
+  return gulp.src(`${paths.dve}/**/*`).pipe(gulp.dest(paths.src));
 }
 
 function copyScss() {

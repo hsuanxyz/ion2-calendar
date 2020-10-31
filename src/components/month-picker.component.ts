@@ -10,7 +10,7 @@ import { defaults } from '../config';
       <div class="month-packer-item"
            [class.this-month]=" i === _thisMonth.getMonth() && month.original.year === _thisMonth.getFullYear()"
            *ngFor="let item of _monthFormat; let i = index">
-        <button type="button" (click)="_onSelect(i)">{{ item }}</button>
+        <button type="button" (click)="_onSelect(i)" [attr.aria-label]="getDate(i) | date:MONTH_FORMAT">{{ item }}</button>
       </div>
     </div>
   `,
@@ -24,6 +24,8 @@ export class MonthPickerComponent {
   select: EventEmitter<number> = new EventEmitter();
   _thisMonth = new Date();
   _monthFormat = defaults.MONTH_FORMAT;
+
+  MONTH_FORMAT = 'MMMM';
 
   @Input()
   set monthFormat(value: string[]) {
@@ -40,5 +42,9 @@ export class MonthPickerComponent {
 
   _onSelect(month: number): void {
     this.select.emit(month);
+  }
+
+  getDate(month: number) {
+    return new Date(this._thisMonth.getFullYear(), month, 1);
   }
 }
