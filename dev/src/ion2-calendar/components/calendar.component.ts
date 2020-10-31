@@ -14,12 +14,20 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import * as moment from 'moment';
 import { defaults, pickModes } from '../config';
+import {isIonIconsV4} from "../utils/icons";
 
 export const ION_CAL_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => CalendarComponent),
   multi: true,
 };
+
+interface CompatibleIcons {
+  caretDown: string;
+  caretUp: string;
+  chevronBack: string;
+  chevronForward: string;
+}
 
 @Component({
   selector: 'ion-calendar',
@@ -35,7 +43,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                     (click)="switchView()">
           {{ _monthFormat(monthOpt.original.time) }}
           <ion-icon class="arrow-dropdown"
-                    [name]="_view === 'days' ? 'caret-down-outline' : 'caret-up-outline'"></ion-icon>
+                    [name]="_view === 'days' ? _compatibleIcons.caretDown : _compatibleIcons.caretUp"></ion-icon>
         </ion-button>
       </ng-template>
       <ng-template #title>
@@ -46,10 +54,10 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
       </ng-template>
       <ng-template [ngIf]="_showToggleButtons">
         <ion-button type="button" fill="clear" class="back" [disabled]="!canBack()" (click)="prev()">
-          <ion-icon slot="icon-only" size="small" name="chevron-back-outline"></ion-icon>
+          <ion-icon slot="icon-only" size="small" [name]="_compatibleIcons.chevronBack"></ion-icon>
         </ion-button>
         <ion-button type="button" fill="clear" class="forward" [disabled]="!canNext()" (click)="next()">
-          <ion-icon slot="icon-only" size="small" name="chevron-forward-outline"></ion-icon>
+          <ion-icon slot="icon-only" size="small" [name]="_compatibleIcons.chevronForward"></ion-icon>
         </ion-button>
       </ng-template>
     </div>
@@ -59,7 +67,7 @@ export const ION_CAL_VALUE_ACCESSOR: Provider = {
                          [weekStart]="_d.weekStart">
       </ion-calendar-week>
 
-      <ion-calendar-month class="component-mode"
+      <ion-calendar-month [componentMode]="true"
                           [(ngModel)]="_calendarMonthValue"
                           [month]="monthOpt"
                           [readonly]="readonly"
@@ -87,8 +95,8 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   _options: CalendarComponentOptions;
   _view: 'month' | 'days' = 'days';
   _calendarMonthValue: CalendarDay[] = [null, null];
-
   _showToggleButtons = true;
+  _compatibleIcons: CompatibleIcons;
   get showToggleButtons(): boolean {
     return this._showToggleButtons;
   }
@@ -140,7 +148,23 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
 
   readonly MONTH_DATE_FORMAT = 'MMMM yyyy';
 
-  constructor(public calSvc: CalendarService) {}
+  constructor(public calSvc: CalendarService) {
+    if (isIonIconsV4()) {
+      this._compatibleIcons = {
+        caretDown: 'md-arrow-dropdown',
+        caretUp: 'md-arrow-dropup',
+        chevronBack: 'ios-arrow-back',
+        chevronForward: 'ios-arrow-forward',
+      };
+    } else {
+      this._compatibleIcons = {
+        caretDown: 'caret-down-outline',
+        caretUp: 'caret-up-outline',
+        chevronBack: 'chevron-back-outline',
+        chevronForward: 'chevron-forward-outline',
+      };
+    }
+  }
 
   ngOnInit(): void {
     this.initOpt();
@@ -180,7 +204,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   prevYear(): void {
-    if (moment(this.monthOpt.original.time).year() === 1970) return;
+    if (moment(this.monthOpt.original.time).year() === 1970) { return; }
     const backTime = moment(this.monthOpt.original.time)
       .subtract(1, 'year')
       .valueOf();
@@ -206,7 +230,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   canNext(): boolean {
-    if (!this._d.to || this._view !== 'days') return true;
+    if (!this._d.to || this._view !== 'days') { return true; }
     return this.monthOpt.original.time < moment(this._d.to).valueOf();
   }
 
@@ -222,7 +246,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
   }
 
   canBack(): boolean {
-    if (!this._d.from || this._view !== 'days') return true;
+    if (!this._d.from || this._view !== 'days') { return true; }
     return this.monthOpt.original.time > moment(this._d.from).valueOf();
   }
 

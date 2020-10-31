@@ -41,10 +41,3 @@
       color: #757575; }
       :host .title .switch-btn .arrow-dropdown {
         margin-left: 5px; }
-  :host .days.between .days-btn.is-last,
-  :host .days.between .days-btn.is-first {
-    border-radius: 0; }
-  :host .component-mode .days.startSelection.is-last-wrap::after {
-    border-radius: 0; }
-  :host .component-mode .days.endSelection.is-first-wrap::after {
-    border-radius: 0; }

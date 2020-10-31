@@ -13,6 +13,10 @@ export const MONTH_VALUE_ACCESSOR: any = {
   selector: 'ion-calendar-month',
   providers: [MONTH_VALUE_ACCESSOR],
   styleUrls: ['./month.component.scss'],
+  // tslint:disable-next-line:use-host-property-decorator
+  host: {
+    '[class.component-mode]': 'componentMode'
+  },
   template: `
     <div [class]="color">
       <ng-template [ngIf]="!_isRange" [ngIfElse]="rangeBox">
@@ -73,6 +77,7 @@ export const MONTH_VALUE_ACCESSOR: any = {
   `,
 })
 export class MonthComponent implements ControlValueAccessor, AfterViewInit {
+  @Input() componentMode = false;
   @Input()
   month: CalendarMonth;
   @Input()

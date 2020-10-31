@@ -18,37 +18,6 @@
     border: none; }
     :host .days .on-selected p {
       font-size: 1.3em; }
-  :host button.days-btn {
-    border-radius: 36px;
-    width: 36px;
-    display: block;
-    margin: 0 auto;
-    padding: 0;
-    height: 36px;
-    background-color: transparent;
-    position: relative;
-    z-index: 2;
-    outline: 0; }
-  :host button.days-btn p {
-    margin: 0;
-    font-size: 1.2em;
-    color: #333;
-    text-align: center; }
-  :host button.days-btn[disabled] p {
-    color: rgba(0, 0, 0, 0.25); }
-  :host button.days-btn.on-selected small {
-    transition: bottom 0.3s;
-    bottom: -14px; }
-  :host button.days-btn small {
-    overflow: hidden;
-    display: block;
-    left: 0;
-    right: 0;
-    bottom: -5px;
-    position: absolute;
-    z-index: 1;
-    text-align: center;
-    font-weight: 200; }
   :host .primary button.days-btn small,
   :host .primary .days .marked p,
   :host .primary .days .today p {
@@ -122,30 +91,6 @@
     border-radius: 50%; }
     :host .primary .endSelection button.days-btn p {
       color: #fff; }
-  :host .primary .days.startSelection:nth-child(7n):before,
-  :host .primary .days.between:nth-child(7n) button.days-btn,
-  :host .primary button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .primary .days.startSelection:nth-child(7n):before.on-selected,
-    :host .primary .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .primary button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .primary .days.endSelection:nth-child(7n + 1):before,
-  :host .primary .days.between:nth-child(7n + 1) button.days-btn,
-  :host .primary .days.between.is-first-wrap button.days-btn.is-first,
-  :host .primary button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .primary .startSelection button.days-btn.is-first,
-  :host .primary .endSelection button.days-btn.is-first,
-  :host .primary button.days-btn.is-first.on-selected,
-  :host .primary button.days-btn.is-last.on-selected,
-  :host .primary .startSelection button.days-btn.is-last,
-  :host .primary .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .primary .startSelection.is-last-wrap::before, :host .primary .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .primary .endSelection.is-first-wrap::before, :host .primary .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .primary .days .on-selected p {
     color: #fff; }
   :host .primary .startSelection button.days-btn,
@@ -241,30 +186,6 @@
     border-radius: 50%; }
     :host .secondary .endSelection button.days-btn p {
       color: #fff; }
-  :host .secondary .days.startSelection:nth-child(7n):before,
-  :host .secondary .days.between:nth-child(7n) button.days-btn,
-  :host .secondary button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .secondary .days.startSelection:nth-child(7n):before.on-selected,
-    :host .secondary .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .secondary button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .secondary .days.endSelection:nth-child(7n + 1):before,
-  :host .secondary .days.between:nth-child(7n + 1) button.days-btn,
-  :host .secondary .days.between.is-first-wrap button.days-btn.is-first,
-  :host .secondary button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .secondary .startSelection button.days-btn.is-first,
-  :host .secondary .endSelection button.days-btn.is-first,
-  :host .secondary button.days-btn.is-first.on-selected,
-  :host .secondary button.days-btn.is-last.on-selected,
-  :host .secondary .startSelection button.days-btn.is-last,
-  :host .secondary .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .secondary .startSelection.is-last-wrap::before, :host .secondary .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .secondary .endSelection.is-first-wrap::before, :host .secondary .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .secondary .days .on-selected p {
     color: #fff; }
   :host .secondary .startSelection button.days-btn,
@@ -360,30 +281,6 @@
     border-radius: 50%; }
     :host .danger .endSelection button.days-btn p {
       color: #fff; }
-  :host .danger .days.startSelection:nth-child(7n):before,
-  :host .danger .days.between:nth-child(7n) button.days-btn,
-  :host .danger button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .danger .days.startSelection:nth-child(7n):before.on-selected,
-    :host .danger .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .danger button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .danger .days.endSelection:nth-child(7n + 1):before,
-  :host .danger .days.between:nth-child(7n + 1) button.days-btn,
-  :host .danger .days.between.is-first-wrap button.days-btn.is-first,
-  :host .danger button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .danger .startSelection button.days-btn.is-first,
-  :host .danger .endSelection button.days-btn.is-first,
-  :host .danger button.days-btn.is-first.on-selected,
-  :host .danger button.days-btn.is-last.on-selected,
-  :host .danger .startSelection button.days-btn.is-last,
-  :host .danger .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .danger .startSelection.is-last-wrap::before, :host .danger .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .danger .endSelection.is-first-wrap::before, :host .danger .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .danger .days .on-selected p {
     color: #fff; }
   :host .danger .startSelection button.days-btn,
@@ -479,30 +376,6 @@
     border-radius: 50%; }
     :host .dark .endSelection button.days-btn p {
       color: #fff; }
-  :host .dark .days.startSelection:nth-child(7n):before,
-  :host .dark .days.between:nth-child(7n) button.days-btn,
-  :host .dark button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .dark .days.startSelection:nth-child(7n):before.on-selected,
-    :host .dark .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .dark button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .dark .days.endSelection:nth-child(7n + 1):before,
-  :host .dark .days.between:nth-child(7n + 1) button.days-btn,
-  :host .dark .days.between.is-first-wrap button.days-btn.is-first,
-  :host .dark button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .dark .startSelection button.days-btn.is-first,
-  :host .dark .endSelection button.days-btn.is-first,
-  :host .dark button.days-btn.is-first.on-selected,
-  :host .dark button.days-btn.is-last.on-selected,
-  :host .dark .startSelection button.days-btn.is-last,
-  :host .dark .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .dark .startSelection.is-last-wrap::before, :host .dark .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .dark .endSelection.is-first-wrap::before, :host .dark .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .dark .days .on-selected p {
     color: #fff; }
   :host .dark .startSelection button.days-btn,
@@ -598,30 +471,6 @@
     border-radius: 50%; }
     :host .light .endSelection button.days-btn p {
       color: #a0a0a0; }
-  :host .light .days.startSelection:nth-child(7n):before,
-  :host .light .days.between:nth-child(7n) button.days-btn,
-  :host .light button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .light .days.startSelection:nth-child(7n):before.on-selected,
-    :host .light .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .light button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .light .days.endSelection:nth-child(7n + 1):before,
-  :host .light .days.between:nth-child(7n + 1) button.days-btn,
-  :host .light .days.between.is-first-wrap button.days-btn.is-first,
-  :host .light button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .light .startSelection button.days-btn.is-first,
-  :host .light .endSelection button.days-btn.is-first,
-  :host .light button.days-btn.is-first.on-selected,
-  :host .light button.days-btn.is-last.on-selected,
-  :host .light .startSelection button.days-btn.is-last,
-  :host .light .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .light .startSelection.is-last-wrap::before, :host .light .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .light .endSelection.is-first-wrap::before, :host .light .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .light .days .on-selected p {
     color: #a0a0a0; }
   :host .light .startSelection button.days-btn,
@@ -646,6 +495,68 @@
     --ion-color-primary: transparent; }
   :host .light .days .today p {
     color: #565656; }
+  :host button.days-btn {
+    border-radius: 36px;
+    width: 36px;
+    display: block;
+    margin: 0 auto;
+    padding: 0;
+    height: 36px;
+    background-color: transparent;
+    position: relative;
+    z-index: 2;
+    outline: 0; }
+  :host button.days-btn p {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+    text-align: center; }
+  :host button.days-btn[disabled] p {
+    color: rgba(0, 0, 0, 0.25); }
+  :host button.days-btn.on-selected small {
+    transition: bottom 0.3s;
+    bottom: -14px; }
+  :host button.days-btn small {
+    overflow: hidden;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    position: absolute;
+    z-index: 1;
+    text-align: center;
+    font-weight: 200; }
+  :host .days.startSelection:nth-child(7n):before,
+  :host .days.between:nth-child(7n) button.days-btn,
+  :host .days.between button.days-btn.is-last {
+    border-radius: 0 36px 36px 0; }
+    :host .days.startSelection:nth-child(7n):before.on-selected,
+    :host .days.between:nth-child(7n) button.days-btn.on-selected,
+    :host .days.between button.days-btn.is-last.on-selected {
+      border-radius: 50%; }
+  :host .days.endSelection:nth-child(7n + 1):before,
+  :host .days.between:nth-child(7n + 1) button.days-btn,
+  :host .days.between.is-first-wrap button.days-btn.is-first,
+  :host button.days-btn.is-first {
+    border-radius: 36px 0 0 36px; }
+  :host .startSelection button.days-btn.is-first,
+  :host .endSelection button.days-btn.is-first,
+  :host button.days-btn.is-first.on-selected,
+  :host button.days-btn.is-last.on-selected,
+  :host .startSelection button.days-btn.is-last,
+  :host .endSelection button.days-btn.is-last {
+    border-radius: 50%; }
+  :host .startSelection.is-last-wrap::before, :host .startSelection.is-last-wrap::after {
+    border-radius: 0 36px 36px 0; }
+  :host .endSelection.is-first-wrap::before, :host .endSelection.is-first-wrap::after {
+    border-radius: 36px 0 0 36px; }
+  :host.component-mode .days.between button.days-btn.is-last,
+  :host.component-mode .days.between button.days-btn.is-first {
+    border-radius: 0; }
+  :host.component-mode .days.startSelection.is-last-wrap::before, :host.component-mode .days.startSelection.is-last-wrap::after {
+    border-radius: 0; }
+  :host.component-mode .days.endSelection.is-first-wrap::before, :host.component-mode .days.endSelection.is-first-wrap::after {
+    border-radius: 0; }
   :host .cal-color .days .today p {
     font-weight: 700; }
   :host .cal-color .days .last-month-day p,
@@ -709,30 +620,6 @@
     border-radius: 50%; }
     :host .cal-color .endSelection button.days-btn p {
       color: #fff; }
-  :host .cal-color .days.startSelection:nth-child(7n):before,
-  :host .cal-color .days.between:nth-child(7n) button.days-btn,
-  :host .cal-color button.days-btn.is-last {
-    border-radius: 0 36px 36px 0; }
-    :host .cal-color .days.startSelection:nth-child(7n):before.on-selected,
-    :host .cal-color .days.between:nth-child(7n) button.days-btn.on-selected,
-    :host .cal-color button.days-btn.is-last.on-selected {
-      border-radius: 50%; }
-  :host .cal-color .days.endSelection:nth-child(7n + 1):before,
-  :host .cal-color .days.between:nth-child(7n + 1) button.days-btn,
-  :host .cal-color .days.between.is-first-wrap button.days-btn.is-first,
-  :host .cal-color button.days-btn.is-first {
-    border-radius: 36px 0 0 36px; }
-  :host .cal-color .startSelection button.days-btn.is-first,
-  :host .cal-color .endSelection button.days-btn.is-first,
-  :host .cal-color button.days-btn.is-first.on-selected,
-  :host .cal-color button.days-btn.is-last.on-selected,
-  :host .cal-color .startSelection button.days-btn.is-last,
-  :host .cal-color .endSelection button.days-btn.is-last {
-    border-radius: 50%; }
-  :host .cal-color .startSelection.is-last-wrap::before, :host .cal-color .startSelection.is-last-wrap::after {
-    border-radius: 0 36px 36px 0; }
-  :host .cal-color .endSelection.is-first-wrap::before, :host .cal-color .endSelection.is-first-wrap::after {
-    border-radius: 36px 0 0 36px; }
   :host .cal-color .days .on-selected p {
     color: #fff; }
   :host .cal-color .startSelection button.days-btn,
