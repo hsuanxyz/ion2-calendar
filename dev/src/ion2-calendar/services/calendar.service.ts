@@ -115,63 +115,81 @@ export class CalendarService {
 
   createCalendarDay(time: number, opt: CalendarModalOptions, month?: number): CalendarDay {
     let _time = moment(time);
-    let date = moment(time);
-    let isToday = moment().isSame(_time, 'days');
-    let dayConfig = this.findDayConfig(_time, opt);
-    let _rangeBeg = moment(opt.from).valueOf();
-    let _rangeEnd = moment(opt.to).valueOf();
-    let isBetween = true;
-    let disableWee = opt.disableWeeks.indexOf(_time.toDate().getDay()) !== -1;
-    if (_rangeBeg > 0 && _rangeEnd > 0) {
-      if (!opt.canBackwardsSelected) {
-        isBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
-      } else {
-        isBetween = moment(_time).isBefore(_rangeBeg) ? false : isBetween;
-      }
-    } else if (_rangeBeg > 0 && _rangeEnd === 0) {
-      if (!opt.canBackwardsSelected) {
-        let _addTime = _time.add(1, 'day');
-        isBetween = !_addTime.isAfter(_rangeBeg);
-      } else {
-        isBetween = false;
-      }
-    }
+		const date = moment(time);
+		const isToday = moment().isSame(_time, 'days');
+		const dayConfig = this.findDayConfig(_time, opt);
 
-    let _disable = false;
+		let disable = false;
 
-    if (dayConfig && isBoolean(dayConfig.disable)) {
-      _disable = dayConfig.disable;
-    } else {
-      _disable = disableWee || isBetween;
-    }
+		if (dayConfig && isBoolean(dayConfig.disable)) {
+			disable = dayConfig.disable;
+		}
+		else {
+			disable = opt.disableWeeks?.indexOf(_time.toDate().getDay()) !== -1;
 
-    let title = new Date(time).getDate().toString();
-    if (dayConfig && dayConfig.title) {
-      title = dayConfig.title;
-    } else if (opt.defaultTitle) {
-      title = opt.defaultTitle;
-    }
-    let subTitle = '';
-    if (dayConfig && dayConfig.subTitle) {
-      subTitle = dayConfig.subTitle;
-    } else if (opt.defaultSubtitle) {
-      subTitle = opt.defaultSubtitle;
-    }
+			if (!disable) {
 
-    return {
-      time,
-      isToday,
-      title,
-      subTitle,
-      selected: false,
-      isLastMonth: date.month() < month,
-      isNextMonth: date.month() > month,
-      marked: dayConfig ? dayConfig.marked || false : false,
-      cssClass: dayConfig ? dayConfig.cssClass || '' : '',
-      disable: _disable,
-      isFirst: date.date() === 1,
-      isLast: date.date() === date.daysInMonth(),
-    };
+				let _rangeBeg = moment(opt.from).valueOf();
+				let _rangeEnd = moment(opt.to).valueOf();
+				let isNotBetween = true;
+
+				if (_rangeEnd === 0) _rangeEnd = moment().valueOf();
+
+				if (!opt.canBackwardsSelected) {
+					isNotBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
+				} else {
+					isNotBetween = moment(_time).isBefore(_rangeBeg); // ? false : isBetween;
+				}
+				/*
+				if (_rangeBeg > 0 && _rangeEnd > 0) {
+					if (!opt.canBackwardsSelected) {
+						isNotBetween = !_time.isBetween(_rangeBeg, _rangeEnd, 'days', '[]');
+					} else {
+						isNotBetween = moment(_time).isBefore(_rangeBeg); // ? false : isBetween;
+					}
+				} else if (_rangeBeg > 0 && _rangeEnd === 0) {
+					if (!opt.canBackwardsSelected) {
+						let _addTime = _time.add(1, 'day');
+						isNotBetween = !_addTime.isAfter(_rangeBeg);
+					} else {
+						isNotBetween = false;
+					}
+				}
+				*/
+
+				disable = isNotBetween;
+			}
+
+		}
+
+		let title = new Date(time).getDate().toString();
+		if (dayConfig && dayConfig.title) {
+			title = dayConfig.title;
+		} else if (opt.defaultTitle) {
+			title = opt.defaultTitle;
+		}
+
+		let subTitle = '';
+		if (dayConfig && dayConfig.subTitle) {
+			subTitle = dayConfig.subTitle;
+		} else if (opt.defaultSubtitle) {
+			subTitle = opt.defaultSubtitle;
+		}
+
+		return {
+			time,
+			isToday,
+			title,
+			subTitle,
+			selected: false,
+			isLastMonth: date.month() < month,
+			isNextMonth: date.month() > month,
+			marked: dayConfig ? dayConfig.marked || false : false,
+			cssClass: dayConfig ? dayConfig.cssClass || '' : '',
+			disable,
+			isFirst: date.date() === 1,
+			isLast: date.date() === date.daysInMonth(),
+		};
   }
 
   createCalendarMonth(original: CalendarOriginal, opt: CalendarModalOptions): CalendarMonth {
