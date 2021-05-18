@@ -205,22 +205,26 @@ export class HomePage {
 
 ### CalendarComponentOptions
 
-| Name              | Type                    | Default                                                                                | Description                                       |
-| ----------------- | ----------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------- |
-| from              | Date                    | `new Date()`                                                                           | start date                                        |
-| to                | Date                    | 0 (Infinite)                                                                           | end date                                          |
-| color             | string                  | `'primary'`                                                                            | 'primary', 'secondary', 'danger', 'light', 'dark' |
-| pickMode          | string                  | `single`                                                                               | 'multi', 'range', 'single'                        |
-| showToggleButtons | boolean                 | `true`                                                                                 | show toggle buttons                               |
-| showMonthPicker   | boolean                 | `true`                                                                                 | show month picker                                 |
-| monthPickerFormat | Array<string>           | `['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']` | month picker format                               |
-| defaultTitle      | string                  | ''                                                                                     | default title in days                             |
-| defaultSubtitle   | string                  | ''                                                                                     | default subtitle in days                          |
-| disableWeeks      | Array<number>           | `[]`                                                                                   | week to be disabled (0-6)                         |
-| monthFormat       | string                  | `'MMM YYYY'`                                                                           | month title format                                |
-| weekdays          | Array<string>           | `['S', 'M', 'T', 'W', 'T', 'F', 'S']`                                                  | weeks text                                        |
-| weekStart         | number                  | `0` (0 or 1)                                                                           | set week start day                                |
-| daysConfig        | Array<**_DaysConfig_**> | `[]`                                                                                   | days configuration                                |
+| Name                 | Type                    | Default                                                                                | Description                                       |
+| -----------------    | ----------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| from                 | Date                    | `new Date()`                                                                           | start date                                        |
+| to                   | Date                    | 0 (Infinite)                                                                           | end date                                          |
+| color                | string                  | `'primary'`                                                                            | 'primary', 'secondary', 'danger', 'light', 'dark' |
+| pickMode             | string                  | `single`                                                                               | 'multi', 'range', 'single'                        |
+| showToggleButtons    | boolean                 | `true`                                                                                 | show toggle buttons                               |
+| showMonthPicker      | boolean                 | `true`                                                                                 | show month picker                                 |
+| monthPickerFormat    | Array<string>           | `['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']` | month picker format                               |
+| defaultTitle         | string                  | ''                                                                                     | default title in days                             |
+| defaultSubtitle      | string                  | ''                                                                                     | default subtitle in days                          |
+| disableWeeks         | Array<number>           | `[]`                                                                                   | week to be disabled (0-6)                         |
+| monthFormat          | string                  | `'MMM YYYY'`                                                                           | month title format                                |
+| weekdays             | Array<string>           | `['S', 'M', 'T', 'W', 'T', 'F', 'S']`                                                  | weeks text                                        |
+| weekStart            | number                  | `0` (0 or 1)                                                                           | set week start day                                |
+| daysConfig           | Array<**_DaysConfig_**> | `[]`                                                                                   | days configuration                                |
+| showAdjacentMonthDay | boolean                 | `true`                                                                                 | show days of other months                         |
+| displayMode          | string                  | `month`                                                                                | 'month', 'week'                                   |
+| weeks                | number                  | `1`                                                                                    | number of week to show in week display mode       |
+| continuous           | boolean                 | `false`                                                                                | how should be navigated when the week change      |
 
 # Modal Mode
 
