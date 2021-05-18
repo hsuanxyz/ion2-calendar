@@ -10,3 +10,8 @@ export const pickModes = {
   RANGE: 'range',
   MULTI: 'multi'
 };
+
+export const displayModes = {
+  WEEK: 'week',
+  MONTH: 'month'
+};
