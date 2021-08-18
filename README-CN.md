@@ -33,7 +33,7 @@ live demo [click me](https://www-yefjsqmtmv.now.sh/).
 
 ### 安装
 
-`$ npm install ion2-calendar moment --save`
+`$ npm install ion2-calendar@next moment --save`
 
 ### 引入模块
 

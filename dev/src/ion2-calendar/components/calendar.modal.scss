@@ -10,6 +10,48 @@
     }
   }
 
+  ion-toolbar ion-button.md {
+    color: var(--ion-color-primary);
+  }
+
+  .dates-toolbar {
+    --background: transparent;
+    padding: 0 1rem;
+
+    &.primary {
+      --background: var(--ion-color-primary);
+    }
+    &.secondary {
+      --background: var(--ion-color-secondary);
+    }
+    &.danger {
+      --background: var(--ion-color-danger);
+    }
+    &.dark {
+      --background: var(--ion-color-dark);
+    }
+    &.light {
+      --background: var(--ion-color-light);
+    }
+    &.transparent {
+      --background: transparent;
+    }
+
+    &.toolbar-md {
+      min-height: 44px;
+    }
+  }
+
+  .ios.dates-toolbar {
+    padding-top: 1rem;
+  }
+
+  .start-date {
+    padding-left: 0.5rem;
+  }
+  .end-date {
+    margin-right: -0.5rem;
+  }
   .calendar-page {
     background-color: #fbfbfb;
   }
@@ -18,7 +60,16 @@
     display: inline-block;
     width: 100%;
     padding-bottom: 1em;
-    border-bottom: 1px solid #f1f1f1;
+  }
+
+  #month-0 {
+    padding-top: 1rem;
+  }
+
+  .month-title {
+    padding-left: 1rem;
+    text-align: left;
+    color: #363749; // ID90 ion-color-dark
   }
 
   h4 {
@@ -28,5 +79,16 @@
     text-align: center;
     margin: 1rem 0 0;
     color: #929292;
+  }
+}
+
+body[data-dark-mode="true"] {
+  :host {
+    .month-title {
+      color: white;
+    }
+    .dates-toolbar {
+      color: white;
+    }
   }
 }

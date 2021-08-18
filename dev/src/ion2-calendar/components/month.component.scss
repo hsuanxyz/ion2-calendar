@@ -141,6 +141,44 @@ $disabled-color: rgba(0, 0, 0, 0.25);
     }
   }
 
+  .days.startSelection:nth-child(7n):before,
+  .days.between:nth-child(7n) button.days-btn,
+  button.days-btn.is-last {
+    border-radius: 0 36px 36px 0;
+    &.on-selected {
+      border-radius: 50%;
+    }
+  }
+
+  .days.endSelection:nth-child(7n + 1):before,
+  .days.between:nth-child(7n + 1) button.days-btn,
+  .days.between.is-first-wrap button.days-btn.is-first,
+  button.days-btn.is-first {
+    border-radius: 36px 0 0 36px;
+  }
+
+  .startSelection button.days-btn.is-first,
+  .endSelection button.days-btn.is-first,
+  button.days-btn.is-first.on-selected,
+  button.days-btn.is-last.on-selected,
+  .startSelection button.days-btn.is-last,
+  .endSelection button.days-btn.is-last {
+    border-radius: 50%;
+  }
+
+  .startSelection.is-last-wrap {
+    &::before,
+    &::after {
+      border-radius: 0 36px 36px 0;
+    }
+  }
+
+  .endSelection.is-first-wrap {
+    &::before,
+    &::after {
+      border-radius: 36px 0 0 36px;
+    }
+  }
 
   .days .on-selected p {
     color: $color;
@@ -186,26 +224,6 @@ $disabled-color: rgba(0, 0, 0, 0.25);
       font-size: 1.3em;
     }
   }
-
-  .primary {
-    @include month-color();
-  }
-  .secondary {
-    @include month-color(secondary);
-  }
-  .danger {
-    @include month-color(danger);
-  }
-  .dark {
-    @include month-color(dark);
-  }
-  .light {
-    @include month-color(light, #a0a0a0);
-    .days .today p {
-      color: #565656;
-    }
-  }
-
   button.days-btn {
     border-radius: 36px;
     width: 36px;
@@ -242,73 +260,35 @@ $disabled-color: rgba(0, 0, 0, 0.25);
     text-align: center;
     font-weight: 200;
   }
-
-
-  .days.startSelection:nth-child(7n):before,
-  .days.between:nth-child(7n) button.days-btn,
-  .days.between button.days-btn.is-last {
-    border-radius: 0 36px 36px 0;
-    &.on-selected {
-      border-radius: 50%;
+  .primary {
+    @include month-color();
+  }
+  .secondary {
+    @include month-color(secondary);
+  }
+  .danger {
+    @include month-color(danger);
+  }
+  .dark {
+    @include month-color(dark);
+  }
+  .light {
+    @include month-color(light, #a0a0a0);
+    .days .today p {
+      color: #565656;
     }
   }
-
-  .days.endSelection:nth-child(7n + 1):before,
-  .days.between:nth-child(7n + 1) button.days-btn,
-  .days.between.is-first-wrap button.days-btn.is-first,
-  button.days-btn.is-first {
-    border-radius: 36px 0 0 36px;
-  }
-
-  .startSelection button.days-btn.is-first,
-  .endSelection button.days-btn.is-first,
-  button.days-btn.is-first.on-selected,
-  button.days-btn.is-last.on-selected,
-  .startSelection button.days-btn.is-last,
-  .endSelection button.days-btn.is-last {
-    border-radius: 50%;
-  }
-
-  .startSelection.is-last-wrap {
-    &::before,
-    &::after {
-      border-radius: 0 36px 36px 0;
-    }
-  }
-
-  .endSelection.is-first-wrap {
-    &::before,
-    &::after {
-      border-radius: 36px 0 0 36px;
-    }
-  }
-
-  &.component-mode {
-
-    .days.between {
-      button.days-btn.is-last,
-      button.days-btn.is-first {
-        border-radius: 0;
-      }
-    }
-
-    .days.startSelection.is-last-wrap {
-      &::before,
-      &::after {
-        border-radius: 0;
-      }
-    }
-
-    .days.endSelection.is-first-wrap {
-      &::before,
-      &::after {
-        border-radius: 0;
-      }
-    }
-  }
-
   .cal-color {
     @include month-color(cal-color);
   }
-
+}
+body[data-dark-mode="true"] {
+ :host{
+    button.days-btn p {
+      color: white;
+    }
+    button.days-btn[disabled] p {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
 }

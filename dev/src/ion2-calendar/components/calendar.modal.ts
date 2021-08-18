@@ -22,28 +22,30 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
   styleUrls: ['./calendar.modal.scss'],
   template: `
     <ion-header>
-      <ion-toolbar [color]="_d.color">
-          <ion-buttons slot="start">
-              <ion-button type='button' slot="icon-only" fill="clear" (click)="onCancel()">
+      <ion-toolbar>
+          <ion-buttons slot="secondary">
+              <ion-button type='button' slot="icon-only" fill="clear" class="primary" (click)="onCancel()">
               <span *ngIf="_d.closeLabel !== '' && !_d.closeIcon">{{ _d.closeLabel }}</span>
               <ion-icon *ngIf="_d.closeIcon" name="close"></ion-icon>
             </ion-button>
           </ion-buttons>
 
           <ion-title>{{ _d.title }}</ion-title>
-
-          <ion-buttons slot="end">
-            <ion-button type='button' *ngIf="!!_d.clearLabel" fill="clear" [disabled]="!canClear()" (click)="clear()">
-              <span *ngIf="_d.clearLabel !== ''">{{ _d.clearLabel }}</span>
-            </ion-button>
-            <ion-button type='button' slot="icon-only" *ngIf="!_d.autoDone" fill="clear" [disabled]="!canDone()" (click)="done()">
-              <span *ngIf="_d.doneLabel !== '' && !_d.doneIcon">{{ _d.doneLabel }}</span>
-              <ion-icon *ngIf="_d.doneIcon" name="checkmark"></ion-icon>
-            </ion-button>
-          </ion-buttons>
       </ion-toolbar>
 
       <ng-content select="[sub-header]"></ng-content>
+
+      <ion-row *ngIf="_d.pickMode === 'range'" lines="none" [class]="'dates-toolbar'" no-border>
+        <ion-col size="4" class="start-date ion-text-nowrap">
+          {{ _getDayFormatted(datesTemp[0]) || 'Start Date' }}
+        </ion-col>
+        <ion-col size="4" class="ion-text-center">
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </ion-col>
+        <ion-col size="4" class="end-date ion-text-right ion-text-nowrap">
+          {{ _getDayFormatted(datesTemp[1]) || 'End Date' }}
+        </ion-col>
+      </ion-row>
 
       <ion-calendar-week
         [color]="_d.color"
@@ -59,12 +61,13 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
       <div #months>
         <ng-template ngFor let-month [ngForOf]="calendarMonths" [ngForTrackBy]="trackByIndex" let-i="index">
           <div class="month-box" [attr.id]="'month-' + i">
-            <h4 class="text-center month-title">{{ _monthFormat(month.original.date) }}</h4>
+            <h4 class="month-title">{{ _monthFormat(month.original.date) }}</h4>
             <ion-calendar-month [month]="month"
                                 [pickMode]="_d.pickMode"
                                 [isSaveHistory]="_d.isSaveHistory"
                                 [id]="_d.id"
                                 [color]="_d.color"
+                                [maxMultiDates]="_d.maxMultiDates"
                                 (change)="onChange($event)"
                                 [(ngModel)]="datesTemp">
             </ion-calendar-month>
@@ -78,6 +81,15 @@ const NUM_OF_MONTHS_TO_CREATE = 3;
       </ion-infinite-scroll>
 
     </ion-content>
+
+    <ion-footer>
+
+        <ion-button expand="full" *ngIf="!_d.autoDone" [disabled]="!canDone()" (click)="done()">
+          <span *ngIf="_d.doneLabel !== '' && !_d.doneIcon">{{ _d.doneLabel }}</span>
+          <ion-icon *ngIf="_d.doneIcon" name="checkmark"></ion-icon>
+        </ion-button>
+
+    </ion-footer>
   `,
 })
 export class CalendarModal implements OnInit, AfterViewInit {
@@ -336,6 +348,11 @@ export class CalendarModal implements OnInit, AfterViewInit {
 
   _monthFormat(date: any): string {
     return moment(date).format(this._d.monthFormat.replace(/y/g, 'Y'));
+  }
+
+  _getDayFormatted(data: any) {
+    if (!data) { return null; }
+    return moment(data.time).format('ddd, MMM Do');
   }
 
   trackByIndex(index: number, momentDate: CalendarMonth): number {

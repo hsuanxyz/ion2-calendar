@@ -39,7 +39,6 @@
     height: 44px;
     width: 100%;
     padding: 15px 0;
-    color: #fff;
     font-size: 0.9em;
 
     &.light,
@@ -53,6 +52,7 @@
       float: left;
       width: 14%;
       text-align: center;
+      font-weight: bold;
     }
 
     li:nth-of-type(7n),

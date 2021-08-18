@@ -5,7 +5,7 @@ import { defaults } from '../config';
   selector: 'ion-calendar-week',
   styleUrls: ['./calendar-week.component.scss'],
   template: `
-    <ion-toolbar [class]="'week-toolbar ' + color" no-border-top>
+    <ion-toolbar [class]="'week-toolbar '" no-border-top>
       <ul [class]="'week-title ' + color">
         <li *ngFor="let w of _displayWeekArray">{{ w }}</li>
       </ul>

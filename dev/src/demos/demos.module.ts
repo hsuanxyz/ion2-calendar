@@ -22,10 +22,12 @@ import { DemoModalRangeBackwardsComponent } from './demo-modal-range-backwards';
 import { DemoModalCustomSubHeaderComponent } from './demo-modal-custom-sub-header';
 import { SubHeaderCalendarModal } from './sub-header-calendar-modal';
 import { DemoModalRangeWithDefaultEndDate } from './demo-modal-range-with-default-end-date';
+import { DemoModalMultiMaxComponent } from './demo-modal-multi-max';
 
 const COMPONENTS = [
   DemoModalBasicComponent,
   DemoModalMultiComponent,
+  DemoModalMultiMaxComponent,
   DemoModalRangeComponent,
   DemoModalCustomSubHeaderComponent,
   SubHeaderCalendarModal,

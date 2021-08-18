@@ -13,10 +13,6 @@ export const MONTH_VALUE_ACCESSOR: any = {
   selector: 'ion-calendar-month',
   providers: [MONTH_VALUE_ACCESSOR],
   styleUrls: ['./month.component.scss'],
-  // tslint:disable-next-line:use-host-property-decorator
-  host: {
-    '[class.component-mode]': 'componentMode'
-  },
   template: `
     <div [class]="color">
       <ng-template [ngIf]="!_isRange" [ngIfElse]="rangeBox">
@@ -77,7 +73,6 @@ export const MONTH_VALUE_ACCESSOR: any = {
   `,
 })
 export class MonthComponent implements ControlValueAccessor, AfterViewInit {
-  @Input() componentMode = false;
   @Input()
   month: CalendarMonth;
   @Input()
@@ -90,6 +85,8 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
   readonly = false;
   @Input()
   color: string = defaults.COLOR;
+  @Input()
+  maxMultiDates: number;
 
   @Output()
   change: EventEmitter<CalendarDay[]> = new EventEmitter();
@@ -220,12 +217,13 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
           this._date[0] = item;
           this.selectStart.emit(item);
         }
-      } else if (this._date[0].time > item.time) {
-        this._date[0] = item;
-        this.selectStart.emit(item);
-      } else if (this._date[1].time < item.time) {
-        this._date[1] = item;
-        this.selectEnd.emit(item);
+      // Ensure if the user has selected a date range, when a user interacts with another date on the calendar the range will reset.
+      // } else if (this._date[0].time > item.time) {
+      //   this._date[0] = item;
+      //   this.selectStart.emit(item);
+      // } else if (this._date[1].time < item.time) {
+      //   this._date[1] = item;
+      //   this.selectEnd.emit(item);
       } else {
         this._date[0] = item;
         this.selectStart.emit(item);
@@ -240,7 +238,9 @@ export class MonthComponent implements ControlValueAccessor, AfterViewInit {
       const index = this._date.findIndex(e => e !== null && e.time === item.time);
 
       if (index === -1) {
-        this._date.push(item);
+        if ((this.maxMultiDates && this._date.length < this.maxMultiDates) || !this.maxMultiDates) {
+          this._date.push(item);
+        }
       } else {
         this._date.splice(index, 1);
       }

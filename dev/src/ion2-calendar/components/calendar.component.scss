@@ -59,28 +59,24 @@
     }
   }
 
-  ::ng-deep {
+  .days.between {
+    .days-btn.is-last,
+    .days-btn.is-first {
+      border-radius: 0;
+    }
+  } 
 
-    //.component-mode {
-    //
-    //  .days.between {
-    //    button.days-btn.is-last,
-    //    button.days-btn.is-first {
-    //      border-radius: 0 !important;
-    //    }
-    //  }
-    //
-    //  .days.startSelection.is-last-wrap {
-    //    &::after {
-    //      border-radius: 0 !important;;
-    //    }
-    //  }
-    //
-    //  .days.endSelection.is-first-wrap {
-    //    &::after {
-    //      border-radius: 0 !important;;
-    //    }
-    //  }
-    //}
+  .component-mode {
+    .days.startSelection.is-last-wrap {
+      &::after {
+        border-radius: 0;
+      }
+    }
+
+    .days.endSelection.is-first-wrap {
+      &::after {
+        border-radius: 0;
+      }
+    }
   }
 }
