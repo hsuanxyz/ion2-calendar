@@ -35,7 +35,8 @@
     display: block;
     float: left;
     width: 14%;
-    text-align: center; }
+    text-align: center;
+    font-weight: bold; }
   :host .week-title li:nth-of-type(7n),
   :host .week-title li:nth-of-type(7n + 1) {
     width: 15%; }

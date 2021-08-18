@@ -90,6 +90,7 @@ export interface CalendarOptions {
    * show last month & next month days fill six weeks
    */
   showAdjacentMonthDay?: boolean;
+  maxMultiDates?: number;
 }
 
 export interface CalendarComponentOptions extends CalendarOptions {

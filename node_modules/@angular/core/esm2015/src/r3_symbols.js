@@ -1,0 +1,36 @@
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,extraRequire,missingReturn,uselessCode} checked by tsc
+ */
+/**
+ * @license
+ * Copyright Google Inc. All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/*
+ * This file exists to support compilation of @angular/core in Ivy mode.
+ *
+ * When the Angular compiler processes a compilation unit, it normally writes imports to
+ * @angular/core. When compiling the core package itself this strategy isn't usable. Instead, the
+ * compiler writes imports to this file.
+ *
+ * Only a subset of such imports are supported - core is not allowed to declare components or pipes.
+ * A check in ngtsc's translator.ts validates this condition. The translator is responsible for
+ * translating an external name (prefixed with ɵ) to the internal symbol name as exported below.
+ *
+ * The below symbols are used for @Injectable and @NgModule compilation.
+ */
+export { defineInjectable, defineInjector } from './di/defs';
+export { inject } from './di/injector_compatibility';
+export { defineNgModule } from './render3/definition';
+export { setClassMetadata } from './render3/metadata';
+export { NgModuleFactory } from './render3/ng_module_ref';
+/**
+ * The existence of this constant (in this particular file) informs the Angular compiler that the
+ * current program is actually \@angular/core, which needs to be compiled specially.
+ * @type {?}
+ */
+export const ITS_JUST_ANGULAR = true;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicjNfc3ltYm9scy5qcyIsInNvdXJjZVJvb3QiOiIuLi8uLi8iLCJzb3VyY2VzIjpbInBhY2thZ2VzL2NvcmUvc3JjL3IzX3N5bWJvbHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBc0JBLE9BQU8sRUFBNkIsZ0JBQWdCLEVBQUUsY0FBYyxFQUFDLE1BQU0sV0FBVyxDQUFDO0FBQ3ZGLE9BQU8sRUFBQyxNQUFNLEVBQUMsTUFBTSw2QkFBNkIsQ0FBQztBQUVuRCxPQUFPLEVBQUMsY0FBYyxFQUFDLE1BQU0sc0JBQXNCLENBQUM7QUFDcEQsT0FBTyxFQUFDLGdCQUFnQixFQUFDLE1BQU0sb0JBQW9CLENBQUM7QUFDcEQsT0FBTyxFQUFDLGVBQWUsRUFBQyxNQUFNLHlCQUF5QixDQUFDOzs7Ozs7QUFPeEQsTUFBTSxPQUFPLGdCQUFnQixHQUFHLElBQUkiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIEBsaWNlbnNlXG4gKiBDb3B5cmlnaHQgR29vZ2xlIEluYy4gQWxsIFJpZ2h0cyBSZXNlcnZlZC5cbiAqXG4gKiBVc2Ugb2YgdGhpcyBzb3VyY2UgY29kZSBpcyBnb3Zlcm5lZCBieSBhbiBNSVQtc3R5bGUgbGljZW5zZSB0aGF0IGNhbiBiZVxuICogZm91bmQgaW4gdGhlIExJQ0VOU0UgZmlsZSBhdCBodHRwczovL2FuZ3VsYXIuaW8vbGljZW5zZVxuICovXG5cbi8qXG4gKiBUaGlzIGZpbGUgZXhpc3RzIHRvIHN1cHBvcnQgY29tcGlsYXRpb24gb2YgQGFuZ3VsYXIvY29yZSBpbiBJdnkgbW9kZS5cbiAqXG4gKiBXaGVuIHRoZSBBbmd1bGFyIGNvbXBpbGVyIHByb2Nlc3NlcyBhIGNvbXBpbGF0aW9uIHVuaXQsIGl0IG5vcm1hbGx5IHdyaXRlcyBpbXBvcnRzIHRvXG4gKiBAYW5ndWxhci9jb3JlLiBXaGVuIGNvbXBpbGluZyB0aGUgY29yZSBwYWNrYWdlIGl0c2VsZiB0aGlzIHN0cmF0ZWd5IGlzbid0IHVzYWJsZS4gSW5zdGVhZCwgdGhlXG4gKiBjb21waWxlciB3cml0ZXMgaW1wb3J0cyB0byB0aGlzIGZpbGUuXG4gKlxuICogT25seSBhIHN1YnNldCBvZiBzdWNoIGltcG9ydHMgYXJlIHN1cHBvcnRlZCAtIGNvcmUgaXMgbm90IGFsbG93ZWQgdG8gZGVjbGFyZSBjb21wb25lbnRzIG9yIHBpcGVzLlxuICogQSBjaGVjayBpbiBuZ3RzYydzIHRyYW5zbGF0b3IudHMgdmFsaWRhdGVzIHRoaXMgY29uZGl0aW9uLiBUaGUgdHJhbnNsYXRvciBpcyByZXNwb25zaWJsZSBmb3JcbiAqIHRyYW5zbGF0aW5nIGFuIGV4dGVybmFsIG5hbWUgKHByZWZpeGVkIHdpdGggybUpIHRvIHRoZSBpbnRlcm5hbCBzeW1ib2wgbmFtZSBhcyBleHBvcnRlZCBiZWxvdy5cbiAqXG4gKiBUaGUgYmVsb3cgc3ltYm9scyBhcmUgdXNlZCBmb3IgQEluamVjdGFibGUgYW5kIEBOZ01vZHVsZSBjb21waWxhdGlvbi5cbiAqL1xuXG5leHBvcnQge0luamVjdGFibGVEZWYsIEluamVjdG9yRGVmLCBkZWZpbmVJbmplY3RhYmxlLCBkZWZpbmVJbmplY3Rvcn0gZnJvbSAnLi9kaS9kZWZzJztcbmV4cG9ydCB7aW5qZWN0fSBmcm9tICcuL2RpL2luamVjdG9yX2NvbXBhdGliaWxpdHknO1xuZXhwb3J0IHtOZ01vZHVsZURlZiwgTmdNb2R1bGVEZWZXaXRoTWV0YX0gZnJvbSAnLi9tZXRhZGF0YS9uZ19tb2R1bGUnO1xuZXhwb3J0IHtkZWZpbmVOZ01vZHVsZX0gZnJvbSAnLi9yZW5kZXIzL2RlZmluaXRpb24nO1xuZXhwb3J0IHtzZXRDbGFzc01ldGFkYXRhfSBmcm9tICcuL3JlbmRlcjMvbWV0YWRhdGEnO1xuZXhwb3J0IHtOZ01vZHVsZUZhY3Rvcnl9IGZyb20gJy4vcmVuZGVyMy9uZ19tb2R1bGVfcmVmJztcblxuXG4vKipcbiAqIFRoZSBleGlzdGVuY2Ugb2YgdGhpcyBjb25zdGFudCAoaW4gdGhpcyBwYXJ0aWN1bGFyIGZpbGUpIGluZm9ybXMgdGhlIEFuZ3VsYXIgY29tcGlsZXIgdGhhdCB0aGVcbiAqIGN1cnJlbnQgcHJvZ3JhbSBpcyBhY3R1YWxseSBAYW5ndWxhci9jb3JlLCB3aGljaCBuZWVkcyB0byBiZSBjb21waWxlZCBzcGVjaWFsbHkuXG4gKi9cbmV4cG9ydCBjb25zdCBJVFNfSlVTVF9BTkdVTEFSID0gdHJ1ZTtcbiJdfQ==

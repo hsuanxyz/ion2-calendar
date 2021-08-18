@@ -56,6 +56,7 @@ export class CalendarService {
       showAdjacentMonthDay = true,
       defaultEndDateToStartDate = false,
       clearLabel = null,
+      maxMultiDates = null
     } = { ...this.defaultOpts, ...calendarOptions };
 
     return {
@@ -88,7 +89,8 @@ export class CalendarService {
       defaultDateRange: calendarOptions.defaultDateRange || null,
       showAdjacentMonthDay,
       defaultEndDateToStartDate,
-      clearLabel
+      clearLabel,
+      maxMultiDates
     };
   }
 

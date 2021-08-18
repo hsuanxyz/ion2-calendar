@@ -756,6 +756,12 @@
   :host .cal-color .startSelection.endSelection::before {
     --ion-color-primary: transparent; }
 
+body[data-dark-mode="true"] :host button.days-btn p {
+  color: white; }
+
+body[data-dark-mode="true"] :host button.days-btn[disabled] p {
+  color: rgba(255, 255, 255, 0.5); }
+
 :host .month-picker {
   margin: 20px 0;
   display: inline-block;
@@ -852,7 +858,6 @@
   height: 44px;
   width: 100%;
   padding: 15px 0;
-  color: #fff;
   font-size: 0.9em; }
   :host .week-title.light, :host .week-title.transparent {
     color: #9e9e9e; }
@@ -861,7 +866,8 @@
     display: block;
     float: left;
     width: 14%;
-    text-align: center; }
+    text-align: center;
+    font-weight: bold; }
   :host .week-title li:nth-of-type(7n),
   :host .week-title li:nth-of-type(7n + 1) {
     width: 15%; }
@@ -874,14 +880,51 @@
   :host ion-select.select-ios {
     max-width: unset; }
 
+:host ion-toolbar ion-button.md {
+  color: var(--ion-color-primary); }
+
+:host .dates-toolbar {
+  --background: transparent;
+  padding: 0 1rem; }
+  :host .dates-toolbar.primary {
+    --background: var(--ion-color-primary); }
+  :host .dates-toolbar.secondary {
+    --background: var(--ion-color-secondary); }
+  :host .dates-toolbar.danger {
+    --background: var(--ion-color-danger); }
+  :host .dates-toolbar.dark {
+    --background: var(--ion-color-dark); }
+  :host .dates-toolbar.light {
+    --background: var(--ion-color-light); }
+  :host .dates-toolbar.transparent {
+    --background: transparent; }
+  :host .dates-toolbar.toolbar-md {
+    min-height: 44px; }
+
+:host .ios.dates-toolbar {
+  padding-top: 1rem; }
+
+:host .start-date {
+  padding-left: 0.5rem; }
+
+:host .end-date {
+  margin-right: -0.5rem; }
+
 :host .calendar-page {
   background-color: #fbfbfb; }
 
 :host .month-box {
   display: inline-block;
   width: 100%;
-  padding-bottom: 1em;
-  border-bottom: 1px solid #f1f1f1; }
+  padding-bottom: 1em; }
+
+:host #month-0 {
+  padding-top: 1rem; }
+
+:host .month-title {
+  padding-left: 1rem;
+  text-align: left;
+  color: #363749; }
 
 :host h4 {
   font-weight: 400;
@@ -890,6 +933,12 @@
   text-align: center;
   margin: 1rem 0 0;
   color: #929292; }
+
+body[data-dark-mode="true"] :host .month-title {
+  color: white; }
+
+body[data-dark-mode="true"] :host .dates-toolbar {
+  color: white; }
 
 :host {
   padding: 10px 20px;

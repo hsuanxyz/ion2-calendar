@@ -755,3 +755,9 @@
     transition-timing-function: ease-out; }
   :host .cal-color .startSelection.endSelection::before {
     --ion-color-primary: transparent; }
+
+body[data-dark-mode="true"] :host button.days-btn p {
+  color: white; }
+
+body[data-dark-mode="true"] :host button.days-btn[disabled] p {
+  color: rgba(255, 255, 255, 0.5); }

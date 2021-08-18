@@ -1,0 +1,5 @@
+<project>
+  <name>project</name>
+  <packaging>electron</packaging>
+  <version>1.0.0</version>
+</project>
