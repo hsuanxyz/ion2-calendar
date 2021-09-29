@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.1.0",
-    "i": "0.3.6",
+    "i": "0.3.7",
     "npm": "5.7.1",
     "typescript": "2.4.2",
     "ws": "3.3.2"
