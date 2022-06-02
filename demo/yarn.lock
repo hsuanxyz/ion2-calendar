@@ -32,11 +32,11 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/core@5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@angular/core/-/core-5.0.0.tgz#4f976a225f7dddf34992f2cad824c9543a46f4c8"
+"@angular/core@11.0.5":
+  version "11.0.5"
+  resolved "https://registry.yarnpkg.com/@angular/core/-/core-11.0.5.tgz#b8c448c3cd4f6dae7327cc1ba4ee2aa29c8dbc26"
   dependencies:
-    tslib "^1.7.1"
+    tslib "^2.0.0"
 
 "@angular/forms@5.0.0":
   version "5.0.0"
@@ -5055,6 +5055,10 @@ tsickle@^0.24.0:
 tslib@^1.0.0, tslib@^1.7.1:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
+
+tslib@^2.0.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
 
 tslint-eslint-rules@^4.1.1:
   version "4.1.1"
