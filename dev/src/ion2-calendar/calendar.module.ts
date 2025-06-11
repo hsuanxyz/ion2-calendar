@@ -17,7 +17,6 @@ export function calendarController(modalCtrl: ModalController, calSvc: CalendarS
   imports: [CommonModule, IonicModule, FormsModule],
   declarations: CALENDAR_COMPONENTS,
   exports: CALENDAR_COMPONENTS,
-  entryComponents: CALENDAR_COMPONENTS,
   providers: [
     CalendarService,
     {
@@ -29,7 +28,7 @@ export function calendarController(modalCtrl: ModalController, calSvc: CalendarS
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class CalendarModule {
-  static forRoot(defaultOptions: CalendarModalOptions = {}): ModuleWithProviders {
+  static forRoot(defaultOptions: CalendarModalOptions = {}): ModuleWithProviders<CalendarModule> {
     return {
       ngModule: CalendarModule,
       providers: [

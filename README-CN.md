@@ -23,7 +23,7 @@
 # 支持
 
 - ionic-angular `^3.0.0` [2.x](https://github.com/HsuanXyz/ion2-calendar/tree/v2)
-- @ionic/angular `4.0.0`
+- 基于 Angular `17` 和 @ionic/angular `^7.0.0`
 
 # Demo
 

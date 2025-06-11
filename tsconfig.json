@@ -13,7 +13,7 @@
     "outDir": "./dist",
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es2020"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["demo/", "dist/", "lazyload-demo/", "node_modules", "lib/"],
